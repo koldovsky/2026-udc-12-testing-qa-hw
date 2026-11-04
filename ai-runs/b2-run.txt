@@ -1,0 +1,792 @@
+
+> test
+> npm --prefix app test
+
+
+> veloprokat@3.2.0 test
+> node --test "test/**/*.test.js"
+
+TAP version 13
+# Subtest: every receipt of a week of rides ends with the amount due
+ok 1 - every receipt of a week of rides ends with the amount due
+  ---
+  duration_ms: 2.14925
+  type: 'test'
+  ...
+# Subtest: a receipt lists the fee for a return outside the zone
+ok 2 - a receipt lists the fee for a return outside the zone
+  ---
+  duration_ms: 0.611292
+  type: 'test'
+  ...
+# Subtest: §4: TC-60 повернення 10:00 при взятті 10:30 → запит відхилено з поясненням
+ok 3 - §4: TC-60 повернення 10:00 при взятті 10:30 → запит відхилено з поясненням
+  ---
+  duration_ms: 1.157041
+  type: 'test'
+  ...
+# Subtest: §4: TC-61 тип велосипеда tandem → запит відхилено з поясненням
+ok 4 - §4: TC-61 тип велосипеда tandem → запит відхилено з поясненням
+  ---
+  duration_ms: 0.079542
+  type: 'test'
+  ...
+# Subtest: §4: TC-62 категорія користувача vip → запит відхилено з поясненням
+ok 5 - §4: TC-62 категорія користувача vip → запит відхилено з поясненням
+  ---
+  duration_ms: 0.090542
+  type: 'test'
+  ...
+# Subtest: §4: TC-63 станція повернення S99 → запит відхилено з поясненням
+ok 6 - §4: TC-63 станція повернення S99 → запит відхилено з поясненням
+  ---
+  duration_ms: 0.055042
+  type: 'test'
+  ...
+# Subtest: T1: TC-01 classic, 10:00:00 → 10:12:40 → 13 хв, 2500
+ok 7 - T1: TC-01 classic, 10:00:00 → 10:12:40 → 13 хв, 2500
+  ---
+  duration_ms: 1.154708
+  type: 'test'
+  ...
+# Subtest: T1: TC-02 classic, 14:05:00 → 14:41:00 → 36 хв, 5000
+ok 8 - T1: TC-02 classic, 14:05:00 → 14:41:00 → 36 хв, 5000
+  ---
+  duration_ms: 0.09375
+  type: 'test'
+  ...
+# Subtest: T1: TC-03 classic, 10:00:00 → 10:30:01 → 31 хв, 5000
+not ok 9 - T1: TC-03 classic, 10:00:00 → 10:30:01 → 31 хв, 5000
+  ---
+  duration_ms: 0.52825
+  type: 'test'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t1-t3-duration-blocks.test.js:28:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    тривалість, хв
+    
+    30 !== 31
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 31
+  actual: 30
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t1-t3-duration-blocks.test.js:30:41)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T1: TC-04 classic, 10:00:00 → 10:30:29 → 31 хв, 5000
+not ok 10 - T1: TC-04 classic, 10:00:00 → 10:30:29 → 31 хв, 5000
+  ---
+  duration_ms: 0.184166
+  type: 'test'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t1-t3-duration-blocks.test.js:28:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    тривалість, хв
+    
+    30 !== 31
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 31
+  actual: 30
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t1-t3-duration-blocks.test.js:30:41)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T1: TC-05 classic, 10:00:00 → 10:01:30 → 2 хв, 0
+not ok 11 - T1: TC-05 classic, 10:00:00 → 10:01:30 → 2 хв, 0
+  ---
+  duration_ms: 0.108542
+  type: 'test'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t1-t3-duration-blocks.test.js:28:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    до сплати, коп.
+    
+    2500 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 2500
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t1-t3-duration-blocks.test.js:31:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T2: TC-06 classic, 10:00:00 → 10:00:50 → 1 хв, 0
+ok 12 - T2: TC-06 classic, 10:00:00 → 10:00:50 → 1 хв, 0
+  ---
+  duration_ms: 0.065834
+  type: 'test'
+  ...
+# Subtest: T2: TC-07 classic, 10:00:00 → 10:02:00 → 2 хв, 0
+not ok 13 - T2: TC-07 classic, 10:00:00 → 10:02:00 → 2 хв, 0
+  ---
+  duration_ms: 0.132958
+  type: 'test'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t1-t3-duration-blocks.test.js:28:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    до сплати, коп.
+    
+    2500 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 2500
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t1-t3-duration-blocks.test.js:31:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T2: TC-08 classic, 10:00:00 → 10:02:01 → 3 хв, 2500
+not ok 14 - T2: TC-08 classic, 10:00:00 → 10:02:01 → 3 хв, 2500
+  ---
+  duration_ms: 0.078708
+  type: 'test'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t1-t3-duration-blocks.test.js:28:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    тривалість, хв
+    
+    2 !== 3
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 3
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t1-t3-duration-blocks.test.js:30:41)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T2: TC-09 classic, 10:00 → 10:04 → 2500
+ok 15 - T2: TC-09 classic, 10:00 → 10:04 → 2500
+  ---
+  duration_ms: 0.438083
+  type: 'test'
+  ...
+# Subtest: T2: TC-10 classic, 10:00:00 → 10:00:00 → 0
+ok 16 - T2: TC-10 classic, 10:00:00 → 10:00:00 → 0
+  ---
+  duration_ms: 0.379459
+  type: 'test'
+  ...
+# Subtest: T2, T7: TC-11 classic, 10:00:00 → 10:01:00, X01 → 15000
+ok 17 - T2, T7: TC-11 classic, 10:00:00 → 10:01:00, X01 → 15000
+  ---
+  duration_ms: 0.157416
+  type: 'test'
+  ...
+# Subtest: T3: TC-12 classic, 10:00 → 10:30 → 2500
+ok 18 - T3: TC-12 classic, 10:00 → 10:30 → 2500
+  ---
+  duration_ms: 0.057541
+  type: 'test'
+  ...
+# Subtest: T3: TC-13 classic, 10:00 → 10:31 → 5000
+ok 19 - T3: TC-13 classic, 10:00 → 10:31 → 5000
+  ---
+  duration_ms: 0.046709
+  type: 'test'
+  ...
+# Subtest: T3: TC-14 classic, 10:00 → 10:50 → 5000
+ok 20 - T3: TC-14 classic, 10:00 → 10:50 → 5000
+  ---
+  duration_ms: 0.044042
+  type: 'test'
+  ...
+# Subtest: T3: TC-15 ebike, 10:00 → 11:15 → 12000
+ok 21 - T3: TC-15 ebike, 10:00 → 11:15 → 12000
+  ---
+  duration_ms: 0.048084
+  type: 'test'
+  ...
+# Subtest: T3: TC-16 ebike, 10:00 → 10:30 → 4000
+ok 22 - T3: TC-16 ebike, 10:00 → 10:30 → 4000
+  ---
+  duration_ms: 0.095166
+  type: 'test'
+  ...
+# Subtest: T10: TC-53 classic, 01:10 → 01:40 → 1750
+ok 23 - T10: TC-53 classic, 01:10 → 01:40 → 1750
+  ---
+  duration_ms: 1.026625
+  type: 'test'
+  ...
+# Subtest: T10: TC-54 classic, 00:00:00 → 00:20:00 → 1750
+ok 24 - T10: TC-54 classic, 00:00:00 → 00:20:00 → 1750
+  ---
+  duration_ms: 0.098792
+  type: 'test'
+  ...
+# Subtest: T10: TC-55 classic, 05:30 → 05:59 → 1750
+ok 25 - T10: TC-55 classic, 05:30 → 05:59 → 1750
+  ---
+  duration_ms: 0.152958
+  type: 'test'
+  ...
+# Subtest: T10: TC-56 classic, 07:00 → 07:20 → 2500
+ok 26 - T10: TC-56 classic, 07:00 → 07:20 → 2500
+  ---
+  duration_ms: 0.072958
+  type: 'test'
+  ...
+# Subtest: T10: TC-57 ebike, 2026-09-16T03:30:00Z → 2026-09-16T03:50:00Z → 4000
+ok 27 - T10: TC-57 ebike, 2026-09-16T03:30:00Z → 2026-09-16T03:50:00Z → 4000
+  ---
+  duration_ms: 0.150667
+  type: 'test'
+  ...
+# Subtest: T10: TC-58 classic, 2026-11-04T22:30:00Z → 2026-11-04T23:00:00Z → 1750
+ok 28 - T10: TC-58 classic, 2026-11-04T22:30:00Z → 2026-11-04T23:00:00Z → 1750
+  ---
+  duration_ms: 0.067208
+  type: 'test'
+  ...
+# Subtest: T10, T2: TC-59 classic, 01:00:00 → 01:01:00 → 0
+ok 29 - T10, T2: TC-59 classic, 01:00:00 → 01:01:00 → 0
+  ---
+  duration_ms: 0.108291
+  type: 'test'
+  ...
+# Subtest: T4: TC-17 subscriber, classic, 10:00 → 10:40 → 0
+ok 30 - T4: TC-17 subscriber, classic, 10:00 → 10:40 → 0
+  ---
+  duration_ms: 1.110209
+  type: 'test'
+  ...
+# Subtest: T4: TC-18 subscriber, classic, 10:00 → 10:45 → 0
+ok 31 - T4: TC-18 subscriber, classic, 10:00 → 10:45 → 0
+  ---
+  duration_ms: 0.090541
+  type: 'test'
+  ...
+# Subtest: T4: TC-19 subscriber, classic, 10:00 → 10:46 → 2500
+ok 32 - T4: TC-19 subscriber, classic, 10:00 → 10:46 → 2500
+  ---
+  duration_ms: 0.178833
+  type: 'test'
+  ...
+# Subtest: T4: TC-20 subscriber, classic, 10:00 → 11:16 → 5000
+ok 33 - T4: TC-20 subscriber, classic, 10:00 → 11:16 → 5000
+  ---
+  duration_ms: 0.07275
+  type: 'test'
+  ...
+# Subtest: T4: TC-21 subscriber, classic, 10:00 → 11:40 → 5000
+ok 34 - T4: TC-21 subscriber, classic, 10:00 → 11:40 → 5000
+  ---
+  duration_ms: 0.146334
+  type: 'test'
+  ...
+# Subtest: T4: TC-22 subscriber, ebike, 10:00 → 10:10 → 3200
+not ok 35 - T4: TC-22 subscriber, ebike, 10:00 → 10:10 → 3200
+  ---
+  duration_ms: 0.440542
+  type: 'test'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t4-t5-subscription-reduced.test.js:42:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    до сплати, коп.
+    
+    0 !== 3200
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 3200
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t4-t5-subscription-reduced.test.js:44:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T4: TC-23 subscriber, ebike, 10:00 → 10:46 → 6400
+not ok 36 - T4: TC-23 subscriber, ebike, 10:00 → 10:46 → 6400
+  ---
+  duration_ms: 0.175834
+  type: 'test'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t4-t5-subscription-reduced.test.js:42:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    до сплати, коп.
+    
+    3200 !== 6400
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 6400
+  actual: 3200
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t4-t5-subscription-reduced.test.js:44:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T5: TC-24 reduced, classic, 10:00 → 10:40 → 2500
+ok 37 - T5: TC-24 reduced, classic, 10:00 → 10:40 → 2500
+  ---
+  duration_ms: 0.064709
+  type: 'test'
+  ...
+# Subtest: T5: TC-25 reduced, ebike, 10:00 → 11:15 → 6000
+ok 38 - T5: TC-25 reduced, ebike, 10:00 → 11:15 → 6000
+  ---
+  duration_ms: 0.472334
+  type: 'test'
+  ...
+# Subtest: T5: TC-26 subscriberConcession, classic, 10:00 → 11:20 → 3750
+ok 39 - T5: TC-26 subscriberConcession, classic, 10:00 → 11:20 → 3750
+  ---
+  duration_ms: 0.361625
+  type: 'test'
+  ...
+# Subtest: T5: TC-27 subscriberConcession, classic, 10:00 → 10:40 → 0
+ok 40 - T5: TC-27 subscriberConcession, classic, 10:00 → 10:40 → 0
+  ---
+  duration_ms: 0.111042
+  type: 'test'
+  ...
+# Subtest: T5: TC-28 subscriberConcession, classic, 10:00 → 10:46 → 2500
+ok 41 - T5: TC-28 subscriberConcession, classic, 10:00 → 10:46 → 2500
+  ---
+  duration_ms: 0.387042
+  type: 'test'
+  ...
+# Subtest: T5: TC-29 subscriberConcession, ebike, 10:00 → 10:30 → 2000
+not ok 42 - T5: TC-29 subscriberConcession, ebike, 10:00 → 10:30 → 2000
+  ---
+  duration_ms: 0.103583
+  type: 'test'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t4-t5-subscription-reduced.test.js:42:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    до сплати, коп.
+    
+    0 !== 2000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 2000
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t4-t5-subscription-reduced.test.js:44:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T5, T7: TC-30 reduced, classic, 10:00 → 10:20, X02 → 16250
+not ok 43 - T5, T7: TC-30 reduced, classic, 10:00 → 10:20, X02 → 16250
+  ---
+  duration_ms: 0.10875
+  type: 'test'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t4-t5-subscription-reduced.test.js:42:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    до сплати, коп.
+    
+    8750 !== 16250
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 16250
+  actual: 8750
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t4-t5-subscription-reduced.test.js:44:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T5, T7: TC-31 subscriberConcession, classic, 10:00 → 12:00, X01 → 20000
+not ok 44 - T5, T7: TC-31 subscriberConcession, classic, 10:00 → 12:00, X01 → 20000
+  ---
+  duration_ms: 0.128417
+  type: 'test'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t4-t5-subscription-reduced.test.js:42:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    до сплати, коп.
+    
+    12500 !== 20000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 20000
+  actual: 12500
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t4-t5-subscription-reduced.test.js:44:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T6: TC-32 три поїздки ebike по 80 хв за 16.09 → 12 000, 12 000, 6 000 (разом 30 000)
+ok 45 - T6: TC-32 три поїздки ebike по 80 хв за 16.09 → 12 000, 12 000, 6 000 (разом 30 000)
+  ---
+  duration_ms: 1.617792
+  type: 'test'
+  ...
+# Subtest: T6: TC-33 10:00 → 10:20; нараховано: той самий 16.09=27500 → 2500
+ok 46 - T6: TC-33 10:00 → 10:20; нараховано: той самий 16.09=27500 → 2500
+  ---
+  duration_ms: 0.191625
+  type: 'test'
+  ...
+# Subtest: T6: TC-34 10:00 → 10:20; нараховано: той самий 16.09=28000 → 2000
+ok 47 - T6: TC-34 10:00 → 10:20; нараховано: той самий 16.09=28000 → 2000
+  ---
+  duration_ms: 0.097417
+  type: 'test'
+  ...
+# Subtest: T6: TC-35 10:00 → 22:00; нараховано: 0 → 30000
+ok 48 - T6: TC-35 10:00 → 22:00; нараховано: 0 → 30000
+  ---
+  duration_ms: 0.066625
+  type: 'test'
+  ...
+# Subtest: T6, T7: TC-36 20:00 → 20:20, X02; нараховано: той самий 16.09=30000 → 15000
+ok 49 - T6, T7: TC-36 20:00 → 20:20, X02; нараховано: той самий 16.09=30000 → 15000
+  ---
+  duration_ms: 0.173208
+  type: 'test'
+  ...
+# Subtest: T6, T10: TC-38 2026-09-16T21:30:00Z → 2026-09-16T21:50:00Z; нараховано: той самий 2026-09-16=30000 → 1750
+not ok 50 - T6, T10: TC-38 2026-09-16T21:30:00Z → 2026-09-16T21:50:00Z; нараховано: той самий 2026-09-16=30000 → 1750
+  ---
+  duration_ms: 0.585125
+  type: 'test'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t6-day-cap.test.js:44:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    до сплати, коп.
+    
+    0 !== 1750
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1750
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t6-day-cap.test.js:46:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T6: TC-39 10:00 → 10:20; нараховано: rider-A 16.09=30000 → 2500
+ok 51 - T6: TC-39 10:00 → 10:20; нараховано: rider-A 16.09=30000 → 2500
+  ---
+  duration_ms: 0.277833
+  type: 'test'
+  ...
+# Subtest: T6: TC-37 поїздка 16.09 23:40 → 17.09 00:20 належить до 16.09 (→ 0), доба 17.09 вільна (→ 2 500)
+ok 52 - T6: TC-37 поїздка 16.09 23:40 → 17.09 00:20 належить до 16.09 (→ 0), доба 17.09 вільна (→ 2 500)
+  ---
+  duration_ms: 0.202959
+  type: 'test'
+  ...
+# Subtest: T7: TC-40 classic, 10:00 → 10:20, X01 → 17500
+ok 53 - T7: TC-40 classic, 10:00 → 10:20, X01 → 17500
+  ---
+  duration_ms: 1.382667
+  type: 'test'
+  ...
+# Subtest: T7: TC-41 classic, 10:00 → 10:20, S08 → 2500
+ok 54 - T7: TC-41 classic, 10:00 → 10:20, S08 → 2500
+  ---
+  duration_ms: 0.145625
+  type: 'test'
+  ...
+# Subtest: T7: TC-42 classic, 10:00 → 10:40, subscriber, X03 → 15000
+ok 55 - T7: TC-42 classic, 10:00 → 10:40, subscriber, X03 → 15000
+  ---
+  duration_ms: 0.085083
+  type: 'test'
+  ...
+# Subtest: T8: TC-43 classic, 10:00:00 → 17.09 10:00:00 → 30000
+ok 56 - T8: TC-43 classic, 10:00:00 → 17.09 10:00:00 → 30000
+  ---
+  duration_ms: 0.0965
+  type: 'test'
+  ...
+# Subtest: T8: TC-44 classic, 10:00:00 → 17.09 10:00:01 → 230000
+not ok 57 - T8: TC-44 classic, 10:00:00 → 17.09 10:00:01 → 230000
+  ---
+  duration_ms: 0.513666
+  type: 'test'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t7-t8-fees.test.js:31:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    до сплати, коп.
+    
+    30000 !== 230000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 230000
+  actual: 30000
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t7-t8-fees.test.js:33:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T8: TC-45 classic, 10:00 → 17.09 11:00 → 230000
+ok 58 - T8: TC-45 classic, 10:00 → 17.09 11:00 → 230000
+  ---
+  duration_ms: 0.07825
+  type: 'test'
+  ...
+# Subtest: T8, T7: TC-46 classic, 10:00 → 17.09 11:00, X01 → 245000
+ok 59 - T8, T7: TC-46 classic, 10:00 → 17.09 11:00, X01 → 245000
+  ---
+  duration_ms: 0.1195
+  type: 'test'
+  ...
+# Subtest: T8, T5: TC-47 classic, 10:00 → 17.09 11:00, reduced → 230000
+not ok 60 - T8, T5: TC-47 classic, 10:00 → 17.09 11:00, reduced → 230000
+  ---
+  duration_ms: 0.175833
+  type: 'test'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t7-t8-fees.test.js:31:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    до сплати, коп.
+    
+    130000 !== 230000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 230000
+  actual: 130000
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t7-t8-fees.test.js:33:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T8, T6: TC-48 classic, 10:00 → 17.09 11:00, нараховано 30 000 → 200000
+ok 61 - T8, T6: TC-48 classic, 10:00 → 17.09 11:00, нараховано 30 000 → 200000
+  ---
+  duration_ms: 0.456166
+  type: 'test'
+  ...
+# Subtest: T9: TC-49 знижка 30 % від 1 235 коп. → до сплати 864, знижка 371
+ok 62 - T9: TC-49 знижка 30 % від 1 235 коп. → до сплати 864, знижка 371
+  ---
+  duration_ms: 0.502917
+  type: 'test'
+  ...
+# Subtest: T9: TC-50 чек для TC-45 → До сплати 2 300,00 грн
+ok 63 - T9: TC-50 чек для TC-45 → До сплати 2 300,00 грн
+  ---
+  duration_ms: 1.726834
+  type: 'test'
+  ...
+# Subtest: T9: TC-51 чек для TC-30 → 20 хв; 25,00 грн; -12,50 грн; 150,00 грн; До сплати 162,50 грн
+not ok 64 - T9: TC-51 чек для TC-30 → 20 хв; 25,00 грн; -12,50 грн; 150,00 грн; До сплати 162,50 грн
+  ---
+  duration_ms: 0.371084
+  type: 'test'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t9-amounts-receipt.test.js:46:3'
+  failureType: 'testCodeFailure'
+  error: '«До сплати»: До сплати .......................... 87,50 грн'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/app/test/spec/t9-amounts-receipt.test.js:51:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T9, T6: TC-52 чек для TC-34 → -5,00 грн; До сплати 20,00 грн
+ok 65 - T9, T6: TC-52 чек для TC-34 → -5,00 грн; До сплати 20,00 грн
+  ---
+  duration_ms: 0.127292
+  type: 'test'
+  ...
+# Subtest: charges recorded for a day reduce what is left of the cap
+ok 66 - charges recorded for a day reduce what is left of the cap
+  ---
+  duration_ms: 3.100291
+  type: 'test'
+  ...
+# Subtest: the day of a ride is the date of its pickup
+ok 67 - the day of a ride is the date of its pickup
+  ---
+  duration_ms: 0.096958
+  type: 'test'
+  ...
+# Subtest: amounts are shown in hryvnias
+ok 68 - amounts are shown in hryvnias
+  ---
+  duration_ms: 0.557084
+  type: 'test'
+  ...
+# Subtest: a receipt has a line for every item
+ok 69 - a receipt has a line for every item
+  ---
+  duration_ms: 0.14975
+  type: 'test'
+  ...
+# Subtest: GET / serves the page and GET /api/health answers
+ok 70 - GET / serves the page and GET /api/health answers
+  ---
+  duration_ms: 0.9375
+  type: 'test'
+  ...
+# Subtest: POST /api/quote returns the quote and the receipt
+ok 71 - POST /api/quote returns the quote and the receipt
+  ---
+  duration_ms: 1.808708
+  type: 'test'
+  ...
+# Subtest: POST /api/quote answers 400 to a body that is not JSON
+ok 72 - POST /api/quote answers 400 to a body that is not JSON
+  ---
+  duration_ms: 0.407208
+  type: 'test'
+  ...
+# Subtest: quote returns an itemised price
+ok 73 - quote returns an itemised price
+  ---
+  duration_ms: 0.907541
+  type: 'test'
+  ...
+# Subtest: a ride of 30 min 20 s is billed as one block
+ok 74 - a ride of 30 min 20 s is billed as one block
+  ---
+  duration_ms: 0.150459
+  type: 'test'
+  ...
+# Subtest: e-bikes are billed at the e-bike rate
+ok 75 - e-bikes are billed at the e-bike rate
+  ---
+  duration_ms: 0.088916
+  type: 'test'
+  ...
+# Subtest: subscribers ride the first 45 minutes free
+ok 76 - subscribers ride the first 45 minutes free
+  ---
+  duration_ms: 0.517583
+  type: 'test'
+  ...
+# Subtest: subscription on a long e-bike ride
+ok 77 - subscription on a long e-bike ride
+  ---
+  duration_ms: 0.121875
+  type: 'test'
+  ...
+# Subtest: reduced fare for a ride returned outside the zone
+ok 78 - reduced fare for a ride returned outside the zone
+  ---
+  duration_ms: 0.380584
+  type: 'test'
+  ...
+# Subtest: night rides get 30 % off
+ok 79 - night rides get 30 % off
+  ---
+  duration_ms: 0.153584
+  type: 'test'
+  ...
+# Subtest: a bike kept over a day and left outside the zone pays both fees
+ok 80 - a bike kept over a day and left outside the zone pays both fees
+  ---
+  duration_ms: 0.072625
+  type: 'test'
+  ...
+# Subtest: the daily cap limits the time charge
+ok 81 - the daily cap limits the time charge
+  ---
+  duration_ms: 0.529209
+  type: 'test'
+  ...
+# Subtest: a 45-minute classic ride costs 50 UAH
+ok 82 - a 45-minute classic ride costs 50 UAH
+  ---
+  duration_ms: 0.453041
+  type: 'test'
+  ...
+# Subtest: a return before the pickup is rejected
+ok 83 - a return before the pickup is rejected
+  ---
+  duration_ms: 0.275375
+  type: 'test'
+  ...
+1..83
+# tests 83
+# suites 0
+# pass 69
+# fail 14
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 157.655167

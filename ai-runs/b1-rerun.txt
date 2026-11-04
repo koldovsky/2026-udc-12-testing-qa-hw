@@ -1,0 +1,518 @@
+TAP version 13
+# Subtest: dayKey
+    # Subtest: returns YYYY-MM-DD for ms and ISO input
+    not ok 1 - returns YYYY-MM-DD for ms and ISO input
+      ---
+      duration_ms: 1.302875
+      type: 'test'
+      location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:6:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+        
+        + '2026-09-17'
+        - '2026-09-16'
+                    ^
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: '2026-09-16'
+      actual: '2026-09-17'
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:8:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Test.start (node:internal/test_runner/test:944:17)
+        node:internal/test_runner/test:1440:71
+        node:internal/per_context/primordials:466:82
+        new Promise (<anonymous>)
+        new SafePromise (node:internal/per_context/primordials:435:3)
+        node:internal/per_context/primordials:466:9
+        Array.map (<anonymous>)
+      ...
+    # Subtest: uses the UTC date (current behaviour)
+    not ok 2 - uses the UTC date (current behaviour)
+      ---
+      duration_ms: 0.181542
+      type: 'test'
+      location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:10:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+        
+        + '2026-09-16'
+        - '2026-09-15'
+                    ^
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: '2026-09-15'
+      actual: '2026-09-16'
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:12:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Promise.all (index 0)
+        async Suite.run (node:internal/test_runner/test:1442:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    1..2
+not ok 1 - dayKey
+  ---
+  duration_ms: 1.99225
+  type: 'suite'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:5:1'
+  failureType: 'subtestsFailed'
+  error: '2 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: createDayCap
+    # Subtest: default limit is DAY_CAP = 30000
+    ok 1 - default limit is DAY_CAP = 30000
+      ---
+      duration_ms: 0.210375
+      type: 'test'
+      ...
+    # Subtest: custom limit
+    ok 2 - custom limit
+      ---
+      duration_ms: 0.065166
+      type: 'test'
+      ...
+    # Subtest: record reduces remaining and accumulates
+    ok 3 - record reduces remaining and accumulates
+      ---
+      duration_ms: 0.09
+      type: 'test'
+      ...
+    # Subtest: remaining never goes below zero
+    ok 4 - remaining never goes below zero
+      ---
+      duration_ms: 0.05575
+      type: 'test'
+      ...
+    # Subtest: separate by rider and by day
+    ok 5 - separate by rider and by day
+      ---
+      duration_ms: 0.163875
+      type: 'test'
+      ...
+    # Subtest: chargedOn for unknown rider is 0
+    ok 6 - chargedOn for unknown rider is 0
+      ---
+      duration_ms: 0.227375
+      type: 'test'
+      ...
+    # Subtest: ledgers are independent
+    ok 7 - ledgers are independent
+      ---
+      duration_ms: 0.176917
+      type: 'test'
+      ...
+    1..7
+ok 2 - createDayCap
+  ---
+  duration_ms: 1.46575
+  type: 'suite'
+  ...
+# Subtest: time charge (blocks of 30 minutes)
+    # Subtest: 0 and 1 minute are free
+    ok 1 - 0 and 1 minute are free
+      ---
+      duration_ms: 0.769542
+      type: 'test'
+      ...
+    # Subtest: 2 minutes is one block
+    not ok 2 - 2 minutes is one block
+      ---
+      duration_ms: 0.444791
+      type: 'test'
+      location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:27:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        
+        0 !== 2500
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 2500
+      actual: 0
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:28:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Promise.all (index 0)
+        async Suite.run (node:internal/test_runner/test:1442:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: 30 minutes is one block, 31 is two
+    ok 3 - 30 minutes is one block, 31 is two
+      ---
+      duration_ms: 0.194792
+      type: 'test'
+      ...
+    # Subtest: ebike rate
+    ok 4 - ebike rate
+      ---
+      duration_ms: 0.072042
+      type: 'test'
+      ...
+    # Subtest: minutes are rounded to the nearest minute
+    not ok 5 - minutes are rounded to the nearest minute
+      ---
+      duration_ms: 0.202208
+      type: 'test'
+      location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:37:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        
+        31 !== 30
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 30
+      actual: 31
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:39:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: result shape for a plain ride
+    ok 6 - result shape for a plain ride
+      ---
+      duration_ms: 0.376125
+      type: 'test'
+      ...
+    # Subtest: offset timestamps are accepted
+    ok 7 - offset timestamps are accepted
+      ---
+      duration_ms: 0.174083
+      type: 'test'
+      ...
+    1..7
+not ok 3 - time charge (blocks of 30 minutes)
+  ---
+  duration_ms: 2.753
+  type: 'suite'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:19:1'
+  failureType: 'subtestsFailed'
+  error: '2 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: subscription
+    # Subtest: first 45 minutes free on classic
+    ok 1 - first 45 minutes free on classic
+      ---
+      duration_ms: 0.1915
+      type: 'test'
+      ...
+    # Subtest: 46 minutes: one paid block after free 45
+    ok 2 - 46 minutes: one paid block after free 45
+      ---
+      duration_ms: 0.241167
+      type: 'test'
+      ...
+    # Subtest: ebike: 20% off the paid blocks
+    not ok 3 - ebike: 20% off the paid blocks
+      ---
+      duration_ms: 0.250292
+      type: 'test'
+      location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:67:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        
+        9600 !== 6400
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 6400
+      actual: 9600
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:70:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    1..3
+not ok 4 - subscription
+  ---
+  duration_ms: 0.923458
+  type: 'suite'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:55:1'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: reduced fare
+    # Subtest: 50% off time charge
+    ok 1 - 50% off time charge
+      ---
+      duration_ms: 0.088167
+      type: 'test'
+      ...
+    # Subtest: subscriber with concession gets the cheaper plan
+    ok 2 - subscriber with concession gets the cheaper plan
+      ---
+      duration_ms: 0.130875
+      type: 'test'
+      ...
+    # Subtest: concession on a non-subscriber standard rider is ignored
+    ok 3 - concession on a non-subscriber standard rider is ignored
+      ---
+      duration_ms: 0.043542
+      type: 'test'
+      ...
+    # Subtest: concession must be strictly true
+    ok 4 - concession must be strictly true
+      ---
+      duration_ms: 0.051375
+      type: 'test'
+      ...
+    1..4
+ok 5 - reduced fare
+  ---
+  duration_ms: 0.409375
+  type: 'suite'
+  ...
+# Subtest: night discount
+    # Subtest: pickup before 06:00 Kyiv gets 30% off
+    ok 1 - pickup before 06:00 Kyiv gets 30% off
+      ---
+      duration_ms: 0.066375
+      type: 'test'
+      ...
+    # Subtest: pickup at 06:00 Kyiv has no night discount
+    ok 2 - pickup at 06:00 Kyiv has no night discount
+      ---
+      duration_ms: 0.042167
+      type: 'test'
+      ...
+    # Subtest: night discount applies after reduced fare
+    ok 3 - night discount applies after reduced fare
+      ---
+      duration_ms: 0.046666
+      type: 'test'
+      ...
+    # Subtest: no night entry when nothing is due
+    ok 4 - no night entry when nothing is due
+      ---
+      duration_ms: 0.043
+      type: 'test'
+      ...
+    1..4
+ok 6 - night discount
+  ---
+  duration_ms: 0.244792
+  type: 'suite'
+  ...
+# Subtest: fees
+    # Subtest: out-of-zone return adds a fee
+    ok 1 - out-of-zone return adds a fee
+      ---
+      duration_ms: 0.075167
+      type: 'test'
+      ...
+    # Subtest: ride over 24h adds unreturned fee; exactly 24h does not
+    ok 2 - ride over 24h adds unreturned fee; exactly 24h does not
+      ---
+      duration_ms: 0.059792
+      type: 'test'
+      ...
+    # Subtest: reduced plan halves fees
+    not ok 3 - reduced plan halves fees
+      ---
+      duration_ms: 0.44025
+      type: 'test'
+      location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:136:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly deep-equal:
+        + actual - expected
+        
+          [
+            {
+        +     amount: 15000,
+        -     amount: 7500,
+              code: 'out-of-zone'
+            }
+          ]
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+        0:
+          code: 'out-of-zone'
+          amount: 7500
+      actual:
+        0:
+          code: 'out-of-zone'
+          amount: 15000
+      operator: 'deepStrictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:138:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: fees are not capped by the day cap
+    ok 4 - fees are not capped by the day cap
+      ---
+      duration_ms: 0.078083
+      type: 'test'
+      ...
+    # Subtest: custom zones option is used
+    ok 5 - custom zones option is used
+      ---
+      duration_ms: 0.061208
+      type: 'test'
+      ...
+    1..5
+not ok 7 - fees
+  ---
+  duration_ms: 0.78675
+  type: 'suite'
+  location: '/Users/sergii.osadchyi-external/IdeaProjects/udc-worksop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:124:1'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: day cap inside quote
+    # Subtest: without ledger, a single ride is capped at DAY_CAP
+    ok 1 - without ledger, a single ride is capped at DAY_CAP
+      ---
+      duration_ms: 0.077333
+      type: 'test'
+      ...
+    # Subtest: ledger accumulates across rides of the same rider and day
+    ok 2 - ledger accumulates across rides of the same rider and day
+      ---
+      duration_ms: 0.1785
+      type: 'test'
+      ...
+    # Subtest: different riders have separate caps
+    ok 3 - different riders have separate caps
+      ---
+      duration_ms: 0.0715
+      type: 'test'
+      ...
+    # Subtest: rider.id required with a ledger
+    ok 4 - rider.id required with a ledger
+      ---
+      duration_ms: 0.205333
+      type: 'test'
+      ...
+    1..4
+ok 8 - day cap inside quote
+  ---
+  duration_ms: 0.585
+  type: 'suite'
+  ...
+# Subtest: validation
+    # Subtest: missing ride
+    ok 1 - missing ride
+      ---
+      duration_ms: 0.074292
+      type: 'test'
+      ...
+    # Subtest: unknown rider type
+    ok 2 - unknown rider type
+      ---
+      duration_ms: 0.07125
+      type: 'test'
+      ...
+    # Subtest: unknown bike
+    ok 3 - unknown bike
+      ---
+      duration_ms: 0.047125
+      type: 'test'
+      ...
+    # Subtest: unknown station
+    ok 4 - unknown station
+      ---
+      duration_ms: 0.073209
+      type: 'test'
+      ...
+    # Subtest: return before pickup
+    ok 5 - return before pickup
+      ---
+      duration_ms: 0.052333
+      type: 'test'
+      ...
+    # Subtest: timestamps without offset are rejected
+    ok 6 - timestamps without offset are rejected
+      ---
+      duration_ms: 0.133167
+      type: 'test'
+      ...
+    # Subtest: syntactically valid but impossible date is rejected
+    ok 7 - syntactically valid but impossible date is rejected
+      ---
+      duration_ms: 0.045459
+      type: 'test'
+      ...
+    # Subtest: inherited property names are not bike types
+    ok 8 - inherited property names are not bike types
+      ---
+      duration_ms: 0.1105
+      type: 'test'
+      ...
+    1..8
+ok 9 - validation
+  ---
+  duration_ms: 1.013875
+  type: 'suite'
+  ...
+# Subtest: discount()
+    # Subtest: rounds the amount left to pay down to the kopeck
+    ok 1 - rounds the amount left to pay down to the kopeck
+      ---
+      duration_ms: 0.04825
+      type: 'test'
+      ...
+    # Subtest: 0% and 100%
+    ok 2 - 0% and 100%
+      ---
+      duration_ms: 0.028542
+      type: 'test'
+      ...
+    1..2
+ok 10 - discount()
+  ---
+  duration_ms: 0.110042
+  type: 'suite'
+  ...
+1..10
+# tests 46
+# suites 10
+# pass 40
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 86.199375

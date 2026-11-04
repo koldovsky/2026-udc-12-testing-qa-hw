@@ -1,0 +1,356 @@
+TAP version 13
+# Subtest: dayKey
+    # Subtest: returns YYYY-MM-DD for ms and ISO input
+    ok 1 - returns YYYY-MM-DD for ms and ISO input
+      ---
+      duration_ms: 1.123375
+      type: 'test'
+      ...
+    # Subtest: uses the UTC date (current behaviour)
+    ok 2 - uses the UTC date (current behaviour)
+      ---
+      duration_ms: 0.063875
+      type: 'test'
+      ...
+    1..2
+ok 1 - dayKey
+  ---
+  duration_ms: 2.096125
+  type: 'suite'
+  ...
+# Subtest: createDayCap
+    # Subtest: default limit is DAY_CAP = 30000
+    ok 1 - default limit is DAY_CAP = 30000
+      ---
+      duration_ms: 0.234292
+      type: 'test'
+      ...
+    # Subtest: custom limit
+    ok 2 - custom limit
+      ---
+      duration_ms: 0.067625
+      type: 'test'
+      ...
+    # Subtest: record reduces remaining and accumulates
+    ok 3 - record reduces remaining and accumulates
+      ---
+      duration_ms: 0.15025
+      type: 'test'
+      ...
+    # Subtest: remaining never goes below zero
+    ok 4 - remaining never goes below zero
+      ---
+      duration_ms: 0.058292
+      type: 'test'
+      ...
+    # Subtest: separate by rider and by day
+    ok 5 - separate by rider and by day
+      ---
+      duration_ms: 0.189417
+      type: 'test'
+      ...
+    # Subtest: chargedOn for unknown rider is 0
+    ok 6 - chargedOn for unknown rider is 0
+      ---
+      duration_ms: 0.219125
+      type: 'test'
+      ...
+    # Subtest: ledgers are independent
+    ok 7 - ledgers are independent
+      ---
+      duration_ms: 0.1765
+      type: 'test'
+      ...
+    1..7
+ok 2 - createDayCap
+  ---
+  duration_ms: 1.464292
+  type: 'suite'
+  ...
+# Subtest: time charge (blocks of 30 minutes)
+    # Subtest: 0 and 1 minute are free
+    ok 1 - 0 and 1 minute are free
+      ---
+      duration_ms: 0.738625
+      type: 'test'
+      ...
+    # Subtest: 2 minutes is one block
+    ok 2 - 2 minutes is one block
+      ---
+      duration_ms: 0.121709
+      type: 'test'
+      ...
+    # Subtest: 30 minutes is one block, 31 is two
+    ok 3 - 30 minutes is one block, 31 is two
+      ---
+      duration_ms: 0.141458
+      type: 'test'
+      ...
+    # Subtest: ebike rate
+    ok 4 - ebike rate
+      ---
+      duration_ms: 0.069667
+      type: 'test'
+      ...
+    # Subtest: minutes are rounded to the nearest minute
+    ok 5 - minutes are rounded to the nearest minute
+      ---
+      duration_ms: 0.136333
+      type: 'test'
+      ...
+    # Subtest: result shape for a plain ride
+    ok 6 - result shape for a plain ride
+      ---
+      duration_ms: 0.4455
+      type: 'test'
+      ...
+    # Subtest: offset timestamps are accepted
+    ok 7 - offset timestamps are accepted
+      ---
+      duration_ms: 0.072292
+      type: 'test'
+      ...
+    1..7
+ok 3 - time charge (blocks of 30 minutes)
+  ---
+  duration_ms: 2.241958
+  type: 'suite'
+  ...
+# Subtest: subscription
+    # Subtest: first 45 minutes free on classic
+    ok 1 - first 45 minutes free on classic
+      ---
+      duration_ms: 0.728292
+      type: 'test'
+      ...
+    # Subtest: 46 minutes: one paid block after free 45
+    ok 2 - 46 minutes: one paid block after free 45
+      ---
+      duration_ms: 0.21125
+      type: 'test'
+      ...
+    # Subtest: ebike: 20% off the paid blocks
+    ok 3 - ebike: 20% off the paid blocks
+      ---
+      duration_ms: 0.259708
+      type: 'test'
+      ...
+    1..3
+ok 4 - subscription
+  ---
+  duration_ms: 1.430375
+  type: 'suite'
+  ...
+# Subtest: reduced fare
+    # Subtest: 50% off time charge
+    ok 1 - 50% off time charge
+      ---
+      duration_ms: 0.118875
+      type: 'test'
+      ...
+    # Subtest: subscriber with concession gets the cheaper plan
+    ok 2 - subscriber with concession gets the cheaper plan
+      ---
+      duration_ms: 0.079875
+      type: 'test'
+      ...
+    # Subtest: concession on a non-subscriber standard rider is ignored
+    ok 3 - concession on a non-subscriber standard rider is ignored
+      ---
+      duration_ms: 0.0405
+      type: 'test'
+      ...
+    # Subtest: concession must be strictly true
+    ok 4 - concession must be strictly true
+      ---
+      duration_ms: 0.048833
+      type: 'test'
+      ...
+    1..4
+ok 5 - reduced fare
+  ---
+  duration_ms: 0.340292
+  type: 'suite'
+  ...
+# Subtest: night discount
+    # Subtest: pickup before 06:00 Kyiv gets 30% off
+    ok 1 - pickup before 06:00 Kyiv gets 30% off
+      ---
+      duration_ms: 0.060583
+      type: 'test'
+      ...
+    # Subtest: pickup at 06:00 Kyiv has no night discount
+    ok 2 - pickup at 06:00 Kyiv has no night discount
+      ---
+      duration_ms: 0.081542
+      type: 'test'
+      ...
+    # Subtest: night discount applies after reduced fare
+    ok 3 - night discount applies after reduced fare
+      ---
+      duration_ms: 0.04525
+      type: 'test'
+      ...
+    # Subtest: no night entry when nothing is due
+    ok 4 - no night entry when nothing is due
+      ---
+      duration_ms: 0.040083
+      type: 'test'
+      ...
+    1..4
+ok 6 - night discount
+  ---
+  duration_ms: 0.276333
+  type: 'suite'
+  ...
+# Subtest: fees
+    # Subtest: out-of-zone return adds a fee
+    ok 1 - out-of-zone return adds a fee
+      ---
+      duration_ms: 0.079292
+      type: 'test'
+      ...
+    # Subtest: ride over 24h adds unreturned fee; exactly 24h does not
+    ok 2 - ride over 24h adds unreturned fee; exactly 24h does not
+      ---
+      duration_ms: 0.054833
+      type: 'test'
+      ...
+    # Subtest: reduced plan halves fees
+    ok 3 - reduced plan halves fees
+      ---
+      duration_ms: 0.042542
+      type: 'test'
+      ...
+    # Subtest: fees are not capped by the day cap
+    ok 4 - fees are not capped by the day cap
+      ---
+      duration_ms: 0.041375
+      type: 'test'
+      ...
+    # Subtest: custom zones option is used
+    ok 5 - custom zones option is used
+      ---
+      duration_ms: 0.045083
+      type: 'test'
+      ...
+    1..5
+ok 7 - fees
+  ---
+  duration_ms: 0.318917
+  type: 'suite'
+  ...
+# Subtest: day cap inside quote
+    # Subtest: without ledger, a single ride is capped at DAY_CAP
+    ok 1 - without ledger, a single ride is capped at DAY_CAP
+      ---
+      duration_ms: 0.055458
+      type: 'test'
+      ...
+    # Subtest: ledger accumulates across rides of the same rider and day
+    ok 2 - ledger accumulates across rides of the same rider and day
+      ---
+      duration_ms: 0.136667
+      type: 'test'
+      ...
+    # Subtest: different riders have separate caps
+    ok 3 - different riders have separate caps
+      ---
+      duration_ms: 0.055208
+      type: 'test'
+      ...
+    # Subtest: rider.id required with a ledger
+    ok 4 - rider.id required with a ledger
+      ---
+      duration_ms: 0.190041
+      type: 'test'
+      ...
+    1..4
+ok 8 - day cap inside quote
+  ---
+  duration_ms: 0.481792
+  type: 'suite'
+  ...
+# Subtest: validation
+    # Subtest: missing ride
+    ok 1 - missing ride
+      ---
+      duration_ms: 0.064042
+      type: 'test'
+      ...
+    # Subtest: unknown rider type
+    ok 2 - unknown rider type
+      ---
+      duration_ms: 0.062916
+      type: 'test'
+      ...
+    # Subtest: unknown bike
+    ok 3 - unknown bike
+      ---
+      duration_ms: 0.045709
+      type: 'test'
+      ...
+    # Subtest: unknown station
+    ok 4 - unknown station
+      ---
+      duration_ms: 0.041583
+      type: 'test'
+      ...
+    # Subtest: return before pickup
+    ok 5 - return before pickup
+      ---
+      duration_ms: 0.039541
+      type: 'test'
+      ...
+    # Subtest: timestamps without offset are rejected
+    ok 6 - timestamps without offset are rejected
+      ---
+      duration_ms: 0.119541
+      type: 'test'
+      ...
+    # Subtest: syntactically valid but impossible date is rejected
+    ok 7 - syntactically valid but impossible date is rejected
+      ---
+      duration_ms: 0.040625
+      type: 'test'
+      ...
+    # Subtest: inherited property names are not bike types
+    ok 8 - inherited property names are not bike types
+      ---
+      duration_ms: 0.077875
+      type: 'test'
+      ...
+    1..8
+ok 9 - validation
+  ---
+  duration_ms: 0.881417
+  type: 'suite'
+  ...
+# Subtest: discount()
+    # Subtest: rounds the amount left to pay down to the kopeck
+    ok 1 - rounds the amount left to pay down to the kopeck
+      ---
+      duration_ms: 0.039417
+      type: 'test'
+      ...
+    # Subtest: 0% and 100%
+    ok 2 - 0% and 100%
+      ---
+      duration_ms: 0.025458
+      type: 'test'
+      ...
+    1..2
+ok 10 - discount()
+  ---
+  duration_ms: 0.093416
+  type: 'suite'
+  ...
+1..10
+# tests 46
+# suites 10
+# pass 46
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 109.925292
