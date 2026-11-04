@@ -1,0 +1,42 @@
+diff --git a/app/test/unit/day-cap.test.js b/app/test/unit/day-cap.test.js
+index 817aaf4..99932db 100644
+--- a/app/test/unit/day-cap.test.js
++++ b/app/test/unit/day-cap.test.js
+@@ -11,3 +11,13 @@ test("charges recorded for a day reduce what is left of the cap", () => {
+ test("the day of a ride is the date of its pickup", () => {
+   assert.equal(dayKey("2026-09-16T08:00:00Z"), "2026-09-16");
+ });
++
++test("the ledger keeps the exact sum per rider and day, and 0 for an unknown rider or day", () => {
++  const ledger = createDayCap();
++  ledger.record("rider-1", "2026-09-16T08:00:00Z", 12000);
++  ledger.record("rider-1", "2026-09-16T12:00:00Z", 5000);
++  assert.equal(ledger.chargedOn("rider-1", "2026-09-16"), 17000);
++  assert.equal(ledger.remaining("rider-1", "2026-09-16T15:00:00Z"), DAY_CAP - 17000);
++  assert.equal(ledger.chargedOn("rider-2", "2026-09-16"), 0);
++  assert.equal(ledger.chargedOn("rider-1", "2026-09-17"), 0);
++});
+diff --git a/app/test/unit/tariff.test.js b/app/test/unit/tariff.test.js
+index afce2e0..f40b3ee 100644
+--- a/app/test/unit/tariff.test.js
++++ b/app/test/unit/tariff.test.js
+@@ -86,3 +86,19 @@ test("a 45-minute classic ride costs 50 UAH", () => {
+ test("a return before the pickup is rejected", () => {
+   assert.throws(() => quote(ride("2026-09-16T08:00:00Z", "2026-09-16T07:00:00Z"), standard), QuoteError);
+ });
++
++test("a free night ride (≤ 2 min) gets no night discount line (T2, T10)", () => {
++  const result = quote(ride("2026-09-16T01:00:00+03:00", "2026-09-16T01:01:00+03:00"), standard);
++  assert.equal(result.total, 0);
++  assert.deepEqual(result.discounts, []);
++});
++
++test("a missing ride (null) is rejected with a QuoteError", () => {
++  assert.throws(() => quote(null, standard), QuoteError);
++});
++
++test("a date-time that is not a string is rejected even if it looks like ISO 8601 when stringified", () => {
++  const iso = "2026-09-16T07:00:00Z";
++  assert.throws(() => quote(ride([iso], "2026-09-16T07:20:00Z"), standard), QuoteError);
++  assert.throws(() => quote(ride(iso, ["2026-09-16T07:20:00Z"]), standard), QuoteError);
++});

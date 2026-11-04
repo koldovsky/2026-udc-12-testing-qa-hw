@@ -1,0 +1,45 @@
+diff --git a/app/test/integration/receipt.test.js b/app/test/integration/receipt.test.js
+index 6c2335e..48db231 100644
+--- a/app/test/integration/receipt.test.js
++++ b/app/test/integration/receipt.test.js
+@@ -3,16 +3,36 @@ import test from "node:test";
+ import assert from "node:assert/strict";
+ import { formatReceipt } from "../../src/receipt.js";
+ import { quote } from "../../src/tariff.js";
+-import { randomRider, randomRides } from "../helpers/factory.js";
++import { randomRider } from "../helpers/factory.js";
+ 
+ const PRICE = { classic: 2500, ebike: 4000 };
+ const uah = (kopecks) => `${(kopecks / 100).toFixed(2).replace(".", ",")} грн`;
+ 
++// Fixed rides, daytime in Kyiv, in zone; durations sit on and around the 30-minute block edges.
++const WEEK_OF_RIDES = [
++  { pickupAt: "2026-09-21T06:12:00Z", minutes: 5, bike: "classic" },
++  { pickupAt: "2026-09-21T06:12:00Z", minutes: 29, bike: "classic" },
++  { pickupAt: "2026-09-21T06:12:00Z", minutes: 30, bike: "classic" },
++  { pickupAt: "2026-09-22T09:40:00Z", minutes: 31, bike: "classic" },
++  { pickupAt: "2026-09-21T15:09:00Z", minutes: 60, bike: "classic" },
++  { pickupAt: "2026-09-23T13:05:00Z", minutes: 61, bike: "classic" },
++  { pickupAt: "2026-09-21T11:17:00Z", minutes: 30, bike: "ebike" },
++  { pickupAt: "2026-09-24T08:30:00Z", minutes: 59, bike: "ebike" },
++  { pickupAt: "2026-09-25T12:00:00Z", minutes: 60, bike: "ebike" },
++  { pickupAt: "2026-09-26T14:45:00Z", minutes: 89, bike: "ebike" },
++].map(({ pickupAt, minutes, bike }) => ({
++  pickupAt,
++  returnAt: new Date(Date.parse(pickupAt) + minutes * 60_000).toISOString(),
++  bike,
++  returnStation: "S01",
++}));
++
+ test("every receipt of a week of rides ends with the amount due", () => {
+-  const rider = randomRider();
+-  for (const ride of randomRides(10)) {
++  const rider = { id: "rider-1", type: "standard" };
++  for (const ride of WEEK_OF_RIDES) {
+     const minutes = (Date.parse(ride.returnAt) - Date.parse(ride.pickupAt)) / 60_000;
+-    const expected = (Math.floor(minutes / 30) + 1) * PRICE[ride.bike];
++    // T3: every started 30-minute block is charged.
++    const expected = Math.ceil(minutes / 30) * PRICE[ride.bike];
+ 
+     const lines = formatReceipt(quote(ride, rider));
+ 

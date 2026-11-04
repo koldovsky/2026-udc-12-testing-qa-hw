@@ -3,26 +3,39 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { formatReceipt } from "../../src/receipt.js";
 import { quote } from "../../src/tariff.js";
-import { randomRider, randomRides } from "../helpers/factory.js";
+import { randomRider } from "../helpers/factory.js";
 
-const PRICE = { classic: 2500, ebike: 4000 };
-const uah = (kopecks) => `${(kopecks / 100).toFixed(2).replace(".", ",")} грн`;
+// A fixed week of daytime rides (Kyiv time, no night discount) of a standard rider.
+// Durations sit on both sides of the 30-minute block boundary; amounts are T3 by hand:
+// every started 30 minutes is a block of 25 / 40 UAH (docs/spec/tariffs.md:62-70).
+const WEEK = [
+  { day: "21", bike: "classic", minutes: 5, due: "25,00 грн" },
+  { day: "21", bike: "classic", minutes: 30, due: "25,00 грн" },
+  { day: "22", bike: "classic", minutes: 31, due: "50,00 грн" },
+  { day: "22", bike: "classic", minutes: 50, due: "50,00 грн" },
+  { day: "23", bike: "classic", minutes: 60, due: "50,00 грн" },
+  { day: "24", bike: "classic", minutes: 61, due: "75,00 грн" },
+  { day: "25", bike: "ebike", minutes: 29, due: "40,00 грн" },
+  { day: "25", bike: "ebike", minutes: 30, due: "40,00 грн" },
+  { day: "26", bike: "ebike", minutes: 75, due: "120,00 грн" },
+  { day: "27", bike: "ebike", minutes: 89, due: "120,00 грн" },
+];
 
-test("every receipt of a week of rides ends with the amount due", () => {
-  const rider = randomRider();
-  for (const ride of randomRides(10)) {
-    const minutes = (Date.parse(ride.returnAt) - Date.parse(ride.pickupAt)) / 60_000;
-    const expected = (Math.floor(minutes / 30) + 1) * PRICE[ride.bike];
+for (const { day, bike, minutes, due } of WEEK) {
+  test(`every receipt of a week of rides ends with the amount due: ${bike}, ${minutes} min → ${due}`, () => {
+    const pickup = Date.parse(`2026-09-${day}T10:00:00+03:00`);
+    const ride = {
+      pickupAt: new Date(pickup).toISOString(),
+      returnAt: new Date(pickup + minutes * 60_000).toISOString(),
+      bike,
+      returnStation: "S03",
+    };
 
-    const lines = formatReceipt(quote(ride, rider));
+    const lines = formatReceipt(quote(ride, { id: "rider-1", type: "standard" }));
 
-    assert.ok(lines.at(-1).startsWith("До сплати "));
-    assert.ok(
-      lines.at(-1).endsWith(` ${uah(expected)}`),
-      `${ride.bike}, ${minutes} min from ${ride.pickupAt}: got "${lines.at(-1)}", expected ${uah(expected)}`,
-    );
-  }
-});
+    assert.match(lines.at(-1), new RegExp(`^До сплати \\.+ ${due}$`));
+  });
+}
 
 test("a receipt lists the fee for a return outside the zone", () => {
   const ride = {
