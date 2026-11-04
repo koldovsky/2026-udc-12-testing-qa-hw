@@ -86,3 +86,24 @@ test("a 45-minute classic ride costs 50 UAH", () => {
 test("a return before the pickup is rejected", () => {
   assert.throws(() => quote(ride("2026-09-16T08:00:00Z", "2026-09-16T07:00:00Z"), standard), QuoteError);
 });
+
+test("a free night ride (≤ 2 min) gets no night discount line (T2, T10)", () => {
+  const result = quote(ride("2026-09-16T01:00:00+03:00", "2026-09-16T01:01:00+03:00"), standard);
+  assert.equal(result.total, 0);
+  assert.deepEqual(result.discounts, []);
+});
+
+test("a missing ride (null) is rejected with a QuoteError", () => {
+  assert.throws(() => quote(null, standard), QuoteError);
+});
+
+test("a date-time that is not a string is rejected even if it looks like ISO 8601 when stringified", () => {
+  const iso = "2026-09-16T07:00:00Z";
+  assert.throws(() => quote(ride([iso], "2026-09-16T07:20:00Z"), standard), QuoteError);
+  assert.throws(() => quote(ride(iso, ["2026-09-16T07:20:00Z"]), standard), QuoteError);
+});
+
+test("a date-time without Z or an offset is rejected: it is not an instant (input contract, tariff.js:5)", () => {
+  assert.throws(() => quote(ride("2026-09-16T10:00:00", "2026-09-16T10:20:00Z"), standard), QuoteError);
+  assert.throws(() => quote(ride("2026-09-16T10:00:00Z", "2026-09-16T10:20:00"), standard), QuoteError);
+});
