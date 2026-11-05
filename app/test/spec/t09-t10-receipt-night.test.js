@@ -14,7 +14,9 @@ test("T9: TC-46 30 % off 1235 kopecks → 864 to pay, discount 371", () => {
 // thousands («2 300,00 грн»), a minus sign on discounts and the cap, a line per item, the last line «До сплати».
 // The spec fixes the amounts, the sign, the order of items and the «До сплати» label — not the other labels or the
 // dot leader, so each line is matched whole: <label> <dots> <exact amount>, nothing after it.
-const line = (amount, label = "[^.\\d]+?") => new RegExp(`^${label} \\.{3,} ${amount.replace(/\s/g, "\\s")}$`);
+// The amount is matched literally: it holds only digits, plain spaces, a comma and a minus — no regex metacharacters,
+// so a tab or a non-breaking space instead of the thousands space does not match.
+const line = (amount, label = "[^.\\d]+?") => new RegExp(`^${label} \\.{3,} ${amount}$`);
 
 // :124-125, :133-135 — 25 h: duration 1500 min, T3 1250 грн, cap −950 грн, T8 fee 2000 грн, due 2300 грн.
 test("T9: TC-47 receipt for a 25 h ride: the last line is «До сплати» ending with `2 300,00 грн`", () => {
