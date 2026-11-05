@@ -1,0 +1,600 @@
+TAP version 13
+# Subtest: DAY_CAP / dayKey
+    # Subtest: default cap is 30000 kopecks
+    ok 1 - default cap is 30000 kopecks
+      ---
+      duration_ms: 0.4044
+      ...
+    # Subtest: dayKey returns YYYY-MM-DD for an ISO string, Date and epoch ms
+    ok 2 - dayKey returns YYYY-MM-DD for an ISO string, Date and epoch ms
+      ---
+      duration_ms: 0.2538
+      ...
+    # Subtest: dayKey gives the same key for instants on the same day
+    not ok 3 - dayKey gives the same key for instants on the same day
+      ---
+      duration_ms: 0.707
+      location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\day-cap.test.js:17:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+        
+        + '2026-01-15'
+        - '2026-01-16'
+                    ^
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: '2026-01-16'
+      actual: '2026-01-15'
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///D:/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/Courses/AI_courses/12%20%D0%A2%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20QA%20%D0%B7%20AI/Homework12/dev/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:18:12)
+        Test.runInAsyncScope (node:async_hooks:211:14)
+        Test.run (node:internal/test_runner/test:979:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:677:18)
+        Test.postRun (node:internal/test_runner/test:1090:19)
+        Test.run (node:internal/test_runner/test:1018:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:677:7)
+      ...
+    1..3
+not ok 1 - DAY_CAP / dayKey
+  ---
+  duration_ms: 2.0337
+  type: 'suite'
+  location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\day-cap.test.js:5:1'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: createDayCap
+    # Subtest: exposes the default limit and accepts a custom one
+    ok 1 - exposes the default limit and accepts a custom one
+      ---
+      duration_ms: 0.2428
+      ...
+    # Subtest: a fresh ledger has the full limit remaining and nothing charged
+    ok 2 - a fresh ledger has the full limit remaining and nothing charged
+      ---
+      duration_ms: 0.1378
+      ...
+    # Subtest: record reduces remaining and accumulates in chargedOn
+    ok 3 - record reduces remaining and accumulates in chargedOn
+      ---
+      duration_ms: 0.13
+      ...
+    # Subtest: remaining never goes below zero when overbooked
+    ok 4 - remaining never goes below zero when overbooked
+      ---
+      duration_ms: 0.1845
+      ...
+    # Subtest: riders are tracked independently
+    ok 5 - riders are tracked independently
+      ---
+      duration_ms: 0.1888
+      ...
+    # Subtest: days are tracked independently
+    ok 6 - days are tracked independently
+      ---
+      duration_ms: 0.1839
+      ...
+    # Subtest: ledgers are independent of each other
+    ok 7 - ledgers are independent of each other
+      ---
+      duration_ms: 0.1872
+      ...
+    # Subtest: recording zero leaves remaining unchanged
+    ok 8 - recording zero leaves remaining unchanged
+      ---
+      duration_ms: 0.0845
+      ...
+    1..8
+ok 2 - createDayCap
+  ---
+  duration_ms: 1.6572
+  type: 'suite'
+  ...
+# Subtest: discount()
+    # Subtest: percent off, remainder rounded down to the kopeck (discount rounds up)
+    ok 1 - percent off, remainder rounded down to the kopeck (discount rounds up)
+      ---
+      duration_ms: 0.3965
+      ...
+    # Subtest: 0% and 100%
+    ok 2 - 0% and 100%
+      ---
+      duration_ms: 0.0698
+      ...
+    1..2
+ok 3 - discount()
+  ---
+  duration_ms: 1.0163
+  type: 'suite'
+  ...
+# Subtest: time charge
+    # Subtest: rides shorter than 2 minutes are free
+    ok 1 - rides shorter than 2 minutes are free
+      ---
+      duration_ms: 0.8597
+      ...
+    # Subtest: 2 minutes is already a full block
+    not ok 2 - 2 minutes is already a full block
+      ---
+      duration_ms: 0.7213
+      location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:38:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        
+        0 !== 2500
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 2500
+      actual: 0
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///D:/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/Courses/AI_courses/12%20%D0%A2%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20QA%20%D0%B7%20AI/Homework12/dev/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:39:12)
+        Test.runInAsyncScope (node:async_hooks:211:14)
+        Test.run (node:internal/test_runner/test:979:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:677:18)
+        Test.postRun (node:internal/test_runner/test:1090:19)
+        Test.run (node:internal/test_runner/test:1018:12)
+        async Promise.all (index 0)
+        async Suite.run (node:internal/test_runner/test:1358:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+      ...
+    # Subtest: block boundaries: 30 min = 1 block, 31 min = 2 blocks
+    ok 3 - block boundaries: 30 min = 1 block, 31 min = 2 blocks
+      ---
+      duration_ms: 0.3407
+      ...
+    # Subtest: ebike uses its own rate
+    ok 4 - ebike uses its own rate
+      ---
+      duration_ms: 0.0975
+      ...
+    # Subtest: result shape for a plain ride
+    ok 5 - result shape for a plain ride
+      ---
+      duration_ms: 0.5839
+      ...
+    # Subtest: seconds are rounded to the nearest minute
+    not ok 6 - seconds are rounded to the nearest minute
+      ---
+      duration_ms: 0.3465
+      location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:65:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        
+        30 !== 29
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 29
+      actual: 30
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///D:/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/Courses/AI_courses/12%20%D0%A2%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20QA%20%D0%B7%20AI/Homework12/dev/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:73:12)
+        Test.runInAsyncScope (node:async_hooks:211:14)
+        Test.run (node:internal/test_runner/test:979:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:677:18)
+        Test.postRun (node:internal/test_runner/test:1090:19)
+        Test.run (node:internal/test_runner/test:1018:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:677:7)
+      ...
+    # Subtest: offsets are honoured: same instant in different offsets
+    ok 7 - offsets are honoured: same instant in different offsets
+      ---
+      duration_ms: 0.181
+      ...
+    1..7
+not ok 4 - time charge
+  ---
+  duration_ms: 3.5349
+  type: 'suite'
+  location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:29:1'
+  failureType: 'subtestsFailed'
+  error: '2 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: reduced fare
+    # Subtest: 50% off the time charge
+    ok 1 - 50% off the time charge
+      ---
+      duration_ms: 0.1717
+      ...
+    # Subtest: odd amounts: what is left is rounded down
+    ok 2 - odd amounts: what is left is rounded down
+      ---
+      duration_ms: 0.0703
+      ...
+    # Subtest: free ride adds no discount entry
+    ok 3 - free ride adds no discount entry
+      ---
+      duration_ms: 0.0449
+      ...
+    1..3
+ok 5 - reduced fare
+  ---
+  duration_ms: 0.3651
+  type: 'suite'
+  ...
+# Subtest: subscription
+    # Subtest: first 45 minutes are free
+    ok 1 - first 45 minutes are free
+      ---
+      duration_ms: 0.1593
+      ...
+    # Subtest: 46 minutes: one billable block
+    ok 2 - 46 minutes: one billable block
+      ---
+      duration_ms: 0.1207
+      ...
+    # Subtest: ebike gets an extra 20% off the billable part
+    not ok 3 - ebike gets an extra 20% off the billable part
+      ---
+      duration_ms: 0.5317
+      location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:123:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly deep-equal:
+        + actual - expected
+        
+          [
+            {
+        +     amount: 2400,
+        -     amount: 5600,
+              code: 'subscription'
+            }
+          ]
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+        0:
+          code: 'subscription'
+          amount: 5600
+      actual:
+        0:
+          code: 'subscription'
+          amount: 2400
+      operator: 'deepStrictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///D:/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/Courses/AI_courses/12%20%D0%A2%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20QA%20%D0%B7%20AI/Homework12/dev/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:126:12)
+        Test.runInAsyncScope (node:async_hooks:211:14)
+        Test.run (node:internal/test_runner/test:979:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:677:18)
+        Test.postRun (node:internal/test_runner/test:1090:19)
+        Test.run (node:internal/test_runner/test:1018:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:677:7)
+      ...
+    # Subtest: subscriber without concession does not get the reduced fare
+    ok 4 - subscriber without concession does not get the reduced fare
+      ---
+      duration_ms: 0.0858
+      ...
+    # Subtest: concession: the cheaper of subscription and reduced is applied, not both
+    ok 5 - concession: the cheaper of subscription and reduced is applied, not both
+      ---
+      duration_ms: 0.0807
+      ...
+    # Subtest: concession: subscription wins when it is cheaper
+    ok 6 - concession: subscription wins when it is cheaper
+      ---
+      duration_ms: 0.0506
+      ...
+    # Subtest: concession flag is ignored for standard riders
+    ok 7 - concession flag is ignored for standard riders
+      ---
+      duration_ms: 0.0454
+      ...
+    1..7
+not ok 6 - subscription
+  ---
+  duration_ms: 1.1818
+  type: 'suite'
+  location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:106:1'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: night discount
+    # Subtest: 30% off for pickups before 06:00 Kyiv time
+    ok 1 - 30% off for pickups before 06:00 Kyiv time
+      ---
+      duration_ms: 0.6686
+      ...
+    # Subtest: 05:59 is night, 06:00 is not
+    ok 2 - 05:59 is night, 06:00 is not
+      ---
+      duration_ms: 0.1506
+      ...
+    # Subtest: uses Kyiv wall-clock regardless of the offset in the string (winter)
+    ok 3 - uses Kyiv wall-clock regardless of the offset in the string (winter)
+      ---
+      duration_ms: 0.0894
+      ...
+    # Subtest: uses Kyiv summer time (UTC+3)
+    ok 4 - uses Kyiv summer time (UTC+3)
+      ---
+      duration_ms: 0.0693
+      ...
+    # Subtest: no night entry on a free ride
+    ok 5 - no night entry on a free ride
+      ---
+      duration_ms: 0.0425
+      ...
+    # Subtest: no night entry when subscription already makes it free
+    ok 6 - no night entry when subscription already makes it free
+      ---
+      duration_ms: 0.0584
+      ...
+    # Subtest: night applies after the plan discount
+    ok 7 - night applies after the plan discount
+      ---
+      duration_ms: 0.051
+      ...
+    1..7
+ok 7 - night discount
+  ---
+  duration_ms: 1.2356
+  type: 'suite'
+  ...
+# Subtest: fees
+    # Subtest: out-of-zone return adds 15000
+    ok 1 - out-of-zone return adds 15000
+      ---
+      duration_ms: 0.106
+      ...
+    # Subtest: out-of-zone fee applies even to a free ride
+    ok 2 - out-of-zone fee applies even to a free ride
+      ---
+      duration_ms: 0.0374
+      ...
+    # Subtest: reduced fare halves fees too
+    not ok 3 - reduced fare halves fees too
+      ---
+      duration_ms: 0.4962
+      location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:213:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly deep-equal:
+        + actual - expected
+        
+          [
+            {
+        +     amount: 15000,
+        -     amount: 7500,
+              code: 'out-of-zone'
+            }
+          ]
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+        0:
+          code: 'out-of-zone'
+          amount: 7500
+      actual:
+        0:
+          code: 'out-of-zone'
+          amount: 15000
+      operator: 'deepStrictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///D:/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/Courses/AI_courses/12%20%D0%A2%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20QA%20%D0%B7%20AI/Homework12/dev/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:215:12)
+        Test.runInAsyncScope (node:async_hooks:211:14)
+        Test.run (node:internal/test_runner/test:979:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:677:18)
+        Test.postRun (node:internal/test_runner/test:1090:19)
+        Test.run (node:internal/test_runner/test:1018:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:677:7)
+      ...
+    # Subtest: subscription does not reduce fees
+    ok 4 - subscription does not reduce fees
+      ---
+      duration_ms: 0.08
+      ...
+    # Subtest: unreturned fee only above 24 h (1440 min exactly is fine)
+    ok 5 - unreturned fee only above 24 h (1440 min exactly is fine)
+      ---
+      duration_ms: 0.1606
+      ...
+    # Subtest: unreturned fee is not subject to the day cap; time charge is
+    ok 6 - unreturned fee is not subject to the day cap; time charge is
+      ---
+      duration_ms: 0.0667
+      ...
+    # Subtest: both fees together, halved for reduced
+    not ok 7 - both fees together, halved for reduced
+      ---
+      duration_ms: 0.2517
+      location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:237:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly deep-equal:
+        + actual - expected
+        
+          [
+            {
+        +     amount: 15000,
+        -     amount: 7500,
+              code: 'out-of-zone'
+            },
+            {
+        +     amount: 200000,
+        -     amount: 100000,
+              code: 'unreturned'
+            }
+          ]
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+        0:
+          code: 'out-of-zone'
+          amount: 7500
+        1:
+          code: 'unreturned'
+          amount: 100000
+      actual:
+        0:
+          code: 'out-of-zone'
+          amount: 15000
+        1:
+          code: 'unreturned'
+          amount: 200000
+      operator: 'deepStrictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///D:/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/Courses/AI_courses/12%20%D0%A2%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20QA%20%D0%B7%20AI/Homework12/dev/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:239:12)
+        Test.runInAsyncScope (node:async_hooks:211:14)
+        Test.run (node:internal/test_runner/test:979:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:677:18)
+        Test.postRun (node:internal/test_runner/test:1090:19)
+        Test.run (node:internal/test_runner/test:1018:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:677:7)
+      ...
+    1..7
+not ok 8 - fees
+  ---
+  duration_ms: 1.3046
+  type: 'suite'
+  location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:202:1'
+  failureType: 'subtestsFailed'
+  error: '2 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: daily cap without a ledger
+    # Subtest: time charge is capped at 30000
+    ok 1 - time charge is capped at 30000
+      ---
+      duration_ms: 0.1075
+      ...
+    # Subtest: rider.id is not required without a ledger
+    ok 2 - rider.id is not required without a ledger
+      ---
+      duration_ms: 0.1333
+      ...
+    1..2
+ok 9 - daily cap without a ledger
+  ---
+  duration_ms: 0.2871
+  type: 'suite'
+  ...
+# Subtest: daily cap with a ledger
+    # Subtest: rider.id is required
+    ok 1 - rider.id is required
+      ---
+      duration_ms: 0.3076
+      ...
+    # Subtest: second ride the same day is billed only up to the remainder
+    ok 2 - second ride the same day is billed only up to the remainder
+      ---
+      duration_ms: 0.177
+      ...
+    # Subtest: books the discounted amount, not the raw time charge
+    ok 3 - books the discounted amount, not the raw time charge
+      ---
+      duration_ms: 0.0621
+      ...
+    # Subtest: another rider and another day are unaffected
+    ok 4 - another rider and another day are unaffected
+      ---
+      duration_ms: 0.0909
+      ...
+    # Subtest: fees are not booked into the cap
+    ok 5 - fees are not booked into the cap
+      ---
+      duration_ms: 0.0508
+      ...
+    # Subtest: a rejected quote does not book anything
+    ok 6 - a rejected quote does not book anything
+      ---
+      duration_ms: 0.0958
+      ...
+    # Subtest: night discount is applied before the cap
+    ok 7 - night discount is applied before the cap
+      ---
+      duration_ms: 0.087
+      ...
+    # Subtest: custom ledger limit
+    ok 8 - custom ledger limit
+      ---
+      duration_ms: 0.0678
+      ...
+    1..8
+ok 10 - daily cap with a ledger
+  ---
+  duration_ms: 1.0388
+  type: 'suite'
+  ...
+# Subtest: custom zones
+    # Subtest: quote uses the supplied zone lookup
+    ok 1 - quote uses the supplied zone lookup
+      ---
+      duration_ms: 0.1038
+      ...
+    1..1
+ok 11 - custom zones
+  ---
+  duration_ms: 0.1469
+  type: 'suite'
+  ...
+# Subtest: validation
+    # Subtest: missing ride
+    ok 1 - missing ride
+      ---
+      duration_ms: 0.1253
+      ...
+    # Subtest: malformed or offset-less timestamps
+    ok 2 - malformed or offset-less timestamps
+      ---
+      duration_ms: 0.1326
+      ...
+    # Subtest: return before pickup
+    ok 3 - return before pickup
+      ---
+      duration_ms: 0.0793
+      ...
+    # Subtest: return equal to pickup is allowed (0 minutes)
+    ok 4 - return equal to pickup is allowed (0 minutes)
+      ---
+      duration_ms: 0.0416
+      ...
+    # Subtest: unknown bike, including inherited property names
+    ok 5 - unknown bike, including inherited property names
+      ---
+      duration_ms: 0.1051
+      ...
+    # Subtest: unknown station
+    ok 6 - unknown station
+      ---
+      duration_ms: 0.0634
+      ...
+    # Subtest: unknown rider type
+    ok 7 - unknown rider type
+      ---
+      duration_ms: 0.0613
+      ...
+    # Subtest: QuoteError is an Error with its own name
+    ok 8 - QuoteError is an Error with its own name
+      ---
+      duration_ms: 0.0798
+      ...
+    1..8
+ok 12 - validation
+  ---
+  duration_ms: 0.798
+  type: 'suite'
+  ...
+1..12
+# tests 63
+# suites 12
+# pass 57
+# fail 6
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 116.2122
