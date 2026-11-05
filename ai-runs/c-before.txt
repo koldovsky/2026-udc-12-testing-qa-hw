@@ -1,0 +1,64 @@
+✔ charges recorded for a day reduce what is left of the cap (6.9049ms)
+✔ the day of a ride is the date of its pickup (0.9135ms)
+✔ amounts are shown in hryvnias (4.5868ms)
+✔ a receipt has a line for every item (1.831ms)
+✔ GET / serves the page and GET /api/health answers (2.9936ms)
+✔ POST /api/quote returns the quote and the receipt (4.6222ms)
+✔ POST /api/quote answers 400 to a body that is not JSON (0.8369ms)
+✔ quote returns an itemised price (6.5486ms)
+✔ a ride of 30 min 20 s is billed as two blocks (2.2782ms)
+✔ e-bikes are billed at the e-bike rate (1.4784ms)
+✔ subscribers ride the first 45 minutes free on a classic bike, not on an e-bike (1.6234ms)
+✔ subscription on a long e-bike ride (0.7035ms)
+✔ reduced fare for a ride returned outside the zone (0.9051ms)
+✔ night rides get 30 % off (0.3974ms)
+✔ a bike kept over a day and left outside the zone pays both fees (0.2197ms)
+✔ the daily cap limits the time charge (1.4548ms)
+✔ a 45-minute classic ride costs 50 UAH (2.1867ms)
+✔ a return before the pickup is rejected (2.9381ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2061.2188
+ℹ start of coverage report
+ℹ --------------------------------------------------------------
+ℹ file          | line % | branch % | funcs % | uncovered lines
+ℹ --------------------------------------------------------------
+ℹ src           |        |          |         | 
+ℹ  day-cap.js   |  96.67 |   100.00 |   83.33 | 27
+ℹ  kyiv-time.js | 100.00 |   100.00 |  100.00 | 
+ℹ  receipt.js   | 100.00 |    75.00 |  100.00 | 
+ℹ  server.js    |  89.61 |    73.91 |   71.43 | 36 39-40 73-77
+ℹ  tariff.js    |  98.53 |    83.33 |  100.00 | 131-132
+ℹ  zones.js     |  96.55 |    75.00 |   66.67 | 24
+ℹ --------------------------------------------------------------
+ℹ all files     |  96.36 |    81.91 |   88.24 | 
+ℹ --------------------------------------------------------------
+ℹ end of coverage report
+Мутаційне тестування
+  цілі:   app/src/tariff.js, app/src/day-cap.js
+  тести:  app/test/unit, app/test/spec — файлів: 7, тестів: 62, пропущено: 0, todo: 0, викликів assert: 51
+
+файл                мутантів     вбито    вижило   таймаут     score
+app/src/tariff.js         76        67         9         0    88.2 %
+app/src/day-cap.js         7         5         2         0    71.4 %
+разом                     83        72        11         0    86.7 %
+
+Вижили (11) — тести не помітили цієї зміни:
+  M009  app/src/tariff.js:25:33     6 → 7                       export const NIGHT_UNTIL_HOUR = 6;
+  M016  app/src/tariff.js:47:21     0 → 1                       if (plan.amount > 0) discounts.push({ code: plan.code, amount: plan...
+  M018  app/src/tariff.js:50:11     > → >=                      if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+  M019  app/src/tariff.js:50:13     0 → 1                       if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+  M021  app/src/tariff.js:50:40     < → <=                      if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+  M023  app/src/tariff.js:57:11     > → >=                      if (due > allowance) {
+  M064  app/src/tariff.js:114:13    || → &&                     if (!ride || typeof ride !== "object") throw new QuoteError("ride i...
+  M066  app/src/tariff.js:117:16    < → <=                      if (returned < pickup) throw new QuoteError("returnAt is before pic...
+  M075  app/src/tariff.js:130:33    || → &&                     if (typeof value !== "string" || !ISO_DATE_TIME.test(value)) {
+  M080  app/src/day-cap.js:20:76    0 → 1                       return Math.max(0, limit - (charged.get(keyOf(riderId, pickupAt)) ?...
+  M083  app/src/day-cap.js:27:50    0 → 1                       return charged.get(`${riderId}|${day}`) ?? 0;
+
+Час: 35.5 с
