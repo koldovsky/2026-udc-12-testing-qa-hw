@@ -25,7 +25,7 @@ const WEEK = [
 const rider = { id: "rider-1001", type: "standard" };
 
 for (const [pickupAt, minutes, bike, due] of WEEK) {
-  test(`every receipt of a week of rides ends with the amount due: ${bike}, ${minutes} min → ${due}`, () => {
+  test(`T3: every receipt of a week of rides ends with the amount due: ${bike}, ${minutes} min → ${due}`, () => {
     const ride = {
       pickupAt,
       returnAt: new Date(Date.parse(pickupAt) + minutes * 60_000).toISOString(),

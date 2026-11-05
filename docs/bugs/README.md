@@ -23,10 +23,15 @@
 | 9 | `app/test/spec/t06-day-cap.test.js` › `T6: TC-35 ride on 17.09 00:30–01:00 is a new day: 2500 − 30 % = 1750` | зі специфікації | дефект коду | `:34`, `:101-102` — доба за київським часом; поїздку 17.09 00:30 зараховано до вичерпаного ліміту 16.09 → `total: 0` (BUG-5) | BUG-5 |
 | 10 | `app/test/spec/t07-t08-fees.test.js` › `T8: TC-43 classic 24:00:01 → fee 200000` | зі специфікації | дефект коду | `:119-120` «понад 24 години»; 24:00:01 за T1 → 1441 хв > 1440, але `Math.round` дає 1440 → збору немає, 30000 замість 230000. Причина та сама, що в № 1 | BUG-1 |
 
-**Тест, що червоніє то так, то ні:** `app/test/integration/receipt.test.js` › `every receipt of a week of rides
-ends with the amount due`. Він не червоний у збереженому `ai-runs/b2-run.txt` (`ok 1`), але червонів у прогоні
-агента B2 (агент написав про це у відповіді) і в моєму проміжному `npm test` після виправлення T5. Між цими
-запусками код не змінювався так, щоб це пояснити. Клас і причину визначаю в Task D (`docs/triage.md`, розділ 1).
+**Тест, що червоніє то так, то ні.**
+- У збереженому `ai-runs/b2-run.txt` він зелений (`ok 1`).
+- Але він червонів у прогоні агента B2 (агент написав про це у відповіді) і в моєму проміжному `npm test` після
+  виправлення T5.
+- Тому він теж у таблиці, окремим рядком:
+
+| # | Тест (файл › назва) | Прогін | Клас | Доказ (рядок специфікації, команда і вивід) | Що зроблено |
+|---|---|---|---|---|---|
+| 11 | `app/test/integration/receipt.test.js` › `every receipt of a week of rides ends with the amount due` (до Task D) | наявний тест; червонів у прогоні агента B2 і в моєму проміжному `npm test` | хибний тест, що червоніє то так, то ні (не дефект коду) | Оракул `(Math.floor(minutes / 30) + 1) * PRICE` (`main:app/test/integration/receipt.test.js:15`) суперечить T3 «за кожні розпочаті 30 хвилин» (`docs/spec/tariffs.md:62`) рівно на 30 і 60 хв, а тривалості випадкові (`app/test/helpers/factory.js:10`, `:15`). `node tools/repeat.mjs 30` → «4 з 30», «classic, 60 min … got 50,00 грн, expected 75,00 грн» (`ai-runs/d-repeat-before.txt:2`, `:8`). Код правий: 60 хв = 2 блоки (`T3: TC-13` зелений) | Виправлено в Task D (коміт `7187722`): фіксовані поїздки з очікуваннями за T3. 0 з 50 — `ai-runs/d-repeat-after.txt:2`. Розбір — `docs/triage.md`, розділ 1 |
 
 ## Дефекти
 
@@ -48,8 +53,18 @@ ends with the amount due`. Він не червоний у збереженом�
 | `app/test/unit/tariff.test.js` › `subscribers ride the first 45 minutes free` | абонент, 40 хв: 0 і для класичного, і для електровелосипеда | T4 `:74-77`: класичний — 0; електро — 2 блоки 8000 − 20 % = 6400 | Очікування для електро 0 → 6400 (таблиця `expected` за типом велосипеда). Цикл по обох велосипедах лишився, коментар з рядком специфікації. Коміт `f9bb9b1` |
 | `app/test/unit/tariff.test.js` › `reduced fare for a ride returned outside the zone` | пільговий, 40 хв, X01: `total` 10000, збір 7500 | T5 `:87`: збір без пільги → 2500 + 15000 = 17500, збір 15000 | Очікування 10000 → 17500, 7500 → 15000, коментар з рядком специфікації. Коміт `c7fcec5` |
 
-Інші тести `app/test/unit/` і `app/test/integration/` не змінювались (`git diff main --stat -- app/test/unit app/test/integration` —
-лише `tariff.test.js`).
+Інші зміни в `app/test/unit/` і `app/test/integration/` прийшли з інших задач, а не з виправлення дефектів Task B.
+`git diff main --stat -- app/test/unit app/test/integration` показує `day-cap.test.js`, `tariff-boundaries.test.js`,
+`tariff.test.js`, `receipt.test.js`:
+
+| Файл | Що змінено | Чому |
+|---|---|---|
+| `app/test/unit/day-cap.test.js` | +3 тести (`remaining never goes below zero …`, `remaining is the full limit …`, `chargedOn is 0 …`); наявні 2 тести не змінено | Task C, крок 3: їх додав агент, щоб вбити мутанти M080, M083 (`ai-runs/c-strengthen.diff`, `docs/test-quality.md`, розділи 3–4). Після рев'ю PR — ID `T6` у назвах і рядки специфікації в коментарях |
+| `app/test/unit/tariff-boundaries.test.js` | новий файл, 8 тестів | Task C, крок 3: додав агент (M018, M023, M024, M064, M066, M075). Після рев'ю PR — ID правила (`T1` / `T2` / `T6`) у назвах і рядки специфікації в коментарях; перевірки не змінено |
+| `app/test/unit/tariff.test.js` | три тести з таблиці вище; після рев'ю PR — `T1:`, `T4:`, `T5:` у назвах. Назву тесту T4 уточнено (`… free on a classic bike, an e-bike is 20 % off`), бо після BUG-3 електровелосипед не безкоштовний | Task B + узгодження назв |
+| `app/test/integration/receipt.test.js` | нестабільний тест переписано на фіксовані дані, у назвах `T3:`; другий тест — з фіксованим `rider` | Task D: рядок 11 вище, `docs/triage.md`, розділ 1 |
+
+Жоден тест не видалено, не пропущено і не послаблено.
 
 ## Тести з коду після виправлення (`ai-runs/b1-rerun.txt`)
 

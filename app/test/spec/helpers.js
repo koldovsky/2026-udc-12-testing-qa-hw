@@ -21,3 +21,6 @@ export const subscriberWithConcession = { type: "subscriber", concession: true }
 export const reduced = { type: "reduced" };
 
 export const quoteOf = (seconds, rideOptions, rider = standard) => quote(ride(seconds, rideOptions), rider);
+
+/** Items of `discounts` / `fees` in a stable order, so a test can compare them exactly without depending on push order. */
+export const byCode = (items) => [...items].sort((a, b) => a.code.localeCompare(b.code));

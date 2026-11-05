@@ -22,7 +22,7 @@ test("quote returns an itemised price", () => {
 });
 
 // T1 (docs/spec/tariffs.md:46-47): a started minute counts as a whole one, so 30 min 20 s is 31 min → 2 blocks.
-test("a ride of 30 min 20 s is billed as two blocks", () => {
+test("T1: a ride of 30 min 20 s is billed as two blocks", () => {
   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:30:20Z"), standard);
   assert.equal(result.minutes, 31);
   assert.equal(result.timeCharge, 5000);
@@ -36,7 +36,7 @@ test("e-bikes are billed at the e-bike rate", () => {
 
 // T4 (docs/spec/tariffs.md:74-77): the 45 free minutes are for classic bikes only;
 // an e-bike subscriber gets 20 % off the T3 charge: 40 min → 2 blocks = 8000 − 20 % = 6400.
-test("subscribers ride the first 45 minutes free", () => {
+test("T4: subscribers ride the first 45 minutes free on a classic bike, an e-bike is 20 % off", () => {
   const expected = { classic: 0, ebike: 6400 };
   for (const bike of ["classic", "ebike"]) {
     const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { bike }), { type: "subscriber" });
@@ -51,7 +51,7 @@ test("subscription on a long e-bike ride", () => {
 });
 
 // T5 (docs/spec/tariffs.md:87): the reduced fare does not apply to fees → 2500 + 15000.
-test("reduced fare for a ride returned outside the zone", () => {
+test("T5: reduced fare for a ride returned outside the zone", () => {
   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { returnStation: "X01" }), { type: "reduced" });
   assert.equal(result.total, 17500);
   assert.equal(result.fees[0].amount, 15000);
