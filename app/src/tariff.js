@@ -76,7 +76,7 @@ function blocks(minutes) {
 }
 
 function chargeFor(minutes, bike) {
-  if (minutes < FREE_START_MINUTES) return 0;
+  if (minutes <= FREE_START_MINUTES) return 0; // T2: "not more than 2 minutes"
   return blocks(minutes) * RATES[bike];
 }
 
