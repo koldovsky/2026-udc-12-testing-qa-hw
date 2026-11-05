@@ -1,0 +1,643 @@
+
+> test
+> npm --prefix app test
+
+
+> veloprokat@3.2.0 test
+> node --test "test/**/*.test.js"
+
+TAP version 13
+# Subtest: every receipt of a week of rides ends with the amount due
+ok 1 - every receipt of a week of rides ends with the amount due
+  ---
+  duration_ms: 1.7863
+  ...
+# Subtest: a receipt lists the fee for a return outside the zone
+ok 2 - a receipt lists the fee for a return outside the zone
+  ---
+  duration_ms: 0.5993
+  ...
+# Subtest: T1: TC-01 10:00:00–10:12:40 → 13 min, 1 block
+ok 3 - T1: TC-01 10:00:00–10:12:40 → 13 min, 1 block
+  ---
+  duration_ms: 1.6567
+  ...
+# Subtest: T1: TC-02 14:05:00–14:41:00 → 36 min, 2 blocks
+ok 4 - T1: TC-02 14:05:00–14:41:00 → 36 min, 2 blocks
+  ---
+  duration_ms: 0.2393
+  ...
+# Subtest: T1: TC-03 30 min 20 s → 31 min, 2 blocks
+not ok 5 - T1: TC-03 30 min 20 s → 31 min, 2 blocks
+  ---
+  duration_ms: 1.0935
+  location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\app\\test\\spec\\t01-t03-duration-and-hourly.test.js:14:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    30 !== 31
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 31
+  actual: 30
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/Courses/AI_courses/12%20%D0%A2%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20QA%20%D0%B7%20AI/Homework12/dev/2026-udc-12-testing-qa-hw/app/test/spec/t01-t03-duration-and-hourly.test.js:16:12)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T1: TC-04 exactly 30 min → 1 block
+ok 6 - T1: TC-04 exactly 30 min → 1 block
+  ---
+  duration_ms: 0.1982
+  ...
+# Subtest: T1: TC-05 return 1 s before pickup is rejected with an explanation
+ok 7 - T1: TC-05 return 1 s before pickup is rejected with an explanation
+  ---
+  duration_ms: 0.5219
+  ...
+# Subtest: T2: TC-06 50 s → 1 min → 0
+ok 8 - T2: TC-06 50 s → 1 min → 0
+  ---
+  duration_ms: 0.1483
+  ...
+# Subtest: T2: TC-07 exactly 2:00 → 2 min → 0
+not ok 9 - T2: TC-07 exactly 2:00 → 2 min → 0
+  ---
+  duration_ms: 1.1958
+  location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\app\\test\\spec\\t01-t03-duration-and-hourly.test.js:34:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    2500 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 2500
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/Courses/AI_courses/12%20%D0%A2%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20QA%20%D0%B7%20AI/Homework12/dev/2026-udc-12-testing-qa-hw/app/test/spec/t01-t03-duration-and-hourly.test.js:37:12)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T2: TC-08 2:01 → 3 min → 1 block
+not ok 10 - T2: TC-08 2:01 → 3 min → 1 block
+  ---
+  duration_ms: 0.2609
+  location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\app\\test\\spec\\t01-t03-duration-and-hourly.test.js:34:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    2 !== 3
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 3
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/Courses/AI_courses/12%20%D0%A2%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20QA%20%D0%B7%20AI/Homework12/dev/2026-udc-12-testing-qa-hw/app/test/spec/t01-t03-duration-and-hourly.test.js:36:12)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T2: TC-09 3:00 → 3 min → 1 block
+ok 11 - T2: TC-09 3:00 → 3 min → 1 block
+  ---
+  duration_ms: 0.4125
+  ...
+# Subtest: T2: TC-10 false start returned out of zone: time charge 0, fee 15000
+ok 12 - T2: TC-10 false start returned out of zone: time charge 0, fee 15000
+  ---
+  duration_ms: 0.5823
+  ...
+# Subtest: T3: TC-11 classic 50 min → 2 blocks
+ok 13 - T3: TC-11 classic 50 min → 2 blocks
+  ---
+  duration_ms: 0.2852
+  ...
+# Subtest: T3: TC-12 e-bike 75 min → 3 blocks
+ok 14 - T3: TC-12 e-bike 75 min → 3 blocks
+  ---
+  duration_ms: 0.1028
+  ...
+# Subtest: T3: TC-13 classic 60 min → 2 blocks
+ok 15 - T3: TC-13 classic 60 min → 2 blocks
+  ---
+  duration_ms: 0.0754
+  ...
+# Subtest: T3: TC-13 classic 61 min → 3 blocks
+ok 16 - T3: TC-13 classic 61 min → 3 blocks
+  ---
+  duration_ms: 0.0615
+  ...
+# Subtest: T3: TC-14 e-bike 30 min → 1 block
+ok 17 - T3: TC-14 e-bike 30 min → 1 block
+  ---
+  duration_ms: 0.056
+  ...
+# Subtest: T3: TC-14 e-bike 31 min → 2 blocks
+ok 18 - T3: TC-14 e-bike 31 min → 2 blocks
+  ---
+  duration_ms: 0.0527
+  ...
+# Subtest: T3: TC-15 unknown bike type `tandem` is rejected with an explanation
+ok 19 - T3: TC-15 unknown bike type `tandem` is rejected with an explanation
+  ---
+  duration_ms: 0.1497
+  ...
+# Subtest: T4: TC-16 subscriber, classic 40 min → 0
+ok 20 - T4: TC-16 subscriber, classic 40 min → 0
+  ---
+  duration_ms: 1.5601
+  ...
+# Subtest: T4: TC-17 subscriber, classic 45 min → 0
+ok 21 - T4: TC-17 subscriber, classic 45 min → 0
+  ---
+  duration_ms: 0.1368
+  ...
+# Subtest: T4: TC-18 subscriber, classic 46 min → 1 block
+ok 22 - T4: TC-18 subscriber, classic 46 min → 1 block
+  ---
+  duration_ms: 0.2335
+  ...
+# Subtest: T4: TC-19 subscriber, classic 75 min → 30 paid min → 1 block
+ok 23 - T4: TC-19 subscriber, classic 75 min → 30 paid min → 1 block
+  ---
+  duration_ms: 0.1034
+  ...
+# Subtest: T4: TC-19 subscriber, classic 76 min → 31 paid min → 2 blocks
+ok 24 - T4: TC-19 subscriber, classic 76 min → 31 paid min → 2 blocks
+  ---
+  duration_ms: 0.2673
+  ...
+# Subtest: T4: TC-20 subscriber, classic 100 min → 55 paid min → 2 blocks
+ok 25 - T4: TC-20 subscriber, classic 100 min → 55 paid min → 2 blocks
+  ---
+  duration_ms: 1.0951
+  ...
+# Subtest: T4: TC-21 subscriber, e-bike 40 min → 8000 − 20 %
+not ok 26 - T4: TC-21 subscriber, e-bike 40 min → 8000 − 20 %
+  ---
+  duration_ms: 0.933
+  location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\app\\test\\spec\\t04-t05-discounts.test.js:18:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 6400
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 6400
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/Courses/AI_courses/12%20%D0%A2%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20QA%20%D0%B7%20AI/Homework12/dev/2026-udc-12-testing-qa-hw/app/test/spec/t04-t05-discounts.test.js:19:12)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T4: TC-22 subscriber, e-bike 75 min → 12000 − 20 %
+not ok 27 - T4: TC-22 subscriber, e-bike 75 min → 12000 − 20 %
+  ---
+  duration_ms: 0.3558
+  location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\app\\test\\spec\\t04-t05-discounts.test.js:18:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    3200 !== 9600
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 9600
+  actual: 3200
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/Courses/AI_courses/12%20%D0%A2%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20QA%20%D0%B7%20AI/Homework12/dev/2026-udc-12-testing-qa-hw/app/test/spec/t04-t05-discounts.test.js:19:12)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T4: TC-23 unknown rider category `vip` is rejected with an explanation
+ok 28 - T4: TC-23 unknown rider category `vip` is rejected with an explanation
+  ---
+  duration_ms: 0.7277
+  ...
+# Subtest: T5: TC-24 reduced, classic 40 min → 5000 − 50 %
+ok 29 - T5: TC-24 reduced, classic 40 min → 5000 − 50 %
+  ---
+  duration_ms: 0.4795
+  ...
+# Subtest: T5: TC-25 reduced, e-bike 30 min → 4000 − 50 %
+ok 30 - T5: TC-25 reduced, e-bike 30 min → 4000 − 50 %
+  ---
+  duration_ms: 0.1853
+  ...
+# Subtest: T5: TC-26 subscriber+concession, classic 80 min: subscription 5000 > reduced 3750 → 3750
+ok 31 - T5: TC-26 subscriber+concession, classic 80 min: subscription 5000 > reduced 3750 → 3750
+  ---
+  duration_ms: 0.0921
+  ...
+# Subtest: T5: TC-27 subscriber+concession, classic 60 min: subscription 2500 = reduced 2500 → 2500
+ok 32 - T5: TC-27 subscriber+concession, classic 60 min: subscription 2500 = reduced 2500 → 2500
+  ---
+  duration_ms: 0.0616
+  ...
+# Subtest: T5: TC-28 subscriber+concession, classic 40 min: subscription 0 < reduced 2500 → 0
+ok 33 - T5: TC-28 subscriber+concession, classic 40 min: subscription 0 < reduced 2500 → 0
+  ---
+  duration_ms: 0.0451
+  ...
+# Subtest: T5: TC-29 subscriber+concession, e-bike 40 min: subscription 6400 > reduced 4000 → 4000
+not ok 34 - T5: TC-29 subscriber+concession, e-bike 40 min: subscription 6400 > reduced 4000 → 4000
+  ---
+  duration_ms: 0.1641
+  location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\app\\test\\spec\\t04-t05-discounts.test.js:38:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 4000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 4000
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/Courses/AI_courses/12%20%D0%A2%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20QA%20%D0%B7%20AI/Homework12/dev/2026-udc-12-testing-qa-hw/app/test/spec/t04-t05-discounts.test.js:39:12)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T5: TC-27 equal amounts → the subscription is applied
+ok 35 - T5: TC-27 equal amounts → the subscription is applied
+  ---
+  duration_ms: 0.7009
+  ...
+# Subtest: T5: TC-30 reduced fare does not apply to the out-of-zone fee: 2500 + 15000
+not ok 36 - T5: TC-30 reduced fare does not apply to the out-of-zone fee: 2500 + 15000
+  ---
+  duration_ms: 0.2373
+  location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\app\\test\\spec\\t04-t05-discounts.test.js:48:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    10000 !== 17500
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 17500
+  actual: 10000
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/Courses/AI_courses/12%20%D0%A2%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20QA%20%D0%B7%20AI/Homework12/dev/2026-udc-12-testing-qa-hw/app/test/spec/t04-t05-discounts.test.js:49:10)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T5: TC-31 reduced, classic 25 h: capped 30000 + unreturned fee 200000 without concession
+not ok 37 - T5: TC-31 reduced, classic 25 h: capped 30000 + unreturned fee 200000 without concession
+  ---
+  duration_ms: 0.1622
+  location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\app\\test\\spec\\t04-t05-discounts.test.js:52:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    130000 !== 230000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 230000
+  actual: 130000
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/Courses/AI_courses/12%20%D0%A2%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20QA%20%D0%B7%20AI/Homework12/dev/2026-udc-12-testing-qa-hw/app/test/spec/t04-t05-discounts.test.js:53:10)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T6: TC-32 three 80-min e-bike rides on one day: 12000, 12000, 6000
+ok 38 - T6: TC-32 three 80-min e-bike rides on one day: 12000, 12000, 6000
+  ---
+  duration_ms: 1.6169
+  ...
+# Subtest: T6: TC-33 after the cap is used up: time charge 0, out-of-zone fee 15000 is outside the cap
+ok 39 - T6: TC-33 after the cap is used up: time charge 0, out-of-zone fee 15000 is outside the cap
+  ---
+  duration_ms: 0.3348
+  ...
+# Subtest: T6: TC-34 ride taken 16.09 23:40, returned 17.09 00:20 belongs to 16.09 → time charge 0
+ok 40 - T6: TC-34 ride taken 16.09 23:40, returned 17.09 00:20 belongs to 16.09 → time charge 0
+  ---
+  duration_ms: 0.3062
+  ...
+# Subtest: T6: TC-35 ride on 17.09 00:30–01:00 is a new day: 2500 − 30 % = 1750
+not ok 41 - T6: TC-35 ride on 17.09 00:30–01:00 is a new day: 2500 − 30 % = 1750
+  ---
+  duration_ms: 0.6541
+  location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\app\\test\\spec\\t06-day-cap.test.js:37:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 1750
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1750
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/Courses/AI_courses/12%20%D0%A2%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20QA%20%D0%B7%20AI/Homework12/dev/2026-udc-12-testing-qa-hw/app/test/spec/t06-day-cap.test.js:40:10)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T6: TC-36 the cap is per user: another rider on the same day pays 12000
+ok 42 - T6: TC-36 the cap is per user: another rider on the same day pays 12000
+  ---
+  duration_ms: 0.1456
+  ...
+# Subtest: T6: TC-37 standard, classic, 25 h: 125000 capped to 30000 + 200000 = 230000
+ok 43 - T6: TC-37 standard, classic, 25 h: 125000 capped to 30000 + 200000 = 230000
+  ---
+  duration_ms: 0.1349
+  ...
+# Subtest: T7: TC-38 classic 20 min returned to X01 → 17500
+ok 44 - T7: TC-38 classic 20 min returned to X01 → 17500
+  ---
+  duration_ms: 1.2973
+  ...
+# Subtest: T7: TC-39 classic 20 min returned to X02 → 17500
+ok 45 - T7: TC-39 classic 20 min returned to X02 → 17500
+  ---
+  duration_ms: 0.1309
+  ...
+# Subtest: T7: TC-39 classic 20 min returned to X03 → 17500
+ok 46 - T7: TC-39 classic 20 min returned to X03 → 17500
+  ---
+  duration_ms: 0.1206
+  ...
+# Subtest: T7: TC-40 classic 20 min returned to S01 → 2500
+ok 47 - T7: TC-40 classic 20 min returned to S01 → 2500
+  ---
+  duration_ms: 0.0741
+  ...
+# Subtest: T7: TC-40 classic 20 min returned to S02 → 2500
+ok 48 - T7: TC-40 classic 20 min returned to S02 → 2500
+  ---
+  duration_ms: 0.1212
+  ...
+# Subtest: T7: TC-40 classic 20 min returned to S03 → 2500
+ok 49 - T7: TC-40 classic 20 min returned to S03 → 2500
+  ---
+  duration_ms: 0.0578
+  ...
+# Subtest: T7: TC-40 classic 20 min returned to S04 → 2500
+ok 50 - T7: TC-40 classic 20 min returned to S04 → 2500
+  ---
+  duration_ms: 0.0884
+  ...
+# Subtest: T7: TC-40 classic 20 min returned to S05 → 2500
+ok 51 - T7: TC-40 classic 20 min returned to S05 → 2500
+  ---
+  duration_ms: 0.7172
+  ...
+# Subtest: T7: TC-40 classic 20 min returned to S06 → 2500
+ok 52 - T7: TC-40 classic 20 min returned to S06 → 2500
+  ---
+  duration_ms: 0.3475
+  ...
+# Subtest: T7: TC-40 classic 20 min returned to S07 → 2500
+ok 53 - T7: TC-40 classic 20 min returned to S07 → 2500
+  ---
+  duration_ms: 0.2674
+  ...
+# Subtest: T7: TC-40 classic 20 min returned to S08 → 2500
+ok 54 - T7: TC-40 classic 20 min returned to S08 → 2500
+  ---
+  duration_ms: 0.1018
+  ...
+# Subtest: T7: TC-41 station S09 (not in appendix A) is rejected with an explanation
+ok 55 - T7: TC-41 station S09 (not in appendix A) is rejected with an explanation
+  ---
+  duration_ms: 0.3423
+  ...
+# Subtest: T8: TC-42 classic exactly 24:00:00 → no fee
+ok 56 - T8: TC-42 classic exactly 24:00:00 → no fee
+  ---
+  duration_ms: 0.0764
+  ...
+# Subtest: T8: TC-43 classic 24:00:01 → fee 200000
+not ok 57 - T8: TC-43 classic 24:00:01 → fee 200000
+  ---
+  duration_ms: 0.5589
+  location: 'D:\\Разное\\Courses\\AI_courses\\12 Тестування та QA з AI\\Homework12\\dev\\2026-udc-12-testing-qa-hw\\app\\test\\spec\\t07-t08-fees.test.js:32:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    30000 !== 230000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 230000
+  actual: 30000
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/%D0%A0%D0%B0%D0%B7%D0%BD%D0%BE%D0%B5/Courses/AI_courses/12%20%D0%A2%D0%B5%D1%81%D1%82%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F%20%D1%82%D0%B0%20QA%20%D0%B7%20AI/Homework12/dev/2026-udc-12-testing-qa-hw/app/test/spec/t07-t08-fees.test.js:33:12)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T8: TC-44 classic 25 h → 30000 + 200000
+ok 58 - T8: TC-44 classic 25 h → 30000 + 200000
+  ---
+  duration_ms: 0.0704
+  ...
+# Subtest: T8: TC-45 classic 25 h returned to X03 → both fees
+ok 59 - T8: TC-45 classic 25 h returned to X03 → both fees
+  ---
+  duration_ms: 0.0395
+  ...
+# Subtest: T9: TC-46 30 % off 1235 kopecks → 864 to pay, discount 371
+ok 60 - T9: TC-46 30 % off 1235 kopecks → 864 to pay, discount 371
+  ---
+  duration_ms: 0.7328
+  ...
+# Subtest: T9: TC-47 receipt for a 25 h ride: the last line is «До сплати» ending with `2 300,00 грн`
+ok 61 - T9: TC-47 receipt for a 25 h ride: the last line is «До сплати» ending with `2 300,00 грн`
+  ---
+  duration_ms: 1.0311
+  ...
+# Subtest: T9: TC-48 receipt for the night ride 01:10–01:40: duration, time charge, discount, total
+ok 62 - T9: TC-48 receipt for the night ride 01:10–01:40: duration, time charge, discount, total
+  ---
+  duration_ms: 0.2046
+  ...
+# Subtest: T9: TC-49 receipt for 20 min out of zone: fee line 150,00 грн, last line «До сплати» 175,00 грн
+ok 63 - T9: TC-49 receipt for 20 min out of zone: fee line 150,00 грн, last line «До сплати» 175,00 грн
+  ---
+  duration_ms: 0.3106
+  ...
+# Subtest: T10: TC-50 00:00–00:30 → 1750
+ok 64 - T10: TC-50 00:00–00:30 → 1750
+  ---
+  duration_ms: 0.1949
+  ...
+# Subtest: T10: TC-51 06:00–06:30 → 2500
+ok 65 - T10: TC-51 06:00–06:30 → 2500
+  ---
+  duration_ms: 0.0727
+  ...
+# Subtest: T10: TC-52 e-bike 01:00–02:15 → 12000 − 30 %
+ok 66 - T10: TC-52 e-bike 01:00–02:15 → 12000 − 30 %
+  ---
+  duration_ms: 0.1052
+  ...
+# Subtest: T10: TC-53 01:10–01:40 → 1750
+ok 67 - T10: TC-53 01:10–01:40 → 1750
+  ---
+  duration_ms: 0.0559
+  ...
+# Subtest: charges recorded for a day reduce what is left of the cap
+ok 68 - charges recorded for a day reduce what is left of the cap
+  ---
+  duration_ms: 2.6929
+  ...
+# Subtest: the day of a ride is the date of its pickup
+ok 69 - the day of a ride is the date of its pickup
+  ---
+  duration_ms: 0.2523
+  ...
+# Subtest: amounts are shown in hryvnias
+ok 70 - amounts are shown in hryvnias
+  ---
+  duration_ms: 0.7094
+  ...
+# Subtest: a receipt has a line for every item
+ok 71 - a receipt has a line for every item
+  ---
+  duration_ms: 0.2322
+  ...
+# Subtest: GET / serves the page and GET /api/health answers
+ok 72 - GET / serves the page and GET /api/health answers
+  ---
+  duration_ms: 1.1518
+  ...
+# Subtest: POST /api/quote returns the quote and the receipt
+ok 73 - POST /api/quote returns the quote and the receipt
+  ---
+  duration_ms: 2.31
+  ...
+# Subtest: POST /api/quote answers 400 to a body that is not JSON
+ok 74 - POST /api/quote answers 400 to a body that is not JSON
+  ---
+  duration_ms: 0.5626
+  ...
+# Subtest: quote returns an itemised price
+ok 75 - quote returns an itemised price
+  ---
+  duration_ms: 1.0215
+  ...
+# Subtest: a ride of 30 min 20 s is billed as one block
+ok 76 - a ride of 30 min 20 s is billed as one block
+  ---
+  duration_ms: 0.1629
+  ...
+# Subtest: e-bikes are billed at the e-bike rate
+ok 77 - e-bikes are billed at the e-bike rate
+  ---
+  duration_ms: 0.113
+  ...
+# Subtest: subscribers ride the first 45 minutes free
+ok 78 - subscribers ride the first 45 minutes free
+  ---
+  duration_ms: 0.1245
+  ...
+# Subtest: subscription on a long e-bike ride
+ok 79 - subscription on a long e-bike ride
+  ---
+  duration_ms: 0.1475
+  ...
+# Subtest: reduced fare for a ride returned outside the zone
+ok 80 - reduced fare for a ride returned outside the zone
+  ---
+  duration_ms: 0.1765
+  ...
+# Subtest: night rides get 30 % off
+ok 81 - night rides get 30 % off
+  ---
+  duration_ms: 0.0864
+  ...
+# Subtest: a bike kept over a day and left outside the zone pays both fees
+ok 82 - a bike kept over a day and left outside the zone pays both fees
+  ---
+  duration_ms: 0.0757
+  ...
+# Subtest: the daily cap limits the time charge
+ok 83 - the daily cap limits the time charge
+  ---
+  duration_ms: 0.4561
+  ...
+# Subtest: a 45-minute classic ride costs 50 UAH
+ok 84 - a 45-minute classic ride costs 50 UAH
+  ---
+  duration_ms: 0.9831
+  ...
+# Subtest: a return before the pickup is rejected
+ok 85 - a return before the pickup is rejected
+  ---
+  duration_ms: 0.3568
+  ...
+1..85
+# tests 85
+# suites 0
+# pass 75
+# fail 10
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 182.9207
