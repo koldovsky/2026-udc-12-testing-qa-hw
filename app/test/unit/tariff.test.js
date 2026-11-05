@@ -34,10 +34,13 @@ test("e-bikes are billed at the e-bike rate", () => {
   assert.equal(result.total, result.timeCharge);
 });
 
+// T4 (docs/spec/tariffs.md:74-77): the 45 free minutes are for classic bikes only;
+// an e-bike subscriber gets 20 % off the T3 charge: 40 min → 2 blocks = 8000 − 20 % = 6400.
 test("subscribers ride the first 45 minutes free", () => {
+  const expected = { classic: 0, ebike: 6400 };
   for (const bike of ["classic", "ebike"]) {
     const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { bike }), { type: "subscriber" });
-    assert.equal(result.total, 0);
+    assert.equal(result.total, expected[bike]);
   }
 });
 
