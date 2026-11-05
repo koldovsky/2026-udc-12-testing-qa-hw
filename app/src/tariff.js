@@ -68,7 +68,7 @@ export function quote(ride, rider, { zones = stationZones, dayCap } = {}) {
 }
 
 function rideMinutes(pickup, returned) {
-  return Math.round((returned - pickup) / 60_000);
+  return Math.ceil((returned - pickup) / 60_000); // T1: a started minute counts as a whole one
 }
 
 function blocks(minutes) {
