@@ -1,0 +1,101 @@
+diff --git a/app/test/unit/day-cap.test.js b/app/test/unit/day-cap.test.js
+index 817aaf4..3a89436 100644
+--- a/app/test/unit/day-cap.test.js
++++ b/app/test/unit/day-cap.test.js
+@@ -11,3 +11,23 @@ test("charges recorded for a day reduce what is left of the cap", () => {
+ test("the day of a ride is the date of its pickup", () => {
+   assert.equal(dayKey("2026-09-16T08:00:00Z"), "2026-09-16");
+ });
++
++test("remaining never goes below zero once the cap is overspent", () => {
++  const ledger = createDayCap({ limit: 1000 });
++  ledger.record("rider-1", "2026-09-16T08:00:00Z", 1500);
++  assert.equal(ledger.remaining("rider-1", "2026-09-16T09:00:00Z"), 0);
++});
++
++test("remaining is the full limit for a rider with no charges", () => {
++  assert.equal(createDayCap({ limit: 1000 }).remaining("nobody", "2026-09-16T08:00:00Z"), 1000);
++});
++
++test("chargedOn is 0 for an unknown rider or day and sums recorded charges", () => {
++  const ledger = createDayCap();
++  assert.equal(ledger.chargedOn("rider-1", "2026-09-16"), 0);
++  ledger.record("rider-1", "2026-09-16T08:00:00Z", 2500);
++  ledger.record("rider-1", "2026-09-16T10:00:00Z", 5000);
++  assert.equal(ledger.chargedOn("rider-1", "2026-09-16"), 7500);
++  assert.equal(ledger.chargedOn("rider-1", "2026-09-17"), 0);
++  assert.equal(ledger.chargedOn("rider-2", "2026-09-16"), 0);
++});
+diff --git a/app/test/unit/tariff-boundaries.test.js b/app/test/unit/tariff-boundaries.test.js
+new file mode 100644
+index 0000000..4b8c370
+--- /dev/null
++++ b/app/test/unit/tariff-boundaries.test.js
+@@ -0,0 +1,67 @@
++// Boundary and exact-value tests that pin down the edges of quote().
++import test from "node:test";
++import assert from "node:assert/strict";
++import { createDayCap } from "../../src/day-cap.js";
++import { QuoteError, quote } from "../../src/tariff.js";
++
++const ride = (pickupAt, returnAt, extra = {}) => ({ pickupAt, returnAt, bike: "classic", returnStation: "S01", ...extra });
++const standard = { type: "standard" };
++
++test("a free ride at night has no discounts at all (nothing to discount)", () => {
++  // 03:00 Kyiv, 2 minutes: T2 makes it free, so the night discount must not appear
++  const result = quote(ride("2026-09-16T03:00:00+03:00", "2026-09-16T03:02:00+03:00"), standard);
++  assert.equal(result.timeCharge, 0);
++  assert.deepEqual(result.discounts, []);
++  assert.equal(result.total, 0);
++});
++
++test("a time charge equal to the remaining cap is not reduced", () => {
++  const dayCap = createDayCap({ limit: 2500 });
++  const result = quote(ride("2026-09-16T10:00:00+03:00", "2026-09-16T10:05:00+03:00"), { ...standard, id: "r1" }, { dayCap });
++  assert.equal(result.timeCharge, 2500);
++  assert.deepEqual(result.discounts, []);
++  assert.equal(result.total, 2500);
++});
++
++test("a time charge over the cap is cut to the cap, the cut is a positive day-cap discount", () => {
++  const result = quote(ride("2026-09-16T10:00:00+03:00", "2026-09-16T23:00:00+03:00"), standard);
++  assert.equal(result.timeCharge, 65000);
++  assert.deepEqual(result.discounts, [{ code: "day-cap", amount: 35000 }]);
++  assert.equal(result.total, 30000);
++});
++
++test("the cap cut is measured against what the ledger has left", () => {
++  const dayCap = createDayCap({ limit: 5000 });
++  const rider = { ...standard, id: "r1" };
++  quote(ride("2026-09-16T10:00:00+03:00", "2026-09-16T10:05:00+03:00"), rider, { dayCap }); // 2500
++  const result = quote(ride("2026-09-16T12:00:00+03:00", "2026-09-16T13:30:00+03:00"), rider, { dayCap }); // 7500
++  assert.deepEqual(result.discounts, [{ code: "day-cap", amount: 5000 }]);
++  assert.equal(result.total, 2500);
++  assert.equal(dayCap.chargedOn("r1", "2026-09-16"), 5000);
++});
++
++test("quote(null) is rejected with a QuoteError", () => {
++  assert.throws(() => quote(null, standard), QuoteError);
++  assert.throws(() => quote(undefined, standard), QuoteError);
++});
++
++test("a ride returned at the very instant of pickup is valid and free", () => {
++  const result = quote(ride("2026-09-16T10:00:00Z", "2026-09-16T10:00:00Z"), standard);
++  assert.equal(result.minutes, 0);
++  assert.equal(result.total, 0);
++});
++
++test("a ride returned one second before pickup is rejected", () => {
++  assert.throws(() => quote(ride("2026-09-16T10:00:01Z", "2026-09-16T10:00:00Z"), standard), /before/);
++});
++
++test("a date-time without an offset is rejected by the format check", () => {
++  assert.throws(
++    () => quote(ride("2026-09-16T10:00:00", "2026-09-16T11:00:00Z"), standard),
++    (e) => e instanceof QuoteError && /ISO 8601/.test(e.message),
++  );
++  assert.throws(
++    () => quote(ride("2026-09-16T10:00:00Z", "2026-09-16"), standard),
++    (e) => e instanceof QuoteError && /ISO 8601/.test(e.message),
++  );
++});
