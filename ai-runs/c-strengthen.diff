@@ -1,0 +1,131 @@
+diff --git a/app/test/spec/day-cap.test.js b/app/test/spec/day-cap.test.js
+index ece2ea1..c1c81f5 100644
+--- a/app/test/spec/day-cap.test.js
++++ b/app/test/spec/day-cap.test.js
+@@ -45,3 +45,25 @@ for (const row of CASES) {
+     );
+   });
+ }
++
++test("T6: нарахування рівно 300 грн не перевищує ліміт — рядка ліміту немає", () => {
++  const dayCap = createDayCap();
++  const ride = { pickupAt: "2026-09-16T09:00:00+03:00", returnAt: "2026-09-16T15:00:00+03:00", bike: "classic", returnStation: "S01" };
++
++  const result = quote(ride, FIRST_RIDER, { dayCap });
++
++  assert.equal(result.timeCharge, 30000);
++  assert.deepEqual(result.discounts, []);
++  assert.equal(result.total, 30000);
++  assert.equal(dayCap.chargedOn(FIRST_RIDER.id, "2026-09-16"), 30000);
++});
++
++test("T6: наступний блок понад 300 грн ліміт зрізає рівно на цей блок", () => {
++  const ride = { pickupAt: "2026-09-16T09:00:00+03:00", returnAt: "2026-09-16T15:01:00+03:00", bike: "classic", returnStation: "S01" };
++
++  const result = quote(ride, FIRST_RIDER, { dayCap: createDayCap() });
++
++  assert.equal(result.timeCharge, 32500);
++  assert.deepEqual(result.discounts, [{ code: "day-cap", amount: 2500 }]);
++  assert.equal(result.total, 30000);
++});
+diff --git a/app/test/spec/tariff.test.js b/app/test/spec/tariff.test.js
+index 3c036ef..e71b6ee 100644
+--- a/app/test/spec/tariff.test.js
++++ b/app/test/spec/tariff.test.js
+@@ -90,3 +90,42 @@ for (const row of REJECTIONS) {
+     );
+   });
+ }
++
++test("T1, §4: повернення в момент взяття не раніше за взяття — 0 хв, без нарахування", () => {
++  const result = quote({ ...VALID_RIDE, returnAt: PICKUP }, STANDARD);
++
++  assert.equal(result.minutes, 0);
++  assert.equal(result.total, 0);
++});
++
++// Both rides lie wholly on one side of the night window, so every reading of Q-1 gives the
++// same price. The instant 06:00:00 itself is open question Q-2 and is deliberately not pinned.
++const NIGHT_EDGES = [
++  { name: "05:30–05:50 — уся поїздка у вікні, знижка діє", pickupAt: "2026-09-16T05:30:00+03:00", returnAt: "2026-09-16T05:50:00+03:00", total: 1750, night: true },
++  { name: "06:30–06:50 — уся поїздка після вікна, знижки немає", pickupAt: "2026-09-16T06:30:00+03:00", returnAt: "2026-09-16T06:50:00+03:00", total: 2500, night: false },
++];
++
++for (const row of NIGHT_EDGES) {
++  test(`T10: ${row.name}`, () => {
++    const result = quote({ ...VALID_RIDE, pickupAt: row.pickupAt, returnAt: row.returnAt }, STANDARD);
++
++    assert.equal(result.total, row.total);
++    assert.equal(result.discounts.some((item) => item.code === "night"), row.night);
++  });
++}
++
++// T9 asks for a receipt line per discount; a discount of nothing would print as an empty
++// line «Знижка: нічна ... 0,00 грн».
++const FREE_NIGHT_RIDES = [
++  { name: "хибний старт", rider: STANDARD, returnAt: "2026-09-16T01:11:00+03:00" },
++  { name: "абонент у межах безкоштовних хвилин", rider: SUBSCRIBER, returnAt: "2026-09-16T01:50:00+03:00" },
++];
++
++for (const row of FREE_NIGHT_RIDES) {
++  test(`T9, T10: ${row.name} уночі — немає рядка знижки на 0 грн`, () => {
++    const result = quote({ ...VALID_RIDE, pickupAt: "2026-09-16T01:10:00+03:00", returnAt: row.returnAt }, row.rider);
++
++    assert.equal(result.total, 0);
++    assert.deepEqual(result.discounts.filter((item) => item.amount === 0), []);
++  });
++}
+diff --git a/app/test/unit/day-cap.test.js b/app/test/unit/day-cap.test.js
+index 817aaf4..9327a0c 100644
+--- a/app/test/unit/day-cap.test.js
++++ b/app/test/unit/day-cap.test.js
+@@ -11,3 +11,24 @@ test("charges recorded for a day reduce what is left of the cap", () => {
+ test("the day of a ride is the date of its pickup", () => {
+   assert.equal(dayKey("2026-09-16T08:00:00Z"), "2026-09-16");
+ });
++
++test("an empty ledger leaves the whole cap", () => {
++  assert.equal(createDayCap().remaining("rider-1", "2026-09-16T08:00:00Z"), DAY_CAP);
++  assert.equal(createDayCap({ limit: 5000 }).remaining("rider-1", "2026-09-16T08:00:00Z"), 5000);
++});
++
++test("a rider with no charges on a day has been charged nothing", () => {
++  assert.equal(createDayCap().chargedOn("rider-1", "2026-09-16"), 0);
++});
++
++test("charges are summed per rider and per Kyiv day", () => {
++  const ledger = createDayCap();
++  ledger.record("rider-1", "2026-09-16T08:00:00Z", 12000);
++  ledger.record("rider-1", "2026-09-16T12:00:00Z", 3000);
++
++  assert.equal(ledger.chargedOn("rider-1", "2026-09-16"), 15000);
++  assert.equal(ledger.remaining("rider-1", "2026-09-16T18:00:00Z"), DAY_CAP - 15000);
++  assert.equal(ledger.chargedOn("rider-2", "2026-09-16"), 0);
++  // 21:30Z on 16.09 is already 00:30 on 17.09 in Kyiv.
++  assert.equal(ledger.remaining("rider-1", "2026-09-16T21:30:00Z"), DAY_CAP);
++});
+diff --git a/app/test/unit/tariff.test.js b/app/test/unit/tariff.test.js
+index ef58be9..f001100 100644
+--- a/app/test/unit/tariff.test.js
++++ b/app/test/unit/tariff.test.js
+@@ -86,3 +86,20 @@ test("a 45-minute classic ride costs 50 UAH", () => {
+ test("a return before the pickup is rejected", () => {
+   assert.throws(() => quote(ride("2026-09-16T08:00:00Z", "2026-09-16T07:00:00Z"), standard), QuoteError);
+ });
++
++test("a missing ride is rejected as a bad request, not a crash", () => {
++  // server.js answers 400 to a QuoteError and 500 to anything else.
++  for (const missing of [null, undefined]) {
++    assert.throws(() => quote(missing, standard), QuoteError);
++  }
++});
++
++// The input contract of quote (tariff.js:5): a date-time with Z or an offset. Without one the
++// instant, and so the price, would depend on the machine's time zone. The spec leaves this
++// to open question Q-10, so these tests pin the current contract, not a rule of the spec.
++for (const value of ["2026-09-16T10:00:00", "2026-09-16"]) {
++  test(`an instant without an offset is rejected: ${value}`, () => {
++    assert.throws(() => quote(ride(value, "2026-09-16T11:00:00Z"), standard), { name: "QuoteError", message: /pickupAt/ });
++    assert.throws(() => quote(ride("2026-09-15T07:00:00Z", value), standard), { name: "QuoteError", message: /returnAt/ });
++  });
++}

@@ -1,0 +1,729 @@
+▶ DAY_CAP
+  ✔ дорівнює 30000 копійок (1.3404ms)
+✔ DAY_CAP (3.4196ms)
+▶ dayKey
+  ✔ повертає дату YYYY-MM-DD для рядка ISO (0.4722ms)
+  ✔ приймає мілісекунди так само, як рядок (0.2366ms)
+  ✔ кидає RangeError на некоректну дату (0.7201ms)
+✔ dayKey (1.7672ms)
+▶ createDayCap
+  ✔ типовий ліміт — DAY_CAP (0.4491ms)
+  ✔ приймає власний ліміт (0.291ms)
+  ✔ новий райдер має весь ліміт і нуль нарахувань (0.3082ms)
+  ✔ record зменшує залишок і накопичує суму за день (0.39ms)
+  ✔ залишок дорівнює нулю, коли ліміт вичерпано рівно (0.1992ms)
+  ✔ залишок не стає від'ємним, коли ліміт перевищено (0.2621ms)
+  ✔ нарахування одного райдера не впливають на іншого (0.2043ms)
+  ✔ наступного дня ліміт доступний знову (0.2373ms)
+  ✔ окремі журнали не мають спільного стану (0.1347ms)
+  ✔ нульовий запис не змінює залишок (1.1691ms)
+✔ createDayCap (4.2206ms)
+▶ [не звірено зі специфікацією] межа доби в журналі — північ UTC
+  ✖ 00:30 за Києвом 16 січня потрапляє на 15 січня (1.5211ms)
+  ✖ влітку 02:59 за Києвом ще належить попередній даті (0.2996ms)
+  ✖ дві поїздки однієї київської доби мають окремі ліміти (0.2382ms)
+  ✖ поїздки двох різних київських діб ділять один ліміт (0.1691ms)
+✖ [не звірено зі специфікацією] межа доби в журналі — північ UTC (2.4537ms)
+▶ discount
+  ✔ 30% від 2500 = 750 (0.6826ms)
+  ✔ 0% від 1000 = 0 (0.113ms)
+  ✔ 100% від 1000 = 1000 (0.1142ms)
+  ✔ 30% від 0 = 0 (0.0922ms)
+  ✔ 50% від 333 = 167 (0.0821ms)
+  ✔ 30% від 999 = 300 (0.0747ms)
+  ✔ 50% від 1 = 1 (0.0908ms)
+✔ discount (2.3895ms)
+▶ погодинне нарахування
+  ✔ classic, 0 хв → 0 (1.4884ms)
+  ✔ classic, 1 хв → 0 (0.1552ms)
+  ✖ classic, 2 хв → 2500 (1.4287ms)
+  ✔ classic, 30 хв → 2500 (0.2698ms)
+  ✔ classic, 31 хв → 5000 (0.1484ms)
+  ✔ classic, 60 хв → 5000 (0.1304ms)
+  ✔ classic, 61 хв → 7500 (0.1118ms)
+  ✔ ebike, 1 хв → 0 (0.0802ms)
+  ✖ ebike, 2 хв → 4000 (0.3343ms)
+  ✔ ebike, 30 хв → 4000 (0.1143ms)
+  ✔ ebike, 31 хв → 8000 (0.0727ms)
+✖ погодинне нарахування (4.7339ms)
+▶ тривалість і формат часу
+  ✔ рахує тривалість між різними зміщеннями (0.2096ms)
+  ✔ рахує реальну тривалість через перехід на літній час (0.092ms)
+  ✔ приймає час без секунд і з дробовими секундами (0.0768ms)
+  ✔ повернення в момент видачі дає нульову поїздку (0.0673ms)
+✔ тривалість і формат часу (0.5667ms)
+▶ пільговий тариф
+  ✔ знімає половину нарахування (0.202ms)
+  ✔ діє і на електровелосипед (0.1004ms)
+  ✖ зменшує збір за повернення поза зоною вдвічі (0.425ms)
+  ✖ зменшує обидва збори вдвічі, а денний ліміт застосовує після знижки (0.3959ms)
+  ✔ прапорець concession не дає знижки стандартному райдеру (0.1254ms)
+✖ пільговий тариф (1.4034ms)
+▶ абонемент
+  ✔ classic, 1 хв → до сплати 0 (0.2804ms)
+  ✔ classic, 45 хв → до сплати 0 (0.0734ms)
+  ✔ classic, 46 хв → до сплати 2500 (0.105ms)
+  ✔ classic, 75 хв → до сплати 2500 (0.115ms)
+  ✔ classic, 76 хв → до сплати 5000 (0.1046ms)
+  ✖ ebike, 45 хв → до сплати 0 (0.3167ms)
+  ✖ ebike, 46 хв → до сплати 3200 (0.2199ms)
+  ✖ ebike, 76 хв → до сплати 6400 (0.2396ms)
+  ✔ не зменшує збір за повернення поза зоною (0.1791ms)
+✖ абонемент (1.8934ms)
+▶ абонемент із правом на пільгу
+  ✔ коротка поїздка: абонемент вигідніший (0.1855ms)
+  ✔ довга поїздка: пільга вигідніша (0.1224ms)
+  ✔ довга поїздка на електровелосипеді: пільга вигідніша (0.114ms)
+  ✖ коли переміг пільговий план, збір зменшується вдвічі (0.2584ms)
+  ✔ concession = "true" не вважається правом на пільгу (0.149ms)
+  ✔ concession = 1 не вважається правом на пільгу (0.0834ms)
+✖ абонемент із правом на пільгу (1.182ms)
+▶ нічна знижка
+  ✔ зима, 05:59 за Києвом: діє (1.3794ms)
+  ✔ зима, 06:00 за Києвом: не діє (0.2055ms)
+  ✔ зима, 00:00 за Києвом: діє (0.1229ms)
+  ✔ зима, 23:59 за Києвом: не діє (0.0871ms)
+  ✔ літо, 05:59 за Києвом: діє (0.0933ms)
+  ✔ літо, 06:00 за Києвом: не діє (0.0672ms)
+  ✔ визначається за часом видачі, а не повернення (0.1729ms)
+  ✔ рахується від суми після пільги (0.1261ms)
+  ✖ рахується від суми після абонемента (0.4341ms)
+  ✔ не з'являється, коли до сплати вже нуль (0.1279ms)
+  ✔ не з'являється на безкоштовній поїздці (0.081ms)
+  ✔ не зменшує збори (0.1127ms)
+  ✔ застосовується до денного ліміту: сума під лімітом його не зачіпає (0.1363ms)
+✖ нічна знижка (3.5518ms)
+▶ збори
+  ✔ станція в зоні не дає збору (0.1772ms)
+  ✔ повернення поза зоною додає 15000 до суми (0.1589ms)
+  ✔ рівно 24 години: збору за неповернення немає (0.1081ms)
+  ✔ 24 години і 1 хвилина: збір є і не обмежується денним лімітом (0.1197ms)
+  ✔ обидва збори додаються (0.1036ms)
+✔ збори (0.8205ms)
+▶ денний ліміт без журналу
+  ✔ рівно на ліміті знижки немає (0.1468ms)
+  ✔ понад ліміт різниця йде знижкою day-cap (0.2896ms)
+  ✔ діє і на електровелосипед (0.198ms)
+  ✔ застосовується після нічної знижки (0.1613ms)
+  ✔ поїздки не накопичуються між викликами (0.1612ms)
+✔ денний ліміт без журналу (1.4561ms)
+▶ денний ліміт із журналом
+  ✔ вимагає rider.id (1.2158ms)
+  ✔ записує нарахування на день видачі (0.463ms)
+  ✔ записує суму після знижок (0.2616ms)
+  ✔ не записує збори (0.1509ms)
+  ✔ частково вичерпаний ліміт обмежує наступну поїздку (0.2061ms)
+  ✔ після вичерпання ліміту час безкоштовний, а збір лишається (0.2012ms)
+  ✔ наступного дня ліміт новий (0.1814ms)
+  ✔ інший райдер має власний ліміт (0.1794ms)
+  ✔ поважає власний ліміт журналу (0.1791ms)
+  ✔ поїздка через північ записується на день видачі (0.1494ms)
+  ✔ невалідна поїздка нічого не записує (0.1769ms)
+✔ денний ліміт із журналом (3.8117ms)
+▶ зони
+  ✔ використовує передану таблицю зон (0.1987ms)
+  ✔ станція, якої немає в переданій таблиці, — помилка (0.1584ms)
+✔ зони (0.4437ms)
+▶ перевірка вхідних даних
+  ✔ QuoteError — це Error з іменем QuoteError (0.3356ms)
+  ✔ ride = null відхиляється (0.1176ms)
+  ✔ ride = undefined відхиляється (0.0574ms)
+  ✔ ride = "ride" відхиляється (0.0601ms)
+  ✔ pickupAt: без значення — відхиляється (0.112ms)
+  ✔ returnAt: без значення — відхиляється (0.0865ms)
+  ✔ pickupAt: число — відхиляється (0.1071ms)
+  ✔ returnAt: число — відхиляється (0.1373ms)
+  ✔ pickupAt: лише дата — відхиляється (0.0895ms)
+  ✔ returnAt: лише дата — відхиляється (0.0725ms)
+  ✔ pickupAt: без зміщення — відхиляється (0.1246ms)
+  ✔ returnAt: без зміщення — відхиляється (0.0773ms)
+  ✔ pickupAt: не дата — відхиляється (0.2046ms)
+  ✔ returnAt: не дата — відхиляється (0.0625ms)
+  ✔ 2026-13-01T10:00:00Z має правильний формат, але не є датою (0.1347ms)
+  ✔ 2026-01-15T25:00:00Z має правильний формат, але не є датою (0.097ms)
+  ✔ повернення раніше за видачу відхиляється (0.1611ms)
+  ✔ bike = scooter відхиляється (0.1504ms)
+  ✔ bike = toString відхиляється (0.0791ms)
+  ✔ bike = null відхиляється (0.0915ms)
+  ✔ станція S99 відхиляється (0.1444ms)
+  ✔ станція toString відхиляється (0.1079ms)
+  ✔ rider = null відхиляється (1.3547ms)
+  ✔ rider = undefined відхиляється (0.0801ms)
+  ✔ rider = {} відхиляється (0.0649ms)
+  ✔ rider = {"type":"vip"} відхиляється (0.0497ms)
+  ✔ rider = {"type":"toString"} відхиляється (0.0743ms)
+✔ перевірка вхідних даних (5.1484ms)
+▶ [не звірено зі специфікацією] поточна поведінка
+  ▶ тривалість округлюється до найближчої хвилини
+    ✖ видача 10:00:00, повернення 2026-01-15T10:01:29Z → 1 хв (0.6656ms)
+    ✖ видача 10:00:00, повернення 2026-01-15T10:01:30Z → 2 хв (0.1798ms)
+    ✖ видача 10:00:00, повернення 2026-01-15T10:30:29Z → 30 хв (0.1921ms)
+    ✔ видача 10:00:00, повернення 2026-01-15T10:30:30Z → 31 хв (0.0717ms)
+    ✖ 24 год 0 хв 29 с: збору за неповернення немає (0.2902ms)
+    ✔ 24 год 0 хв 30 с: збір за неповернення є (0.1324ms)
+  ✖ тривалість округлюється до найближчої хвилини (1.6888ms)
+  ✖ доба журналу — UTC: 00:30 за Києвом 16 січня записується на 15 січня (0.2517ms)
+  ✖ доба журналу — UTC: у межах однієї київської доби ліміт відкривається знову (0.3273ms)
+  ✖ пільговик платить повний збір, якщо поїздка коротша за 2 хв (0.33ms)
+  ✔ план обирається лише за часом: абонемент із пільгою платить більше через збір (0.1557ms)
+  ✔ за рівної знижки перемагає абонемент, і збір не зменшується (0.3689ms)
+  ✔ rider.id = 0 вважається відсутнім (0.3503ms)
+✖ [не звірено зі специфікацією] поточна поведінка (3.909ms)
+ℹ tests 135
+ℹ suites 18
+ℹ pass 115
+ℹ fail 20
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 564.2917
+
+✖ failing tests:
+
+test at ai-runs\b1-from-code\day-cap.test.js:100:3
+✖ 00:30 за Києвом 16 січня потрапляє на 15 січня (1.5211ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '2026-01-16'
+  - '2026-01-15'
+              ^
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:101:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at node:internal/test_runner/test:1792:71
+      at node:internal/per_context/primordials:466:82
+      at new Promise (<anonymous>)
+      at new SafePromise (node:internal/per_context/primordials:435:3)
+      at node:internal/per_context/primordials:466:9
+      at Array.map (<anonymous>) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '2026-01-16',
+    expected: '2026-01-15',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\day-cap.test.js:104:3
+✖ влітку 02:59 за Києвом ще належить попередній даті (0.2996ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '2026-07-16'
+  - '2026-07-15'
+              ^
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:105:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Promise.all (index 0)
+      at async Suite.run (node:internal/test_runner/test:1794:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '2026-07-16',
+    expected: '2026-07-15',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\day-cap.test.js:108:3
+✖ дві поїздки однієї київської доби мають окремі ліміти (0.2382ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 30000
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:111:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 30000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\day-cap.test.js:114:3
+✖ поїздки двох різних київських діб ділять один ліміт (0.1691ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  30000 !== 0
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:117:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 30000,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:68:5
+✖ classic, 2 хв → 2500 (1.4287ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      discounts: [],
+      fees: [],
+      minutes: 2,
+  +   timeCharge: 0,
+  +   total: 0
+  -   timeCharge: 2500,
+  -   total: 2500
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:69:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 2, timeCharge: 0, discounts: [], fees: [], total: 0 },
+    expected: { minutes: 2, timeCharge: 2500, discounts: [], fees: [], total: 2500 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:68:5
+✖ ebike, 2 хв → 4000 (0.3343ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      discounts: [],
+      fees: [],
+      minutes: 2,
+  +   timeCharge: 0,
+  +   total: 0
+  -   timeCharge: 4000,
+  -   total: 4000
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:69:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 2, timeCharge: 0, discounts: [], fees: [], total: 0 },
+    expected: { minutes: 2, timeCharge: 4000, discounts: [], fees: [], total: 4000 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:129:3
+✖ зменшує збір за повернення поза зоною вдвічі (0.425ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 15000,
+  -     amount: 7500,
+        code: 'out-of-zone'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:131:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'out-of-zone', amount: 15000 } ],
+    expected: [ { code: 'out-of-zone', amount: 7500 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:135:3
+✖ зменшує обидва збори вдвічі, а денний ліміт застосовує після знижки (0.3959ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    {
+      discounts: [
+        {
+          amount: 61250,
+          code: 'reduced'
+  ...
+        {
+  +       amount: 15000,
+  -       amount: 7500,
+          code: 'out-of-zone'
+        },
+        {
+  +       amount: 200000,
+  -       amount: 100000,
+          code: 'unreturned'
+        }
+      ],
+      minutes: 1441,
+      timeCharge: 122500,
+  +   total: 245000
+  -   total: 137500
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:136:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 1441, timeCharge: 122500, discounts: [ [Object], [Object] ], fees: [ [Object], [Object] ], total: 245000 },
+    expected: { minutes: 1441, timeCharge: 122500, discounts: [ [Object], [Object] ], fees: [ [Object], [Object] ], total: 137500 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:172:5
+✖ ebike, 45 хв → до сплати 0 (0.3167ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 1600,
+  -     amount: 8000,
+        code: 'subscription'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:175:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'subscription', amount: 1600 } ],
+    expected: [ { code: 'subscription', amount: 8000 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:172:5
+✖ ebike, 46 хв → до сплати 3200 (0.2199ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 1600,
+  -     amount: 4800,
+        code: 'subscription'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:175:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'subscription', amount: 1600 } ],
+    expected: [ { code: 'subscription', amount: 4800 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:172:5
+✖ ebike, 76 хв → до сплати 6400 (0.2396ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 2400,
+  -     amount: 5600,
+        code: 'subscription'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:175:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'subscription', amount: 2400 } ],
+    expected: [ { code: 'subscription', amount: 5600 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:206:3
+✖ коли переміг пільговий план, збір зменшується вдвічі (0.2584ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 15000,
+  -     amount: 7500,
+        code: 'out-of-zone'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:208:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'out-of-zone', amount: 15000 } ],
+    expected: [ { code: 'out-of-zone', amount: 7500 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:252:3
+✖ рахується від суми після абонемента (0.4341ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 1600,
+  -     amount: 4800,
+        code: 'subscription'
+      },
+      {
+  +     amount: 1920,
+  -     amount: 960,
+        code: 'night'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:254:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'subscription', amount: 1600 }, { code: 'night', amount: 1920 } ],
+    expected: [ { code: 'subscription', amount: 4800 }, { code: 'night', amount: 960 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:531:7
+✖ видача 10:00:00, повернення 2026-01-15T10:01:29Z → 1 хв (0.6656ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:533:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Test.start (node:internal/test_runner/test:1191:17)
+      at node:internal/test_runner/test:1792:71
+      at node:internal/per_context/primordials:466:82
+      at new Promise (<anonymous>)
+      at new SafePromise (node:internal/per_context/primordials:435:3)
+      at node:internal/per_context/primordials:466:9
+      at Array.map (<anonymous>) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:531:7
+✖ видача 10:00:00, повернення 2026-01-15T10:01:30Z → 2 хв (0.1798ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 2500
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:534:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Promise.all (index 0)
+      at async Suite.run (node:internal/test_runner/test:1794:7)
+      at async Promise.all (index 0)
+      at async Suite.run (node:internal/test_runner/test:1794:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 2500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:531:7
+✖ видача 10:00:00, повернення 2026-01-15T10:30:29Z → 30 хв (0.1921ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  31 !== 30
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:533:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 31,
+    expected: 30,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:538:5
+✖ 24 год 0 хв 29 с: збору за неповернення немає (0.2902ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     amount: 200000,
+  +     code: 'unreturned'
+  +   }
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:540:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'unreturned', amount: 200000 } ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:549:3
+✖ доба журналу — UTC: 00:30 за Києвом 16 січня записується на 15 січня (0.2517ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 30000
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:554:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Suite.postRun (node:internal/test_runner/test:1465:19)
+      at Suite.run (node:internal/test_runner/test:1809:10)
+      at async Promise.all (index 0)
+      at async Suite.run (node:internal/test_runner/test:1794:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 30000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:558:3
+✖ доба журналу — UTC: у межах однієї київської доби ліміт відкривається знову (0.3273ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     amount: 2500,
+  +     code: 'day-cap'
+  +   }
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:563:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'day-cap', amount: 2500 } ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:567:3
+✖ пільговик платить повний збір, якщо поїздка коротша за 2 хв (0.33ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 15000,
+  -     amount: 7500,
+        code: 'out-of-zone'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/pikachu/UDC/task_12/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:573:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1325:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:911:18)
+      at Test.postRun (node:internal/test_runner/test:1465:19)
+      at Test.run (node:internal/test_runner/test:1390:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'out-of-zone', amount: 15000 } ],
+    expected: [ { code: 'out-of-zone', amount: 7500 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
