@@ -21,10 +21,10 @@ test("quote returns an itemised price", () => {
   }
 });
 
-test("a ride of 30 min 20 s is billed as one block", () => {
+test("a ride of 30 min 20 s is 31 min and billed as two blocks (T1: round up)", () => {
   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:30:20Z"), standard);
-  assert.equal(result.minutes, 30);
-  assert.equal(result.timeCharge, 2500);
+  assert.equal(result.minutes, 31); // tariffs.md:46 — a part-minute counts as a full one, round up
+  assert.equal(result.timeCharge, 5000); // tariffs.md:62, :66 — 31 min = 2 started blocks × 25 грн
 });
 
 test("e-bikes are billed at the e-bike rate", () => {
@@ -33,11 +33,14 @@ test("e-bikes are billed at the e-bike rate", () => {
   assert.equal(result.total, result.timeCharge);
 });
 
-test("subscribers ride the first 45 minutes free", () => {
-  for (const bike of ["classic", "ebike"]) {
-    const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { bike }), { type: "subscriber" });
-    assert.equal(result.total, 0);
-  }
+test("subscribers ride the first 45 minutes free on a classic bike (T4)", () => {
+  const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z"), { type: "subscriber" });
+  assert.equal(result.total, 0, "classic"); // tariffs.md:74–75, :81 — 40 min ≤ 45 free min
+});
+
+test("subscribers get 20 % off on an e-bike, with no free minutes (T4)", () => {
+  const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { bike: "ebike" }), { type: "subscriber" });
+  assert.equal(result.total, 6400, "ebike"); // tariffs.md:67, :76–77 — 40 min → 2 blocks = 8000 − 20 %
 });
 
 test("subscription on a long e-bike ride", () => {
@@ -46,10 +49,10 @@ test("subscription on a long e-bike ride", () => {
   assert.ok(result.total < result.timeCharge);
 });
 
-test("reduced fare for a ride returned outside the zone", () => {
+test("reduced fare for a ride returned outside the zone: the fee is not discounted (T5)", () => {
   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { returnStation: "X01" }), { type: "reduced" });
-  assert.equal(result.total, 10000);
-  assert.equal(result.fees[0].amount, 7500);
+  assert.equal(result.total, 17500); // tariffs.md:62, :66, :86 — 2 blocks = 5000 − 50 % = 2500, + fee 15000
+  assert.equal(result.fees[0].amount, 15000); // tariffs.md:87 — no concession on fees; :111–112 — 150 грн
 });
 
 test("night rides get 30 % off", () => {

@@ -1,31 +1,20 @@
-// Test data: rides and riders with varied values.
+// Test data: rides and riders with fixed, explicit defaults — no randomness.
+// A test overrides every value its expectation depends on. The defaults are chosen so that
+// no other rule applies:
+//   pickup 2026-09-21T06:00:00Z = 09:00 in Kyiv (EEST) — daytime, no night discount (T10);
+//   return station S01 — in the zone, no fee (T7, додаток А);
+//   standard rider — no subscription or reduced fare (T4, T5).
 
-const BIKES = ["classic", "ebike"];
-const IN_ZONE = ["S01", "S02", "S03", "S04", "S05", "S06", "S07", "S08"];
-
-// 21.09.2026, 09:00 in Kyiv (06:00Z): rides start during the day.
-const DAY_START = Date.UTC(2026, 8, 21, 6, 0);
-const MINUTE = 60_000;
-
-const between = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
-const pick = (list) => list[Math.floor(Math.random() * list.length)];
-
-export function randomRide(overrides = {}) {
-  const pickup = DAY_START + between(0, 600) * MINUTE;
-  const minutes = between(5, 89);
+export function ride(overrides = {}) {
   return {
-    pickupAt: new Date(pickup).toISOString(),
-    returnAt: new Date(pickup + minutes * MINUTE).toISOString(),
-    bike: pick(BIKES),
-    returnStation: pick(IN_ZONE),
+    pickupAt: "2026-09-21T06:00:00Z",
+    returnAt: "2026-09-21T06:20:00Z",
+    bike: "classic",
+    returnStation: "S01",
     ...overrides,
   };
 }
 
-export function randomRides(count, overrides = {}) {
-  return Array.from({ length: count }, () => randomRide(overrides));
-}
-
-export function randomRider(overrides = {}) {
-  return { id: `rider-${between(1000, 9999)}`, type: "standard", ...overrides };
+export function rider(overrides = {}) {
+  return { id: "rider-1001", type: "standard", ...overrides };
 }

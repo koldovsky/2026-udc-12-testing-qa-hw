@@ -1,0 +1,141 @@
+✔ DAY_CAP equals 30000 (1.3708ms)
+✔ dayKey extracts YYYY-MM-DD from a UTC timestamp (0.2121ms)
+✖ dayKey at end of UTC day stays on that day (0.8244ms)
+✔ dayKey advances at UTC midnight (0.1274ms)
+✔ remaining returns the full limit when nothing has been recorded (0.1867ms)
+✔ chargedOn returns 0 for a rider with no records (0.0962ms)
+✔ remaining decreases by the recorded amount (0.1329ms)
+✔ remaining is zero when the full limit has been recorded (0.0978ms)
+✔ remaining never goes below zero when recorded over the limit (0.1483ms)
+✔ multiple records accumulate (0.2101ms)
+✔ records on different days do not affect each other (0.1298ms)
+✔ records for one rider do not affect another rider on the same day (0.0903ms)
+✔ custom limit is used by remaining and stored on cap.limit (0.0903ms)
+✔ RATES: classic=2500, ebike=4000 (0.9994ms)
+✔ BLOCK_MINUTES is 30 (0.1421ms)
+✔ FREE_START_MINUTES is 2 (0.0848ms)
+✔ SUBSCRIPTION_FREE_MINUTES is 45 (0.073ms)
+✔ SUBSCRIPTION_EBIKE_PERCENT is 20 (0.0912ms)
+✔ REDUCED_PERCENT is 50 (0.0702ms)
+✔ NIGHT_PERCENT is 30 (0.0774ms)
+✔ NIGHT_UNTIL_HOUR is 6 (0.1274ms)
+✔ OUT_OF_ZONE_FEE is 15000 (0.1303ms)
+✔ UNRETURNED_FEE is 200000 (0.3019ms)
+✔ UNRETURNED_AFTER_MINUTES is 1440 (0.1178ms)
+✔ discount(1000, 50) = 500 (0.084ms)
+✔ discount floors the remaining amount (not the discount itself) (0.0429ms)
+✔ discount(0, 50) = 0 (0.0496ms)
+✔ QuoteError.name is "QuoteError" and it is an Error (0.1412ms)
+✔ throws QuoteError when ride is null (0.3999ms)
+✔ throws QuoteError when pickupAt is not an ISO 8601 datetime (0.1782ms)
+✔ throws QuoteError when returnAt is before pickupAt (0.1954ms)
+✔ throws QuoteError for an unknown bike type (0.0762ms)
+✔ throws QuoteError for an unknown return station (0.0726ms)
+✔ throws QuoteError for an unknown rider type (0.0967ms)
+✔ throws QuoteError when dayCap is supplied but rider has no id (0.1162ms)
+✔ standard 30-min classic ride costs 1 block = 2500 (0.6507ms)
+✔ ride under 2 minutes is free (timeCharge = 0) (0.0842ms)
+✔ 31-min ride uses 2 blocks = 5000 (0.077ms)
+✔ subscriber 45-min classic ride: fully covered by free minutes → total 0 (0.1925ms)
+✔ subscriber 90-min classic: 45 min free, next 45 min billed (1 block) → 5000 (0.119ms)
+✖ subscriber 90-min ebike: extra 20% ebike discount on billed portion → 6400 (1.1294ms)
+✔ subscriber+concession picks reduced when it saves more than subscription (0.1583ms)
+✔ subscriber+concession picks subscription when it saves more than reduced (0.1292ms)
+✔ reduced rider gets 50% off time charge (0.1216ms)
+✔ night discount (04:00 Kyiv = 02:00 UTC) reduces due by 30% (0.1025ms)
+✔ no night discount when pickup is at or after 06:00 Kyiv (04:00 UTC) (0.0829ms)
+✔ out-of-zone fee 15000 is added for a standard rider (0.1021ms)
+✖ reduced rider gets 50% off the out-of-zone fee (0.379ms)
+✔ unreturned fee 200000 is added when ride exceeds 1440 minutes (0.169ms)
+✔ day cap: third ride on the same day is entirely capped when limit is exhausted (0.2337ms)
+✔ day cap resets for a new calendar day (UTC) (0.1855ms)
+ℹ tests 51
+ℹ suites 0
+ℹ pass 48
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 122.1948
+
+✖ failing tests:
+
+test at ai-runs\b1-from-code\day-cap.test.js:17:1
+✖ dayKey at end of UTC day stays on that day (0.8244ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '2026-11-06'
+  - '2026-11-05'
+              ^
+  
+      at TestContext.<anonymous> (file:///C:/Users/Haspe/IdeaProjects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:18:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '2026-11-06',
+    expected: '2026-11-05',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:174:1
+✖ subscriber 90-min ebike: extra 20% ebike discount on billed portion → 6400 (1.1294ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 2400,
+  -     amount: 5600,
+        code: 'subscription'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/Haspe/IdeaProjects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:184:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'subscription', amount: 2400 } ],
+    expected: [ { code: 'subscription', amount: 5600 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:266:1
+✖ reduced rider gets 50% off the out-of-zone fee (0.379ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 15000,
+  -     amount: 7500,
+        code: 'out-of-zone'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/Haspe/IdeaProjects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:274:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'out-of-zone', amount: 15000 } ],
+    expected: [ { code: 'out-of-zone', amount: 7500 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

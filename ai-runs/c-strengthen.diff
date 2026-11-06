@@ -1,0 +1,134 @@
+diff --git a/app/test/spec/tariff-s4.test.js b/app/test/spec/tariff-s4.test.js
+index d896798..221dbbc 100644
+--- a/app/test/spec/tariff-s4.test.js
++++ b/app/test/spec/tariff-s4.test.js
+@@ -36,6 +36,31 @@ test("§4: TC-82 TC-83 — unknown bike type or rider category → QuoteError",
+   }
+ });
+ 
++// §4 — null ride object → rejected
++// Kills M067 (|| → && in !ride || typeof ride !== "object"): with &&, null passes because
++// typeof null === "object", so the second operand is false and no error is thrown.
++test("§4: null ride → QuoteError", () => {
++  assert.throws(
++    () => quote(null, { type: "standard" }),
++    QuoteError,
++    "null ride must throw QuoteError",
++  );
++});
++
++// §4 — date-only string (no time part) → rejected
++// Kills M078 (|| → && in invalid date string check): with &&, a string that fails the regex
++// does not throw because "typeof string !== 'string'" is false and false && true = false.
++test("§4: date-only pickupAt (no time offset) → QuoteError", () => {
++  assert.throws(
++    () => quote(
++      { pickupAt: "2026-09-16", returnAt: "2026-09-16T10:30:00Z", bike: "classic", returnStation: "S01" },
++      { type: "standard" },
++    ),
++    QuoteError,
++    "date-only string must throw QuoteError",
++  );
++});
++
+ // §4 — TC-84 to TC-86: station not in appendix A → rejected (spec:tariffs.md:149)
+ test("§4: TC-84 to TC-86 — station absent from appendix A → QuoteError", () => {
+   for (const { id, station } of [
+diff --git a/app/test/spec/tariff-t10.test.js b/app/test/spec/tariff-t10.test.js
+index f0b5814..043d3f8 100644
+--- a/app/test/spec/tariff-t10.test.js
++++ b/app/test/spec/tariff-t10.test.js
+@@ -49,3 +49,28 @@ test("T10: TC-80 — false start at night: T2 applies first → zero charge", ()
+   const r = quote(ride("2026-09-16T01:00:00+03:00", "2026-09-16T01:02:00+03:00"), standard);
+   assert.equal(r.total, 0, "TC-80: false start overrides night discount");
+ });
++
++// T10 — boundary: exactly 06:00 Kyiv → night window [00:00, 06:00) is closed (spec:tariffs.md:141)
++// Kills M009 (NIGHT_UNTIL_HOUR 6→7) and M021 (< → <=): with either mutant, hour 6 would
++// incorrectly receive a night discount.
++test("T10: pickup at exactly 06:00 Kyiv — outside night window, no discount", () => {
++  // 2026-09-16T06:00:00+03:00 → Kyiv hour = 6, NOT in [00:00, 06:00)
++  const r = quote(ride("2026-09-16T06:00:00+03:00", "2026-09-16T06:30:00+03:00"), standard);
++  assert.equal(r.total, 2500, "06:00 Kyiv: no night discount");
++  assert.equal(r.discounts.length, 0, "06:00 Kyiv: discounts must be empty");
++});
++
++// T10 — night discount requires due > 0: subscriber within 45 free minutes at night
++// Kills M018 (due > 0 → due >= 0): mutation pushes a "night" entry with amount 0.
++test("T10: subscriber within free minutes at night — due is zero, no night discount entry", () => {
++  // classic subscriber, 40 min at 01:00 Kyiv → subscription covers all → due = 0
++  const r = quote(
++    ride("2026-09-16T01:00:00+03:00", "2026-09-16T01:40:00+03:00"),
++    { type: "subscriber" },
++  );
++  assert.equal(r.total, 0, "subscriber night free ride: total 0");
++  assert.ok(
++    !r.discounts.some((d) => d.code === "night"),
++    "no night discount entry when due is zero",
++  );
++});
+diff --git a/app/test/spec/tariff-t4-t5.test.js b/app/test/spec/tariff-t4-t5.test.js
+index 337ad4b..e8c1a4a 100644
+--- a/app/test/spec/tariff-t4-t5.test.js
++++ b/app/test/spec/tariff-t4-t5.test.js
+@@ -84,6 +84,20 @@ test("T5: TC-33 to TC-39 — subscriber+concession: cheaper of subscription vs r
+   }
+ });
+ 
++// T5 — tie-breaking: when subscription and reduced give equal discount, subscription wins
++// Kills M054 (plan.amount > best.amount → plan.amount >= best.amount): with >= the later
++// plan in the array (reduced) would win instead of subscription.
++test("T5: TC-34 tie-break — subscription discount code takes priority over equal reduced", () => {
++  const conc = { type: "subscriber", concession: true };
++  // 50 min classic: timeCharge = 5000; subscription amount = 2500; reduced = 2500 → tie
++  const r = quote(ride("2026-09-16T10:00:00+03:00", "2026-09-16T10:50:00+03:00"), conc);
++  assert.equal(r.total, 2500, "TC-34 tie: total 2500");
++  assert.ok(
++    r.discounts.some((d) => d.code === "subscription"),
++    "TC-34 tie: discount code must be 'subscription', not 'reduced'",
++  );
++});
++
+ // T5 — TC-40: reduced + 25-hour ride — unreturned fee not discounted (spec:tariffs.md:87)
+ test("T5: TC-40 — reduced fare + T6 cap + T8 fee: fee not discounted", () => {
+   // 25 h → 50 blocks = 125000 − 50% = 62500 → cap 30000; unreturned 200000 unchanged → 230000
+diff --git a/app/test/spec/tariff-t6.test.js b/app/test/spec/tariff-t6.test.js
+index dd2861e..1de459d 100644
+--- a/app/test/spec/tariff-t6.test.js
++++ b/app/test/spec/tariff-t6.test.js
+@@ -138,6 +138,20 @@ test("T6: TC-50 TC-51 — 300 грн boundary: at-limit and over-limit", () => {
+   }
+ });
+ 
++// T6 — cap boundary: due === allowance exactly → no "day-cap" discount code
++// Kills M023 (due > allowance → due >= allowance): mutation pushes a "day-cap" entry with amount 0.
++test("T6: when due equals the daily cap exactly — no day-cap discount in result", () => {
++  const dayCap = createDayCap();
++  const rider  = { id: "rider-exact-cap", type: "standard" };
++  // 360 min → 12 blocks × 2500 = 30000 = DAY_CAP exactly → due equals allowance
++  const r = quote(ride("2026-09-17T10:00:00+03:00", "2026-09-17T16:00:00+03:00"), rider, { dayCap });
++  assert.equal(r.total, 30000, "exact cap: total 30000");
++  assert.ok(
++    !r.discounts.some((d) => d.code === "day-cap"),
++    "no day-cap discount when due equals allowance exactly",
++  );
++});
++
+ // TC-52: cap is per rider — a different rider is unaffected (spec:tariffs.md:100)
+ test("T6: TC-52 — daily cap is per rider; second rider's cap is independent", () => {
+   const dayCap = createDayCap();
+diff --git a/app/test/unit/day-cap.test.js b/app/test/unit/day-cap.test.js
+index 817aaf4..6287d0a 100644
+--- a/app/test/unit/day-cap.test.js
++++ b/app/test/unit/day-cap.test.js
+@@ -11,3 +11,10 @@ test("charges recorded for a day reduce what is left of the cap", () => {
+ test("the day of a ride is the date of its pickup", () => {
+   assert.equal(dayKey("2026-09-16T08:00:00Z"), "2026-09-16");
+ });
++
++// chargedOn with no prior record must return 0
++// Kills M086 (?? 0 → ?? 1): mutation returns 1 for a rider with no charges.
++test("chargedOn returns 0 for a rider with no charges on that day", () => {
++  const ledger = createDayCap();
++  assert.equal(ledger.chargedOn("unknown-rider", "2026-09-16"), 0);
++});
