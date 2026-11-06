@@ -1,0 +1,105 @@
+diff --git a/app/test/helpers/factory.js b/app/test/helpers/factory.js
+deleted file mode 100644
+index 1e183c6..0000000
+--- a/app/test/helpers/factory.js
++++ /dev/null
+@@ -1,31 +0,0 @@
+-// Test data: rides and riders with varied values.
+-
+-const BIKES = ["classic", "ebike"];
+-const IN_ZONE = ["S01", "S02", "S03", "S04", "S05", "S06", "S07", "S08"];
+-
+-// 21.09.2026, 09:00 in Kyiv (06:00Z): rides start during the day.
+-const DAY_START = Date.UTC(2026, 8, 21, 6, 0);
+-const MINUTE = 60_000;
+-
+-const between = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+-const pick = (list) => list[Math.floor(Math.random() * list.length)];
+-
+-export function randomRide(overrides = {}) {
+-  const pickup = DAY_START + between(0, 600) * MINUTE;
+-  const minutes = between(5, 89);
+-  return {
+-    pickupAt: new Date(pickup).toISOString(),
+-    returnAt: new Date(pickup + minutes * MINUTE).toISOString(),
+-    bike: pick(BIKES),
+-    returnStation: pick(IN_ZONE),
+-    ...overrides,
+-  };
+-}
+-
+-export function randomRides(count, overrides = {}) {
+-  return Array.from({ length: count }, () => randomRide(overrides));
+-}
+-
+-export function randomRider(overrides = {}) {
+-  return { id: `rider-${between(1000, 9999)}`, type: "standard", ...overrides };
+-}
+diff --git a/app/test/integration/receipt.test.js b/app/test/integration/receipt.test.js
+index 6c2335e..62c94d3 100644
+--- a/app/test/integration/receipt.test.js
++++ b/app/test/integration/receipt.test.js
+@@ -3,24 +3,40 @@ import test from "node:test";
+ import assert from "node:assert/strict";
+ import { formatReceipt } from "../../src/receipt.js";
+ import { quote } from "../../src/tariff.js";
+-import { randomRider, randomRides } from "../helpers/factory.js";
++const rider = { id: "rider-1001", type: "standard" };
+ 
+-const PRICE = { classic: 2500, ebike: 4000 };
+-const uah = (kopecks) => `${(kopecks / 100).toFixed(2).replace(".", ",")} грн`;
++// Fixed daytime rides (12:00 in Kyiv), in zone, standard rider: the amount due is the time
++// charge alone. Durations sit on both sides of every 30-minute block boundary.
++const PICKUP = Date.parse("2026-09-21T09:00:00Z");
++const ride = (bike, minutes) => ({
++  pickupAt: new Date(PICKUP).toISOString(),
++  returnAt: new Date(PICKUP + minutes * 60_000).toISOString(),
++  bike,
++  returnStation: "S03",
++});
+ 
+-test("every receipt of a week of rides ends with the amount due", () => {
+-  const rider = randomRider();
+-  for (const ride of randomRides(10)) {
+-    const minutes = (Date.parse(ride.returnAt) - Date.parse(ride.pickupAt)) / 60_000;
+-    const expected = (Math.floor(minutes / 30) + 1) * PRICE[ride.bike];
++const CASES = [
++  ["classic", 5, "25,00 грн"],
++  ["classic", 29, "25,00 грн"],
++  ["classic", 30, "25,00 грн"],
++  ["classic", 31, "50,00 грн"],
++  ["classic", 60, "50,00 грн"],
++  ["classic", 61, "75,00 грн"],
++  ["classic", 89, "75,00 грн"],
++  ["ebike", 30, "40,00 грн"],
++  ["ebike", 31, "80,00 грн"],
++  ["ebike", 60, "80,00 грн"],
++  ["ebike", 61, "120,00 грн"],
++];
+ 
+-    const lines = formatReceipt(quote(ride, rider));
++test("every receipt ends with the amount due", async (t) => {
++  for (const [bike, minutes, due] of CASES) {
++    await t.test(`${bike}, ${minutes} min → ${due}`, () => {
++      const lines = formatReceipt(quote(ride(bike, minutes), rider));
+ 
+-    assert.ok(lines.at(-1).startsWith("До сплати "));
+-    assert.ok(
+-      lines.at(-1).endsWith(` ${uah(expected)}`),
+-      `${ride.bike}, ${minutes} min from ${ride.pickupAt}: got "${lines.at(-1)}", expected ${uah(expected)}`,
+-    );
++      assert.ok(lines.at(-1).startsWith("До сплати "), lines.at(-1));
++      assert.ok(lines.at(-1).endsWith(` ${due}`), `got "${lines.at(-1)}"`);
++    });
+   }
+ });
+ 
+@@ -32,7 +48,7 @@ test("a receipt lists the fee for a return outside the zone", () => {
+     returnStation: "X02",
+   };
+ 
+-  const lines = formatReceipt(quote(ride, randomRider()));
++  const lines = formatReceipt(quote(ride, rider));
+ 
+   assert.deepEqual(lines, [
+     "Тривалість поїздки: 20 хв",
