@@ -90,3 +90,42 @@ for (const row of REJECTIONS) {
     );
   });
 }
+
+test("T1, §4: повернення в момент взяття не раніше за взяття — 0 хв, без нарахування", () => {
+  const result = quote({ ...VALID_RIDE, returnAt: PICKUP }, STANDARD);
+
+  assert.equal(result.minutes, 0);
+  assert.equal(result.total, 0);
+});
+
+// Both rides lie wholly on one side of the night window, so every reading of Q-1 gives the
+// same price. The instant 06:00:00 itself is open question Q-2 and is deliberately not pinned.
+const NIGHT_EDGES = [
+  { name: "05:30–05:50 — уся поїздка у вікні, знижка діє", pickupAt: "2026-09-16T05:30:00+03:00", returnAt: "2026-09-16T05:50:00+03:00", total: 1750, night: true },
+  { name: "06:30–06:50 — уся поїздка після вікна, знижки немає", pickupAt: "2026-09-16T06:30:00+03:00", returnAt: "2026-09-16T06:50:00+03:00", total: 2500, night: false },
+];
+
+for (const row of NIGHT_EDGES) {
+  test(`T10: ${row.name}`, () => {
+    const result = quote({ ...VALID_RIDE, pickupAt: row.pickupAt, returnAt: row.returnAt }, STANDARD);
+
+    assert.equal(result.total, row.total);
+    assert.equal(result.discounts.some((item) => item.code === "night"), row.night);
+  });
+}
+
+// T9 asks for a receipt line per discount; a discount of nothing would print as an empty
+// line «Знижка: нічна ... 0,00 грн».
+const FREE_NIGHT_RIDES = [
+  { name: "хибний старт", rider: STANDARD, returnAt: "2026-09-16T01:11:00+03:00" },
+  { name: "абонент у межах безкоштовних хвилин", rider: SUBSCRIBER, returnAt: "2026-09-16T01:50:00+03:00" },
+];
+
+for (const row of FREE_NIGHT_RIDES) {
+  test(`T9, T10: ${row.name} уночі — немає рядка знижки на 0 грн`, () => {
+    const result = quote({ ...VALID_RIDE, pickupAt: "2026-09-16T01:10:00+03:00", returnAt: row.returnAt }, row.rider);
+
+    assert.equal(result.total, 0);
+    assert.deepEqual(result.discounts.filter((item) => item.amount === 0), []);
+  });
+}

@@ -45,3 +45,25 @@ for (const row of CASES) {
     );
   });
 }
+
+test("T6: нарахування рівно 300 грн не перевищує ліміт — рядка ліміту немає", () => {
+  const dayCap = createDayCap();
+  const ride = { pickupAt: "2026-09-16T09:00:00+03:00", returnAt: "2026-09-16T15:00:00+03:00", bike: "classic", returnStation: "S01" };
+
+  const result = quote(ride, FIRST_RIDER, { dayCap });
+
+  assert.equal(result.timeCharge, 30000);
+  assert.deepEqual(result.discounts, []);
+  assert.equal(result.total, 30000);
+  assert.equal(dayCap.chargedOn(FIRST_RIDER.id, "2026-09-16"), 30000);
+});
+
+test("T6: наступний блок понад 300 грн ліміт зрізає рівно на цей блок", () => {
+  const ride = { pickupAt: "2026-09-16T09:00:00+03:00", returnAt: "2026-09-16T15:01:00+03:00", bike: "classic", returnStation: "S01" };
+
+  const result = quote(ride, FIRST_RIDER, { dayCap: createDayCap() });
+
+  assert.equal(result.timeCharge, 32500);
+  assert.deepEqual(result.discounts, [{ code: "day-cap", amount: 2500 }]);
+  assert.equal(result.total, 30000);
+});

@@ -86,3 +86,20 @@ test("a 45-minute classic ride costs 50 UAH", () => {
 test("a return before the pickup is rejected", () => {
   assert.throws(() => quote(ride("2026-09-16T08:00:00Z", "2026-09-16T07:00:00Z"), standard), QuoteError);
 });
+
+test("a missing ride is rejected as a bad request, not a crash", () => {
+  // server.js answers 400 to a QuoteError and 500 to anything else.
+  for (const missing of [null, undefined]) {
+    assert.throws(() => quote(missing, standard), QuoteError);
+  }
+});
+
+// The input contract of quote (tariff.js:5): a date-time with Z or an offset. Without one the
+// instant, and so the price, would depend on the machine's time zone. The spec leaves this
+// to open question Q-10, so these tests pin the current contract, not a rule of the spec.
+for (const value of ["2026-09-16T10:00:00", "2026-09-16"]) {
+  test(`an instant without an offset is rejected: ${value}`, () => {
+    assert.throws(() => quote(ride(value, "2026-09-16T11:00:00Z"), standard), { name: "QuoteError", message: /pickupAt/ });
+    assert.throws(() => quote(ride("2026-09-15T07:00:00Z", value), standard), { name: "QuoteError", message: /returnAt/ });
+  });
+}
