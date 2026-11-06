@@ -17,6 +17,8 @@ test("T9: TC-30 знижка 30 % від 1235 коп.: до сплати окр�
 const AMOUNT = /-?\d+(?: \d{3})*,\d{2} грн$/;
 
 const RECEIPTS = [
+  // TC-31 crosses the night window of 17.09, so its lines depend on open question Q-1: no night
+  // line is readings А or Б (docs/test-cases.md, «Питання до специфікації»). The amount due does not.
   {
     id: "TC-31",
     name: "чек із лімітом і двома зборами",

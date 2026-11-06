@@ -94,12 +94,10 @@ test("a missing ride is rejected as a bad request, not a crash", () => {
   }
 });
 
-// The input contract of quote (tariff.js:5): a date-time with Z or an offset. Without one the
-// instant, and so the price, would depend on the machine's time zone. The spec leaves this
-// to open question Q-10, so these tests pin the current contract, not a rule of the spec.
-for (const value of ["2026-09-16T10:00:00", "2026-09-16"]) {
-  test(`an instant without an offset is rejected: ${value}`, () => {
-    assert.throws(() => quote(ride(value, "2026-09-16T11:00:00Z"), standard), { name: "QuoteError", message: /pickupAt/ });
-    assert.throws(() => quote(ride("2026-09-15T07:00:00Z", value), standard), { name: "QuoteError", message: /returnAt/ });
-  });
-}
+// «вчора» cannot be read under any answer to open question Q-10, so the test pins only the field
+// named in the error, not whether an instant without an offset is accepted.
+test("an unreadable instant is rejected and the error names the field", () => {
+  const message = (field) => new RegExp(`^${field} must be an ISO 8601 date-time`);
+  assert.throws(() => quote(ride("вчора", "2026-09-16T11:00:00Z"), standard), { name: "QuoteError", message: message("pickupAt") });
+  assert.throws(() => quote(ride("2026-09-16T10:00:00Z", "вчора"), standard), { name: "QuoteError", message: message("returnAt") });
+});

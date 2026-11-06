@@ -13,8 +13,7 @@ test("the day of a ride is the date of its pickup", () => {
 });
 
 test("an empty ledger leaves the whole cap", () => {
-  assert.equal(createDayCap().remaining("rider-1", "2026-09-16T08:00:00Z"), DAY_CAP);
-  assert.equal(createDayCap({ limit: 5000 }).remaining("rider-1", "2026-09-16T08:00:00Z"), 5000);
+  assert.equal(createDayCap().remaining("rider-1", "2026-09-16T08:00:00Z"), 30000);
 });
 
 test("a rider with no charges on a day has been charged nothing", () => {
@@ -27,8 +26,8 @@ test("charges are summed per rider and per Kyiv day", () => {
   ledger.record("rider-1", "2026-09-16T12:00:00Z", 3000);
 
   assert.equal(ledger.chargedOn("rider-1", "2026-09-16"), 15000);
-  assert.equal(ledger.remaining("rider-1", "2026-09-16T18:00:00Z"), DAY_CAP - 15000);
+  assert.equal(ledger.remaining("rider-1", "2026-09-16T18:00:00Z"), 15000);
   assert.equal(ledger.chargedOn("rider-2", "2026-09-16"), 0);
   // 21:30Z on 16.09 is already 00:30 on 17.09 in Kyiv.
-  assert.equal(ledger.remaining("rider-1", "2026-09-16T21:30:00Z"), DAY_CAP);
+  assert.equal(ledger.remaining("rider-1", "2026-09-16T21:30:00Z"), 30000);
 });

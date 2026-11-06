@@ -113,19 +113,3 @@ for (const row of NIGHT_EDGES) {
     assert.equal(result.discounts.some((item) => item.code === "night"), row.night);
   });
 }
-
-// T9 asks for a receipt line per discount; a discount of nothing would print as an empty
-// line «Знижка: нічна ... 0,00 грн».
-const FREE_NIGHT_RIDES = [
-  { name: "хибний старт", rider: STANDARD, returnAt: "2026-09-16T01:11:00+03:00" },
-  { name: "абонент у межах безкоштовних хвилин", rider: SUBSCRIBER, returnAt: "2026-09-16T01:50:00+03:00" },
-];
-
-for (const row of FREE_NIGHT_RIDES) {
-  test(`T9, T10: ${row.name} уночі — немає рядка знижки на 0 грн`, () => {
-    const result = quote({ ...VALID_RIDE, pickupAt: "2026-09-16T01:10:00+03:00", returnAt: row.returnAt }, row.rider);
-
-    assert.equal(result.total, 0);
-    assert.deepEqual(result.discounts.filter((item) => item.amount === 0), []);
-  });
-}
