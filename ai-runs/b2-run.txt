@@ -1,0 +1,395 @@
+
+> test
+> npm --prefix app test
+
+
+> veloprokat@3.2.0 test
+> node --test "test/**/*.test.js"
+
+[32m✔ every receipt of a week of rides ends with the amount due [90m(4.7301ms)[39m[39m
+[32m✔ a receipt lists the fee for a return outside the zone [90m(1.5996ms)[39m[39m
+[32m✔ §4: TC-59 — повернення 09:59:59 при взятті 10:00:00 → запит відхилено з поясненням [90m(1.81ms)[39m[39m
+[32m✔ §4: TC-60 — тип велосипеда «тандем» → запит відхилено з поясненням [90m(0.2042ms)[39m[39m
+[32m✔ §4: TC-61 — категорія користувача «VIP» → запит відхилено з поясненням [90m(0.2306ms)[39m[39m
+[32m✔ §4: TC-62 — станція повернення S09 → запит відхилено з поясненням [90m(0.123ms)[39m[39m
+[32m✔ T1: TC-01 — 10:00:00 → 10:12:40 → 13 хв, до сплати 2500 [90m(4.1979ms)[39m[39m
+[32m✔ T1: TC-02 — 14:05:00 → 14:41:00 → 36 хв, до сплати 5000 [90m(0.6062ms)[39m[39m
+[32m✔ T1: TC-03 — 10:00:00 → 10:30:00 → 30 хв, до сплати 2500 [90m(0.593ms)[39m[39m
+[31m✖ T1: TC-04 — 10:00:00 → 10:30:01 → 31 хв, до сплати 5000 [90m(2.7927ms)[39m[39m
+[31m✖ T1, T2: TC-05 — 10:00:00 → 10:01:30 → 2 хв, до сплати 0 [90m(0.7548ms)[39m[39m
+[32m✔ T2: TC-06 — 10:00:00 → 10:00:50 → 1 хв, до сплати 0 [90m(0.3838ms)[39m[39m
+[31m✖ T2: TC-07 — 10:00:00 → 10:02:00 → 2 хв, до сплати 0 [90m(0.7176ms)[39m[39m
+[31m✖ T2: TC-08 — 10:00:00 → 10:02:01 → 3 хв, до сплати 2500 [90m(0.352ms)[39m[39m
+[32m✔ T2: TC-09 — 10:00 → 10:04 → 4 хв, до сплати 2500 [90m(0.3437ms)[39m[39m
+[32m✔ T2, T7: TC-10 — 10:00:00 → 10:00:50, станція X01 → 1 хв, до сплати 15000 [90m(0.6323ms)[39m[39m
+[32m✔ T2, §4: TC-11 — 10:00:00 → 10:00:00 → 0 хв, до сплати 0 [90m(0.2495ms)[39m[39m
+[32m✔ T3: TC-12 — classic, 50 хв → до сплати 5000 [90m(0.6847ms)[39m[39m
+[32m✔ T3: TC-13 — ebike, 75 хв → до сплати 12000 [90m(0.1608ms)[39m[39m
+[32m✔ T3: TC-14 — ebike, 60 хв → до сплати 8000 [90m(0.3094ms)[39m[39m
+[32m✔ T3: TC-15 — ebike, 61 хв → до сплати 12000 [90m(0.1514ms)[39m[39m
+[32m✔ T10: TC-51 — 01:10 → 01:40 → до сплати 1750 [90m(1.9013ms)[39m[39m
+[32m✔ T10: TC-52 — електровелосипед, 02:00 → 02:30 → до сплати 2800 [90m(0.2322ms)[39m[39m
+[32m✔ T10: TC-53 — 00:00:00 → 00:30:00 → до сплати 1750 [90m(0.1526ms)[39m[39m
+[32m✔ T10: TC-54 — 23:00 → 23:30 (поза вікном) → до сплати 2500 [90m(0.1382ms)[39m[39m
+[32m✔ T10: TC-55 — 06:30 → 07:00 (поза вікном) → до сплати 2500 [90m(0.1531ms)[39m[39m
+[32m✔ T10, T7: TC-56 — 01:10 → 01:40, станція X01 (знижка лише на погодинне) → до сплати 16750 [90m(0.1959ms)[39m[39m
+[32m✔ T10: TC-57 — 2026-09-15T22:10:00Z → 22:40:00Z (16.09 01:10–01:40 за Києвом) → до сплати 1750 [90m(0.1101ms)[39m[39m
+[32m✔ T1, T10: TC-58 — перехід на зимовий час 2026-10-25T03:50:00+03:00 → 03:10:00+02:00 → 20 хв, уночі → 1 750 [90m(0.9956ms)[39m[39m
+[32m✔ T4: TC-16 — абонент, 40 хв → до сплати 0 [90m(1.8171ms)[39m[39m
+[32m✔ T4: TC-17 — абонент, 100 хв → до сплати 5000 [90m(0.4075ms)[39m[39m
+[32m✔ T4: TC-18 — абонент, 45 хв → до сплати 0 [90m(0.1229ms)[39m[39m
+[32m✔ T4: TC-19 — абонент, 46 хв → до сплати 2500 [90m(0.123ms)[39m[39m
+[32m✔ T4: TC-20 — абонент, 75 хв → до сплати 2500 [90m(0.1916ms)[39m[39m
+[32m✔ T4: TC-21 — абонент, 76 хв → до сплати 5000 [90m(0.1866ms)[39m[39m
+[31m✖ T4: TC-22 — абонент, електровелосипед, 30 хв → до сплати 3200 [90m(1.2687ms)[39m[39m
+[31m✖ T4: TC-23 — абонент, електровелосипед, 45 хв → до сплати 6400 [90m(0.3512ms)[39m[39m
+[32m✔ T5: TC-24 — пільговий, 40 хв → до сплати 2500 [90m(0.2543ms)[39m[39m
+[32m✔ T5: TC-25 — пільговий, електровелосипед, 30 хв → до сплати 2000 [90m(0.3131ms)[39m[39m
+[32m✔ T5: TC-26 — абонент із правом на пільгу, 80 хв → до сплати 3750 [90m(0.1982ms)[39m[39m
+[32m✔ T5: TC-27 — абонент із правом на пільгу, 40 хв → до сплати 0 [90m(0.1504ms)[39m[39m
+[32m✔ T5: TC-28 — абонент із правом на пільгу, 100 хв → до сплати 5000 [90m(0.1089ms)[39m[39m
+[31m✖ T5, T7: TC-29 — пільговий, 20 хв, станція X01 (збір без пільги) → до сплати 16250 [90m(0.3273ms)[39m[39m
+[31m✖ T5, T8: TC-30 — пільговий, 16.09 10:00 → 17.09 11:00 (25 год, збір без пільги) → до сплати 230000 [90m(0.5956ms)[39m[39m
+[32m✔ T5: TC-28 — абонент із правом на пільгу, 100 хв, суми рівні → застосовано абонемент, не пільгу [90m(0.5764ms)[39m[39m
+[32m✔ T6: TC-31 — три поїздки електровелосипедом по 80 хв 16.09 → 12 000; 12 000; 6 000 [90m(3.0722ms)[39m[39m
+[32m✔ T6: TC-32 — після TC-31 — 16.09 20:00 → 20:30 → ліміт вичерпано → 0 [90m(0.4424ms)[39m[39m
+[32m✔ T6, T7: TC-33 — після TC-31 — 16.09 20:00 → 20:20, станція X02 → 0 + збір → 15 000 [90m(0.3554ms)[39m[39m
+[32m✔ T6: TC-34 — після TC-31 для U1 — U2, електровелосипед, 16.09 19:00 → 20:20 → ліміт окремий → 12 000 [90m(0.2374ms)[39m[39m
+[32m✔ T6: TC-38 — після TC-31 — 16.09 23:40 → 17.09 00:20 → належить 16.09 → 0 [90m(0.2372ms)[39m[39m
+[31m✖ T6, T10: TC-39 — після TC-31 — 2026-09-16T22:00:00Z → 22:30:00Z (17.09 01:00–01:30 за Києвом) → нова доба, нічна → 1 750 [90m(1.4571ms)[39m[39m
+[32m✔ T5, T6: TC-40 — пільговий, електровелосипед, шість поїздок по 80 хв 16.09 → 6 000 × 5, шоста 0 [90m(0.2887ms)[39m[39m
+[32m✔ T6: TC-35 — електровелосипед, 10:00 → 18:00 (480 хв, 64 000) → до сплати 30000 [90m(0.251ms)[39m[39m
+[32m✔ T6: TC-36 — 10:00 → 16:00 (360 хв, рівно 30 000) → до сплати 30000 [90m(0.2071ms)[39m[39m
+[32m✔ T6: TC-37 — 10:00 → 16:01 (361 хв, 32 500) → до сплати 30000 [90m(0.2319ms)[39m[39m
+[32m✔ T6: TC-36 — рівно 30 000: у чеку немає рядка ліміту [90m(1.8941ms)[39m[39m
+[32m✔ T7: TC-41 — 20 хв, станція X01 → до сплати 17500 [90m(3.1929ms)[39m[39m
+[32m✔ T7: TC-42 — 20 хв, станція X02 → до сплати 17500 [90m(0.4719ms)[39m[39m
+[32m✔ T7: TC-42 — 20 хв, станція X03 → до сплати 17500 [90m(0.1776ms)[39m[39m
+[32m✔ T7: TC-43 — 20 хв, станція S01 → до сплати 2500 [90m(0.1124ms)[39m[39m
+[32m✔ T7: TC-43 — 20 хв, станція S02 → до сплати 2500 [90m(0.1353ms)[39m[39m
+[32m✔ T7: TC-43 — 20 хв, станція S03 → до сплати 2500 [90m(0.097ms)[39m[39m
+[32m✔ T7: TC-43 — 20 хв, станція S04 → до сплати 2500 [90m(0.0952ms)[39m[39m
+[32m✔ T7: TC-43 — 20 хв, станція S05 → до сплати 2500 [90m(0.0974ms)[39m[39m
+[32m✔ T7: TC-43 — 20 хв, станція S06 → до сплати 2500 [90m(0.1145ms)[39m[39m
+[32m✔ T7: TC-43 — 20 хв, станція S07 → до сплати 2500 [90m(0.1924ms)[39m[39m
+[32m✔ T7: TC-43 — 20 хв, станція S08 → до сплати 2500 [90m(0.1069ms)[39m[39m
+[32m✔ T8: TC-44 — 16.09 10:00:00 → 17.09 11:00, 25 год → до сплати 230000 [90m(0.1373ms)[39m[39m
+[32m✔ T8: TC-45 — 16.09 10:00:00 → 17.09 10:00:00, рівно 24 год → без збору → до сплати 30000 [90m(0.0874ms)[39m[39m
+[31m✖ T8: TC-46 — 16.09 10:00:00 → 17.09 10:00:01, 24 год 1 с → 1 441 хв → зі збором → до сплати 230000 [90m(0.882ms)[39m[39m
+[32m✔ T7, T8: TC-47 — 16.09 10:00:00 → 17.09 11:00, 25 год, станція X01 → до сплати 245000 [90m(0.731ms)[39m[39m
+[32m✔ T9: TC-48 — знижка 30 % від 1 235 коп. → до сплати 864 (вниз), знижка 371 [90m(1.7844ms)[39m[39m
+[32m✔ T9: TC-49 — чек поїздки TC-44 (25 год): «До сплати» — 2 300,00 грн [90m(1.3391ms)[39m[39m
+[32m✔ T9: TC-50 — чек поїздки TC-29 містить рядок: тривалість 20 хв [90m(0.5631ms)[39m[39m
+[32m✔ T9: TC-50 — чек поїздки TC-29 містить рядок: погодинне за T3 25,00 грн [90m(0.2714ms)[39m[39m
+[32m✔ T9: TC-50 — чек поїздки TC-29 містить рядок: пільга зі знаком мінус −12,50 грн [90m(0.2734ms)[39m[39m
+[31m✖ T9: TC-50 — чек поїздки TC-29 містить рядок: збір T7 150,00 грн [90m(0.8667ms)[39m[39m
+[31m✖ T9: TC-50 — чек поїздки TC-29 містить рядок: «До сплати» 162,50 грн [90m(0.3009ms)[39m[39m
+[32m✔ charges recorded for a day reduce what is left of the cap [90m(1.4908ms)[39m[39m
+[32m✔ the day of a ride is the date of its pickup [90m(0.1503ms)[39m[39m
+[32m✔ amounts are shown in hryvnias [90m(1.4908ms)[39m[39m
+[32m✔ a receipt has a line for every item [90m(0.5324ms)[39m[39m
+[32m✔ GET / serves the page and GET /api/health answers [90m(1.532ms)[39m[39m
+[32m✔ POST /api/quote returns the quote and the receipt [90m(2.6787ms)[39m[39m
+[32m✔ POST /api/quote answers 400 to a body that is not JSON [90m(0.5432ms)[39m[39m
+[32m✔ quote returns an itemised price [90m(1.4111ms)[39m[39m
+[32m✔ a ride of 30 min 20 s is billed as one block [90m(0.1628ms)[39m[39m
+[32m✔ e-bikes are billed at the e-bike rate [90m(0.1378ms)[39m[39m
+[32m✔ subscribers ride the first 45 minutes free [90m(0.1652ms)[39m[39m
+[32m✔ subscription on a long e-bike ride [90m(0.1342ms)[39m[39m
+[32m✔ reduced fare for a ride returned outside the zone [90m(0.1348ms)[39m[39m
+[32m✔ night rides get 30 % off [90m(0.1093ms)[39m[39m
+[32m✔ a bike kept over a day and left outside the zone pays both fees [90m(0.1172ms)[39m[39m
+[32m✔ the daily cap limits the time charge [90m(0.4863ms)[39m[39m
+[32m✔ a 45-minute classic ride costs 50 UAH [90m(0.451ms)[39m[39m
+[32m✔ a return before the pickup is rejected [90m(0.3924ms)[39m[39m
+[34mℹ tests 96[39m
+[34mℹ suites 0[39m
+[34mℹ pass 84[39m
+[34mℹ fail 12[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 264.9448[39m
+
+[31m✖ failing tests:[39m
+
+test at test\spec\t1-t3-duration-blocks.test.js:26:3
+[31m✖ T1: TC-04 — 10:00:00 → 10:30:01 → 31 хв, до сплати 5000 [90m(2.7927ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   minutes: 30,
+  +   total: 2500
+  -   minutes: 31,
+  -   total: 5000
+    }
+  
+      at TestContext.<anonymous> (file:///K:/udcHomeTask/Git/2026-udc-12-testing-qa-hw/app/test/spec/t1-t3-duration-blocks.test.js:28:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 30, total: 2500 },
+    expected: { minutes: 31, total: 5000 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t1-t3-duration-blocks.test.js:26:3
+[31m✖ T1, T2: TC-05 — 10:00:00 → 10:01:30 → 2 хв, до сплати 0 [90m(0.7548ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      minutes: 2,
+  +   total: 2500
+  -   total: 0
+    }
+  
+      at TestContext.<anonymous> (file:///K:/udcHomeTask/Git/2026-udc-12-testing-qa-hw/app/test/spec/t1-t3-duration-blocks.test.js:28:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 2, total: 2500 },
+    expected: { minutes: 2, total: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t1-t3-duration-blocks.test.js:26:3
+[31m✖ T2: TC-07 — 10:00:00 → 10:02:00 → 2 хв, до сплати 0 [90m(0.7176ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      minutes: 2,
+  +   total: 2500
+  -   total: 0
+    }
+  
+      at TestContext.<anonymous> (file:///K:/udcHomeTask/Git/2026-udc-12-testing-qa-hw/app/test/spec/t1-t3-duration-blocks.test.js:28:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 2, total: 2500 },
+    expected: { minutes: 2, total: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t1-t3-duration-blocks.test.js:26:3
+[31m✖ T2: TC-08 — 10:00:00 → 10:02:01 → 3 хв, до сплати 2500 [90m(0.352ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   minutes: 2,
+  -   minutes: 3,
+      total: 2500
+    }
+  
+      at TestContext.<anonymous> (file:///K:/udcHomeTask/Git/2026-udc-12-testing-qa-hw/app/test/spec/t1-t3-duration-blocks.test.js:28:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 2, total: 2500 },
+    expected: { minutes: 3, total: 2500 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t4-t5-subscription-reduced.test.js:84:3
+[31m✖ T4: TC-22 — абонент, електровелосипед, 30 хв → до сплати 3200 [90m(1.2687ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 3200
+  
+      at TestContext.<anonymous> (file:///K:/udcHomeTask/Git/2026-udc-12-testing-qa-hw/app/test/spec/t4-t5-subscription-reduced.test.js:86:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 3200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t4-t5-subscription-reduced.test.js:84:3
+[31m✖ T4: TC-23 — абонент, електровелосипед, 45 хв → до сплати 6400 [90m(0.3512ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 6400
+  
+      at TestContext.<anonymous> (file:///K:/udcHomeTask/Git/2026-udc-12-testing-qa-hw/app/test/spec/t4-t5-subscription-reduced.test.js:86:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 6400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t4-t5-subscription-reduced.test.js:84:3
+[31m✖ T5, T7: TC-29 — пільговий, 20 хв, станція X01 (збір без пільги) → до сплати 16250 [90m(0.3273ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  8750 !== 16250
+  
+      at TestContext.<anonymous> (file:///K:/udcHomeTask/Git/2026-udc-12-testing-qa-hw/app/test/spec/t4-t5-subscription-reduced.test.js:86:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 8750,
+    expected: 16250,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t4-t5-subscription-reduced.test.js:84:3
+[31m✖ T5, T8: TC-30 — пільговий, 16.09 10:00 → 17.09 11:00 (25 год, збір без пільги) → до сплати 230000 [90m(0.5956ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  130000 !== 230000
+  
+      at TestContext.<anonymous> (file:///K:/udcHomeTask/Git/2026-udc-12-testing-qa-hw/app/test/spec/t4-t5-subscription-reduced.test.js:86:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 130000,
+    expected: 230000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t6-day-cap.test.js:77:3
+[31m✖ T6, T10: TC-39 — після TC-31 — 2026-09-16T22:00:00Z → 22:30:00Z (17.09 01:00–01:30 за Києвом) → нова доба, нічна → 1 750 [90m(1.4571ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   0
+  -   1750
+    ]
+  
+      at TestContext.<anonymous> (file:///K:/udcHomeTask/Git/2026-udc-12-testing-qa-hw/app/test/spec/t6-day-cap.test.js:85:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 0 ],
+    expected: [ 1750 ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t7-t8-fees.test.js:34:3
+[31m✖ T8: TC-46 — 16.09 10:00:00 → 17.09 10:00:01, 24 год 1 с → 1 441 хв → зі збором → до сплати 230000 [90m(0.882ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  30000 !== 230000
+  
+      at TestContext.<anonymous> (file:///K:/udcHomeTask/Git/2026-udc-12-testing-qa-hw/app/test/spec/t7-t8-fees.test.js:36:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 30000,
+    expected: 230000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t9-amounts-receipt.test.js:39:3
+[31m✖ T9: TC-50 — чек поїздки TC-29 містить рядок: збір T7 150,00 грн [90m(0.8667ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: немає рядка «збір T7 150,00 грн» у чеку:
+  Тривалість поїздки: 20 хв
+  Погодинне нарахування .............. 25,00 грн
+  Знижка: пільговий тариф ........... -12,50 грн
+  Збір: повернення поза зоною ........ 75,00 грн
+  До сплати .......................... 87,50 грн
+      at TestContext.<anonymous> (file:///K:/udcHomeTask/Git/2026-udc-12-testing-qa-hw/app/test/spec/t9-amounts-receipt.test.js:41:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\spec\t9-amounts-receipt.test.js:39:3
+[31m✖ T9: TC-50 — чек поїздки TC-29 містить рядок: «До сплати» 162,50 грн [90m(0.3009ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: немає рядка ««До сплати» 162,50 грн» у чеку:
+  Тривалість поїздки: 20 хв
+  Погодинне нарахування .............. 25,00 грн
+  Знижка: пільговий тариф ........... -12,50 грн
+  Збір: повернення поза зоною ........ 75,00 грн
+  До сплати .......................... 87,50 грн
+      at TestContext.<anonymous> (file:///K:/udcHomeTask/Git/2026-udc-12-testing-qa-hw/app/test/spec/t9-amounts-receipt.test.js:41:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

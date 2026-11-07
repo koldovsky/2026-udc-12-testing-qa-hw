@@ -1,0 +1,130 @@
+▶ DAY_CAP
+  [32m✔ is 300 UAH in kopecks [90m(0.3633ms)[39m[39m
+[32m✔ DAY_CAP [90m(0.8815ms)[39m[39m
+▶ dayKey
+  [32m✔ returns YYYY-MM-DD for an epoch-milliseconds instant [90m(0.8182ms)[39m[39m
+  [32m✔ accepts an ISO string as well [90m(0.082ms)[39m[39m
+  [32m✔ last and first millisecond of a UTC day fall on different days [90m(0.0616ms)[39m[39m
+  [32m✔ uses the UTC calendar day (not Kyiv local day) [90m(0.0636ms)[39m[39m
+  [32m✔ throws RangeError for an invalid instant [90m(0.2951ms)[39m[39m
+[32m✔ dayKey [90m(1.5065ms)[39m[39m
+▶ createDayCap
+  [32m✔ defaults the limit to DAY_CAP and exposes it [90m(0.2248ms)[39m[39m
+  [32m✔ accepts a custom limit [90m(0.1124ms)[39m[39m
+  [32m✔ a rider with no charges has the full limit remaining and 0 charged [90m(0.0885ms)[39m[39m
+  [32m✔ record reduces what remains on the same day [90m(0.1246ms)[39m[39m
+  [32m✔ records on the same day accumulate [90m(0.1455ms)[39m[39m
+  [32m✔ remaining never goes below zero when more than the limit was recorded [90m(0.0688ms)[39m[39m
+  [32m✔ remaining is exactly zero when the limit is reached [90m(0.0418ms)[39m[39m
+  [32m✔ recording zero changes nothing [90m(0.0501ms)[39m[39m
+  [32m✔ riders are tracked separately [90m(0.2179ms)[39m[39m
+  [32m✔ days are tracked separately [90m(0.2187ms)[39m[39m
+  [32m✔ the day boundary is midnight UTC (current behaviour) [90m(0.0927ms)[39m[39m
+  [32m✔ separate ledgers do not share state [90m(0.0377ms)[39m[39m
+  [32m✔ chargedOn takes the day string, not an instant [90m(0.0319ms)[39m[39m
+[32m✔ createDayCap [90m(2.4009ms)[39m[39m
+▶ constants
+  [32m✔ tariff constants have the values the code relies on [90m(0.7847ms)[39m[39m
+[32m✔ constants [90m(1.3035ms)[39m[39m
+▶ discount
+  [32m✔ returns the percentage off for exact amounts [90m(0.0903ms)[39m[39m
+  [32m✔ rounds what is left to pay down, so the discount rounds up [90m(0.0636ms)[39m[39m
+  [32m✔ edge percentages and zero amount [90m(0.0569ms)[39m[39m
+[32m✔ discount [90m(0.3231ms)[39m[39m
+▶ quote — result shape
+  [32m✔ returns minutes, timeCharge, discounts, fees and total [90m(0.6839ms)[39m[39m
+  [32m✔ total = timeCharge − discounts + fees [90m(0.1446ms)[39m[39m
+[32m✔ quote — result shape [90m(0.9411ms)[39m[39m
+▶ quote — time charge (standard rider)
+  [32m✔ a zero-length ride is free [90m(0.1267ms)[39m[39m
+  [32m✔ rides shorter than the free start (under 2 min) cost nothing [90m(0.0701ms)[39m[39m
+  [32m✔ from 2 minutes the first 30-minute block is charged in full [90m(0.0874ms)[39m[39m
+  [32m✔ each started 30-minute block is charged [90m(0.1379ms)[39m[39m
+  [32m✔ ride length is rounded to the nearest minute [90m(0.1363ms)[39m[39m
+  [32m✔ e-bike rate is 40 UAH per block [90m(0.0555ms)[39m[39m
+  [32m✔ pickup and return in different offsets are compared as instants [90m(0.0373ms)[39m[39m
+[32m✔ quote — time charge (standard rider) [90m(0.8223ms)[39m[39m
+▶ quote — reduced fare
+  [32m✔ halves the time charge [90m(0.075ms)[39m[39m
+  [32m✔ no discount line when there is nothing to discount [90m(0.0419ms)[39m[39m
+  [32m✔ halves the out-of-zone fee [90m(0.0613ms)[39m[39m
+  [32m✔ halves the unreturned-bike fee [90m(0.0755ms)[39m[39m
+  [32m✔ a reduced rider's free ride returned out of zone pays the full fee (current behaviour) [90m(0.0509ms)[39m[39m
+[32m✔ quote — reduced fare [90m(0.3884ms)[39m[39m
+▶ quote — subscription
+  [32m✔ the first 45 minutes are free [90m(0.093ms)[39m[39m
+  [32m✔ past 45 minutes, started blocks of the remainder are charged [90m(0.0627ms)[39m[39m
+  [32m✔ subscription discount = full charge − subscription charge [90m(0.0373ms)[39m[39m
+  [32m✔ e-bike subscription charge gets 20% off [90m(0.0354ms)[39m[39m
+  [32m✔ subscriber fees are not reduced [90m(0.038ms)[39m[39m
+  [32m✔ a free subscriber ride has no discount line [90m(0.0303ms)[39m[39m
+[32m✔ quote — subscription [90m(0.382ms)[39m[39m
+▶ quote — subscriber with concession (cheaper plan wins)
+  [32m✔ reduced fare wins when it is cheaper than subscription [90m(0.0752ms)[39m[39m
+  [32m✔ subscription wins when it is cheaper than reduced fare [90m(0.0371ms)[39m[39m
+  [32m✔ on a tie the subscription is chosen [90m(0.0636ms)[39m[39m
+  [32m✔ fees are halved only when the reduced plan is chosen [90m(0.0541ms)[39m[39m
+  [32m✔ concession must be exactly true [90m(0.0688ms)[39m[39m
+  [32m✔ concession is ignored for a standard rider [90m(0.0508ms)[39m[39m
+[32m✔ quote — subscriber with concession (cheaper plan wins) [90m(0.4334ms)[39m[39m
+▶ quote — night discount
+  [32m✔ 30% off for a pickup before 06:00 Kyiv time [90m(0.0885ms)[39m[39m
+  [32m✔ boundary: 05:59 is night, 06:00 is not (winter, UTC+2) [90m(0.0518ms)[39m[39m
+  [32m✔ boundary: 00:00 Kyiv is night [90m(0.0357ms)[39m[39m
+  [32m✔ Kyiv hour is used whatever offset the pickup is written in [90m(0.0486ms)[39m[39m
+  [32m✔ summer time (UTC+3) is respected [90m(0.058ms)[39m[39m
+  [32m✔ only the pickup time matters, not the return time [90m(0.0496ms)[39m[39m
+  [32m✔ applies after the fare plan, on what is left to pay [90m(0.0502ms)[39m[39m
+  [32m✔ not applied when nothing is left to pay [90m(0.0506ms)[39m[39m
+  [32m✔ does not apply to fees [90m(0.0476ms)[39m[39m
+[32m✔ quote — night discount [90m(0.6077ms)[39m[39m
+▶ quote — daily cap without a ledger
+  [32m✔ a single ride's time charge is capped at 300 UAH [90m(0.072ms)[39m[39m
+  [32m✔ exactly at the cap there is no day-cap line [90m(0.0338ms)[39m[39m
+  [32m✔ the cap is applied after other discounts [90m(0.0408ms)[39m[39m
+  [32m✔ fees are added on top of the capped time charge [90m(0.0539ms)[39m[39m
+[32m✔ quote — daily cap without a ledger [90m(0.2734ms)[39m[39m
+▶ quote — daily cap with a ledger
+  [32m✔ requires rider.id [90m(0.4004ms)[39m[39m
+  [32m✔ books the amount due (after discounts) into the ledger [90m(0.1232ms)[39m[39m
+  [32m✔ fees are not booked into the ledger [90m(0.0563ms)[39m[39m
+  [32m✔ rides on the same day share the cap [90m(0.1172ms)[39m[39m
+  [32m✔ a capped-out rider still pays fees [90m(0.0647ms)[39m[39m
+  [32m✔ other riders and other days are not affected [90m(0.0781ms)[39m[39m
+  [32m✔ honours a custom ledger limit [90m(0.0518ms)[39m[39m
+  [32m✔ a free ride is booked as zero [90m(0.0554ms)[39m[39m
+  [32m✔ an after-midnight Kyiv ride is booked on the previous UTC day (current behaviour) [90m(0.0737ms)[39m[39m
+[32m✔ quote — daily cap with a ledger [90m(1.1553ms)[39m[39m
+▶ quote — fees
+  [32m✔ out-of-zone return adds 150 UAH [90m(0.4163ms)[39m[39m
+  [32m✔ in-zone return has no fee [90m(0.0721ms)[39m[39m
+  [32m✔ unreturned fee applies strictly after 24 hours [90m(0.0465ms)[39m[39m
+  [32m✔ both fees together, out-of-zone first [90m(0.0449ms)[39m[39m
+  [32m✔ fees apply even to a free ride [90m(0.0251ms)[39m[39m
+[32m✔ quote — fees [90m(0.6745ms)[39m[39m
+▶ quote — zones option
+  [32m✔ uses a custom station table [90m(0.0675ms)[39m[39m
+  [32m✔ a default station is unknown to a custom table [90m(0.0801ms)[39m[39m
+  [32m✔ any object with zoneOf works [90m(0.0475ms)[39m[39m
+[32m✔ quote — zones option [90m(0.2507ms)[39m[39m
+▶ quote — validation
+  [32m✔ QuoteError is an Error named QuoteError [90m(0.0902ms)[39m[39m
+  [32m✔ ride is required and must be an object [90m(0.0645ms)[39m[39m
+  [32m✔ pickupAt / returnAt must be ISO date-times with an offset [90m(0.1308ms)[39m[39m
+  [32m✔ accepted ISO variants: no seconds, fractional seconds, Z, offset [90m(0.0375ms)[39m[39m
+  [32m✔ a well-formed but impossible date is rejected [90m(0.0354ms)[39m[39m
+  [32m✔ returnAt before pickupAt is rejected; equal is allowed [90m(0.0365ms)[39m[39m
+  [32m✔ unknown bike types are rejected, including inherited property names [90m(0.056ms)[39m[39m
+  [32m✔ unknown stations are rejected [90m(0.0376ms)[39m[39m
+  [32m✔ rider must exist and have a known type [90m(0.0482ms)[39m[39m
+  [32m✔ ride is validated before rider [90m(0.0229ms)[39m[39m
+  [32m✔ a failed quote books nothing into the ledger [90m(0.0439ms)[39m[39m
+[32m✔ quote — validation [90m(0.7119ms)[39m[39m
+[34mℹ tests 90[39m
+[34mℹ suites 16[39m
+[34mℹ pass 90[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 97.2062[39m
