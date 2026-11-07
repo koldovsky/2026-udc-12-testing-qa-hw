@@ -1,0 +1,184 @@
+diff --git a/app/test/unit/day-cap.test.js b/app/test/unit/day-cap.test.js
+index 817aaf4..d83e364 100644
+--- a/app/test/unit/day-cap.test.js
++++ b/app/test/unit/day-cap.test.js
+@@ -11,3 +11,42 @@ test("charges recorded for a day reduce what is left of the cap", () => {
+ test("the day of a ride is the date of its pickup", () => {
+   assert.equal(dayKey("2026-09-16T08:00:00Z"), "2026-09-16");
+ });
++
++// Свіжий реєстр: ліміт доби доступний повністю, нараховано нічого. Точні значення, а не
++// «менше за ліміт», — інакше помилка на одиницю в `remaining()` лишається непоміченою.
++test("a fresh ledger leaves the whole cap and has nothing charged", () => {
++  const ledger = createDayCap();
++  assert.equal(ledger.limit, DAY_CAP, "ліміт за замовчуванням");
++  assert.equal(ledger.remaining("rider-new", "2026-09-16T08:00:00Z"), DAY_CAP, "доступний увесь ліміт");
++  assert.equal(ledger.chargedOn("rider-new", "2026-09-16"), 0, "за добу нічого не нараховано");
++});
++
++test("remaining and chargedOn report exact amounts, per rider and per day", () => {
++  const ledger = createDayCap();
++  ledger.record("rider-1", "2026-09-16T08:00:00Z", 12000);
++  assert.equal(ledger.chargedOn("rider-1", "2026-09-16"), 12000);
++  assert.equal(ledger.remaining("rider-1", "2026-09-16T12:00:00Z"), DAY_CAP - 12000);
++
++  // Нарахування складаються; понад ліміт залишок — рівно 0, а не від'ємне число.
++  ledger.record("rider-1", "2026-09-16T12:00:00Z", 25000);
++  assert.equal(ledger.chargedOn("rider-1", "2026-09-16"), 37000, "нарахування за добу складаються");
++  assert.equal(ledger.remaining("rider-1", "2026-09-16T20:00:00Z"), 0, "залишок не буває від'ємним");
++
++  assert.equal(ledger.chargedOn("rider-1", "2026-09-17"), 0, "інша доба — окремий рахунок");
++  assert.equal(ledger.remaining("rider-1", "2026-09-17T08:00:00Z"), DAY_CAP, "нова доба — повний ліміт");
++  assert.equal(ledger.chargedOn("rider-2", "2026-09-16"), 0, "інший користувач — окремий рахунок");
++});
++
++// T6 (docs/spec/tariffs.md:101-102): доба — київська календарна дата моменту взяття.
++test("the day is the Kyiv calendar date of the pickup, not the UTC one", () => {
++  assert.equal(dayKey("2026-09-16T21:30:00Z"), "2026-09-17", "00:30 за Києвом — це вже наступна доба");
++  assert.equal(dayKey("2026-09-16T23:40:00+03:00"), "2026-09-16", "23:40 за Києвом — ще та сама доба");
++});
++
++// Налаштовуваний ліміт: межа «рівно ліміт» ще не вичерпує його, а перевищення дає 0.
++test("a custom limit is respected at its exact boundary", () => {
++  const ledger = createDayCap({ limit: 1000 });
++  assert.equal(ledger.remaining("rider-3", "2026-09-16T08:00:00Z"), 1000);
++  ledger.record("rider-3", "2026-09-16T08:00:00Z", 1000);
++  assert.equal(ledger.remaining("rider-3", "2026-09-16T09:00:00Z"), 0);
++});
+diff --git a/app/test/unit/tariff-boundaries.test.js b/app/test/unit/tariff-boundaries.test.js
+new file mode 100644
+index 0000000..dccccd4
+--- /dev/null
++++ b/app/test/unit/tariff-boundaries.test.js
+@@ -0,0 +1,104 @@
++// Межові тести quote(), написані під мутантів, що вижили в `npm run mutate` (Task C).
++// Оракул очікувань — docs/spec/tariffs.md; кожен тест перевіряє не лише `total`,
++// а й склад `discounts` — саме там мутації лишалися непоміченими.
++//
++// Мутанти, яких ці тести вбивають (ід з ai-runs/c-before.txt):
++//   M030  tariff.js:71  60_000 → 60001  — крок округлення тривалості (T1)
++//   M018  tariff.js:50  due > 0 → >=    — нічна знижка на нульовому нарахуванні (T10)
++//   M023  tariff.js:57  due > allowance → >=   — рівно ліміт доби (T6)
++//   M081  day-cap.js:23 ?? 0 → ?? 1     — залишок ліміту для першої поїздки доби (T6)
++//   M024  tariff.js:58  due - allowance → +    — сума знижки «day-cap» у чеку (T6)
++//   M065  tariff.js:120 || → &&         — відсутня поїздка (§4)
++//   M076  tariff.js:136 || → &&         — момент не за ISO 8601 (§4)
++
++import test from "node:test";
++import assert from "node:assert/strict";
++import { createDayCap, DAY_CAP } from "../../src/day-cap.js";
++import { QuoteError, quote } from "../../src/tariff.js";
++
++const ride = (pickupAt, returnAt, extra = {}) => ({
++  pickupAt,
++  returnAt,
++  bike: "classic",
++  returnStation: "S01",
++  ...extra,
++});
++const standard = { type: "standard" };
++// Київський час: у вересні 2026 зсув +03:00.
++const at = (time, date = "2026-09-16") => `${date}T${time}+03:00`;
++
++// T1 (docs/spec/tariffs.md:46): неповна хвилина рахується як повна. Найтонша межа правила —
++// перевищення на одну мілісекунду: 1 хв 1 мс — це вже 2 хвилини.
++test("T1: 1 хв 1 мс → 2 хвилини (неповна хвилина як повна)", () => {
++  const result = quote(ride(at("10:00:00.000"), at("10:01:00.001")), standard);
++  assert.equal(result.minutes, 2, "тривалість у хвилинах");
++  assert.equal(result.timeCharge, 0, "T2: до 2 хвилин включно погодинного немає");
++});
++
++// T2 + T10: якщо до сплати 0, нічна знижка не має з'являтися в чеку рядком на 0.
++test("T2 + T10: нічна поїздка 2 хв → 0 до сплати і жодної знижки в чеку", () => {
++  const result = quote(ride(at("01:00:00"), at("01:02:00")), standard);
++  assert.equal(result.minutes, 2, "тривалість у хвилинах");
++  assert.equal(result.timeCharge, 0, "нарахування за T3");
++  assert.deepEqual(result.discounts, [], "знижок немає: знижувати нічого");
++  assert.equal(result.total, 0, "до сплати");
++});
++
++// T6 (docs/spec/tariffs.md:101-102): ліміт — 300 грн на добу. Рівно ліміт ще не є
++// перевищенням: 360 хв класичного = 12 блоків × 2500 = 30000.
++test("T6: погодинне рівно 30000 → ліміт не перевищено, рядка «day-cap» у чеку немає", () => {
++  const dayCap = createDayCap();
++  const rider = { id: "rider-cap-exact", type: "standard" };
++  const pickupAt = at("09:00:00");
++
++  const result = quote(ride(pickupAt, at("15:00:00")), rider, { dayCap });
++  assert.equal(result.minutes, 360, "тривалість у хвилинах");
++  assert.equal(result.timeCharge, DAY_CAP, "12 блоків × 2500 = рівно ліміт доби");
++  assert.deepEqual(result.discounts, [], "ліміт не перевищено — знижки немає");
++  assert.equal(result.total, DAY_CAP, "до сплати");
++  assert.equal(dayCap.remaining(rider.id, Date.parse(pickupAt)), 0, "ліміт доби вичерпано");
++});
++
++// T6: перевищення — знижка «day-cap» рівно на різницю. 390 хв = 13 блоків × 2500 = 32500.
++test("T6: погодинне 32500 → знижка «day-cap» рівно на перевищення (2500)", () => {
++  const dayCap = createDayCap();
++  const rider = { id: "rider-cap-over", type: "standard" };
++
++  const result = quote(ride(at("09:00:00"), at("15:30:00")), rider, { dayCap });
++  assert.equal(result.minutes, 390, "тривалість у хвилинах");
++  assert.equal(result.timeCharge, 32500, "нарахування за T3 до ліміту");
++  assert.deepEqual(result.discounts, [{ code: "day-cap", amount: 2500 }], "знижка — рівно перевищення");
++  assert.equal(result.total, DAY_CAP, "до сплати — ліміт доби");
++});
++
++// §4 (docs/spec/tariffs.md:147-149): некоректні дані відхиляються з поясненням. Перевіряємо
++// й текст пояснення — інакше «відхилено не з тієї причини» лишається непоміченим.
++test("§4: поїздки немає або вона не об'єкт → відмова з поясненням саме про поїздку", () => {
++  for (const bad of [null, undefined, "2026-09-16", 42, true]) {
++    assert.throws(
++      () => quote(bad, standard),
++      { name: "QuoteError", message: "ride is required" },
++      `ride = ${JSON.stringify(bad) ?? "undefined"}`,
++    );
++  }
++});
++
++test("§4: момент не за ISO 8601 або без зсуву → відмова з поясненням про момент", () => {
++  const bad = ["2026-09-16T10:00", "2026-09-16 10:00:00Z", "2026-09-16", "16.09.2026 10:00", ""];
++  for (const value of bad) {
++    assert.throws(
++      () => quote(ride(value, at("10:20:00")), standard),
++      { name: "QuoteError", message: /^pickupAt must be an ISO 8601 date-time with an offset$/ },
++      `pickupAt = ${JSON.stringify(value)}`,
++    );
++    assert.throws(
++      () => quote(ride(at("10:00:00"), value), standard),
++      { name: "QuoteError", message: /^returnAt must be an ISO 8601 date-time with an offset$/ },
++      `returnAt = ${JSON.stringify(value)}`,
++    );
++  }
++});
++
++test("§4: QuoteError — саме той клас помилки, який експортує модуль", () => {
++  assert.throws(() => quote(null, standard), QuoteError);
++});
+diff --git a/app/test/unit/tariff.test.js b/app/test/unit/tariff.test.js
+index 788daef..fa88da0 100644
+--- a/app/test/unit/tariff.test.js
++++ b/app/test/unit/tariff.test.js
+@@ -76,14 +76,19 @@ test("a bike kept over a day and left outside the zone pays both fees", () => {
+   assert.equal(result.fees.length, 2);
+ });
+ 
++// T6: три поїздки e-bike по 80 хв — 3 блоки × 4000 = 12000 кожна, третю обрізає ліміт доби.
++// Точні суми кожної поїздки, а не «не більше за ліміт»: інакше тест проходить і тоді, коли
++// ліміт зрізає зайве або, навпаки, не зрізає нічого.
+ test("the daily cap limits the time charge", () => {
+   const dayCap = createDayCap();
+   const rider = { id: "rider-7", type: "standard" };
+-  let last;
++  const totals = [];
+   for (const [from, to] of [["06:00", "07:20"], ["10:00", "11:20"], ["15:00", "16:20"]]) {
+-    last = quote(ride(`2026-09-16T${from}:00Z`, `2026-09-16T${to}:00Z`, { bike: "ebike" }), rider, { dayCap });
++    totals.push(quote(ride(`2026-09-16T${from}:00Z`, `2026-09-16T${to}:00Z`, { bike: "ebike" }), rider, { dayCap }).total);
+   }
+-  assert.ok(last.total <= DAY_CAP);
++  assert.deepEqual(totals, [12000, 12000, 6000]);
++  assert.equal(totals.reduce((sum, value) => sum + value, 0), DAY_CAP, "за добу нараховано рівно ліміт");
++  assert.equal(dayCap.remaining(rider.id, Date.parse("2026-09-16T15:00:00Z")), 0);
+ });
+ 
+ test("a 45-minute classic ride costs 50 UAH", () => {

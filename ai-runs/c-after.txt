@@ -1,0 +1,223 @@
+TAP version 13
+# Subtest: charges recorded for a day reduce what is left of the cap
+ok 1 - charges recorded for a day reduce what is left of the cap
+  ---
+  duration_ms: 1.10875
+  type: 'test'
+  ...
+# Subtest: the day of a ride is the date of its pickup
+ok 2 - the day of a ride is the date of its pickup
+  ---
+  duration_ms: 0.098042
+  type: 'test'
+  ...
+# Subtest: a fresh ledger leaves the whole cap and has nothing charged
+ok 3 - a fresh ledger leaves the whole cap and has nothing charged
+  ---
+  duration_ms: 0.085042
+  type: 'test'
+  ...
+# Subtest: remaining and chargedOn report exact amounts, per rider and per day
+ok 4 - remaining and chargedOn report exact amounts, per rider and per day
+  ---
+  duration_ms: 0.102375
+  type: 'test'
+  ...
+# Subtest: the day is the Kyiv calendar date of the pickup, not the UTC one
+ok 5 - the day is the Kyiv calendar date of the pickup, not the UTC one
+  ---
+  duration_ms: 0.066459
+  type: 'test'
+  ...
+# Subtest: a custom limit is respected at its exact boundary
+ok 6 - a custom limit is respected at its exact boundary
+  ---
+  duration_ms: 0.1345
+  type: 'test'
+  ...
+# Subtest: amounts are shown in hryvnias
+ok 7 - amounts are shown in hryvnias
+  ---
+  duration_ms: 1.008125
+  type: 'test'
+  ...
+# Subtest: a receipt has a line for every item
+ok 8 - a receipt has a line for every item
+  ---
+  duration_ms: 0.313833
+  type: 'test'
+  ...
+# Subtest: GET / serves the page and GET /api/health answers
+ok 9 - GET / serves the page and GET /api/health answers
+  ---
+  duration_ms: 2.140292
+  type: 'test'
+  ...
+# Subtest: POST /api/quote returns the quote and the receipt
+ok 10 - POST /api/quote returns the quote and the receipt
+  ---
+  duration_ms: 2.442833
+  type: 'test'
+  ...
+# Subtest: POST /api/quote answers 400 to a body that is not JSON
+ok 11 - POST /api/quote answers 400 to a body that is not JSON
+  ---
+  duration_ms: 0.626667
+  type: 'test'
+  ...
+# Subtest: T1: 1 хв 1 мс → 2 хвилини (неповна хвилина як повна)
+ok 12 - T1: 1 хв 1 мс → 2 хвилини (неповна хвилина як повна)
+  ---
+  duration_ms: 1.220709
+  type: 'test'
+  ...
+# Subtest: T2 + T10: нічна поїздка 2 хв → 0 до сплати і жодної знижки в чеку
+ok 13 - T2 + T10: нічна поїздка 2 хв → 0 до сплати і жодної знижки в чеку
+  ---
+  duration_ms: 1.058958
+  type: 'test'
+  ...
+# Subtest: T6: погодинне рівно 30000 → ліміт не перевищено, рядка «day-cap» у чеку немає
+ok 14 - T6: погодинне рівно 30000 → ліміт не перевищено, рядка «day-cap» у чеку немає
+  ---
+  duration_ms: 0.264291
+  type: 'test'
+  ...
+# Subtest: T6: погодинне 32500 → знижка «day-cap» рівно на перевищення (2500)
+ok 15 - T6: погодинне 32500 → знижка «day-cap» рівно на перевищення (2500)
+  ---
+  duration_ms: 0.182292
+  type: 'test'
+  ...
+# Subtest: §4: поїздки немає або вона не об'єкт → відмова з поясненням саме про поїздку
+ok 16 - §4: поїздки немає або вона не об'єкт → відмова з поясненням саме про поїздку
+  ---
+  duration_ms: 0.323417
+  type: 'test'
+  ...
+# Subtest: §4: момент не за ISO 8601 або без зсуву → відмова з поясненням про момент
+ok 17 - §4: момент не за ISO 8601 або без зсуву → відмова з поясненням про момент
+  ---
+  duration_ms: 0.218791
+  type: 'test'
+  ...
+# Subtest: §4: QuoteError — саме той клас помилки, який експортує модуль
+ok 18 - §4: QuoteError — саме той клас помилки, який експортує модуль
+  ---
+  duration_ms: 0.125583
+  type: 'test'
+  ...
+# Subtest: quote returns an itemised price
+ok 19 - quote returns an itemised price
+  ---
+  duration_ms: 1.380541
+  type: 'test'
+  ...
+# Subtest: a ride of 30 min 20 s is 31 minutes and is billed as two blocks
+ok 20 - a ride of 30 min 20 s is 31 minutes and is billed as two blocks
+  ---
+  duration_ms: 0.16425
+  type: 'test'
+  ...
+# Subtest: e-bikes are billed at the e-bike rate
+ok 21 - e-bikes are billed at the e-bike rate
+  ---
+  duration_ms: 0.080417
+  type: 'test'
+  ...
+# Subtest: subscribers ride the first 45 minutes free on a classic bike, and pay 20 % less on an e-bike
+ok 22 - subscribers ride the first 45 minutes free on a classic bike, and pay 20 % less on an e-bike
+  ---
+  duration_ms: 0.127792
+  type: 'test'
+  ...
+# Subtest: subscription on a long e-bike ride
+ok 23 - subscription on a long e-bike ride
+  ---
+  duration_ms: 0.078666
+  type: 'test'
+  ...
+# Subtest: reduced fare for a ride returned outside the zone
+ok 24 - reduced fare for a ride returned outside the zone
+  ---
+  duration_ms: 0.075333
+  type: 'test'
+  ...
+# Subtest: night rides get 30 % off
+ok 25 - night rides get 30 % off
+  ---
+  duration_ms: 0.074542
+  type: 'test'
+  ...
+# Subtest: a bike kept over a day and left outside the zone pays both fees
+ok 26 - a bike kept over a day and left outside the zone pays both fees
+  ---
+  duration_ms: 0.062875
+  type: 'test'
+  ...
+# Subtest: the daily cap limits the time charge
+ok 27 - the daily cap limits the time charge
+  ---
+  duration_ms: 1.022375
+  type: 'test'
+  ...
+# Subtest: a 45-minute classic ride costs 50 UAH
+ok 28 - a 45-minute classic ride costs 50 UAH
+  ---
+  duration_ms: 0.209083
+  type: 'test'
+  ...
+# Subtest: a return before the pickup is rejected
+ok 29 - a return before the pickup is rejected
+  ---
+  duration_ms: 0.240709
+  type: 'test'
+  ...
+1..29
+# tests 29
+# suites 0
+# pass 29
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 177.194666
+# start of coverage report
+# --------------------------------------------------------------
+# file          | line % | branch % | funcs % | uncovered lines
+# --------------------------------------------------------------
+# src           |        |          |         | 
+#  day-cap.js   | 100.00 |   100.00 |  100.00 | 
+#  kyiv-time.js | 100.00 |   100.00 |  100.00 | 
+#  receipt.js   | 100.00 |    75.00 |  100.00 | 
+#  server.js    |  89.61 |    73.91 |   71.43 | 36 39-40 73-77
+#  tariff.js    | 100.00 |    88.68 |  100.00 | 
+#  zones.js     |  96.55 |    75.00 |   66.67 | 24
+# --------------------------------------------------------------
+# all files     |  97.35 |    85.15 |   91.18 | 
+# --------------------------------------------------------------
+# end of coverage report
+мутантів: 84, паралельно: 3, базовий прогін: 328 мс
+  10/84
+  20/84
+  30/84
+  40/84
+  50/84
+  60/84
+  70/84
+  80/84
+  84/84
+Мутаційне тестування
+  цілі:   app/src/tariff.js, app/src/day-cap.js
+  тести:  app/test/unit, app/test/spec — файлів: 14, тестів: 87, пропущено: 0, todo: 0, викликів assert: 114
+
+файл                мутантів     вбито    вижило   таймаут     score
+app/src/tariff.js         77        75         2         0    97.4 %
+app/src/day-cap.js         7         7         0         0   100.0 %
+разом                     84        82         2         0    97.6 %
+
+Вижили (2) — тести не помітили цієї зміни:
+  M016  app/src/tariff.js:47:21     0 → 1                       if (plan.amount > 0) discounts.push({ code: plan.code, amount: plan...
+  M019  app/src/tariff.js:50:13     0 → 1                       if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+
+Час: 18.0 с

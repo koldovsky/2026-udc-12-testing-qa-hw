@@ -76,14 +76,19 @@ test("a bike kept over a day and left outside the zone pays both fees", () => {
   assert.equal(result.fees.length, 2);
 });
 
+// T6: три поїздки e-bike по 80 хв — 3 блоки × 4000 = 12000 кожна, третю обрізає ліміт доби.
+// Точні суми кожної поїздки, а не «не більше за ліміт»: інакше тест проходить і тоді, коли
+// ліміт зрізає зайве або, навпаки, не зрізає нічого.
 test("the daily cap limits the time charge", () => {
   const dayCap = createDayCap();
   const rider = { id: "rider-7", type: "standard" };
-  let last;
+  const totals = [];
   for (const [from, to] of [["06:00", "07:20"], ["10:00", "11:20"], ["15:00", "16:20"]]) {
-    last = quote(ride(`2026-09-16T${from}:00Z`, `2026-09-16T${to}:00Z`, { bike: "ebike" }), rider, { dayCap });
+    totals.push(quote(ride(`2026-09-16T${from}:00Z`, `2026-09-16T${to}:00Z`, { bike: "ebike" }), rider, { dayCap }).total);
   }
-  assert.ok(last.total <= DAY_CAP);
+  assert.deepEqual(totals, [12000, 12000, 6000]);
+  assert.equal(totals.reduce((sum, value) => sum + value, 0), DAY_CAP, "за добу нараховано рівно ліміт");
+  assert.equal(dayCap.remaining(rider.id, Date.parse("2026-09-16T15:00:00Z")), 0);
 });
 
 test("a 45-minute classic ride costs 50 UAH", () => {
