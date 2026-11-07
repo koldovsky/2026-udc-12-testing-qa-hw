@@ -76,3 +76,7 @@ is not visible.
 - With an empty ledger only the booked date differs. For the night ride above, `total` is 1750 on
   both. `dayCap.chargedOn("R1", day)` shows the 1750 on `2026-09-16` on `main` and on `2026-09-17`
   after the fix.
+
+---
+
+Reviewed and approved by Yurii Slynko, 2026-11-07.

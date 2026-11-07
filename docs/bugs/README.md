@@ -172,6 +172,10 @@ in text, with no spec to check them against:
 | `app/test/unit/tariff.test.js` › `reduced fare for a ride returned outside the zone` | Fee 7500, total 10000 | The reduced fare does not apply to fees: 2500 + 15000 (`docs/spec/tariffs.md:87, 112`) | Expected values are now fee 15000, total 17500. Commit `3234a10` |
 
 No test was deleted, skipped or weakened. Each change is in the commit of the fix that exposed it.
+In Task C the second test was split into one test per bike, with the same expected values, 0 and
+6400: `T4: subscribers ride the first 45 minutes free on a classic bike, an e-bike gets 20 % off:
+classic, 40 min is free` and `…: e-bike, 40 min is 8000 less 20 %` (`docs/test-quality.md`,
+section 5).
 
 ## Tests from the code run after the fixes (`ai-runs/b1-rerun.txt`)
 
@@ -279,8 +283,12 @@ The files in `ai-runs/b1-from-code/` were not changed.
 - Three test cases were added after the fixes: TC-99, TC-100 and TC-101. They cover fee
   combinations of BUG-4 that had no case, and their expected values come from the spec lines in
   `docs/test-cases.md`. That made 101 test cases in 113 tests; at the end of Task B `npm test` ran
-  133 tests, 152 after the tests added in Tasks C and D (`docs/test-quality.md`, sections 3-5, and
+  133 tests, 155 after the tests added in Tasks C and D (`docs/test-quality.md`, sections 3-5, and
   `docs/triage.md`, section 1). They are not in the table of red tests, because that table
   classifies the saved run.
 - `app/test/spec/t6-day-cap.test.js` had its own copy of the `ebike80` helper from
   `app/test/spec/support.js`. It now imports that helper. No test name or expected value changed.
+
+---
+
+Reviewed and approved by Yurii Slynko, 2026-11-07.

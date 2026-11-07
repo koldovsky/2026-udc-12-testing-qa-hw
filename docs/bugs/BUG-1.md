@@ -62,3 +62,7 @@ nearest minute then gives the same 31 min.
 - Existing test that asserted the defect: `app/test/unit/tariff.test.js` › `a ride of 30 min 20 s
   is billed as one block`. It was updated by the spec, see `docs/bugs/README.md`.
 - Tests from code that pinned the defect: 4, listed in `docs/bugs/README.md`.
+
+---
+
+Reviewed and approved by Yurii Slynko, 2026-11-07.

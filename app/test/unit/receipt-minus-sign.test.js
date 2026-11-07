@@ -2,8 +2,10 @@
 // (docs/spec/tariffs.md:133-135). The test asserts no amount and no wording of these lines, and not
 // whether a line belongs on the receipt when it reduces nothing: those are open questions Q-4 and
 // Q-12 (docs/test-cases.md:162, 170). It asserts only that every discount or cap item of the quote
-// gets a receipt line with a minus sign. Q-5 leaves the minus character open
-// (docs/test-cases.md:163), so U+2212 and the ASCII hyphen both count.
+// gets a receipt line with a minus sign, and that the summary line «До сплати», the one wording the
+// spec fixes (:135), has none, so a wrong minus there cannot stand in for a missing one on a discount
+// line. Q-5 leaves the minus character open (docs/test-cases.md:163), so U+2212 and the ASCII hyphen
+// both count.
 import test from "node:test";
 import assert from "node:assert/strict";
 import { formatReceipt } from "../../src/receipt.js";
@@ -38,5 +40,9 @@ for (const { case: name, pickupAt, minutes, bike = "classic", rider } of rows) {
 
     const withMinus = lines.filter((line) => MINUS_AMOUNT.test(line));
     assert.equal(withMinus.length, result.discounts.length, `discounts ${JSON.stringify(result.discounts)}, receipt ${JSON.stringify(lines)}`);
+
+    const due = lines.filter((line) => line.startsWith("До сплати "));
+    assert.equal(due.length, 1, `receipt ${JSON.stringify(lines)}`);
+    assert.doesNotMatch(due[0], MINUS_AMOUNT);
   });
 }

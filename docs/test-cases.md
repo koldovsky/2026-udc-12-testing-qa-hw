@@ -266,3 +266,7 @@ the code the drafts read. The Task B fixes moved them.
 | A1 | F-12 | A second calculation of the same ride is booked into the cap again (`tariff.js:61`) | Not stated, see Q-10: `docs/spec/tariffs.md:100` |
 | A1 | G-01 to G-19, H-04 to H-07, A-14 | Exact error texts, HTTP codes and accepted time formats (`tariff.js:113-133`, `server.js:38`) | Only "rejected with an explanation": `docs/spec/tariffs.md:147-149` |
 | A1 | C-23 to C-26, D-09, E-01, F-02b, F-11, G-17, G-18, J-02 | Handling of the `concession` field, a required `rider.id`, a custom ledger limit, the order of `fees`, no lines with a zero amount (`tariff.js:47, 57, 94, 105-110, 125`, `day-cap.js:10`) | Not in the spec, these are code details: `docs/spec/tariffs.md:38-39` lists the categories only, `:133-135` lists the receipt lines with no order. A cap line of 0 (E-01, F-02b) is Q-12 |
+
+---
+
+Reviewed and approved by Yurii Slynko, 2026-11-07.

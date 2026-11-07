@@ -30,3 +30,7 @@ After the Task B fixes, pass a copy of that code: `mkdir -p ../ws12-main && git 
 - What can be taken from A1 unchanged: inputs of the 70 priced cases that agree with the spec, for example C-07 to C-10, E-01, E-02 and the ledger steps F-01a to F-01d. Its П1 is a useful lead for Task B, and its П2 is an open question (Q-11). Its expected values cannot be trusted without a check against the spec.
 - What can be taken from A2 unchanged: sections 1 to 11 (97 priced cases, 4 rounding cases, 5 invalid data cases). Its section 12 maps to Q-1, Q-2, Q-3, Q-6, Q-7 and Q-9 in `docs/test-cases.md`. It does not cover the receipt text.
 - Items added after Task B or Task C: 14, from the weak assertions of Task C (`docs/test-quality.md`, section 2); 15, from the cause of the flaky test of Task D (`docs/triage.md`, section 1); 16, from CI run 1141 of Task D (`docs/triage.md`, section 2). Task B added no item: its findings are covered by items 1, 2 and 6.
+
+---
+
+Reviewed and approved by Yurii Slynko, 2026-11-07.

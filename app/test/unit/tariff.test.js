@@ -6,23 +6,34 @@ import { QuoteError, quote } from "../../src/tariff.js";
 const ride = (pickupAt, returnAt, extra = {}) => ({ pickupAt, returnAt, bike: "classic", returnStation: "S01", ...extra });
 const standard = { type: "standard" };
 
-test("quote returns an itemised price", () => {
-  const rides = [
-    ride("2026-09-16T07:00:00Z", "2026-09-16T07:01:00Z"),
-    ride("2026-09-16T07:00:00Z", "2026-09-16T07:50:00Z"),
-    ride("2026-09-16T07:00:00Z", "2026-09-16T09:10:00Z", { bike: "ebike" }),
-  ];
-  // free start (docs/spec/tariffs.md:54, 57); 2 blocks × 25 UAH (:69); 5 blocks × 40 UAH (:62, 67)
-  const totals = [0, 5000, 20000];
-  const minutes = [1, 50, 130]; // whole minutes of each ride (docs/spec/tariffs.md:45-47)
-  for (const [i, r] of rides.entries()) {
-    const result = quote(r, standard);
-    assert.equal(result.total, totals[i]);
-    assert.equal(result.minutes, minutes[i]);
-    assert.ok(Array.isArray(result.discounts)); // no discount asserted: a false start on the receipt is Q-4
-    assert.deepEqual(result.fees, []); // S01 is in the zone, no ride is over 24 h (docs/spec/tariffs.md:112, 119, 166)
-  }
+// One test per ride, so that a failing ride does not hide the others (app/AGENTS.md, rule 5). Every
+// ride is by a standard rider by day, ends at S01 in the zone and lasts under 24 h: no fee
+// (docs/spec/tariffs.md:112, 119, 166). Durations are whole minutes (:45-47).
+test("T1, T2: quote returns an itemised price: classic, 1 min is a false start", () => {
+  const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:01:00Z"), standard);
+  assert.equal(result.minutes, 1);
+  assert.equal(result.total, 0); // free start (docs/spec/tariffs.md:54, 57)
+  assert.deepEqual(result.fees, []);
+  // No discount asserted: what a false start shows as a discount is Q-4 (docs/test-cases.md:162).
 });
+
+const itemised = [
+  // 2 blocks × 25 UAH (docs/spec/tariffs.md:69)
+  { case: "classic, 50 min is 2 blocks", bike: "classic", returnAt: "2026-09-16T07:50:00Z", minutes: 50, total: 5000 },
+  // 5 blocks × 40 UAH (docs/spec/tariffs.md:62, 67)
+  { case: "e-bike, 130 min is 5 blocks", bike: "ebike", returnAt: "2026-09-16T09:10:00Z", minutes: 130, total: 20000 },
+];
+
+for (const { case: name, bike, returnAt, minutes, total } of itemised) {
+  test(`T1, T3: quote returns an itemised price: ${name}`, () => {
+    const result = quote(ride("2026-09-16T07:00:00Z", returnAt, { bike }), standard);
+    assert.equal(result.minutes, minutes);
+    assert.equal(result.total, total);
+    // No subscription, concession or night ride, and the cap is not reached (docs/spec/tariffs.md:74-77, 86, 100, 141)
+    assert.deepEqual(result.discounts, []);
+    assert.deepEqual(result.fees, []);
+  });
+}
 
 test("a ride of 30 min 20 s is billed as two blocks", () => {
   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:30:20Z"), standard);
@@ -37,12 +48,20 @@ test("e-bikes are billed at the e-bike rate", () => {
   assert.equal(result.total, 12000); // a standard rider by day at S01: no discount, no fee
 });
 
-test("subscribers ride the first 45 minutes free on a classic bike, an e-bike gets 20 % off", () => {
-  for (const [bike, total] of [["classic", 0], ["ebike", 6400]]) {
+// One test per bike, so that a failing case does not hide the other (app/AGENTS.md, rule 5).
+const subscriberRides = [
+  // the first 45 minutes are free (docs/spec/tariffs.md:74, 81)
+  { case: "classic, 40 min is free", bike: "classic", total: 0 },
+  // no free minutes: 2 blocks × 40 UAH, 20 % off (docs/spec/tariffs.md:62, 67, 76-77)
+  { case: "e-bike, 40 min is 8000 less 20 %", bike: "ebike", total: 6400 },
+];
+
+for (const { case: name, bike, total } of subscriberRides) {
+  test(`T4: subscribers ride the first 45 minutes free on a classic bike, an e-bike gets 20 % off: ${name}`, () => {
     const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { bike }), { type: "subscriber" });
     assert.equal(result.total, total);
-  }
-});
+  });
+}
 
 test("subscription on a long e-bike ride", () => {
   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T08:40:00Z", { bike: "ebike" }), { type: "subscriber" });

@@ -67,3 +67,7 @@ is not visible, there is no fee to halve. With a standard rider it is not visibl
   above). TC-99 and TC-100 are red on `main` and green from `3234a10`. TC-101 is green on `main` too.
 - The final answer of the code run noticed the halving but listed the rides with a full fee as the
   suspicious ones (`ai-runs/b1-from-code.md`). By the spec the full fee is the correct one.
+
+---
+
+Reviewed and approved by Yurii Slynko, 2026-11-07.

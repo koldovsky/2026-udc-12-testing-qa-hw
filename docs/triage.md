@@ -85,12 +85,12 @@ green      | green   | a receipt lists the fee for a return outside the zone
 
 ```text
 $ node tools/repeat.mjs 50
-Прогонів: 50 (app: файлів 17, тестів 152)
+Прогонів: 50 (app: файлів 17, тестів 155)
 Червоних прогонів: 0 з 50
 
-Решта тестів (152) — зелені в усіх прогонах.
+Решта тестів (155) — зелені в усіх прогонах.
 
-Час: 27.9 с
+Час: 28.2 с
 ```
 - **First AI answer** (`ai-runs/d-flaky-first.md`): the agent found the same cause and fixed the
   test. It replaced the formula with `Math.ceil(minutes / 30) * PRICE[ride.bike]` and added two
@@ -404,3 +404,7 @@ $ node docs/evidence/task-d-check.mjs fees
   (`run-1141.log:214`).
 - `Failed to save: Unable to reserve cache` in runs 1144 and 1152 (`run-1144.log:204`,
   `run-1152.log:209`), after the job had already failed.
+
+---
+
+Reviewed and approved by Yurii Slynko, 2026-11-07.

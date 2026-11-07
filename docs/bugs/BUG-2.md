@@ -63,3 +63,7 @@ visible, the ride is free either way.
 - BUG-1 hides part of this defect on `main`. With return `2026-09-16T07:01:20Z` (80 s) the check
   above prints `minutes` 1 and `total` 0, with return `2026-09-16T07:01:30Z` (90 s) it prints
   `minutes` 2 and `total` 2500. After the fixes both print `minutes` 2 and `total` 0.
+
+---
+
+Reviewed and approved by Yurii Slynko, 2026-11-07.

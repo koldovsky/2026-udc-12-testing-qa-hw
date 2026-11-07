@@ -98,3 +98,7 @@ Subscriber, e-bike, in-zone station, 40 min. With a classic bike the defect is n
   ```text
   subscriber with concession, 1441 min: total 130000 on the base, 130000 on the other
   ```
+
+---
+
+Reviewed and approved by Yurii Slynko, 2026-11-07.
