@@ -77,7 +77,9 @@ function blocks(minutes) {
 }
 
 function chargeFor(minutes, bike) {
-  if (minutes < FREE_START_MINUTES) return 0;
+  // T2: a ride of no more than 2 minutes carries no time charge (docs/spec/tariffs.md:54),
+  // so the boundary minute itself is still free.
+  if (minutes <= FREE_START_MINUTES) return 0;
   return blocks(minutes) * RATES[bike];
 }
 
