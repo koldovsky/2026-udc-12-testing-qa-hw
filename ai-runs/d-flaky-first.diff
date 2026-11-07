@@ -1,0 +1,107 @@
+diff --git a/app/test/helpers/factory.js b/app/test/helpers/factory.js
+index 1e183c6..7c9f585 100644
+--- a/app/test/helpers/factory.js
++++ b/app/test/helpers/factory.js
+@@ -1,4 +1,8 @@
+ // Test data: rides and riders with varied values.
++//
++// The values are varied but *reproducible*: they come from a seeded generator, not
++// Math.random(), so a failing run can be replayed exactly. Override the seed with
++// TEST_SEED=<number> to explore other data; the test prints the seed it used.
+ 
+ const BIKES = ["classic", "ebike"];
+ const IN_ZONE = ["S01", "S02", "S03", "S04", "S05", "S06", "S07", "S08"];
+@@ -7,8 +11,29 @@ const IN_ZONE = ["S01", "S02", "S03", "S04", "S05", "S06", "S07", "S08"];
+ const DAY_START = Date.UTC(2026, 8, 21, 6, 0);
+ const MINUTE = 60_000;
+ 
+-const between = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+-const pick = (list) => list[Math.floor(Math.random() * list.length)];
++export const SEED = Number(process.env.TEST_SEED ?? 20260921);
++
++// mulberry32: small, fast, deterministic PRNG — the same seed always yields the same data.
++function mulberry32(seed) {
++  let state = seed >>> 0;
++  return () => {
++    state = (state + 0x6d2b79f5) >>> 0;
++    let t = state;
++    t = Math.imul(t ^ (t >>> 15), t | 1);
++    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
++    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
++  };
++}
++
++let random = mulberry32(SEED);
++
++/** Restart the generator, so each test gets the same data regardless of run order. */
++export function resetRandom(seed = SEED) {
++  random = mulberry32(seed);
++}
++
++const between = (min, max) => min + Math.floor(random() * (max - min + 1));
++const pick = (list) => list[Math.floor(random() * list.length)];
+ 
+ export function randomRide(overrides = {}) {
+   const pickup = DAY_START + between(0, 600) * MINUTE;
+diff --git a/app/test/integration/receipt.test.js b/app/test/integration/receipt.test.js
+index 6c2335e..cd2882a 100644
+--- a/app/test/integration/receipt.test.js
++++ b/app/test/integration/receipt.test.js
+@@ -3,24 +3,46 @@ import test from "node:test";
+ import assert from "node:assert/strict";
+ import { formatReceipt } from "../../src/receipt.js";
+ import { quote } from "../../src/tariff.js";
+-import { randomRider, randomRides } from "../helpers/factory.js";
++import { SEED, randomRide, randomRider, randomRides, resetRandom } from "../helpers/factory.js";
+ 
+ const PRICE = { classic: 2500, ebike: 4000 };
+ const uah = (kopecks) => `${(kopecks / 100).toFixed(2).replace(".", ",")} грн`;
+ 
++// T3: every *started* 30-minute block is charged, so an exact multiple of 30 is still
++// that many blocks — 30 min → 1 block, 60 min → 2 (docs/spec/tariffs.md, TC-12/TC-13).
++const dueFor = (minutes, bike) => Math.ceil(minutes / 30) * PRICE[bike];
++
++function checkAmountDue(ride, rider) {
++  const minutes = (Date.parse(ride.returnAt) - Date.parse(ride.pickupAt)) / 60_000;
++  const expected = dueFor(minutes, ride.bike);
++
++  const lines = formatReceipt(quote(ride, rider));
++
++  assert.ok(lines.at(-1).startsWith("До сплати "));
++  assert.ok(
++    lines.at(-1).endsWith(` ${uah(expected)}`),
++    `seed ${SEED} — ${ride.bike}, ${minutes} min from ${ride.pickupAt}: ` +
++      `got "${lines.at(-1)}", expected ${uah(expected)}`,
++  );
++}
++
+ test("every receipt of a week of rides ends with the amount due", () => {
++  resetRandom();
+   const rider = randomRider();
+-  for (const ride of randomRides(10)) {
+-    const minutes = (Date.parse(ride.returnAt) - Date.parse(ride.pickupAt)) / 60_000;
+-    const expected = (Math.floor(minutes / 30) + 1) * PRICE[ride.bike];
+-
+-    const lines = formatReceipt(quote(ride, rider));
++  for (const ride of randomRides(10)) checkAmountDue(ride, rider);
++});
+ 
+-    assert.ok(lines.at(-1).startsWith("До сплати "));
+-    assert.ok(
+-      lines.at(-1).endsWith(` ${uah(expected)}`),
+-      `${ride.bike}, ${minutes} min from ${ride.pickupAt}: got "${lines.at(-1)}", expected ${uah(expected)}`,
+-    );
++// The block boundaries are where the amount due is easiest to get wrong, and the random
++// rides above hit them only now and then — so pin them down explicitly.
++test("a receipt on a 30-minute block boundary ends with the amount due", () => {
++  resetRandom();
++  const rider = randomRider();
++  for (const bike of ["classic", "ebike"]) {
++    for (const minutes of [29, 30, 31, 59, 60, 61, 89, 90]) {
++      const pickupAt = "2026-09-21T06:12:00.000Z";
++      const returnAt = new Date(Date.parse(pickupAt) + minutes * 60_000).toISOString();
++      checkAmountDue(randomRide({ pickupAt, returnAt, bike }), rider);
++    }
+   }
+ });
+ 
