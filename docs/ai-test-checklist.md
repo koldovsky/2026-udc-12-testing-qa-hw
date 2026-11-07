@@ -21,9 +21,12 @@ After the Task B fixes, pass a copy of that code: `mkdir -p ../ws12-main && git 
 | 11 | Does the draft's own summary match the file? | A summary is what gets read first | ✅ «Набір із 134 тест-кейсів»: the file has 134 with the F steps grouped, 144 table rows | ✅ «119 рядків»: the file has 119 IDs |
 | 12 | Does the set cover the receipt text required by T9? | The receipt is what the rider sees | ⚠️ H-01 and H-02 check only the last line | ❌ Section 13 lists «Формат чека (T9)» as not covered |
 | 13 | Do the cases cover all four kinds of invalid data from section 4 of the spec? | A wrong input must not produce a price | ✅ G-07, G-08, G-10, G-15 | ✅ TC-E-01 to TC-E-04 |
+| 14 | Is every expected result an exact value, not a direction, a sign or a type? | A check like `> 0` or `<` passes on a wrong amount (Task C, smells #1, #4-#7, #9) | ⚠️ The priced cases give exact amounts, but J-02 expects only that every `amount` in `discounts` and `fees` is greater than 0 | ✅ Every priced case gives an exact amount, for example TC-T6-05: 2000 |
+| 15 | Are all inputs fixed, with nothing drawn at random? | A random input makes a red run impossible to repeat (Task D, the flaky receipt test) | ✅ Every case gives its instants, for example A-04: `2026-07-01T09:00:00Z` to `09:02:00Z` | ✅ Every case gives its times, for example TC-T2-02: 10:00:00 to 10:02:00 |
+| 16 | Across a clock change, is the expected duration the elapsed time, not the difference on the wall clock? | T1 counts the time that actually elapsed (Task D, CI run 1141: a test expected 120 min for a ride of 180 min) | ✅ A-16 and A-17: 60 min elapsed, not 2 h or 0 by the clock | ✅ TC-T1-07 to TC-T1-09, for example TC-T1-09: 20 min, not 80 |
 
 ## Conclusion
 
 - What can be taken from A1 unchanged: inputs of the 70 priced cases that agree with the spec, for example C-07 to C-10, E-01, E-02 and the ledger steps F-01a to F-01d. Its П1 is a useful lead for Task B, and its П2 is an open question (Q-11). Its expected values cannot be trusted without a check against the spec.
 - What can be taken from A2 unchanged: sections 1 to 11 (97 priced cases, 4 rounding cases, 5 invalid data cases). Its section 12 maps to Q-1, Q-2, Q-3, Q-6, Q-7 and Q-9 in `docs/test-cases.md`. It does not cover the receipt text.
-- Items added after Task B or Task C: none yet.
+- Items added after Task B or Task C: 14, from the weak assertions of Task C (`docs/test-quality.md`, section 2); 15, from the cause of the flaky test of Task D (`docs/triage.md`, section 1); 16, from CI run 1141 of Task D (`docs/triage.md`, section 2). Task B added no item: its findings are covered by items 1, 2 and 6.

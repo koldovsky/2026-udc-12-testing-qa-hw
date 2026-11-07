@@ -1,8 +1,8 @@
 // Task D evidence for docs/triage.md and docs/bugs/CI-1152.md. Works on copies of `app/` taken
 // from a commit, in temporary folders; the repo's files are never touched.
 //
-//   node docs/evidence/task-d-check.mjs odds               section 1, rows 3-6
-//   node docs/evidence/task-d-check.mjs sabotage [commit]  section 1, row 8
+//   node docs/evidence/task-d-check.mjs odds               section 1, rows 4 and 6
+//   node docs/evidence/task-d-check.mjs sabotage [commit]  section 1, row 7
 //   node docs/evidence/task-d-check.mjs repro [runs]       section 2, every run (default: 20 runs)
 //   node docs/evidence/task-d-check.mjs dst                section 2, run-1141
 //   node docs/evidence/task-d-check.mjs smoke              section 2, run-1147

@@ -19,8 +19,9 @@ says what each mode does.
   (`docs/spec/tariffs.md:29, 62`): a ride of exactly 30 min is 1 block and of 60 min is 2 blocks,
   where the formula gives 2 and 3. For every other duration the test could draw, the formula is
   right. The test drew 10 rides of 5 to 89 whole minutes from `Math.random()` with no seed
-  (`app/test/helpers/factory.js:10, 15`; `receipt.test.js:13`). A run went red only when one of the
-  10 rides was 30 or 60 min long: 2 of 85 durations, 21.2 % of runs. The code was right every time.
+  (`app/test/helpers/factory.js:10, 15`; `receipt.test.js:13`, both at `95db090`). A run went red
+  only when one of the 10 rides was 30 or 60 min long: 2 of 85 durations, 21.2 % of runs. The code
+  was right every time.
 - **Evidence:**
 
 | # | Claim | Source (file:line, command and its output) |
@@ -29,7 +30,7 @@ says what each mode does.
 | 2 | The test expects one block more than the code charges, at 30 min | `ai-runs/d-repeat-before.txt:7-9`: three distinct messages, all 30-minute rides, got 1 block (25,00 / 40,00 UAH), expected 2. At 60 min in other runs: `ci/runs/run-1144.log:187` (`classic, 60 min … got … 50,00 грн, expected 75,00 грн`), and in the `main` block of `repro` below |
 | 3 | The spec gives 1 block for 30 min and 2 for 60 min, and the code agrees | `docs/spec/tariffs.md:29, 62, 66-67`. `T3: TC-19 classic, 60 min is 2 blocks` and `T3: TC-21 e-bike, 30 min is 1 block` (`app/test/spec/t3-time-charge.test.js:8, 10`) are green in all 30 runs (`ai-runs/d-repeat-before.txt:11`) |
 | 4 | Of the durations the test could draw, the formula is wrong at 30 and 60 min only | `node docs/evidence/task-d-check.mjs odds`: `old oracle differs from the started blocks at: 30, 60 min (2 of 85)`. The started blocks are counted one by one there, not with the code's formula |
-| 5 | Nothing but the random draw changes between runs | `git grep -nE "Math\.random\|Date\.now\|new Date\(\)\|performance\.now\|process\.env" 95db090 -- app/src app/test`: `Math.random()` only in `app/test/helpers/factory.js:10-11`; `process.env` only for `PORT` in `src/server.js:73` and `TZ` in a child process of `tariff-time-zone.test.js:26`. Pickups are 09:00-19:00 in Kyiv (`factory.js:7, 14`), so T10 never applies; stations are in the zone (`factory.js:4, 20`); the rider is `standard` (`:30`) and no day-cap ledger is passed (`receipt.test.js:17`) |
+| 5 | Nothing but the random draw changes between runs | `git grep -nE "Math\.random\|Date\.now\|new Date\(\)\|performance\.now\|process\.env" 95db090 -- app/src app/test`: `Math.random()` only in `app/test/helpers/factory.js:10-11`; `process.env` only for `PORT` in `src/server.js:73` and `TZ` in a child process of `tariff-time-zone.test.js:26`. Pickups are 09:00-19:00 in Kyiv (`factory.js:7, 14`), so T10 never applies; stations are in the zone (`factory.js:4, 20`); the rider is `standard` (`:30`) and no day-cap ledger is passed (`receipt.test.js:17` at `95db090`) |
 | 6 | The odds match the count | `odds`: `1 - (1 - 2/85)^10 = 21.2 %`, `expected red runs: 6.4 of 30; observed: 6 of 30` |
 | 7 | The fixed test still catches the defect the old expectation described | `node docs/evidence/task-d-check.mjs sabotage`: with `blocks()` changed to `Math.floor(minutes / BLOCK_MINUTES) + 1`, exactly the four rows at 30 and 60 min turn red; all eleven tests are green on the unchanged code |
 
@@ -72,12 +73,25 @@ green      | green   | a receipt lists the fee for a return outside the zone
   longer changes between runs, so the boundary cases run in every run instead of in 21 % of them
   and a failure reproduces with the same input. No retry, wait, skip or weaker check was added.
   The suite goes from 137 to 146 tests: one test became ten rows, and its old name no longer
-  exists. The second test of the file still takes its rider from `randomRider()`; only the `id` is
-  random there, and `quote` reads `rider.id` only with a day-cap ledger
-  (`app/src/tariff.js:56, 61`), which that test does not pass. `randomRides` in
-  `app/test/helpers/factory.js` is no longer used and was left in place.
-- **After the fix:** 0 of 50 runs red, 146 tests (`ai-runs/d-repeat-after.txt:1-2`). With the old
-  test, 10.6 red runs of 50 were expected (`odds`).
+  exists. In `9126021` the second test of the file still took its rider from `randomRider()`; only
+  the `id` was random there, and `quote` reads `rider.id` only with a day-cap ledger
+  (`app/src/tariff.js:56, 61`), which that test does not pass. After `9126021` that test takes the
+  same fixed rider as the table, and `app/test/helpers/factory.js`, which no test imports any more,
+  is removed, so no test draws a random value: `git grep -n "Math.random" -- app` prints nothing.
+- **After the fix:** 0 of 50 runs red, 146 tests, at `9126021` (`ai-runs/d-repeat-after.txt:1-2`).
+  With the old test, 10.6 red runs of 50 were expected (`odds`). On the submitted state, with the
+  fixed rider, without `factory.js` and with the unit tests changed and added after Task D
+  (`docs/test-quality.md`, sections 3-5), the same command again:
+
+```text
+$ node tools/repeat.mjs 50
+Прогонів: 50 (app: файлів 17, тестів 152)
+Червоних прогонів: 0 з 50
+
+Решта тестів (152) — зелені в усіх прогонах.
+
+Час: 27.9 с
+```
 - **First AI answer** (`ai-runs/d-flaky-first.md`): the agent found the same cause and fixed the
   test. It replaced the formula with `Math.ceil(minutes / 30) * PRICE[ride.bike]` and added two
   fixed classic rides of 30 and 60 min in front of the 10 random ones (`ai-runs/d-flaky-first.diff`).
@@ -259,9 +273,51 @@ main, port taken: server exit code 1, "Error: listen EADDRINUSE: address already
 ```
 
 The script passes the port in `PORT`, so it does not need port 3000 on the local machine; the ports
-differ between calls. The same check with port 3000 itself and `curl` gave the same lines as the
-log: `Error: listen EADDRINUSE: address already in use :::3000` and `curl: (22) The requested URL
-returned error: 404`, with the code of the PR and with the code of `main`.
+differ between calls. The step of the log itself, with port 3000 and `curl`, on a copy of `main`
+with the change and then without it, while another process holds port 3000 and answers 404 (run
+with `bash` from the repo root; `lsof` prints nothing, so port 3000 was free before the check):
+
+```bash
+lsof -nP -iTCP:3000 -sTCP:LISTEN
+COPY=$(mktemp -d) && git archive main app ci | tar -x -C "$COPY" && git -C "$COPY" init -q && git -C "$COPY" apply ci/changes/run-1147.diff
+node -e 'require("node:http").createServer((req, res) => { res.statusCode = 404; res.end(); }).listen(3000)' & OCC=$!
+sleep 1
+for version in "PR #236" "main"; do
+  [ "$version" = "main" ] && git -C "$COPY" apply -R ci/changes/run-1147.diff
+  echo "== $version"
+  npm --prefix "$COPY/app" start > "$COPY/server.out" 2>&1 & SERVER=$!
+  for i in 1 2 3 4 5; do curl -fsS http://127.0.0.1:3000/api/health && break; sleep 1; done
+  wait $SERVER; echo "npm start exit code: $?"
+  grep -E "^Error:|^Node.js" "$COPY/server.out"
+done
+kill $OCC; rm -rf "$COPY"
+```
+
+```text
+== PR #236
+curl: (22) The requested URL returned error: 404
+curl: (22) The requested URL returned error: 404
+curl: (22) The requested URL returned error: 404
+curl: (22) The requested URL returned error: 404
+curl: (22) The requested URL returned error: 404
+npm start exit code: 1
+Error: listen EADDRINUSE: address already in use :::3000
+Node.js v24.21.0
+== main
+curl: (22) The requested URL returned error: 404
+curl: (22) The requested URL returned error: 404
+curl: (22) The requested URL returned error: 404
+curl: (22) The requested URL returned error: 404
+curl: (22) The requested URL returned error: 404
+npm start exit code: 1
+Error: listen EADDRINUSE: address already in use :::3000
+Node.js v24.21.0
+```
+
+The shell's last line, the notice that the helper on port 3000 was terminated, is left out. The
+lines match the log: `Error: listen EADDRINUSE: address already in use :::3000` (`:195`) and five
+`curl: (22) The requested URL returned error: 404` (`:214-218`), with the code of the PR and with
+the code of `main`.
 
 - **What was rejected and why:**
   - A code defect in PR #236: with `PORT` unset both versions take 3000 (row 4), the PR's server

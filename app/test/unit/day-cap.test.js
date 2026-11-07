@@ -1,11 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createDayCap, DAY_CAP, dayKey } from "../../src/day-cap.js";
+import { createDayCap, dayKey } from "../../src/day-cap.js";
 
 test("charges recorded for a day reduce what is left of the cap", () => {
   const ledger = createDayCap();
   ledger.record("rider-1", "2026-09-16T08:00:00Z", 12000);
-  assert.ok(ledger.remaining("rider-1", "2026-09-16T12:00:00Z") < DAY_CAP);
   assert.equal(ledger.remaining("rider-1", "2026-09-16T12:00:00Z"), 18000); // 300 UAH − 120 UAH, docs/spec/tariffs.md:100-101
 });
 

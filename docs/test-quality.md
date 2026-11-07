@@ -44,13 +44,13 @@ changed in a temporary copy of `app/` from commit `6c85f02`, the named test is r
 and it stays green. `node docs/evidence/task-c-check.mjs sabotage` repeats all eleven checks
 and ends with `every result as in docs/test-quality.md`.
 
-Line numbers in this section and in section 5 are those of commit `6c85f02`, the state the
-smells were found on (`git show 6c85f02:app/test/unit/tariff.test.js`). Task C moved them. In
-the submitted `app/test/unit/tariff.test.js` the tests on lines 30, 36, 43, 49, 55, 64, 69 and 79
-start on lines 33, 40, 47, 56, 62, 73, 85 and 99, and every line inside them moved by the same
-amount; the test on line 9 did not move, but its checks on lines 17–20 are now on lines 20–23. In
-`app/test/unit/day-cap.test.js` the test on line 11 starts on line 12. `receipt-format.test.js`
-and `server.test.js` did not change.
+Line numbers in this section and in the rule table of section 5 are those of commit `6c85f02`,
+the state the smells were found on (`git show 6c85f02:app/test/unit/tariff.test.js`). Task C
+moved them. In the submitted `app/test/unit/tariff.test.js` the tests on lines 30, 36, 43, 49,
+55, 64, 69 and 79 start on lines 33, 40, 47, 55, 61, 71, 83 and 96, and the test on line 9 did not
+move; their checks changed in section 3 and again in section 5. In `app/test/unit/day-cap.test.js`
+both tests are still on lines 5 and 11. `receipt-format.test.js` and `server.test.js` did not
+change.
 
 | # | Smell | Test (file:line › name) | Why it is a problem | Evidence | AI found? |
 |---|---|---|---|---|---|
@@ -61,7 +61,7 @@ and `server.test.js` did not change.
 | 5 | Weak assertion (direction instead of amount) | `app/test/unit/tariff.test.js:55` › `night rides get 30 % off` | Line 61 checks `total < timeCharge`. Any discount passes, although the name promises 30 %. The spec gives 1750 for this exact ride (`docs/spec/tariffs.md:143`). | `NIGHT_PERCENT = 10`: test green | yes, AI #8 |
 | 6 | Weak assertions, name without an expected result | `app/test/unit/tariff.test.js:43` › `subscription on a long e-bike ride` | Lines 45–46 check that a `subscription` discount exists and that `total < timeCharge`. The name says what is set up, not what should happen. 100 min on an e-bike is 4 blocks = 16000, 20 % off → 12800 (`docs/spec/tariffs.md:62, 67, 76`). | subscription e-bike discount 20 % → 1 %: test green | yes, AI #7 |
 | 7 | Count-only assertion | `app/test/unit/tariff.test.js:64` › `a bike kept over a day and left outside the zone pays both fees` | Line 66 checks `fees.length === 2`. Neither the fee codes nor the amounts (15000 and 200000, `docs/spec/tariffs.md:112, 120`) are checked. | `UNRETURNED_FEE = 2000` (1 % of the fee): test green | yes, AI #9 |
-| 8 | Magic numbers, order-dependent index | `app/test/unit/tariff.test.js:49` › `reduced fare for a ride returned outside the zone` | Lines 51–52 assert 17500 and `fees[0].amount === 15000` with no source for either number, and `fees[0]` assumes the fee order without checking the fee code. These expected values were wrong in `main` (total 10000, fee 7500) and were changed in Task B, commit `3234a10` (`docs/bugs/README.md:157-163`). | `git diff main -- app/test/unit/tariff.test.js` | no: AI #14 flags this test as a Mystery Guest, not for its numbers |
+| 8 | Magic numbers, order-dependent index | `app/test/unit/tariff.test.js:49` › `reduced fare for a ride returned outside the zone` | Lines 51–52 assert 17500 and `fees[0].amount === 15000` with no source for either number, and `fees[0]` assumes the fee order without checking the fee code. These expected values were wrong in `main` (total 10000, fee 7500) and were changed in Task B, commit `3234a10` (`docs/bugs/README.md:166-172`). | `git diff main -- app/test/unit/tariff.test.js` | no: AI #14 flags this test as a Mystery Guest, not for its numbers |
 | 9 | Weak assertion | `app/test/unit/day-cap.test.js:5` › `charges recorded for a day reduce what is left of the cap` | Line 8 checks `remaining < DAY_CAP`. Any recorded amount above zero passes; the exact remainder is 30000 − 12000 = 18000. | `record` adds `amount / 2`: test green | yes, AI #5 |
 | 10 | Test data that cannot tell the cases apart | `app/test/unit/day-cap.test.js:11` › `the day of a ride is the date of its pickup` | `2026-09-16T08:00:00Z` is 11:00 in Kyiv, the same date in UTC and in Kyiv. The code in `main` used the UTC date (`git show main:app/src/day-cap.js`, line 7), BUG-5, and this test was green before and after the fix. The spec books a ride on its Kyiv date (`docs/spec/tariffs.md:101-102`); `2026-09-16T21:30:00Z` is 00:30 on 17.09 in Kyiv. | `dayKey` returns the UTC date: test green | yes, AI #6 |
 | 11 | Partial assertion | `app/test/unit/receipt-format.test.js:11` › `a receipt has a line for every item` | Lines 19–20 check the number of lines and that the last one contains `185,00`. The labels, the minus sign of the discount line and the fee line are not checked (`docs/spec/tariffs.md:133-135`). | fee line printed as `? … -150,00 грн`: test green | yes, AI #10 |
@@ -93,25 +93,36 @@ What the AI called a smell and the participant disagrees with:
 
 The agent's answer is `ai-runs/c-strengthen.md`, its changes are `ai-runs/c-strengthen.diff`.
 `ai-runs/c-after.txt` was taken on the agent's changes as they were. The last column is the
-state after the participant's corrections listed below and the participant's new test of
-section 4, `app/test/unit/tariff-time-zone.test.js`; it was measured with
-`node tools/mutate.mjs` and `npm run -s coverage` and is not in `ai-runs/`.
+submitted state: the participant's corrections listed below, the participant's two new test files
+of section 4, `app/test/unit/tariff-time-zone.test.js` and
+`app/test/unit/receipt-minus-sign.test.js`, and the review of the weak checks in section 5. It was
+measured with `node tools/mutate.mjs` and `npm run -s coverage` and is not in `ai-runs/`.
 
-| Measure | Before (`c-before.txt`) | After the agent (`c-after.txt`) | After the corrections and the new test |
+| Measure | Before (`c-before.txt`) | After the agent (`c-after.txt`) | Submitted |
 |---|---|---|---|
-| Mutation score | 91.6 % | 97.6 % | 95.2 % |
-| Mutants survived | 7 | 2 | 4 |
-| Test files (mutate header) | 14 | 14 | 15 |
-| Tests (mutate header: `unit` + `spec`) | 131 | 137 | 135 |
-| Assert calls (mutate header) | 45 | 73 | 65 |
+| Mutation score | 91.6 % | 97.6 % | 97.6 % |
+| Mutants survived | 7 | 2 | 2 |
+| Test files (mutate header) | 14 | 14 | 16 |
+| Tests (mutate header: `unit` + `spec`) | 131 | 137 | 141 |
+| Assert calls (mutate header) | 45 | 73 | 59 |
 | Line coverage of `src/` (`unit` only) | 96.36 % | 97.27 % | 97.27 % |
-| Branch coverage of `src/` (`unit` only) | 81.91 % | 85.00 % | 84.85 % |
-| Unit tests in the coverage run | 18 | 24 | 22 |
+| Branch coverage of `src/` (`unit` only) | 81.91 % | 85.00 % | 85.86 % |
+| Unit tests in the coverage run | 18 | 24 | 28 |
 
-The corrections alone (without the new test) gave 94.0 %, 5 survivors, 133 tests, 63 assert calls,
-96.67 % of lines and 83.67 % of branches over 20 unit tests. The new test starts child processes
-that run `quote`, and Node's coverage counts them: `app/src/tariff.js:131-132`, the rejection of a
-moment without an offset, is uncovered in that run and covered with the new test.
+The steps in between, each measured the same way:
+
+| Step | Mutation score | Survived | Tests | Assert calls | Lines / branches (`unit`) | Unit tests |
+|---|---|---|---|---|---|---|
+| The corrections of this section alone | 94.0 % | 5 | 133 | 63 | 96.67 % / 83.67 % | 20 |
+| + `tariff-time-zone.test.js` (kills M075) | 95.2 % | 4 | 135 | 65 | 97.27 % / 84.85 % | 22 |
+| + `receipt-minus-sign.test.js` (kills M018, M023) and section 5 | 97.6 % | 2 | 141 | 59 | 97.27 % / 85.86 % | 28 |
+
+`tariff-time-zone.test.js` starts child processes that run `quote`, and Node's coverage counts
+them: `app/src/tariff.js:131-132`, the rejection of a moment without an offset, is uncovered
+without it. The assert count goes down in the last step: section 5 removes seven checks that an
+exact check in the same test already implies or that checked a mock, and replaces six with exact
+values; the new file adds one `assert` call, run once per row. The two survivors are the
+equivalent mutants of section 4.
 
 ### What the agent deleted, skipped or weakened
 
@@ -134,44 +145,43 @@ Nothing. What was checked:
 
 | # | What changed | Line from the diff | Verdict |
 |---|---|---|---|
-| 1 | `a 45-minute classic ride costs 50 UAH`: the mock no longer returns a hard-coded answer, it wraps the real `quote` | `:91` `-  const priceRide = mock.fn(() => ({ minutes: 45, timeCharge: 5000, … }));`, `:92` `+  const priceRide = mock.fn(quote);` | Kept. The expected 5000 is unchanged and agrees with the spec (45 min → 2 blocks × 25 UAH, `docs/spec/tariffs.md:62, 66`), and the test now runs the code. The `callCount` assertion still checks the mock, not the code. |
+| 1 | `a 45-minute classic ride costs 50 UAH`: the mock no longer returns a hard-coded answer, it wraps the real `quote` | `:91` `-  const priceRide = mock.fn(() => ({ minutes: 45, timeCharge: 5000, … }));`, `:92` `+  const priceRide = mock.fn(quote);` | Kept. The expected 5000 is unchanged and agrees with the spec (45 min → 2 blocks × 25 UAH, `docs/spec/tariffs.md:62, 66`), and the test now runs the code. The `callCount` assertion still checks the mock, not the code; section 5 removes it together with the mock. |
 | 2 | `quote returns an itemised price`: the loop gets exact totals | `:34` `-  for (const r of rides) {`, `:36` `+  const totals = [0, 5000, 20000];` | Kept. 1 min is a false start (`docs/spec/tariffs.md:54, 57`), 50 min classic is 5000 (`:69`), 130 min e-bike is 5 blocks × 40 UAH = 20000 (`:62, 67`). The three cases are still one loop without a label. |
 | 3 | Expected values computed from the code constant `DAY_CAP` | `:9` `DAY_CAP - 12000`, `:76` `DAY_CAP + 15000 + 200000`, `:87` `chargedOn(…), DAY_CAP)` | Corrected: the oracle is the code again (smell #2). The values are right, but a wrong `DAY_CAP`, for example the 250 UAH of version 2 (`docs/spec/tariffs.md:154`), would pass. Now literals with the spec line: 18000, 245000, 30000. |
-| 4 | Both fees compared as an ordered array | `:72` `+  assert.deepEqual(result.fees, [` | Corrected: the spec fixes no order of fees (`docs/spec/tariffs.md:121-122, 133-135`; `docs/test-cases.md:268` lists "the order of `fees`" as a code detail). Now compared by fee code, in any order. |
+| 4 | Both fees compared as an ordered array | `:72` `+  assert.deepEqual(result.fees, [` | Corrected: the spec fixes no order of fees (`docs/spec/tariffs.md:121-122, 133-135`; `docs/test-cases.md:268` lists "the order of `fees`" as a code detail). Now compared by fee code, in any order; since section 5 as the whole array sorted by code. |
 | 5 | New test `a night ride within the free start has no discounts` (kills M018) | `:101`–`:106`, `:105` `+  assert.deepEqual(result.discounts, []);` | Reverted. Whether a T2 false start shows a discount line is open question Q-4 (`docs/test-cases.md:162`), and `docs/test-cases.md:268` lists "no lines with a zero amount" as a code detail. Its time charge of 0 is already checked by `app/test/spec/t2-false-start.test.js` and, for a night ride, by TC-88 (`app/test/spec/t10-night.test.js:59-62`). |
 | 6 | New tests `a time charge equal to the daily cap gets no day-cap discount` and `… equal to what is left of the cap …` (kill M023) | `:108`–`:124`, `:112` and `:121` `+  assert.deepEqual(result.discounts, []);` | Reverted. They assert that no day-cap line of 0 exists; the spec does not say: open question Q-12 (`docs/test-cases.md:170`), and `docs/test-cases.md:268` lists "no lines with a zero amount" as a code detail. TC-47 (`app/test/spec/t6-day-cap.test.js:34-37`) already checks the amount, 30000, and no reduction. |
 | 7 | New test `a date-time without an offset is rejected` (kills M075) | `:132`–`:135` | Reverted. Section 4 of the spec (`docs/spec/tariffs.md:147-149`) does not list a missing or unreadable moment: open question Q-8 (`docs/test-cases.md:166`). M075 is killed instead by the participant's test, which asserts no answer to Q-8 (section 4). |
 | 8 | New test `a missing ride is rejected with a QuoteError` (kills M064) | `:126`–`:130` | Kept. A missing ride has no known bike type, and the spec rejects such a request with an explanation (`docs/spec/tariffs.md:147-149`). In this code a rejection is a `QuoteError`: the API answers 400 with its message (`app/src/server.js:38`), any other error is a 500 `internal error` (`:39`); `app/test/spec/support.js:56-61` uses the same convention. |
 | 9 | New test `a rider with no rides that day has been charged nothing` (kills M083) | `:18`–`:25` | Kept. T6 sums the time charges per rider and per day (`docs/spec/tariffs.md:100-101`); with no ride the sum is 0. Its reach is narrow: `chargedOn` has no caller in `app/src/` other than its definition (`app/src/day-cap.js:26`), so the test checks the ledger's reporting function, not a pricing path, and the `"2026-09-16"` day key it passes is a code detail (the rules run asks about its format, `ai-runs/c-with-rules/OPEN-QUESTIONS.md:29-30`). |
-| 10 | Exact values added to existing tests | `:15` `dayKey("2026-09-16T22:30:00Z"), "2026-09-17"`, `:47` `12000`, `:56`–`:57` `3200` / `12800`, `:65`–`:66` `750` / `1750`, `:85`–`:86` `6000` | Kept. Each agrees with the spec: `docs/spec/tariffs.md:101-102`, `:70`, `:62, 67, 76`, `:143`, `:105-106`; these spec lines are now in comments next to the values. They close smells #10, #6, #5 and #4. Smell #2 is neutralised, not removed: the assertion built from the code's formula is still on `app/test/unit/tariff.test.js:35`, and `:36` now checks the literal 12000, so a wrong block length or rounding turns the test red. |
+| 10 | Exact values added to existing tests | `:15` `dayKey("2026-09-16T22:30:00Z"), "2026-09-17"`, `:47` `12000`, `:56`–`:57` `3200` / `12800`, `:65`–`:66` `750` / `1750`, `:85`–`:86` `6000` | Kept. Each agrees with the spec: `docs/spec/tariffs.md:101-102`, `:70`, `:62, 67, 76`, `:143`, `:105-106`; these spec lines are now in comments next to the values. They close smells #10, #6, #5 and #4. Smell #2 is neutralised here: the literal 12000 is checked next to the assertion built from the code's formula, so a wrong block length or rounding turns the test red. Section 5 replaces that assertion with the spec's 75 min (`app/test/unit/tariff.test.js:35`). |
 
 The corrections are a separate change on top of the agent's: the agent's version is the one in
 `ai-runs/c-strengthen.diff`.
 
 Numbers for the PR: line coverage 96.36 % → 97.27 %; mutation score 91.6 % → 97.6 %; tests
-131 → 137; assert calls 45 → 73; tests the AI deleted, skipped or weakened: 0. After the
-participant's corrections and the new test of section 4: 95.2 %, 135 tests, 65 assert calls,
-97.27 % line coverage.
+131 → 137; assert calls 45 → 73; tests the AI deleted, skipped or weakened: 0. Submitted state,
+after the participant's corrections, the two new test files of section 4 and section 5: 97.6 %,
+2 survivors (both equivalent), 141 tests, 59 assert calls, 97.27 % line coverage.
 
 ## 4. Surviving mutants
 
 `ai-runs/c-after.txt` lists two survivors, M016 and M019. The table also covers the five
 mutants of `ai-runs/c-before.txt` that the agent killed, because four of its six killing tests,
 those for three of the five mutants, were reverted (section 3). After the corrections alone
-`node tools/mutate.mjs` listed five survivors: M016, M018, M019, M023 and M075. The run after the
-corrections and the participant's test `app/test/unit/tariff-time-zone.test.js`,
-`node tools/mutate.mjs`:
+`node tools/mutate.mjs` listed five survivors: M016, M018, M019, M023 and M075. With the
+participant's `app/test/unit/tariff-time-zone.test.js` it listed four: M016, M018, M019 and M023.
+The run on the submitted state, with the participant's `app/test/unit/receipt-minus-sign.test.js`
+and the changes of section 5, `node tools/mutate.mjs`:
 
 ```text
-  тести:  app/test/unit, app/test/spec — файлів: 15, тестів: 135, пропущено: 0, todo: 0, викликів assert: 65
+  тести:  app/test/unit, app/test/spec — файлів: 16, тестів: 141, пропущено: 0, todo: 0, викликів assert: 59
 
-разом                     83        79         4         0    95.2 %
+разом                     83        81         2         0    97.6 %
 
-Вижили (4) — тести не помітили цієї зміни:
+Вижили (2) — тести не помітили цієї зміни:
   M016  app/src/tariff.js:47:21     0 → 1                       if (plan.amount > 0) discounts.push({ code: plan.code, amount: plan...
-  M018  app/src/tariff.js:50:11     > → >=                      if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
   M019  app/src/tariff.js:50:13     0 → 1                       if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
-  M023  app/src/tariff.js:57:11     > → >=                      if (due > allowance) {
 ```
 
 | Mutant | File:line | Change | Verdict |
@@ -180,29 +190,34 @@ corrections and the participant's test `app/test/unit/tariff-time-zone.test.js`,
 | M019 | `app/src/tariff.js:50:13` | `due > 0` → `due > 1` | **Equivalent.** Before T10, `due` is the time charge minus that discount: on a classic bike 2500 × blocks minus 0, 2500 × k or 1250 × blocks, a multiple of 1250; on an e-bike 4000, 3200 or 2000 × blocks. It is never 1. The same command: `exactly 1 kopeck never occurs; smallest above 0: 1250`. The agent's argument (`ai-runs/c-strengthen.md`) says "a multiple of 1250 or 800", which misses part of the e-bike reduced fare: 2000 × blocks is a multiple of 800 only for an even number of blocks and a multiple of 1250 only for a multiple of 5 blocks, so 2000, 6000 or 14000 is a multiple of neither. The conclusion holds. |
 | M064 | `app/src/tariff.js:114:13` | `\|\|` → `&&` | **Killed** by `app/test/unit/tariff.test.js` › `a missing ride is rejected with a QuoteError` (the agent's test, kept, section 3 row 8). Not in the list after the corrections. |
 | M083 | `app/src/day-cap.js:27:50` | `?? 0` → `?? 1` | **Killed** by `app/test/unit/day-cap.test.js` › `a rider with no rides that day has been charged nothing` (the agent's test, kept, row 9). Not in the list after the corrections. The kill raises the score, but `chargedOn` is called only by tests (`app/src/day-cap.js:26` is its only occurrence in `app/src/`), so it protects no pricing path. |
-| M018 | `app/src/tariff.js:50:11` | `due > 0` → `due >= 0` | **Not equivalent, no oracle in the spec.** 1 min at 01:00 in Kyiv: the code gives `discounts: []`, the mutant `[{ code: "night", amount: 0 }]`, which adds the receipt line `Знижка: нічна ....................... 0,00 грн`, with no minus sign. Whether that line belongs there is Q-4. The killing test was reverted (row 5); the mutant stays until the product owner answers. |
-| M023 | `app/src/tariff.js:57:11` | `due > allowance` → `>=` | **Not equivalent, no oracle in the spec.** 360 min on a classic bike, exactly the cap: the code gives `discounts: []`, the mutant `[{ code: "day-cap", amount: 0 }]`, which adds the receipt line `Денний ліміт ........................ 0,00 грн`. The spec requires a receipt line for each discount and the cap (`docs/spec/tariffs.md:134-135`) but does not say whether a cap that reduces nothing is one. That is Q-12 (`docs/test-cases.md:170`). Reverted (row 6). |
+| M018 | `app/src/tariff.js:50:11` | `due > 0` → `due >= 0` | **Killed** by the participant's `app/test/unit/receipt-minus-sign.test.js` › `T9: every discount and cap line of the receipt has a minus sign, classic, 01:10, 1 min: false start at night`. Not in the list above. 1 min at 01:00 in Kyiv: the code gives `discounts: []`, the mutant `[{ code: "night", amount: 0 }]`, which adds the receipt line `Знижка: нічна ....................... 0,00 грн`, with no minus sign. T9 requires the minus sign on every discount line (`docs/spec/tariffs.md:134-135`). The test does not say whether that line belongs on the receipt, which is Q-4: it fails only because the line has no minus sign. The agent's test for M018 (row 5 of section 3) asserted that no such line exists and was reverted. |
+| M023 | `app/src/tariff.js:57:11` | `due > allowance` → `>=` | **Killed** by the participant's `app/test/unit/receipt-minus-sign.test.js` › `T9: every discount and cap line of the receipt has a minus sign, classic, 360 min: exactly the cap`. Not in the list above. 360 min on a classic bike, exactly the cap: the code gives `discounts: []`, the mutant `[{ code: "day-cap", amount: 0 }]`, which adds the receipt line `Денний ліміт ........................ 0,00 грн`, with no minus sign. Whether a cap that reduces nothing gets a line is Q-12 (`docs/test-cases.md:170`), and the test does not answer it; the spec does say that a cap line carries a minus sign (`docs/spec/tariffs.md:134-135`). The agent's tests for M023 (row 6 of section 3) asserted that no such line exists and were reverted. |
 | M075 | `app/src/tariff.js:130:33` | `\|\|` → `&&` | **Killed** by the participant's `app/test/unit/tariff-time-zone.test.js` › `§2: the outcome does not depend on the time zone of the server: a pickup moment without an offset` and `…: a return moment without an offset`. Not in the list after it. The mutant lets through any string that `Date.parse` can read, and any other value whose text form is an ISO 8601 date-time with an offset: `"2026-09-16T07:00:00"` with no offset, `"2026-09-16"` as a date only (26250), and `["2026-09-16T07:00:00Z"]` wrapped in an array (2500); the code rejects each with a `QuoteError`. A moment with no offset is read in the server's time zone: 17500 for 200 min in Europe/Kyiv, a `QuoteError` "returnAt is before pickupAt" with `TZ=America/New_York`. Whether such a moment is rejected or priced is Q-8 (`docs/test-cases.md:166`), so the test asserts neither: it runs the same ride in two processes, America/New_York and Europe/Kyiv, and asserts the same outcome. Every time in the spec is Kyiv time (`docs/spec/tariffs.md:37-38`), so a price that changes with the server's time zone is wrong whatever the answer to Q-8. The code rejects the ride in both zones (green); the mutant prices it in one of them (red). The test also checks that the two processes run with different offsets, so a platform that ignores `TZ` turns it red instead of letting it pass. The agent's test for M075 (row 7 of section 3) was reverted because it asserted the rejection itself. |
 
 The inputs are `node docs/evidence/task-c-check.mjs probes`, which prints the code's and the
 mutant's result side by side, and for M018 and M023 the mutant's receipt; the first M075 input
 also with `TZ=America/New_York` in front.
 
-Verdicts: 2 equivalent (M016, M019), 3 killed by a test (M064 and M083 by the agent's tests, M075
-by the participant's), 2 not equivalent but with no expected value in the spec (M018, M023).
+Verdicts: 2 equivalent (M016, M019), 5 killed by a test: M064 and M083 by the agent's tests, M075,
+M018 and M023 by the participant's.
 
-Why there is a third kind of verdict. Step 4 (`docs/walkthrough.md:351-354`) asks for at least
-five mutants from the survivors list of `ai-runs/c-after.txt`, each killed by a new test or shown
-equivalent. That list holds two (`ai-runs/c-after.txt:57-59`), so the table also takes the five
-mutants of `ai-runs/c-before.txt` that the agent killed. Five of the seven have one of the two
-verdicts step 4 asks for: M016 and M019 are equivalent, M064, M083 and M075 are killed. M018 and
-M023 have a third kind of verdict. The only difference between either of them and the code is an
-extra discount line of 0, a night line or a cap line (`node docs/evidence/task-c-check.mjs
-probes`). A test that kills one of them has to pick an answer to Q-4 or Q-12, and walkthrough
-rule 2 (`docs/walkthrough.md:59-61`) forbids picking one silently. The reason is a missing
-oracle, not the size of the test (`docs/walkthrough.md:353-354`). M075 had the same problem while
-its test asserted the rejection; the participant's test asserts only what holds for either answer
-to Q-8.
+Step 4 (`docs/walkthrough.md:351-354`) asks for at least five mutants from the survivors list of
+`ai-runs/c-after.txt`, each killed by a new test or shown equivalent. That list holds two
+(`ai-runs/c-after.txt:57-59`), so the table also takes the five mutants of `ai-runs/c-before.txt`
+that the agent killed. All seven have one of the two verdicts.
+
+How M018 and M023 were killed without an answer to Q-4 or Q-12. The only difference between
+either of them and the code is an extra discount line of 0, a night line or a cap line
+(`node docs/evidence/task-c-check.mjs probes`). Whether such a line belongs on the receipt is Q-4
+or Q-12, and walkthrough rule 2 (`docs/walkthrough.md:59-61`) forbids picking an answer silently;
+the agent's tests picked one and were reverted. The spec does answer another question about that
+line: every discount and cap line carries a minus sign (`docs/spec/tariffs.md:134-135`), and the
+mutants print `0,00 грн` without one, because the receipt takes the sign from `kopecks < 0`
+(`app/src/receipt.js:16`). `app/test/unit/receipt-minus-sign.test.js` asserts only that: one
+receipt line with a minus sign per discount or cap item of the quote, for six rides on both sides
+of the false start and of the cap, with either minus character (Q-5). It holds whatever the
+product owner answers to Q-4 and Q-12. M075 had the same problem while its test asserted the
+rejection; the participant's test asserts only what holds for either answer to Q-8.
 
 ## 5. Testing rules for the agent
 
@@ -213,38 +228,50 @@ to Q-8.
 
 | Rule (short) | Where it comes from (finding, file) |
 |---|---|
-| 1. The oracle is the spec; no spec, no value: an open question | Task A: 17 of the 109 totals of the draft from the code contradict the spec (`docs/ai-test-checklist.md:12`). Task B: 15 tests from the code were green on `main` and red after the fixes, they recorded the defects (`docs/bugs/README.md:169`). Task C: three agent tests picked answers the spec leaves open (section 3, rows 5–7). |
+| 1. The oracle is the spec; no spec, no value: an open question | Task A: 17 of the 109 totals of the draft from the code contradict the spec (`docs/ai-test-checklist.md:12`). Task B: 15 tests from the code were green on `main` and red after the fixes, they recorded the defects (`docs/bugs/README.md:178`). Task C: three agent tests picked answers the spec leaves open (section 3, rows 5–7). |
 | 2. No expected value built from the code's constants or formulas | Smell #2, `app/test/unit/tariff.test.js:32`. The agent used `DAY_CAP` in three new expected values (section 3, row 3). |
 | 3. Exact values, not `<`, `>= 0`, `typeof` or `length` | Smells #1, #4, #5, #6, #7, #9, #11 (section 2). |
 | 4. Test the real unit, not a mock's own answer | Smell #3, `app/test/unit/tariff.test.js:79`; the agent kept a `callCount` check on the mock (section 3, row 1). |
 | 5. Both sides of every boundary, one table row each | Smell #12, `app/test/unit/tariff.test.js:36`, M005 survives the unit-only run (section 1). `docs/ai-test-checklist.md:16`: the draft from the code tested the code's boundary, not the spec's. |
 | 6. Kyiv time in the test data | Smell #10, `app/test/unit/day-cap.test.js:11`: green before and after the fix of BUG-5. `docs/ai-test-checklist.md:18`. The AI's #8 in section 2. |
-| 7. Do not test what the spec does not define | `docs/test-cases.md:268` (error texts, order of `fees`, lines with a zero amount); `docs/ai-test-checklist.md:19`; section 3, rows 4–7. |
-| 8. Never make a test pass by changing it | Task B: the agent of the run from the code edited its own test after its first red run (`ai-runs/b1-from-code.md:5`); the unit tests changed in Task B each with the spec line (`docs/bugs/README.md:157-165`). |
+| 7. Do not test what the spec does not define | `docs/test-cases.md:267-268` (error texts, order of `fees`, lines with a zero amount); `docs/ai-test-checklist.md:19`; section 3, rows 4–7. |
+| 8. Never make a test pass by changing it | Task B: the agent of the run from the code edited its own test after its first red run (`ai-runs/b1-from-code.md:5`); the unit tests changed in Task B each with the spec line (`docs/bugs/README.md:166-174`). |
 
-The rules are for the tests an agent writes or changes. Some smells of section 2 are still in the
-submitted unit tests, against these rules, and were left as found so that section 2 still points
-at them. In `app/test/unit/tariff.test.js`: the expected value built from the code's formula on
-line 35 (smell #2, rule 2; line 36 now checks the literal 12000), the `callCount` check on the
-mock on line 103 (smell #3, rule 4; the mock now wraps the real `quote`), the loops on lines 17-24
-and 41-44, where the first failing case hides the others (smell #12, rule 5), `fees[0]` on line 59,
-which assumes an order of the fees (smell #8, rule 7), and test names without a rule ID (rule 1).
-The weak checks are also still there, next to the exact values added in section 3: `total >= 0`,
-`Array.isArray` and `typeof` on lines 20-23 (smell #1, rule 3), `some(…)` and
-`total < timeCharge` on lines 49-50 (smell #6), `total < timeCharge` on line 68 (smell #5),
-`fees.length` on line 75 (smell #7) and `last.total <= DAY_CAP` on line 92 (smell #4), which also
-takes its bound from the code's constant (rule 2). In `app/test/unit/day-cap.test.js`,
-`remaining < DAY_CAP` on line 8 (smell #9, rules 2 and 3) stays above the literal 18000 on line 9.
-They were not deleted: next to the exact values they add nothing to the check of the price, but
-they are not wrong, and the Definition of Done asks for a reason for every removed or weakened
-check (`docs/walkthrough.md:565`). `receipt-format.test.js` and `server.test.js` did not change,
-so smells #11 and #13 are as in section 2. The 45-minute boundary that smell #12 misses is tested
-from both sides in `app/test/spec/t4-subscription.test.js:9-10` (TC-25, TC-26).
+The rules are for the tests an agent writes or changes. After Task C the submitted unit tests were
+checked against them once more. Each weak or code-derived check that was still there next to the
+exact values of section 3 was either replaced with the exact value of the spec it stood in for, or
+removed because an exact check in the same test already implies it. One smell had been removed
+before that: `fees[0].amount` in `reduced fare for a ride returned outside the zone` assumed an
+order of the fees (smell #8, rule 7); line 58 compares the whole `fees` array with the one fee that
+ride has, `out-of-zone` 15000 (`docs/spec/tariffs.md:87, 112`). The other changes, in
+`app/test/unit/tariff.test.js` (lines as submitted):
 
-The participant's new test, `app/test/unit/tariff-time-zone.test.js`, has no expected value from
-the code (rule 2), runs the real `quote` in both processes (rule 4) and asserts nothing about
-which formats are accepted (rule 7). Its name carries the spec section, `§2`, instead of a rule
-ID: rule 1 asks for an ID from T1–T10, and the property comes from section 2 of the spec
+| Test (line) | Check before | Check now | Why |
+|---|---|---|---|
+| `quote returns an itemised price` (9) | `total >= 0`, `Array.isArray(fees)`, `typeof minutes` (smell #1) | `minutes` 1, 50 and 130 and `fees` `[]` (lines 21, 23) | The exact total on line 20 implies `total >= 0`. T1 gives the minutes (`docs/spec/tariffs.md:45-47`); all three rides end at S01, in the zone, within 24 h, so no fee (`:112, 119, 166`). `Array.isArray(discounts)` stays (line 22): what a false start shows on the receipt is Q-4, so there is no exact value for it |
+| `e-bikes are billed at the e-bike rate` (33) | the code's formula `Math.ceil(result.minutes / BLOCK_MINUTES) * RATES.ebike` (smell #2), `total === timeCharge` | `minutes` 75 and `total` 12000 (lines 35, 37) | Rule 2. T1 and T3 give 75 min and 12000 (`:45-47, 70`); line 36 already checked the 12000 of `timeCharge` |
+| `subscription on a long e-bike ride` (47) | `some(… "subscription")`, `total < timeCharge` (smell #6) | `timeCharge` 16000 (line 50) | The exact `discounts` on line 51 implies the first. 100 min is 4 blocks × 40 UAH (`:62, 67`) |
+| `night rides get 30 % off` (61) | `total < timeCharge` (smell #5) | removed | Lines 64 and 68 assert 2500 and 1750 |
+| `a bike kept over a day and left outside the zone pays both fees` (71) | `fees.length === 2` (smell #7) and the comparison by fee code of section 3 | the whole `fees` array sorted by code (line 75) | Still in any order (rule 7). The sorted array also fails on a third or a repeated fee, which the comparison by code alone let through |
+| `the daily cap limits the time charge` (83) | `last.total <= DAY_CAP` (smell #4) | removed | Line 91 asserts 6000; the bound came from the code's constant (rule 2) |
+| `a 45-minute classic ride costs 50 UAH` (96) | `mock.fn(quote)` and `callCount === 1` (smell #3) | a direct call of `quote` | Rule 4: the call count checked the mock, not the code. The exact 5000 on line 98 is unchanged |
+
+In `app/test/unit/day-cap.test.js`, `remaining < DAY_CAP` (smell #9, rules 2 and 3) is removed:
+line 8 asserts 18000. No test was removed and no expected value changed: seven checks were removed
+and six replaced by exact values. The run of section 4 lists no survivor that the run before
+these changes did not list. What is left against the rules: the loops on lines 18-24 and 41-44 of
+`tariff.test.js`, where the first failing case hides the others (smell #12, rule 5), and test names
+without a rule ID (rule 1). `receipt-format.test.js` and `server.test.js` did not change, so
+smells #11 and #13 are as in section 2. The 45-minute boundary that smell #12 misses is tested from
+both sides in `app/test/spec/t4-subscription.test.js:9-10` (TC-25, TC-26).
+
+The participant's new tests, `app/test/unit/tariff-time-zone.test.js` and
+`app/test/unit/receipt-minus-sign.test.js`, have no expected value from the code (rule 2), run the
+real `quote` (rule 4) and assert nothing the spec leaves open (rule 7): not which formats are
+accepted, and not whether a line of 0 belongs on the receipt. The rows of the second one sit on
+both sides of the false start and of the cap, each a test of its own with the case in its name
+(rule 5), and its name carries the rule ID, T9 (rule 1). The name of the time-zone test carries the
+spec section, `§2`, instead of a rule ID: rule 1 asks for an ID from T1–T10, and the property comes from section 2 of the spec
 (`docs/spec/tariffs.md:37-38`), which has none. The Task B spec tests mark section 4 the same way,
 for example `T3: TC-23 bike type scooter is rejected (§4)`
 (`app/test/spec/t3-time-charge.test.js:20`). `app/AGENTS.md` was not changed to allow this: the

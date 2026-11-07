@@ -3,7 +3,6 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { formatReceipt } from "../../src/receipt.js";
 import { quote } from "../../src/tariff.js";
-import { randomRider } from "../helpers/factory.js";
 
 // Fixed rides on both sides of the 30- and 60-minute block boundaries, so every run checks the
 // same cases. A block is each started 30 minutes (docs/spec/tariffs.md:29, 62); the block price is
@@ -48,7 +47,7 @@ test("a receipt lists the fee for a return outside the zone", () => {
     returnStation: "X02",
   };
 
-  const lines = formatReceipt(quote(ride, randomRider()));
+  const lines = formatReceipt(quote(ride, rider));
 
   assert.deepEqual(lines, [
     "Тривалість поїздки: 20 хв",
