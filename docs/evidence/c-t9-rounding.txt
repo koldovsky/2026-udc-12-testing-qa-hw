@@ -1,0 +1,6 @@
+(a) quote() inputs: 201672 (4 pickups x 2 bikes x 2 stations x 4 rider kinds x 3001 durations + day-cap ledger runs)
+    discount() calls: 294030
+    calls with a fraction: 0
+(b) Math.floor -> Math.ceil in discount(): tests 106, pass 105, fail 1
+    red tests:
+      T9: TC-55 знижка 30 % від 1 235 коп. — до сплати округлюється вниз до 864, знижка 371

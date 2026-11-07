@@ -42,6 +42,7 @@ test("POST /api/quote returns the quote and the receipt", async () => {
   });
   assert.equal(res.status, 200);
   const json = JSON.parse(res.body);
+  // T3, docs/spec/tariffs.md:62, :66 — 40 min (10:00–10:40 Kyiv) = 2 blocks × 2 500
   assert.equal(json.quote.total, 5000);
   assert.ok(json.receipt.at(-1).endsWith("50,00 грн"));
 });

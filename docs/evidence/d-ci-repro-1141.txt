@@ -1,0 +1,56 @@
+$ rm -rf ../ws12-d-repro && mkdir -p ../ws12-d-repro && git archive main app ci | tar -x -C ../ws12-d-repro
+$ cd ../ws12-d-repro && git init -q && git apply ci/changes/run-1141.diff && npm --prefix app test; cd -
+npm notice run veloprokat@3.2.0 test
+npm notice run node --test "test/**/*.test.js"
+✔ every receipt of a week of rides ends with the amount due (…ms)
+✔ a receipt lists the fee for a return outside the zone (…ms)
+✖ a ride on the night the clocks go back is billed by the station clock (…ms)
+✔ a ride the evening before the change is not affected (…ms)
+✔ charges recorded for a day reduce what is left of the cap (…ms)
+✔ the day of a ride is the date of its pickup (…ms)
+✔ amounts are shown in hryvnias (…ms)
+✔ a receipt has a line for every item (…ms)
+✔ GET / serves the page and GET /api/health answers (…ms)
+✔ POST /api/quote returns the quote and the receipt (…ms)
+✔ POST /api/quote answers 400 to a body that is not JSON (…ms)
+✔ quote returns an itemised price (…ms)
+✔ a ride of 30 min 20 s is billed as one block (…ms)
+✔ e-bikes are billed at the e-bike rate (…ms)
+✔ subscribers ride the first 45 minutes free (…ms)
+✔ subscription on a long e-bike ride (…ms)
+✔ reduced fare for a ride returned outside the zone (…ms)
+✔ night rides get 30 % off (…ms)
+✔ a bike kept over a day and left outside the zone pays both fees (…ms)
+✔ the daily cap limits the time charge (…ms)
+✔ a 45-minute classic ride costs 50 UAH (…ms)
+✔ a return before the pickup is rejected (…ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 21
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms …
+
+✖ failing tests:
+
+test at test/unit/clock-change.test.js:8:1
+✖ a ride on the night the clocks go back is billed by the station clock (…ms)
+  AssertionError [ERR_ASSERTION]: tariff.quote() miscounts the ride across the DST change
+  
+  180 !== 120
+  
+      at TestContext.<anonymous> (file:///<копія>/app/test/unit/clock-change.test.js:11:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.start (node:internal/test_runner/test:1096:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 180,
+    expected: 120,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+exit code: 1

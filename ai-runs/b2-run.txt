@@ -1,0 +1,346 @@
+✔ every receipt of a week of rides ends with the amount due (7.614569ms)
+✔ a receipt lists the fee for a return outside the zone (3.738084ms)
+✔ §4: TC-V-01 повернення на 1 с раніше за взяття — запит відхилено (5.562337ms)
+✔ §4: TC-V-03 невідомий тип велосипеда «тандем» — запит відхилено (0.368642ms)
+✔ §4: TC-V-04 невідома категорія «корпоративний» — запит відхилено (0.498799ms)
+✔ §4: TC-V-05 станції повернення X04 немає в додатку А — запит відхилено (0.311526ms)
+✔ §4 (+T2): TC-V-02 взяття = повернення — не відхиляється, 0 хв, до сплати 0 (1.645028ms)
+✔ T1: TC-01 10:00:00 → 10:12:40 — 13 хв, 1 блок (5.977401ms)
+✔ T1: TC-02 14:05:00 → 14:41:00 — 36 хв, 2 блоки (0.500403ms)
+✔ T1: TC-03 29 хв 59 с → 30 хв, 1 блок (0.476741ms)
+✔ T1: TC-04 рівно 30 хв — 1 блок (0.45829ms)
+✖ T1: TC-05 30 хв 1 с → 31 хв, 2 блоки (4.906422ms)
+✔ T1 (+T10): TC-06 перехід на зимовий час — фактичні 50 хв, нічна знижка (0.702864ms)
+✖ T2: TC-07 рівно 2 хв — хибний старт, 0 (0.617317ms)
+✖ T2: TC-08 2 хв 1 с → 3 хв — не хибний старт, 1 блок (0.410164ms)
+✔ T2: TC-09 50 с → 1 хв — 0 (0.280627ms)
+✔ T2 (+T7): TC-10 хибний старт з поверненням на X02 — збір T7 нараховується (0.655412ms)
+✔ T3: TC-11 класичний, 50 хв — 2 блоки (6.457869ms)
+✔ T3: TC-12 електро, 75 хв — 3 блоки (0.465279ms)
+✔ T3: TC-13 класичний, 60 хв — 2 блоки (0.405526ms)
+✔ T3: TC-14 класичний, 61 хв — 3 блоки (0.404341ms)
+✔ T3: TC-15 електро, 30 хв — 1 блок (0.436572ms)
+✔ T3: TC-16 електро, 31 хв — 2 блоки (1.61876ms)
+✔ T4: TC-17 абонент, класичний, 40 хв — безкоштовно (6.921784ms)
+✔ T4: TC-18 абонент, класичний, рівно 45 хв — безкоштовно (0.388511ms)
+✔ T4: TC-19 абонент, класичний, 46 хв — 1 платна хвилина, 1 блок (2.03971ms)
+✔ T4: TC-20 абонент, класичний, 75 хв — 30 платних, 1 блок (0.353701ms)
+✔ T4: TC-21 абонент, класичний, 76 хв — 31 платна, 2 блоки (0.459846ms)
+✔ T4: TC-22 абонент, класичний, 100 хв — 55 платних, 2 блоки (0.36588ms)
+✖ T4: TC-23 абонент, електро, 30 хв — −20 % (3.714454ms)
+✖ T4: TC-24 абонент, електро, 45 хв — безкоштовних хвилин немає, −20 % (0.565188ms)
+✔ T5: TC-26 пільговий, класичний, 40 хв — −50 % (0.471086ms)
+✔ T5: TC-27 пільговий, електро, 75 хв — −50 % (0.446438ms)
+✔ T5: TC-28 абонент з пільгою, класичний, 80 хв — пільга вигідніша (0.502982ms)
+✔ T5: TC-29 абонент з пільгою, класичний, 40 хв — абонемент вигідніший (0.185142ms)
+✔ T5: TC-30 абонент з пільгою, класичний, 60 хв — суми рівні → абонемент (0.173166ms)
+✖ T5 (+T7): TC-31 абонент з пільгою, електро, 30 хв, X03 — пільга, збір без знижки (0.397256ms)
+✔ T5 (+T7): TC-32 абонент з пільгою, класичний, 30 хв, X01 — порівнюється лише погодинне (0.35467ms)
+✔ T4: TC-25 45 безкоштовних хвилин діють на кожну поїздку, а не на добу (0.447283ms)
+✔ T6: TC-34 уже 27 500 + 2 500 — рівно 30 000, ліміт не урізає (7.780534ms)
+✔ T6: TC-35 уже 28 000 + 2 500 — ліміт −500 (0.604791ms)
+✔ T6 (+T7): TC-36 ліміт вичерпано, X01 — збір лімітом не обмежується (0.616414ms)
+✔ T6 (+T5): TC-37 пільговий, уже 27 000 — ліміт після знижки (2.062509ms)
+✔ T6: TC-39 поїздка 23:40 → 00:20 належить до доби взяття (16.09) (0.414068ms)
+✖ T6 (+T10): TC-41 доба — за київським часом: 17.09 00:30 (16.09 за UTC) — новий ліміт (2.081369ms)
+✔ T6: TC-42 ліміт рахується для кожного користувача окремо (0.504701ms)
+✔ T8 (+T6): TC-54 ліміт вичерпано, 25 год — збір T8 лімітом не обмежується (0.378312ms)
+✔ T6: TC-33 три поїздки електро по 80 хв — третя урізана до 60 грн, разом 300 грн (1.154174ms)
+✖ T6 (+T10): TC-38 нічна поїздка зі знижкою, потім довга денна — разом рівно 30 000 (2.677157ms)
+✔ T6: TC-40 поїздка, взята 16.09 о 23:40, не входить у ліміт 17.09 (0.72035ms)
+✔ T7: TC-43 стандартний, класичний, 20 хв, X01 — 25 + 150 грн (7.328148ms)
+✔ T7: TC-44 стандартний, електро, 40 хв, X02 — 80 + 150 грн (1.75508ms)
+✔ T7: TC-45 абонент, класичний, 40 хв, X03 — погодинне 0 + збір (0.458428ms)
+✔ T7: TC-46 повернення на S01 (у зоні) — збору немає (0.38423ms)
+✔ T7: TC-46 повернення на S02 (у зоні) — збору немає (0.338733ms)
+✔ T7: TC-46 повернення на S03 (у зоні) — збору немає (0.221781ms)
+✔ T7: TC-46 повернення на S04 (у зоні) — збору немає (0.24369ms)
+✔ T7: TC-46 повернення на S05 (у зоні) — збору немає (0.297484ms)
+✔ T7: TC-46 повернення на S06 (у зоні) — збору немає (0.362191ms)
+✔ T7: TC-46 повернення на S07 (у зоні) — збору немає (0.664519ms)
+✔ T7: TC-46 повернення на S08 (у зоні) — збору немає (0.397926ms)
+✖ T7 (+T5): TC-47 пільговий, X01 — пільга не поширюється на збір (4.094768ms)
+✔ T7 (+T10): TC-48 нічна поїздка, X02 — нічна знижка лише на погодинне (0.532858ms)
+✔ T8 (+T6): TC-49 рівно 24 год — не «понад 24 години», збору немає (0.281017ms)
+✖ T8 (+T6): TC-50 24 год + 1 с → 1 441 хв — збір 2 000 грн (0.461727ms)
+✔ T8 (+T6): TC-51 25 год — ліміт 300 грн + збір 2 000 грн (0.227009ms)
+✔ T8 (+T7): TC-52 25 год, X03 — обидва збори незалежно (0.226193ms)
+✖ T8 (+T5): TC-53 пільговий, електро, 25 год — збір T8 без знижки (0.484771ms)
+✔ T9: TC-55 знижка 30 % від 1 235 коп. — до сплати округлюється вниз до 864, знижка 371 (4.504125ms)
+✔ T9: TC-56 230000 коп. → «2 300,00 грн» (0.643634ms)
+✔ T9: TC-57а 99999 коп. → «999,99 грн» (0.277084ms)
+✔ T9: TC-57б 100000 коп. → «1 000,00 грн» (0.303265ms)
+✔ T9: TC-58а 1750 коп. → «17,50 грн» (0.305856ms)
+✔ T9: TC-58б 5 коп. → «0,05 грн» (0.230262ms)
+✔ T9 (+T6): TC-59 чек третьої поїздки з TC-33 — T3 120,00, ліміт −60,00, до сплати 60,00 (3.472738ms)
+✔ T9 (+T7): TC-60 чек поїздки з TC-43 — T3 25,00, збір 150,00, до сплати 175,00, без знижок (0.688991ms)
+✔ T9 (+T10): TC-61 чек поїздки з TC-62 — T3 25,00, нічна −7,50, до сплати 17,50 (0.679573ms)
+✔ T10: TC-62 класичний, 01:10 → 01:40 — −30 % (6.297501ms)
+✔ T10: TC-63 початок рівно о 00:00 — нічна (0.469209ms)
+✔ T10: TC-64 05:30:00 → 05:59:59 — уся поїздка до 06:00 (0.47817ms)
+✔ T10: TC-65 електро, 00:30 → 01:00 — −30 % (0.411392ms)
+✔ T10: TC-66 денна поїздка 12:00 → 12:20 — нічної знижки немає (0.623531ms)
+✔ charges recorded for a day reduce what is left of the cap (5.372319ms)
+✔ the day of a ride is the date of its pickup (0.410641ms)
+✔ amounts are shown in hryvnias (3.866245ms)
+✔ a receipt has a line for every item (0.745018ms)
+✔ GET / serves the page and GET /api/health answers (4.952915ms)
+✔ POST /api/quote returns the quote and the receipt (6.268202ms)
+✔ POST /api/quote answers 400 to a body that is not JSON (1.0848ms)
+✔ quote returns an itemised price (4.541205ms)
+✔ a ride of 30 min 20 s is billed as one block (0.322132ms)
+✔ e-bikes are billed at the e-bike rate (0.37979ms)
+✔ subscribers ride the first 45 minutes free (0.494961ms)
+✔ subscription on a long e-bike ride (0.340712ms)
+✔ reduced fare for a ride returned outside the zone (1.667235ms)
+✔ night rides get 30 % off (0.309493ms)
+✔ a bike kept over a day and left outside the zone pays both fees (0.242206ms)
+✔ the daily cap limits the time charge (1.25661ms)
+✔ a 45-minute classic ride costs 50 UAH (0.860769ms)
+✔ a return before the pickup is rejected (0.696678ms)
+ℹ tests 100
+ℹ suites 0
+ℹ pass 89
+ℹ fail 11
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 563.136109
+
+✖ failing tests:
+
+test at test/spec/t01-t02-duration.test.js:40:3
+✖ T1: TC-05 30 хв 1 с → 31 хв, 2 блоки (4.906422ms)
+  AssertionError [ERR_ASSERTION]: тривалість, хв (T1)
+  
+  30 !== 31
+  
+      at assertQuote (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/helpers/spec.js:47:37)
+      at TestContext.<anonymous> (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/spec/t01-t02-duration.test.js:41:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 30,
+    expected: 31,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/t01-t02-duration.test.js:40:3
+✖ T2: TC-07 рівно 2 хв — хибний старт, 0 (0.617317ms)
+  AssertionError [ERR_ASSERTION]: погодинне після знижок і ліміту, коп.
+  
+  2500 !== 0
+  
+      at assertQuote (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/helpers/spec.js:60:36)
+      at TestContext.<anonymous> (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/spec/t01-t02-duration.test.js:41:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2500,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/t01-t02-duration.test.js:40:3
+✖ T2: TC-08 2 хв 1 с → 3 хв — не хибний старт, 1 блок (0.410164ms)
+  AssertionError [ERR_ASSERTION]: тривалість, хв (T1)
+  
+  2 !== 3
+  
+      at assertQuote (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/helpers/spec.js:47:37)
+      at TestContext.<anonymous> (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/spec/t01-t02-duration.test.js:41:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/t04-t05-subscription-reduced.test.js:68:3
+✖ T4: TC-23 абонент, електро, 30 хв — −20 % (3.714454ms)
+  AssertionError [ERR_ASSERTION]: знижка «subscription», коп.
+  
+  4000 !== 800
+  
+      at assertQuote (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/helpers/spec.js:51:17)
+      at TestContext.<anonymous> (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/spec/t04-t05-subscription-reduced.test.js:69:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 4000,
+    expected: 800,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/t04-t05-subscription-reduced.test.js:68:3
+✖ T4: TC-24 абонент, електро, 45 хв — безкоштовних хвилин немає, −20 % (0.565188ms)
+  AssertionError [ERR_ASSERTION]: знижка «subscription», коп.
+  
+  8000 !== 1600
+  
+      at assertQuote (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/helpers/spec.js:51:17)
+      at TestContext.<anonymous> (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/spec/t04-t05-subscription-reduced.test.js:69:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 8000,
+    expected: 1600,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/t04-t05-subscription-reduced.test.js:68:3
+✖ T5 (+T7): TC-31 абонент з пільгою, електро, 30 хв, X03 — пільга, збір без знижки (0.397256ms)
+  AssertionError [ERR_ASSERTION]: має бути застосована пільга: [{"code":"subscription","amount":4000}]
+      at assertQuote (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/helpers/spec.js:54:12)
+      at TestContext.<anonymous> (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/spec/t04-t05-subscription-reduced.test.js:69:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test/spec/t06-day-cap.test.js:53:3
+✖ T6 (+T10): TC-41 доба — за київським часом: 17.09 00:30 (16.09 за UTC) — новий ліміт (2.081369ms)
+  AssertionError [ERR_ASSERTION]: знижки «day-cap» не має бути: [{"code":"night","amount":750},{"code":"day-cap","amount":1750}]
+      at assertQuote (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/helpers/spec.js:50:30)
+      at TestContext.<anonymous> (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/spec/t06-day-cap.test.js:55:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test/spec/t06-day-cap.test.js:73:1
+✖ T6 (+T10): TC-38 нічна поїздка зі знижкою, потім довга денна — разом рівно 30 000 (2.677157ms)
+  AssertionError [ERR_ASSERTION]: знижка «day-cap», коп.
+  
+  10000 !== 11750
+  
+      at assertQuote (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/helpers/spec.js:51:17)
+      at TestContext.<anonymous> (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/spec/t06-day-cap.test.js:83:3)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 10000,
+    expected: 11750,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/t07-t08-fees.test.js:50:3
+✖ T7 (+T5): TC-47 пільговий, X01 — пільга не поширюється на збір (4.094768ms)
+  AssertionError [ERR_ASSERTION]: збори, коп.
+  
+  7500 !== 15000
+  
+      at assertQuote (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/helpers/spec.js:61:34)
+      at TestContext.<anonymous> (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/spec/t07-t08-fees.test.js:51:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 7500,
+    expected: 15000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/t07-t08-fees.test.js:50:3
+✖ T8 (+T6): TC-50 24 год + 1 с → 1 441 хв — збір 2 000 грн (0.461727ms)
+  AssertionError [ERR_ASSERTION]: тривалість, хв (T1)
+  
+  1440 !== 1441
+  
+      at assertQuote (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/helpers/spec.js:47:37)
+      at TestContext.<anonymous> (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/spec/t07-t08-fees.test.js:51:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1440,
+    expected: 1441,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/t07-t08-fees.test.js:50:3
+✖ T8 (+T5): TC-53 пільговий, електро, 25 год — збір T8 без знижки (0.484771ms)
+  AssertionError [ERR_ASSERTION]: збори, коп.
+  
+  100000 !== 200000
+  
+      at assertQuote (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/helpers/spec.js:61:34)
+      at TestContext.<anonymous> (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/app/test/spec/t07-t08-fees.test.js:51:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 100000,
+    expected: 200000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

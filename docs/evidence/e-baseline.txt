@@ -1,0 +1,75 @@
+c4a4d2d
+✔ charges recorded for a day reduce what is left of the cap (3.639532ms)
+✔ the day of a ride is the date of its pickup (1.315705ms)
+✔ nothing is charged on a day with no rides (0.302667ms)
+✔ charges add up per rider and day; remaining is the cap minus them, never below 0 (0.308007ms)
+✔ amounts are shown in hryvnias (3.282406ms)
+✔ a receipt has a line for every item (0.530176ms)
+✔ GET / serves the page and GET /api/health answers (6.200004ms)
+✔ POST /api/quote returns the quote and the receipt (7.719ms)
+✔ POST /api/quote answers 400 to a body that is not JSON (1.128596ms)
+✔ quote returns an itemised price (4.74039ms)
+✔ a ride of 30 min 20 s is billed as two blocks (0.294315ms)
+✔ e-bikes are billed at the e-bike rate (0.272928ms)
+✔ subscribers ride the first 45 minutes free on a classic bike only (0.454076ms)
+✔ subscription on a long e-bike ride (0.324674ms)
+✔ reduced fare for a ride returned outside the zone (0.349758ms)
+✔ night rides get 30 % off (0.271149ms)
+✔ a bike kept over a day and left outside the zone pays both fees (0.24179ms)
+✔ the daily cap limits the time charge (0.761251ms)
+✔ a 45-minute classic ride costs 50 UAH (0.816362ms)
+✔ a return before the pickup is rejected (0.878355ms)
+✔ a ride that starts at 06:30 in Kyiv gets no night discount (T10: 00:00–06:00) (2.3118ms)
+✔ a subscriber's 31-minute e-bike ride is billed from the first minute: 2 blocks − 20 % (0.516312ms)
+✔ a null ride is rejected with a QuoteError, not a TypeError (0.267629ms)
+✔ a pickupAt that is not a string is rejected even if it stringifies to a valid date (0.310666ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 446.999793
+ℹ start of coverage report
+ℹ --------------------------------------------------------------
+ℹ file          | line % | branch % | funcs % | uncovered lines
+ℹ --------------------------------------------------------------
+ℹ src           |        |          |         | 
+ℹ  day-cap.js   | 100.00 |   100.00 |  100.00 | 
+ℹ  kyiv-time.js | 100.00 |   100.00 |  100.00 | 
+ℹ  receipt.js   | 100.00 |    75.00 |  100.00 | 
+ℹ  server.js    |  89.61 |    73.91 |   71.43 | 36 39-40 73-77
+ℹ  tariff.js    | 100.00 |    89.09 |  100.00 | 
+ℹ  zones.js     |  96.55 |    75.00 |   66.67 | 24
+ℹ --------------------------------------------------------------
+ℹ all files     |  97.26 |    85.44 |   91.18 | 
+ℹ --------------------------------------------------------------
+ℹ end of coverage report
+мутантів: 86, паралельно: 5, базовий прогін: 742 мс
+  10/86
+  20/86
+  30/86
+  40/86
+  50/86
+  60/86
+  70/86
+  80/86
+  86/86
+Мутаційне тестування
+  цілі:   app/src/tariff.js, app/src/day-cap.js
+  тести:  app/test/unit, app/test/spec — файлів: 12, тестів: 104, пропущено: 0, todo: 0, викликів assert: 70
+
+файл                мутантів     вбито    вижило   таймаут     score
+app/src/tariff.js         79        71         3         5    96.2 %
+app/src/day-cap.js         7         7         0         0   100.0 %
+разом                     86        78         3         5    96.5 %
+
+Вижили (3) — тести не помітили цієї зміни:
+  M016  app/src/tariff.js:47:21     0 → 1                       if (plan.amount > 0) discounts.push({ code: plan.code, amount: plan...
+  M018  app/src/tariff.js:50:11     > → >=                      if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+  M019  app/src/tariff.js:50:13     0 → 1                       if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+
+Таймаут (зараховано як вбиті): M011, M012, M013, M014, M015
+
+Час: 372.3 с

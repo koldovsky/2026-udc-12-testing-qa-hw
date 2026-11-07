@@ -1,0 +1,13 @@
+$ # ../ws12-d-repro-1152: копія з main + git apply ci/changes/run-1152.diff
+$ for i in $(seq 10); do node --test app/test/unit/tariff.test.js > /dev/null 2>&1 && echo -n "зелений " || echo -n "червоний "; done
+червоний червоний червоний червоний червоний червоний червоний червоний червоний червоний 
+$ # ../ws12-d-repro-1147-main: копія з main без diff, та сама команда
+зелений зелений зелений зелений зелений зелений зелений зелений зелений зелений 
+
+$ node -e 'import("./app/src/tariff.js").then(({ quote }) => console.log(JSON.stringify(quote({ pickupAt: "2026-09-16T10:00:00+03:00", returnAt: "2026-09-17T11:00:00+03:00", bike: "classic", returnStation: "X02" }, { type: "standard" }).fees)))'   # 25 год, повернення поза зоною (X02)
+з diff (../ws12-d-repro-1152):
+[{"code":"out-of-zone","amount":15000}]
+main без diff (../ws12-d-repro-1147-main):
+[{"code":"out-of-zone","amount":15000},{"code":"unreturned","amount":200000}]
+поточний код (репо, після Task B):
+[{"code":"out-of-zone","amount":15000},{"code":"unreturned","amount":200000}]

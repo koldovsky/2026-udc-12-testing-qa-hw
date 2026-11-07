@@ -1,0 +1,4 @@
+$ node docs/evidence/d-flaky-oracle.mjs
+1. rides checked: 102170; old oracle ≠ code at durations (min → rides): { '30': 1202, '60': 1202 }
+2. P(run red) = 1 − (83/85)^10 = 0.2119; in 30 runs ≈ 6.4
+3. simulated runs: 100000; red: 21102 (21.10 %); first failing duration → runs: { '30': 10599, '60': 10503 }

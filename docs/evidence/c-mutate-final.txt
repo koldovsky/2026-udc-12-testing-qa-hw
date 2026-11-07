@@ -1,0 +1,26 @@
+$ node tools/mutate.mjs
+мутантів: 86, паралельно: 5, базовий прогін: 794 мс
+  10/86
+  20/86
+  30/86
+  40/86
+  50/86
+  60/86
+  70/86
+  80/86
+  86/86
+Мутаційне тестування
+  цілі:   app/src/tariff.js, app/src/day-cap.js
+  тести:  app/test/unit, app/test/spec — файлів: 12, тестів: 106, пропущено: 0, todo: 0, викликів assert: 86
+
+файл                мутантів     вбито    вижило   таймаут     score
+app/src/tariff.js         79        76         3         0    96.2 %
+app/src/day-cap.js         7         7         0         0   100.0 %
+разом                     86        83         3         0    96.5 %
+
+Вижили (3) — тести не помітили цієї зміни:
+  M016  app/src/tariff.js:47:21     0 → 1                       if (plan.amount > 0) discounts.push({ code: plan.code, amount: plan...
+  M018  app/src/tariff.js:50:11     > → >=                      if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+  M019  app/src/tariff.js:50:13     0 → 1                       if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+
+Час: 45.6 с

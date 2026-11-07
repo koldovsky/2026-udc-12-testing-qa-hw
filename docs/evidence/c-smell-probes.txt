@@ -1,0 +1,23 @@
+$ node docs/evidence/c-smell-probes.mjs
+baseline: pass 18, fail 0
+#1 quote throws: pass 7, fail 11
+  ✖ POST /api/quote returns the quote and the receipt
+  ✖ quote returns an itemised price
+  ✖ a ride of 30 min 20 s is billed as two blocks
+  ✖ e-bikes are billed at the e-bike rate
+  ✖ subscribers ride the first 45 minutes free on a classic bike only
+  ✖ subscription on a long e-bike ride
+  ✖ reduced fare for a ride returned outside the zone
+  ✖ night rides get 30 % off
+  ✖ a bike kept over a day and left outside the zone pays both fees
+  ✖ the daily cap limits the time charge
+  ✖ a return before the pickup is rejected
+#2 RATES.ebike 4000 -> 4500: pass 17, fail 1
+  ✖ subscribers ride the first 45 minutes free on a classic bike only
+#4 NIGHT_PERCENT 30 -> 10: pass 18, fail 0
+#5 SUBSCRIPTION_EBIKE_PERCENT 20 -> 10: pass 17, fail 1
+  ✖ subscribers ride the first 45 minutes free on a classic bike only
+#6 UNRETURNED_FEE 200000 -> 1: pass 18, fail 0
+#7 day cap never applied: pass 18, fail 0
+#8 remaining subtracts half: pass 18, fail 0
+#9 dayKey by UTC: pass 18, fail 0

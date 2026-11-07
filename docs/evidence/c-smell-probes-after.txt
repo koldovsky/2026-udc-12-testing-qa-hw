@@ -1,0 +1,42 @@
+$ node docs/evidence/c-smell-probes.mjs --worktree
+baseline: pass 24, fail 0
+#1 quote throws: pass 8, fail 16
+  ✖ POST /api/quote returns the quote and the receipt
+  ✖ quote returns an itemised price
+  ✖ a ride of 30 min 20 s is billed as two blocks
+  ✖ e-bikes are billed at the e-bike rate
+  ✖ subscribers ride the first 45 minutes free on a classic bike only
+  ✖ subscription on a long e-bike ride
+  ✖ reduced fare for a ride returned outside the zone
+  ✖ night rides get 30 % off
+  ✖ a bike kept over a day and left outside the zone pays both fees
+  ✖ the daily cap limits the time charge
+  ✖ a 45-minute classic ride costs 50 UAH
+  ✖ a return before the pickup is rejected
+  ✖ a ride that starts at 06:30 in Kyiv gets no night discount (T10: 00:00–06:00)
+  ✖ a subscriber's 31-minute e-bike ride is billed from the first minute: 2 blocks − 20 %
+  ✖ a null ride is rejected with a QuoteError, not a TypeError
+  ✖ a pickupAt that is not a string is rejected even if it stringifies to a valid date
+#2 RATES.ebike 4000 -> 4500: pass 18, fail 6
+  ✖ quote returns an itemised price
+  ✖ e-bikes are billed at the e-bike rate
+  ✖ subscribers ride the first 45 minutes free on a classic bike only
+  ✖ subscription on a long e-bike ride
+  ✖ the daily cap limits the time charge
+  ✖ a subscriber's 31-minute e-bike ride is billed from the first minute: 2 blocks − 20 %
+#4 NIGHT_PERCENT 30 -> 10: pass 23, fail 1
+  ✖ night rides get 30 % off
+#5 SUBSCRIPTION_EBIKE_PERCENT 20 -> 10: pass 21, fail 3
+  ✖ subscribers ride the first 45 minutes free on a classic bike only
+  ✖ subscription on a long e-bike ride
+  ✖ a subscriber's 31-minute e-bike ride is billed from the first minute: 2 blocks − 20 %
+#6 UNRETURNED_FEE 200000 -> 1: pass 23, fail 1
+  ✖ a bike kept over a day and left outside the zone pays both fees
+#7 day cap never applied: pass 23, fail 1
+  ✖ the daily cap limits the time charge
+#8 remaining subtracts half: pass 21, fail 3
+  ✖ charges recorded for a day reduce what is left of the cap
+  ✖ charges add up per rider and day; remaining is the cap minus them, never below 0
+  ✖ the daily cap limits the time charge
+#9 dayKey by UTC: pass 23, fail 1
+  ✖ the day of a ride is the date of its pickup

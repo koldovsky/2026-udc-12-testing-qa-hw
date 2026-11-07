@@ -1,0 +1,6 @@
+$ node docs/evidence/d-flaky-pooled.mjs
+p = 0.2119
+11/30 ai-runs/d-repeat-before.txt:2: expected 6.3564, P(X>=11) = 0.0379, P(X<=11) = 0.9850
+7/30 d-ci-1144-repeat.txt:4: expected 6.3564, P(X>=7) = 0.4572, P(X<=7) = 0.7061
+4/30 d-ci-1144-repeat.txt:20: expected 6.3564, P(X>=4) = 0.9056, P(X<=4) = 0.2075
+22/90 pooled: expected 19.0693, P(X>=22) = 0.2605, P(X<=22) = 0.8135

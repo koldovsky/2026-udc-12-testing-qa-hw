@@ -1,0 +1,84 @@
+ok   D-T1-1: draft 13, code 13
+ok   D-T1-2: draft 36, code 36
+ok   D-T1-3 0 s: draft 0, code 0
+ok   D-T1-3 1 s: draft 1, code 1
+ok   D-T1-3 60 s: draft 1, code 1
+ok   D-T1-3 61 s: draft 2, code 2
+ok   D-T2-1 50 s: draft 0, code 0
+ok   D-T2-2 120 s: draft 0, code 0
+ok   D-T2-2 121 s: draft 2500, code 2500
+ok   D-T2-3 1 min X02: draft 15000, code 15000
+ok   D-T3 classic 30 min: draft 2500, code 2500
+ok   D-T3 classic 31 min: draft 5000, code 5000
+ok   D-T3 classic 60 min: draft 5000, code 5000
+ok   D-T3 classic 61 min: draft 7500, code 7500
+ok   D-T3 classic 50 min: draft 5000, code 5000
+ok   D-T3 ebike 30 min: draft 4000, code 4000
+ok   D-T3 ebike 31 min: draft 8000, code 8000
+ok   D-T3 ebike 75 min: draft 12000, code 12000
+ok   D-T4 sub classic 40 min: draft 0, code 0
+ok   D-T4 sub classic 45 min: draft 0, code 0
+ok   D-T4 sub classic 46 min: draft 2500, code 2500
+ok   D-T4 sub classic 75 min: draft 2500, code 2500
+ok   D-T4 sub classic 76 min: draft 5000, code 5000
+ok   D-T4 sub classic 100 min: draft 5000, code 5000
+ok   D-T4-3 sub ebike 3 min: draft 3200, code 3200
+ok   D-T4-3 sub ebike 30 min: draft 3200, code 3200
+ok   D-T4-3 sub ebike 31 min: draft 6400, code 6400
+ok   D-T5-1 reduced 40 min: draft 2500, code 2500
+ok   D-T5-2 reduced classic 3 min: draft 1250, code 1250
+ok   D-T5-2 reduced ebike 30 min: draft 2000, code 2000
+ok   D-T5 sub+concession classic 80 min: draft 3750, code 3750
+ok   D-T5 sub+concession classic 46 min: draft 2500, code 2500
+ok   D-T5 sub+concession classic 60 min: draft 2500, code 2500
+ok   D-T5 sub+concession classic 75 min: draft 2500, code 2500
+ok   D-T5 sub+concession classic 76 min: draft 3750, code 3750
+ok   D-T5 sub+concession classic 105 min: draft 5000, code 5000
+ok   D-T5 sub+concession classic 106 min: draft 5000, code 5000
+ok   D-T5 sub+concession classic 2 min: draft 0, code 0
+ok   D-T5-7 sub+concession ebike 30 min: draft 2000, code 2000
+ok   D-T6-2 360 min: draft 30000, code 30000
+ok   D-T6-2 361 min: draft 30000, code 30000
+ok   D-T6-5 reduced 25 h: draft 230000, code 230000
+ok   D-T7-1 20 min X01: draft 17500, code 17500
+ok   D-T7-2 S01: draft 2500, code 2500
+ok   D-T7-2 S02: draft 2500, code 2500
+ok   D-T7-2 S03: draft 2500, code 2500
+ok   D-T7-2 S04: draft 2500, code 2500
+ok   D-T7-2 S05: draft 2500, code 2500
+ok   D-T7-2 S06: draft 2500, code 2500
+ok   D-T7-2 S07: draft 2500, code 2500
+ok   D-T7-2 S08: draft 2500, code 2500
+ok   D-T7-2 X01: draft 17500, code 17500
+ok   D-T7-2 X02: draft 17500, code 17500
+ok   D-T7-2 X03: draft 17500, code 17500
+ok   D-T7-3 reduced 40 min X03: draft 17500, code 17500
+ok   D-T8-1 1440 min: draft 30000, code 30000
+ok   D-T8-2 1441 min: draft 230000, code 230000
+ok   (not in the draft) 24 h + 1 s: draft 230000, code 230000
+ok   D-T8-3 25 h: draft 230000, code 230000
+ok   D-T8-4 25 h X03: draft 245000, code 245000
+ok   D-T10-1 01:10-01:40: draft 1750, code 1750
+ok   D-T10-2 ebike 00:10-00:40: draft 2800, code 2800
+ok   D-DST-1 minutes: draft 60, code 60
+ok   D-DST-1 total: draft 3500, code 3500
+ok   D-DST-2 minutes: draft 20, code 20
+ok   D-DST-2 total: draft 1750, code 1750
+ok   D-INV-2 return = pickup: draft 0, code 0
+ok   D-T5 tie 46 min: discount code: draft subscription, code subscription
+ok   D-T5 tie 60 min: discount code: draft subscription, code subscription
+ok   D-T5 tie 105 min: discount code: draft subscription, code subscription
+ok   D-T6-1 ride 1: draft 12000, code 12000
+ok   D-T6-1 ride 2: draft 12000, code 12000
+ok   D-T6-1 ride 3: draft 6000, code 6000
+ok   D-T6-4 after the cap, X01: draft 15000, code 15000
+ok   D-INV-1 return 1 s before pickup: draft rejected, code rejected
+ok   D-INV-3 bike tandem: draft rejected, code rejected
+ok   D-INV-3 bike empty: draft rejected, code rejected
+ok   D-INV-4 category vip: draft rejected, code rejected
+ok   D-INV-4 category empty: draft rejected, code rejected
+ok   D-INV-5 station "S09": draft rejected, code rejected
+ok   D-INV-5 station "X04": draft rejected, code rejected
+ok   D-INV-5 station "": draft rejected, code rejected
+
+ok 82, diff 0

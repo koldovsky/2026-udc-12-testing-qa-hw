@@ -1,0 +1,14 @@
+# Навмисний дефект у копії app/ (поза репо): блоки T3 рахуються як floor(m/30)+1 — саме так, як думав старий тест.
+$ cp -r app <копія>/ && sed -i "" "s|return Math.ceil(minutes / BLOCK_MINUTES);|return Math.floor(minutes / BLOCK_MINUTES) + 1;|" <копія>/app/src/tariff.js
+73:  return Math.floor(minutes / BLOCK_MINUTES) + 1;
+
+## Новий тест (app/test/integration/receipt.test.js після виправлення) на дефектному коді:
+$ node --test test/integration/receipt.test.js
+✖ every receipt of a week of rides ends with the amount due (5.205447ms)
+ℹ pass 1
+ℹ fail 1
+✖ every receipt of a week of rides ends with the amount due (5.205447ms)
+
+## Старий тест (git show b8c42be:app/test/integration/receipt.test.js) на тому самому дефектному коді, 20 запусків:
+$ for i in $(seq 20); do node --test test/integration/receipt.test.js > /dev/null 2>&1 && echo -n "зелений " || echo -n "червоний "; done
+зелений зелений зелений зелений зелений зелений зелений зелений зелений зелений зелений зелений зелений зелений зелений зелений зелений зелений зелений зелений 

@@ -1,0 +1,12 @@
+$ cd <копія> && node --test "ai-runs/c-with-rules/*.test.js"   # app/src з main
+✖ T6: одна доба за Києвом, різні доби за UTC — ліміт спільний
+✖ T6: різні доби за Києвом, одна доба за UTC — ліміт окремий
+✖ T6: поїздка о 01:00 за Києвом записується на київську дату
+ℹ tests 3
+ℹ pass 0
+ℹ fail 3
+
+$ node --test "ai-runs/c-with-rules/*.test.js"   # корінь репо, поточний код
+ℹ tests 3
+ℹ pass 3
+ℹ fail 0

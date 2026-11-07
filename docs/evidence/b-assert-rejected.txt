@@ -1,0 +1,21 @@
+# Імітований дефект: невідома категорія (rider.type) кидає TypeError замість QuoteError (у app/src/tariff.js підмінено один рядок).
+# Старий assertRejected (instanceof Error) цього не бачить; новий (instanceof QuoteError) бачить. Копії: <копія>/old, <копія>/new.
+
+$ cd <копія>/old/app && node --test test/spec/s4-invalid-input.test.js
+ℹ tests 5
+ℹ pass 5
+ℹ fail 0
+
+$ cd <копія>/new/app && node --test test/spec/s4-invalid-input.test.js
+✖ §4: TC-V-04 невідома категорія «корпоративний» — запит відхилено (1.827322ms)
+ℹ tests 5
+ℹ pass 4
+ℹ fail 1
+✖ failing tests:
+✖ §4: TC-V-04 невідома категорія «корпоративний» — запит відхилено (1.827322ms)
+
+$ node docs/evidence/b-assert-rejected-api.mjs <копія>/new/app  (запит з rider.type=vip, патчений код)
+500 {"error":"internal error"}
+
+$ node docs/evidence/b-assert-rejected-api.mjs  (той самий запит, код репозиторію без патча)
+400 {"error":"unknown rider type: vip"}
