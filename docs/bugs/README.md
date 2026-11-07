@@ -81,6 +81,11 @@ due` fails on some runs with no change in the code. It is not in the 17: it pass
 saved in `ai-runs/b2-run.txt`. The test was not changed and is left for Task D, which saves its own
 run in `ai-runs/d-repeat-before.txt`.
 
+Task D: a test defect, not a code defect. The test expected one block too many at exactly 30 and
+60 min and drew its rides at random, so it failed only when a ride of 30 or 60 min came up. It was
+replaced by fixed rows in `9126021`; 0 of 50 runs red after that (`ai-runs/d-repeat-after.txt`).
+Cause, evidence and fix: `docs/triage.md`, section 1. The runs below are from before the fix.
+
 The count changes from one set of runs to the next, and in both sets below only this test failed.
 Both commands run from the repo root. `2>/dev/null` drops the progress lines.
 
@@ -140,6 +145,10 @@ test/integration/receipt.test.js
 | BUG-5 | T6 | The daily cap uses the UTC date, not the Kyiv date | no | yes | `2c45deb` |
 
 The report on each defect is in `docs/bugs/BUG-<N>.md`.
+
+`docs/bugs/CI-1152.md` (Task D) is a defect of CI run 1152: it is in pull request #238
+(`ci/changes/run-1152.diff`), not in `main` or in this branch, so it has no fix commit here. The
+triage of all four CI runs is in `docs/triage.md`, section 2.
 
 "Found" means a test went red. The tests of the code run were all green on the defective code,
 so they found none. The final answer of that run (`ai-runs/b1-from-code.md`) did raise suspicions
