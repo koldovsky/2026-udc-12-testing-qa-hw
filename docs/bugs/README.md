@@ -44,7 +44,7 @@ and 0, and 17 is the count of the saved run.
 
 `ai-runs/b2-run.txt` (spec run): 130 tests, 113 green, 17 red. All 17 are code defects. No false
 tests and no spec gaps: every expected value below comes from a line of the spec, and nothing
-that depends on an open question (Q-1 to Q-11 in `docs/test-cases.md`) is asserted. Such points
+that depends on an open question (Q-1 to Q-12 in `docs/test-cases.md`) is asserted. Such points
 have no test case, and TC-78 is automated without its receipt lines that depend on Q-1.
 
 `time` is `total` minus `fees`, as defined in `docs/test-cases.md`. "Got" values are the ones

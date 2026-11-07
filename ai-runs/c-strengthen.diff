@@ -1,0 +1,135 @@
+diff --git a/app/test/unit/day-cap.test.js b/app/test/unit/day-cap.test.js
+index 817aaf4..ef9fe87 100644
+--- a/app/test/unit/day-cap.test.js
++++ b/app/test/unit/day-cap.test.js
+@@ -6,8 +6,20 @@ test("charges recorded for a day reduce what is left of the cap", () => {
+   const ledger = createDayCap();
+   ledger.record("rider-1", "2026-09-16T08:00:00Z", 12000);
+   assert.ok(ledger.remaining("rider-1", "2026-09-16T12:00:00Z") < DAY_CAP);
++  assert.equal(ledger.remaining("rider-1", "2026-09-16T12:00:00Z"), DAY_CAP - 12000);
+ });
+ 
+ test("the day of a ride is the date of its pickup", () => {
+   assert.equal(dayKey("2026-09-16T08:00:00Z"), "2026-09-16");
++  // 01:30 on 17.09 in Kyiv
++  assert.equal(dayKey("2026-09-16T22:30:00Z"), "2026-09-17");
++});
++
++test("a rider with no rides that day has been charged nothing", () => {
++  const ledger = createDayCap();
++  assert.equal(ledger.chargedOn("rider-1", "2026-09-16"), 0);
++  ledger.record("rider-1", "2026-09-16T08:00:00Z", 12000);
++  assert.equal(ledger.chargedOn("rider-1", "2026-09-16"), 12000);
++  assert.equal(ledger.chargedOn("rider-1", "2026-09-17"), 0);
++  assert.equal(ledger.chargedOn("rider-2", "2026-09-16"), 0);
+ });
+diff --git a/app/test/unit/tariff.test.js b/app/test/unit/tariff.test.js
+index a4b0af3..91a1819 100644
+--- a/app/test/unit/tariff.test.js
++++ b/app/test/unit/tariff.test.js
+@@ -12,8 +12,11 @@ test("quote returns an itemised price", () => {
+     ride("2026-09-16T07:00:00Z", "2026-09-16T07:50:00Z"),
+     ride("2026-09-16T07:00:00Z", "2026-09-16T09:10:00Z", { bike: "ebike" }),
+   ];
+-  for (const r of rides) {
++  // free start; 2 blocks × 25 UAH; 5 blocks × 40 UAH
++  const totals = [0, 5000, 20000];
++  for (const [i, r] of rides.entries()) {
+     const result = quote(r, standard);
++    assert.equal(result.total, totals[i]);
+     assert.ok(result.total >= 0);
+     assert.ok(Array.isArray(result.discounts));
+     assert.ok(Array.isArray(result.fees));
+@@ -30,6 +33,7 @@ test("a ride of 30 min 20 s is billed as two blocks", () => {
+ test("e-bikes are billed at the e-bike rate", () => {
+   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T08:15:00Z", { bike: "ebike" }), standard);
+   assert.equal(result.timeCharge, Math.ceil(result.minutes / BLOCK_MINUTES) * RATES.ebike);
++  assert.equal(result.timeCharge, 12000); // 75 min → 3 blocks × 40 UAH
+   assert.equal(result.total, result.timeCharge);
+ });
+ 
+@@ -44,6 +48,9 @@ test("subscription on a long e-bike ride", () => {
+   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T08:40:00Z", { bike: "ebike" }), { type: "subscriber" });
+   assert.ok(result.discounts.some((d) => d.code === "subscription"));
+   assert.ok(result.total < result.timeCharge);
++  // 100 min → 4 blocks × 40 UAH = 160 UAH, 20 % off
++  assert.deepEqual(result.discounts, [{ code: "subscription", amount: 3200 }]);
++  assert.equal(result.total, 12800);
+ });
+ 
+ test("reduced fare for a ride returned outside the zone", () => {
+@@ -59,11 +66,18 @@ test("night rides get 30 % off", () => {
+   assert.equal(result.discounts.length, 1);
+   assert.equal(result.discounts[0].code, "night");
+   assert.ok(result.total < result.timeCharge);
++  assert.equal(result.discounts[0].amount, 750);
++  assert.equal(result.total, 1750);
+ });
+ 
+ test("a bike kept over a day and left outside the zone pays both fees", () => {
+   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-18T07:00:00Z", { returnStation: "X03" }), standard);
+   assert.equal(result.fees.length, 2);
++  assert.deepEqual(result.fees, [
++    { code: "out-of-zone", amount: 15000 },
++    { code: "unreturned", amount: 200000 },
++  ]);
++  assert.equal(result.total, DAY_CAP + 15000 + 200000);
+ });
+ 
+ test("the daily cap limits the time charge", () => {
+@@ -74,10 +88,14 @@ test("the daily cap limits the time charge", () => {
+     last = quote(ride(`2026-09-16T${from}:00Z`, `2026-09-16T${to}:00Z`, { bike: "ebike" }), rider, { dayCap });
+   }
+   assert.ok(last.total <= DAY_CAP);
++  // 80 min on an e-bike is 120 UAH; two rides leave 60 UAH of the cap for the third
++  assert.equal(last.total, 6000);
++  assert.deepEqual(last.discounts, [{ code: "day-cap", amount: 6000 }]);
++  assert.equal(dayCap.chargedOn("rider-7", "2026-09-16"), DAY_CAP);
+ });
+ 
+ test("a 45-minute classic ride costs 50 UAH", () => {
+-  const priceRide = mock.fn(() => ({ minutes: 45, timeCharge: 5000, discounts: [], fees: [], total: 5000 }));
++  const priceRide = mock.fn(quote);
+   const result = priceRide(ride("2026-09-16T07:00:00Z", "2026-09-16T07:45:00Z"), standard);
+   assert.equal(result.total, 5000);
+   assert.equal(priceRide.mock.callCount(), 1);
+@@ -86,3 +104,39 @@ test("a 45-minute classic ride costs 50 UAH", () => {
+ test("a return before the pickup is rejected", () => {
+   assert.throws(() => quote(ride("2026-09-16T08:00:00Z", "2026-09-16T07:00:00Z"), standard), QuoteError);
+ });
++
++test("a night ride within the free start has no discounts", () => {
++  // 01:00–01:01 in Kyiv: nothing to discount, so no zero «night» line
++  const result = quote(ride("2026-09-15T22:00:00Z", "2026-09-15T22:01:00Z"), standard);
++  assert.equal(result.total, 0);
++  assert.deepEqual(result.discounts, []);
++});
++
++test("a time charge equal to the daily cap gets no day-cap discount", () => {
++  // 6 h → 12 blocks × 25 UAH = 300 UAH, exactly the cap
++  const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T13:00:00Z"), standard);
++  assert.equal(result.timeCharge, DAY_CAP);
++  assert.deepEqual(result.discounts, []);
++  assert.equal(result.total, DAY_CAP);
++});
++
++test("a time charge equal to what is left of the cap gets no day-cap discount", () => {
++  const dayCap = createDayCap();
++  const rider = { id: "rider-8", type: "standard" };
++  dayCap.record(rider.id, "2026-09-16T06:00:00Z", DAY_CAP - 2500);
++  const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:30:00Z"), rider, { dayCap });
++  assert.deepEqual(result.discounts, []);
++  assert.equal(result.total, 2500);
++  assert.equal(dayCap.chargedOn(rider.id, "2026-09-16"), DAY_CAP);
++});
++
++test("a missing ride is rejected with a QuoteError", () => {
++  for (const missing of [null, undefined]) {
++    assert.throws(() => quote(missing, standard), QuoteError);
++  }
++});
++
++test("a date-time without an offset is rejected", () => {
++  assert.throws(() => quote(ride("2026-09-16T07:00:00", "2026-09-16T07:20:00Z"), standard), QuoteError);
++  assert.throws(() => quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:20:00"), standard), QuoteError);
++});
