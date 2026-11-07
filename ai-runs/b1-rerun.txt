@@ -1,0 +1,1080 @@
+TAP version 13
+# Subtest: DAY_CAP
+    # Subtest: is 30000 kopecks (300.00 UAH)
+    ok 1 - is 30000 kopecks (300.00 UAH)
+      ---
+      duration_ms: 0.540667
+      type: 'test'
+      ...
+    1..1
+ok 1 - DAY_CAP
+  ---
+  duration_ms: 1.255125
+  type: 'suite'
+  ...
+# Subtest: dayKey
+    # Subtest: returns the YYYY-MM-DD part of the instant
+    ok 1 - returns the YYYY-MM-DD part of the instant
+      ---
+      duration_ms: 0.235917
+      type: 'test'
+      ...
+    # Subtest: accepts an epoch-millisecond number, an ISO string and a Date alike
+    ok 2 - accepts an epoch-millisecond number, an ISO string and a Date alike
+      ---
+      duration_ms: 0.094333
+      type: 'test'
+      ...
+    # Subtest: resolves an offset to the same instant before taking the day
+    not ok 3 - resolves an offset to the same instant before taking the day
+      ---
+      duration_ms: 0.9485
+      type: 'test'
+      location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:30:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+        
+        + '2026-01-15'
+        - '2026-01-14'
+                    ^
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: '2026-01-14'
+      actual: '2026-01-15'
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:32:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: keys days in UTC, not in Kyiv wall-clock time
+    not ok 4 - keys days in UTC, not in Kyiv wall-clock time
+      ---
+      duration_ms: 0.184042
+      type: 'test'
+      location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:35:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+        
+        + '2026-01-16'
+        - '2026-01-15'
+                    ^
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: '2026-01-15'
+      actual: '2026-01-16'
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:38:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: treats midnight UTC as the start of a new day
+    not ok 5 - treats midnight UTC as the start of a new day
+      ---
+      duration_ms: 0.0965
+      type: 'test'
+      location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:43:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+        
+        + '2026-01-16'
+        - '2026-01-15'
+                    ^
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: '2026-01-15'
+      actual: '2026-01-16'
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:44:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: throws RangeError on an unparsable instant
+    ok 6 - throws RangeError on an unparsable instant
+      ---
+      duration_ms: 0.307375
+      type: 'test'
+      ...
+    1..6
+not ok 2 - dayKey
+  ---
+  duration_ms: 2.243666
+  type: 'suite'
+  location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:18:1'
+  failureType: 'subtestsFailed'
+  error: '3 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: createDayCap — limit
+    # Subtest: defaults to DAY_CAP
+    ok 1 - defaults to DAY_CAP
+      ---
+      duration_ms: 0.187291
+      type: 'test'
+      ...
+    # Subtest: can be overridden
+    ok 2 - can be overridden
+      ---
+      duration_ms: 0.141834
+      type: 'test'
+      ...
+    # Subtest: accepts a zero limit (nothing may be charged)
+    ok 3 - accepts a zero limit (nothing may be charged)
+      ---
+      duration_ms: 0.236291
+      type: 'test'
+      ...
+    1..3
+ok 3 - createDayCap — limit
+  ---
+  duration_ms: 0.65925
+  type: 'suite'
+  ...
+# Subtest: createDayCap — remaining
+    # Subtest: starts at the full limit for an unseen rider
+    ok 1 - starts at the full limit for an unseen rider
+      ---
+      duration_ms: 0.091542
+      type: 'test'
+      ...
+    # Subtest: shrinks by what has been recorded on that day
+    ok 2 - shrinks by what has been recorded on that day
+      ---
+      duration_ms: 0.058709
+      type: 'test'
+      ...
+    # Subtest: is zero once the limit is reached exactly
+    ok 3 - is zero once the limit is reached exactly
+      ---
+      duration_ms: 0.046875
+      type: 'test'
+      ...
+    # Subtest: clamps at zero instead of going negative when over-recorded
+    ok 4 - clamps at zero instead of going negative when over-recorded
+      ---
+      duration_ms: 0.044292
+      type: 'test'
+      ...
+    # Subtest: is unaffected by a recording of zero
+    ok 5 - is unaffected by a recording of zero
+      ---
+      duration_ms: 0.047042
+      type: 'test'
+      ...
+    # Subtest: reads the same bucket for any instant on the same UTC day
+    not ok 6 - reads the same bucket for any instant on the same UTC day
+      ---
+      duration_ms: 0.125792
+      type: 'test'
+      location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:101:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        
+        30000 !== 20000
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 20000
+      actual: 30000
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:104:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    1..6
+not ok 4 - createDayCap — remaining
+  ---
+  duration_ms: 0.496459
+  type: 'suite'
+  location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:71:1'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: createDayCap — record
+    # Subtest: accumulates several charges on the same day
+    ok 1 - accumulates several charges on the same day
+      ---
+      duration_ms: 0.085333
+      type: 'test'
+      ...
+    # Subtest: keeps riders apart
+    ok 2 - keeps riders apart
+      ---
+      duration_ms: 0.048666
+      type: 'test'
+      ...
+    # Subtest: keeps days apart
+    ok 3 - keeps days apart
+      ---
+      duration_ms: 0.045
+      type: 'test'
+      ...
+    # Subtest: keeps ledger instances independent
+    ok 4 - keeps ledger instances independent
+      ---
+      duration_ms: 0.040208
+      type: 'test'
+      ...
+    # Subtest: accepts rider ids of any shape, including numbers
+    ok 5 - accepts rider ids of any shape, including numbers
+      ---
+      duration_ms: 0.042583
+      type: 'test'
+      ...
+    1..5
+ok 5 - createDayCap — record
+  ---
+  duration_ms: 0.380625
+  type: 'suite'
+  ...
+# Subtest: createDayCap — chargedOn
+    # Subtest: takes the day as a YYYY-MM-DD string, not an instant
+    ok 1 - takes the day as a YYYY-MM-DD string, not an instant
+      ---
+      duration_ms: 0.066666
+      type: 'test'
+      ...
+    # Subtest: returns 0 for a rider or day that was never recorded
+    ok 2 - returns 0 for a rider or day that was never recorded
+      ---
+      duration_ms: 0.035791
+      type: 'test'
+      ...
+    # Subtest: does not expose Map prototype keys
+    ok 3 - does not expose Map prototype keys
+      ---
+      duration_ms: 0.030541
+      type: 'test'
+      ...
+    1..3
+ok 6 - createDayCap — chargedOn
+  ---
+  duration_ms: 0.174083
+  type: 'suite'
+  ...
+# Subtest: createDayCap — flat string keys
+    # Subtest: lets a rider id containing a pipe collide with another rider's day bucket
+    ok 1 - lets a rider id containing a pipe collide with another rider's day bucket
+      ---
+      duration_ms: 0.057
+      type: 'test'
+      ...
+    1..1
+ok 7 - createDayCap — flat string keys
+  ---
+  duration_ms: 0.640875
+  type: 'suite'
+  ...
+# Subtest: exported constants
+    # Subtest: hold the tariff numbers the rules are built on
+    ok 1 - hold the tariff numbers the rules are built on
+      ---
+      duration_ms: 1.264458
+      type: 'test'
+      ...
+    # Subtest: freezes the rate table
+    ok 2 - freezes the rate table
+      ---
+      duration_ms: 0.099584
+      type: 'test'
+      ...
+    1..2
+ok 8 - exported constants
+  ---
+  duration_ms: 2.032583
+  type: 'suite'
+  ...
+# Subtest: discount()
+    # Subtest: takes the given percent off the amount
+    ok 1 - takes the given percent off the amount
+      ---
+      duration_ms: 0.154458
+      type: 'test'
+      ...
+    # Subtest: rounds what is left to pay down, so the discount absorbs the remainder (T9)
+    ok 2 - rounds what is left to pay down, so the discount absorbs the remainder (T9)
+      ---
+      duration_ms: 0.051459
+      type: 'test'
+      ...
+    # Subtest: is 0 at 0 percent and the whole amount at 100 percent
+    ok 3 - is 0 at 0 percent and the whole amount at 100 percent
+      ---
+      duration_ms: 0.046833
+      type: 'test'
+      ...
+    # Subtest: is 0 for a zero amount
+    ok 4 - is 0 for a zero amount
+      ---
+      duration_ms: 0.046625
+      type: 'test'
+      ...
+    1..4
+ok 9 - discount()
+  ---
+  duration_ms: 0.470541
+  type: 'suite'
+  ...
+# Subtest: quote — result shape
+    # Subtest: itemises minutes, time charge, discounts, fees and total
+    ok 1 - itemises minutes, time charge, discounts, fees and total
+      ---
+      duration_ms: 0.596166
+      type: 'test'
+      ...
+    # Subtest: totals the time charge less every discount plus every fee
+    ok 2 - totals the time charge less every discount plus every fee
+      ---
+      duration_ms: 0.147417
+      type: 'test'
+      ...
+    1..2
+ok 10 - quote — result shape
+  ---
+  duration_ms: 0.979125
+  type: 'suite'
+  ...
+# Subtest: quote — time charge (T3)
+    # Subtest: charges nothing under the free start
+    ok 1 - charges nothing under the free start
+      ---
+      duration_ms: 0.184
+      type: 'test'
+      ...
+    # Subtest: charges a full block from the second minute on — the free start is strictly under 2 minutes
+    not ok 2 - charges a full block from the second minute on — the free start is strictly under 2 minutes
+      ---
+      duration_ms: 0.822542
+      type: 'test'
+      location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:121:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        
+        0 !== 2500
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 2500
+      actual: 0
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:124:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Promise.all (index 0)
+        async Suite.run (node:internal/test_runner/test:1442:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: charges one block up to 30 minutes and a whole block for every started one after
+    ok 3 - charges one block up to 30 minutes and a whole block for every started one after
+      ---
+      duration_ms: 0.244125
+      type: 'test'
+      ...
+    # Subtest: charges the e-bike rate for an e-bike
+    ok 4 - charges the e-bike rate for an e-bike
+      ---
+      duration_ms: 0.065208
+      type: 'test'
+      ...
+    # Subtest: rounds the duration to the nearest minute
+    not ok 5 - rounds the duration to the nearest minute
+      ---
+      duration_ms: 0.586916
+      type: 'test'
+      location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:140:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        
+        2 !== 1
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 1
+      actual: 2
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:143:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: prices a zero-length ride with equal timestamps
+    ok 6 - prices a zero-length ride with equal timestamps
+      ---
+      duration_ms: 0.038917
+      type: 'test'
+      ...
+    1..6
+not ok 11 - quote — time charge (T3)
+  ---
+  duration_ms: 2.0485
+  type: 'suite'
+  location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:115:1'
+  failureType: 'subtestsFailed'
+  error: '2 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: quote — standard rider
+    # Subtest: gets no fare discount at all
+    ok 1 - gets no fare discount at all
+      ---
+      duration_ms: 0.058625
+      type: 'test'
+      ...
+    1..1
+ok 12 - quote — standard rider
+  ---
+  duration_ms: 0.152875
+  type: 'suite'
+  ...
+# Subtest: quote — reduced fare
+    # Subtest: halves the time charge
+    ok 1 - halves the time charge
+      ---
+      duration_ms: 0.070042
+      type: 'test'
+      ...
+    # Subtest: halves the e-bike charge too
+    ok 2 - halves the e-bike charge too
+      ---
+      duration_ms: 0.104333
+      type: 'test'
+      ...
+    # Subtest: gets no free minutes — the subscription plan is not offered to it
+    ok 3 - gets no free minutes — the subscription plan is not offered to it
+      ---
+      duration_ms: 0.038958
+      type: 'test'
+      ...
+    # Subtest: records no discount line when there is nothing to discount
+    ok 4 - records no discount line when there is nothing to discount
+      ---
+      duration_ms: 0.039
+      type: 'test'
+      ...
+    1..4
+ok 13 - quote — reduced fare
+  ---
+  duration_ms: 0.299791
+  type: 'suite'
+  ...
+# Subtest: quote — subscriber
+    # Subtest: rides the first 45 minutes free
+    ok 1 - rides the first 45 minutes free
+      ---
+      duration_ms: 0.079334
+      type: 'test'
+      ...
+    # Subtest: pays by started block for the time past 45 minutes
+    ok 2 - pays by started block for the time past 45 minutes
+      ---
+      duration_ms: 0.057708
+      type: 'test'
+      ...
+    # Subtest: gets a further 20% off the e-bike time past the free minutes
+    not ok 3 - gets a further 20% off the e-bike time past the free minutes
+      ---
+      duration_ms: 0.848041
+      type: 'test'
+      location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:209:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly deep-equal:
+        + actual - expected
+        
+          [
+            {
+        +     amount: 1600,
+        -     amount: 4800,
+              code: 'subscription'
+            }
+          ]
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+        0:
+          code: 'subscription'
+          amount: 4800
+      actual:
+        0:
+          code: 'subscription'
+          amount: 1600
+      operator: 'deepStrictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:212:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: rides an e-bike free inside the free minutes
+    not ok 4 - rides an e-bike free inside the free minutes
+      ---
+      duration_ms: 0.086667
+      type: 'test'
+      location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:216:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        
+        6400 !== 0
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 0
+      actual: 6400
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:217:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    1..4
+not ok 14 - quote — subscriber
+  ---
+  duration_ms: 1.126042
+  type: 'suite'
+  location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:195:1'
+  failureType: 'subtestsFailed'
+  error: '2 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: quote — subscriber with a concession
+    # Subtest: is charged by whichever of the two plans leaves less to pay
+    ok 1 - is charged by whichever of the two plans leaves less to pay
+      ---
+      duration_ms: 0.0795
+      type: 'test'
+      ...
+    # Subtest: keeps the subscription when the two plans tie
+    ok 2 - keeps the subscription when the two plans tie
+      ---
+      duration_ms: 0.04625
+      type: 'test'
+      ...
+    # Subtest: keeps the subscription when it is the better of the two
+    ok 3 - keeps the subscription when it is the better of the two
+      ---
+      duration_ms: 0.040625
+      type: 'test'
+      ...
+    # Subtest: needs concession === true: any other truthy value is ignored
+    ok 4 - needs concession === true: any other truthy value is ignored
+      ---
+      duration_ms: 0.046083
+      type: 'test'
+      ...
+    # Subtest: ignores concession on a standard rider
+    ok 5 - ignores concession on a standard rider
+      ---
+      duration_ms: 0.045084
+      type: 'test'
+      ...
+    1..5
+ok 15 - quote — subscriber with a concession
+  ---
+  duration_ms: 0.312833
+  type: 'suite'
+  ...
+# Subtest: quote — night discount
+    # Subtest: takes 30% off a ride picked up before 06:00 Kyiv time
+    ok 1 - takes 30% off a ride picked up before 06:00 Kyiv time
+      ---
+      duration_ms: 0.158875
+      type: 'test'
+      ...
+    # Subtest: stops at 06:00 Kyiv time
+    ok 2 - stops at 06:00 Kyiv time
+      ---
+      duration_ms: 0.061834
+      type: 'test'
+      ...
+    # Subtest: follows Kyiv summer time (UTC+3)
+    ok 3 - follows Kyiv summer time (UTC+3)
+      ---
+      duration_ms: 0.060167
+      type: 'test'
+      ...
+    # Subtest: goes by the pickup, not by the return
+    ok 4 - goes by the pickup, not by the return
+      ---
+      duration_ms: 0.048083
+      type: 'test'
+      ...
+    # Subtest: honours the offset written in the timestamp
+    ok 5 - honours the offset written in the timestamp
+      ---
+      duration_ms: 0.041292
+      type: 'test'
+      ...
+    # Subtest: applies to what is left after the fare plan
+    ok 6 - applies to what is left after the fare plan
+      ---
+      duration_ms: 0.04675
+      type: 'test'
+      ...
+    # Subtest: is skipped when the fare plan already leaves nothing to pay
+    ok 7 - is skipped when the fare plan already leaves nothing to pay
+      ---
+      duration_ms: 0.116166
+      type: 'test'
+      ...
+    # Subtest: is skipped on a free start inside the night
+    ok 8 - is skipped on a free start inside the night
+      ---
+      duration_ms: 0.050416
+      type: 'test'
+      ...
+    1..8
+ok 16 - quote — night discount
+  ---
+  duration_ms: 0.668417
+  type: 'suite'
+  ...
+# Subtest: quote — fees
+    # Subtest: charges the out-of-zone fee for a return outside the zone
+    ok 1 - charges the out-of-zone fee for a return outside the zone
+      ---
+      duration_ms: 0.086083
+      type: 'test'
+      ...
+    # Subtest: charges no fee for a return inside the zone
+    ok 2 - charges no fee for a return inside the zone
+      ---
+      duration_ms: 0.050375
+      type: 'test'
+      ...
+    # Subtest: charges the out-of-zone fee even on a free ride
+    ok 3 - charges the out-of-zone fee even on a free ride
+      ---
+      duration_ms: 0.03825
+      type: 'test'
+      ...
+    # Subtest: charges the unreturned-bike fee only past 24 hours
+    ok 4 - charges the unreturned-bike fee only past 24 hours
+      ---
+      duration_ms: 0.097375
+      type: 'test'
+      ...
+    # Subtest: stacks both fees, out-of-zone first
+    ok 5 - stacks both fees, out-of-zone first
+      ---
+      duration_ms: 0.164834
+      type: 'test'
+      ...
+    # Subtest: halves the fees for a reduced fare
+    not ok 6 - halves the fees for a reduced fare
+      ---
+      duration_ms: 0.567959
+      type: 'test'
+      location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:346:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly deep-equal:
+        + actual - expected
+        
+          [
+            {
+        +     amount: 15000,
+        -     amount: 7500,
+              code: 'out-of-zone'
+            }
+          ]
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+        0:
+          code: 'out-of-zone'
+          amount: 7500
+      actual:
+        0:
+          code: 'out-of-zone'
+          amount: 15000
+      operator: 'deepStrictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:348:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: does not halve the fees for a subscriber
+    ok 7 - does not halve the fees for a subscriber
+      ---
+      duration_ms: 0.049417
+      type: 'test'
+      ...
+    # Subtest: halves the fees of a concession subscriber only when the reduced plan wins
+    not ok 8 - halves the fees of a concession subscriber only when the reduced plan wins
+      ---
+      duration_ms: 0.209
+      type: 'test'
+      location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:358:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly deep-equal:
+        + actual - expected
+        
+          [
+            {
+        +     amount: 15000,
+        -     amount: 7500,
+              code: 'out-of-zone'
+            }
+          ]
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+        0:
+          code: 'out-of-zone'
+          amount: 7500
+      actual:
+        0:
+          code: 'out-of-zone'
+          amount: 15000
+      operator: 'deepStrictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:365:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    1..8
+not ok 17 - quote — fees
+  ---
+  duration_ms: 1.374959
+  type: 'suite'
+  location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:309:1'
+  failureType: 'subtestsFailed'
+  error: '2 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: quote — daily cap (T6)
+    # Subtest: caps the time charge at the daily cap even without a ledger
+    ok 1 - caps the time charge at the daily cap even without a ledger
+      ---
+      duration_ms: 0.130875
+      type: 'test'
+      ...
+    # Subtest: does not cap a charge that reaches the cap exactly
+    ok 2 - does not cap a charge that reaches the cap exactly
+      ---
+      duration_ms: 0.056375
+      type: 'test'
+      ...
+    # Subtest: caps what is left after the night discount
+    ok 3 - caps what is left after the night discount
+      ---
+      duration_ms: 0.055834
+      type: 'test'
+      ...
+    # Subtest: spends the rider's remaining allowance across rides of one day
+    ok 4 - spends the rider's remaining allowance across rides of one day
+      ---
+      duration_ms: 0.171083
+      type: 'test'
+      ...
+    # Subtest: charges no time at all once the day's allowance is gone
+    ok 5 - charges no time at all once the day's allowance is gone
+      ---
+      duration_ms: 0.092083
+      type: 'test'
+      ...
+    # Subtest: still charges the fees when the allowance is gone
+    ok 6 - still charges the fees when the allowance is gone
+      ---
+      duration_ms: 0.1125
+      type: 'test'
+      ...
+    # Subtest: gives every rider their own allowance
+    ok 7 - gives every rider their own allowance
+      ---
+      duration_ms: 0.098167
+      type: 'test'
+      ...
+    # Subtest: starts the allowance over on the next day
+    ok 8 - starts the allowance over on the next day
+      ---
+      duration_ms: 0.680792
+      type: 'test'
+      ...
+    # Subtest: honours a ledger with a custom limit
+    ok 9 - honours a ledger with a custom limit
+      ---
+      duration_ms: 0.147833
+      type: 'test'
+      ...
+    # Subtest: books a free ride as zero and leaves the allowance untouched
+    ok 10 - books a free ride as zero and leaves the allowance untouched
+      ---
+      duration_ms: 0.076875
+      type: 'test'
+      ...
+    # Subtest: combines a reduced fare, a cap and halved fees
+    not ok 11 - combines a reduced fare, a cap and halved fees
+      ---
+      duration_ms: 0.292792
+      type: 'test'
+      location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:459:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly deep-equal:
+        + actual - expected
+        
+          [
+            {
+        +     amount: 15000,
+        -     amount: 7500,
+              code: 'out-of-zone'
+            },
+            {
+        +     amount: 200000,
+        -     amount: 100000,
+              code: 'unreturned'
+            }
+          ]
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+        0:
+          code: 'out-of-zone'
+          amount: 7500
+        1:
+          code: 'unreturned'
+          amount: 100000
+      actual:
+        0:
+          code: 'out-of-zone'
+          amount: 15000
+        1:
+          code: 'unreturned'
+          amount: 200000
+      operator: 'deepStrictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:469:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    1..11
+not ok 18 - quote — daily cap (T6)
+  ---
+  duration_ms: 2.077667
+  type: 'suite'
+  location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:370:1'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: quote — zones option
+    # Subtest: uses the built-in station table by default
+    ok 1 - uses the built-in station table by default
+      ---
+      duration_ms: 0.07725
+      type: 'test'
+      ...
+    # Subtest: takes an injected station table instead
+    ok 2 - takes an injected station table instead
+      ---
+      duration_ms: 0.270291
+      type: 'test'
+      ...
+    1..2
+ok 19 - quote — zones option
+  ---
+  duration_ms: 0.38575
+  type: 'suite'
+  ...
+# Subtest: quote — validation
+    # Subtest: rejects a missing or non-object ride
+    ok 1 - rejects a missing or non-object ride
+      ---
+      duration_ms: 0.13425
+      type: 'test'
+      ...
+    # Subtest: rejects timestamps that are not ISO date-times with an offset
+    ok 2 - rejects timestamps that are not ISO date-times with an offset
+      ---
+      duration_ms: 0.278917
+      type: 'test'
+      ...
+    # Subtest: rejects a non-string timestamp
+    ok 3 - rejects a non-string timestamp
+      ---
+      duration_ms: 0.074333
+      type: 'test'
+      ...
+    # Subtest: accepts minutes-only, seconds and fractional-seconds precision
+    not ok 4 - accepts minutes-only, seconds and fractional-seconds precision
+      ---
+      duration_ms: 0.106
+      type: 'test'
+      location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:526:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        
+        31 !== 30
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 30
+      actual: 31
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:528:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: rejects a well-formed but impossible date-time
+    ok 5 - rejects a well-formed but impossible date-time
+      ---
+      duration_ms: 0.060542
+      type: 'test'
+      ...
+    # Subtest: accepts an overflowing day and rolls it over, as Date.parse does
+    ok 6 - accepts an overflowing day and rolls it over, as Date.parse does
+      ---
+      duration_ms: 0.039792
+      type: 'test'
+      ...
+    # Subtest: rejects a return before the pickup
+    ok 7 - rejects a return before the pickup
+      ---
+      duration_ms: 0.045792
+      type: 'test'
+      ...
+    # Subtest: rejects an unknown bike type
+    ok 8 - rejects an unknown bike type
+      ---
+      duration_ms: 0.085208
+      type: 'test'
+      ...
+    # Subtest: does not take a bike type off the prototype chain
+    ok 9 - does not take a bike type off the prototype chain
+      ---
+      duration_ms: 0.044542
+      type: 'test'
+      ...
+    # Subtest: rejects an unknown return station
+    ok 10 - rejects an unknown return station
+      ---
+      duration_ms: 0.064375
+      type: 'test'
+      ...
+    # Subtest: rejects an unknown or missing rider type
+    ok 11 - rejects an unknown or missing rider type
+      ---
+      duration_ms: 0.104
+      type: 'test'
+      ...
+    # Subtest: requires a rider id when a ledger is given
+    ok 12 - requires a rider id when a ledger is given
+      ---
+      duration_ms: 0.070584
+      type: 'test'
+      ...
+    # Subtest: needs no rider id without a ledger
+    ok 13 - needs no rider id without a ledger
+      ---
+      duration_ms: 0.040208
+      type: 'test'
+      ...
+    # Subtest: checks the ride before the rider
+    ok 14 - checks the ride before the rider
+      ---
+      duration_ms: 0.045792
+      type: 'test'
+      ...
+    # Subtest: throws QuoteError, an Error subclass
+    ok 15 - throws QuoteError, an Error subclass
+      ---
+      duration_ms: 0.045416
+      type: 'test'
+      ...
+    # Subtest: does not book anything into the ledger when the ride is rejected
+    ok 16 - does not book anything into the ledger when the ride is rejected
+      ---
+      duration_ms: 0.050917
+      type: 'test'
+      ...
+    1..16
+not ok 20 - quote — validation
+  ---
+  duration_ms: 1.476334
+  type: 'suite'
+  location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:496:1'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..20
+# tests 98
+# suites 20
+# pass 86
+# fail 12
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 138.719958
