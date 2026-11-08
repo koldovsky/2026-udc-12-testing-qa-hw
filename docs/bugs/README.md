@@ -283,12 +283,12 @@ The files in `ai-runs/b1-from-code/` were not changed.
 - Three test cases were added after the fixes: TC-99, TC-100 and TC-101. They cover fee
   combinations of BUG-4 that had no case, and their expected values come from the spec lines in
   `docs/test-cases.md`. That made 101 test cases in 113 tests; at the end of Task B `npm test` ran
-  133 tests, 155 after the tests added in Tasks C and D (`docs/test-quality.md`, sections 3-5, and
-  `docs/triage.md`, section 1). They are not in the table of red tests, because that table
-  classifies the saved run.
+  133 tests, 156 after the tests added in Tasks C and D (`docs/test-quality.md`, sections 3-5, and
+  `docs/triage.md`, section 1), and 160 with the e2e test of Task E (`docs/task-e-bonus.md`). They
+  are not in the table of red tests, because that table classifies the saved run.
 - `app/test/spec/t6-day-cap.test.js` had its own copy of the `ebike80` helper from
   `app/test/spec/support.js`. It now imports that helper. No test name or expected value changed.
 
 ---
 
-Reviewed and approved by Yurii Slynko, 2026-11-07.
+Reviewed and approved by Yurii Slynko, 2026-11-07, updated 2026-11-08.

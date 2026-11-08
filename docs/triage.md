@@ -80,17 +80,18 @@ green      | green   | a receipt lists the fee for a return outside the zone
   is removed, so no test draws a random value: `git grep -n "Math.random" -- app` prints nothing.
 - **After the fix:** 0 of 50 runs red, 146 tests, at `9126021` (`ai-runs/d-repeat-after.txt:1-2`).
   With the old test, 10.6 red runs of 50 were expected (`odds`). On the submitted state, with the
-  fixed rider, without `factory.js` and with the unit tests changed and added after Task D
-  (`docs/test-quality.md`, sections 3-5), the same command again:
+  fixed rider, without `factory.js`, with the unit tests changed and added after Task D
+  (`docs/test-quality.md`, sections 3-5) and with the e2e test of Task E (`docs/task-e-bonus.md`),
+  the same command again:
 
 ```text
 $ node tools/repeat.mjs 50
-Прогонів: 50 (app: файлів 17, тестів 155)
+Прогонів: 50 (app: файлів 18, тестів 160)
 Червоних прогонів: 0 з 50
 
-Решта тестів (155) — зелені в усіх прогонах.
+Решта тестів (160) — зелені в усіх прогонах.
 
-Час: 28.2 с
+Час: 52.1 с
 ```
 - **First AI answer** (`ai-runs/d-flaky-first.md`): the agent found the same cause and fixed the
   test. It replaced the formula with `Math.ceil(minutes / 30) * PRICE[ride.bike]` and added two
@@ -407,4 +408,4 @@ $ node docs/evidence/task-d-check.mjs fees
 
 ---
 
-Reviewed and approved by Yurii Slynko, 2026-11-07.
+Reviewed and approved by Yurii Slynko, 2026-11-07, updated 2026-11-08.

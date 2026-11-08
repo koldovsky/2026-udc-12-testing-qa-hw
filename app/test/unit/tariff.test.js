@@ -121,8 +121,10 @@ test("a return before the pickup is rejected", () => {
   assert.throws(() => quote(ride("2026-09-16T08:00:00Z", "2026-09-16T07:00:00Z"), standard), QuoteError);
 });
 
-test("a missing ride is rejected with a QuoteError", () => {
-  for (const missing of [null, undefined]) {
+// One test per value, so that a failing value does not hide the other (app/AGENTS.md, rule 5).
+// A missing ride has no known bike type: rejected with an explanation (docs/spec/tariffs.md:147-149).
+for (const missing of [null, undefined]) {
+  test(`§4: a missing ride is rejected with a QuoteError: ride ${missing}`, () => {
     assert.throws(() => quote(missing, standard), QuoteError);
-  }
-});
+  });
+}
