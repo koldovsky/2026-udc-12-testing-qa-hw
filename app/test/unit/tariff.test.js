@@ -21,10 +21,11 @@ test("quote returns an itemised price", () => {
   }
 });
 
-test("a ride of 30 min 20 s is billed as one block", () => {
+// T1: an incomplete minute counts as a full one (docs/spec/tariffs.md:45-47) → 31 min → 2 blocks (:62).
+test("a ride of 30 min 20 s is billed as two blocks", () => {
   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:30:20Z"), standard);
-  assert.equal(result.minutes, 30);
-  assert.equal(result.timeCharge, 2500);
+  assert.equal(result.minutes, 31);
+  assert.equal(result.timeCharge, 5000);
 });
 
 test("e-bikes are billed at the e-bike rate", () => {
@@ -33,10 +34,13 @@ test("e-bikes are billed at the e-bike rate", () => {
   assert.equal(result.total, result.timeCharge);
 });
 
-test("subscribers ride the first 45 minutes free", () => {
+// T4: 45 free minutes on a classic bike only (docs/spec/tariffs.md:74-75); an e-bike has no free
+// minutes, 20 % off the T3 charge (:76-77): 40 min → 2 blocks × 4000 = 8000 − 20 % = 6400.
+test("subscribers ride the first 45 minutes free on a classic bike, not on an e-bike", () => {
+  const expected = { classic: 0, ebike: 6400 };
   for (const bike of ["classic", "ebike"]) {
     const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { bike }), { type: "subscriber" });
-    assert.equal(result.total, 0);
+    assert.equal(result.total, expected[bike], bike);
   }
 });
 
@@ -46,10 +50,12 @@ test("subscription on a long e-bike ride", () => {
   assert.ok(result.total < result.timeCharge);
 });
 
+// T5: 50 % off the time charge only, not the fees (docs/spec/tariffs.md:86-87); T7 fee 15000 (:112):
+// 40 min → 2 blocks × 2500 = 5000 − 50 % = 2500, + 15000 = 17500.
 test("reduced fare for a ride returned outside the zone", () => {
   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { returnStation: "X01" }), { type: "reduced" });
-  assert.equal(result.total, 10000);
-  assert.equal(result.fees[0].amount, 7500);
+  assert.equal(result.total, 17500);
+  assert.equal(result.fees[0].amount, 15000);
 });
 
 test("night rides get 30 % off", () => {
@@ -85,4 +91,31 @@ test("a 45-minute classic ride costs 50 UAH", () => {
 
 test("a return before the pickup is rejected", () => {
   assert.throws(() => quote(ride("2026-09-16T08:00:00Z", "2026-09-16T07:00:00Z"), standard), QuoteError);
+});
+
+// Section 4 (docs/spec/tariffs.md:147-149): invalid data — no price, the request is rejected with an
+// explanation. The explanation text is not specified, so only its presence is checked (as in
+// test/spec/invalid-input.test.js). A QuoteError is what POST /api/quote turns into 400
+// (src/server.js:38); any other error becomes 500 "internal error" with no explanation.
+const rejectedWithExplanation = (err) => err instanceof QuoteError && err.message.trim() !== "";
+
+test("a missing ride is rejected with an explanation, not a crash", () => {
+  // `{ "ride": null }` in the request body reaches quote() as is (src/server.js:33).
+  for (const missing of [null, undefined]) {
+    assert.throws(() => quote(missing, standard), rejectedWithExplanation, String(missing));
+  }
+});
+
+// Розд. 2 (docs/spec/tariffs.md:37): every time is Kyiv time; the format is not specified (W-10 in
+// docs/test-cases.md). A date only may be rejected or read as 00:00 in Kyiv — never as 00:00 UTC.
+// Kyiv: 00:00 → 03:20 = 200 min → 7 blocks × 2500 = 17500, all at night − 30 % = 12250 (T3, T10).
+test("розд. 2: a pickup given as a date only is rejected or read as 00:00 in Kyiv, never in UTC", () => {
+  let total;
+  try {
+    total = quote(ride("2026-09-16", "2026-09-16T03:20:00+03:00"), standard).total;
+  } catch (err) {
+    assert.ok(rejectedWithExplanation(err), `a rejection must be a QuoteError with a message, got ${err}`);
+    return;
+  }
+  assert.equal(total, 12250);
 });

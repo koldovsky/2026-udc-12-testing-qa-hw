@@ -1,0 +1,55 @@
+diff --git a/app/test/integration/receipt.test.js b/app/test/integration/receipt.test.js
+index 6c2335e..771e2e8 100644
+--- a/app/test/integration/receipt.test.js
++++ b/app/test/integration/receipt.test.js
+@@ -3,26 +3,34 @@ import test from "node:test";
+ import assert from "node:assert/strict";
+ import { formatReceipt } from "../../src/receipt.js";
+ import { quote } from "../../src/tariff.js";
+-import { randomRider, randomRides } from "../helpers/factory.js";
++import { randomRider } from "../helpers/factory.js";
+ 
+-const PRICE = { classic: 2500, ebike: 4000 };
+-const uah = (kopecks) => `${(kopecks / 100).toFixed(2).replace(".", ",")} грн`;
++// A week of daytime rides (Kyiv 09:00–18:00, no night discount) of a standard rider, in the zone.
++// Every started 30 minutes is a block (T3): 25,00 грн classic, 40,00 грн ebike. The durations
++// sit on both sides of the block boundaries, where 30:00 is still one block and 30:01 is two.
++const RIDES = [
++  { bike: "classic", from: "2026-09-21T06:10:00Z", to: "2026-09-21T06:15:00Z", due: "25,00 грн" }, //  5 min, 1 block
++  { bike: "ebike", from: "2026-09-21T08:02:00Z", to: "2026-09-21T08:31:00Z", due: "40,00 грн" }, //    29 min, 1 block
++  { bike: "ebike", from: "2026-09-22T08:07:00Z", to: "2026-09-22T08:37:00Z", due: "40,00 грн" }, //    30 min, 1 block
++  { bike: "ebike", from: "2026-09-22T09:00:00Z", to: "2026-09-22T09:30:01Z", due: "80,00 грн" }, //    30:01 → 31 min, 2 blocks
++  { bike: "classic", from: "2026-09-23T10:00:00Z", to: "2026-09-23T10:59:00Z", due: "50,00 грн" }, // 59 min, 2 blocks
++  { bike: "classic", from: "2026-09-24T11:00:00Z", to: "2026-09-24T12:00:00Z", due: "50,00 грн" }, // 60 min, 2 blocks
++  { bike: "classic", from: "2026-09-25T12:00:00Z", to: "2026-09-25T13:01:00Z", due: "75,00 грн" }, // 61 min, 3 blocks
++  { bike: "ebike", from: "2026-09-26T13:49:00Z", to: "2026-09-26T14:49:00Z", due: "80,00 грн" }, //    60 min, 2 blocks
++  { bike: "ebike", from: "2026-09-27T14:00:00Z", to: "2026-09-27T15:29:00Z", due: "120,00 грн" }, //   89 min, 3 blocks
++  { bike: "classic", from: "2026-09-27T06:30:00Z", to: "2026-09-27T08:00:00Z", due: "75,00 грн" }, // 90 min, 3 blocks
++];
+ 
+-test("every receipt of a week of rides ends with the amount due", () => {
+-  const rider = randomRider();
+-  for (const ride of randomRides(10)) {
+-    const minutes = (Date.parse(ride.returnAt) - Date.parse(ride.pickupAt)) / 60_000;
+-    const expected = (Math.floor(minutes / 30) + 1) * PRICE[ride.bike];
++for (const { bike, from, to, due } of RIDES) {
++  test(`a receipt ends with the amount due: ${bike} ${from} → ${to} → ${due}`, () => {
++    const ride = { pickupAt: from, returnAt: to, bike, returnStation: "S03" };
+ 
+-    const lines = formatReceipt(quote(ride, rider));
++    const lines = formatReceipt(quote(ride, { type: "standard" }));
+ 
+-    assert.ok(lines.at(-1).startsWith("До сплати "));
+-    assert.ok(
+-      lines.at(-1).endsWith(` ${uah(expected)}`),
+-      `${ride.bike}, ${minutes} min from ${ride.pickupAt}: got "${lines.at(-1)}", expected ${uah(expected)}`,
+-    );
+-  }
+-});
++    assert.match(lines.at(-1), /^До сплати /u);
++    assert.ok(lines.at(-1).endsWith(` ${due}`), `got "${lines.at(-1)}", expected ${due}`);
++  });
++}
+ 
+ test("a receipt lists the fee for a return outside the zone", () => {
+   const ride = {

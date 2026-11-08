@@ -1,0 +1,877 @@
+✔ every receipt of a week of rides ends with the amount due (5.8426ms)
+✔ a receipt lists the fee for a return outside the zone (1.8853ms)
+✔ T1 (розд. 4): TC-86 — повернення на 1 с раніше за взяття: запит відхилено з поясненням (2.8772ms)
+✔ T3 (розд. 4): TC-87 — тип велосипеда «тандем»: запит відхилено з поясненням (0.2855ms)
+✔ T5 (розд. 4): TC-88 — категорія «корпоративний»: запит відхилено з поясненням (0.3959ms)
+✔ T7 (розд. 4): TC-89 — станції S09 немає в додатку А: запит відхилено з поясненням (0.2567ms)
+✔ T7 (розд. 4): TC-90 — точки X04 немає в додатку А — відхилення, а не збір: запит відхилено з поясненням (0.3002ms)
+✔ T1: TC-01 — 10:00:00 → 10:12:40: неповна хвилина — повна, 13 хв → 2500 (4.3261ms)
+✔ T1: TC-02 — 14:05:00 → 14:41:00: 36 хв → 5000 (0.3855ms)
+✔ T1: TC-03 — межа 29:59 → 30 хв, 1 блок → 2500 (0.3364ms)
+✔ T1: TC-04 — межа 30:00 → 30 хв, 1 блок → 2500 (0.3458ms)
+✖ T1: TC-05 — межа 30:01 → 31 хв, 2 блоки → 5000 (2.703ms)
+✔ T1: TC-06 — осінній перехід годинника: фактично 80 хв, нічна знижка → 5250 (0.4343ms)
+✔ T1: TC-07 — весняний перехід годинника: фактично 60 хв, нічна знижка → 3500 (0.2905ms)
+✔ T10: TC-78 — 01:10 → 01:40: 1 блок − 30 % → 1750 (4.4342ms)
+✔ T10: TC-79 — ел., 02:00 → 02:45: 2 блоки − 30 % → 5600 (0.4058ms)
+✔ T10: TC-80 — межа: взяття рівно о 00:00:00 → 1750 (0.3042ms)
+✔ T10: TC-81 — межа: 23:00:00 → 23:59:59, цілком до 00:00 → 5000 (0.3511ms)
+✔ T10: TC-82 — межа: 05:30:00 → 05:59:59, цілком у вікні → 1750 (0.3469ms)
+✔ T10: TC-83 — межа: 06:00:01 → 06:30:01, цілком поза вікном → 2500 (0.2702ms)
+✔ T10: TC-84 — 03:10Z → 03:40Z = 06:10–06:40 за Києвом (+03:00): день → 2500 (0.3139ms)
+✔ T10: TC-85 — 03:00Z → 03:30Z = 05:00–05:30 за Києвом (+02:00): ніч → 1750 (0.3077ms)
+✔ T2: TC-08 — 50 с → 1 хв, без погодинного нарахування → 0 (4.0437ms)
+✖ T2: TC-09 — межа 1:59 → 2 хв → 0 (2.7251ms)
+✖ T2: TC-10 — межа 2:00 — «не більше 2 хвилин» → 0 (0.6733ms)
+✔ T2: TC-11 — межа 2:01 → 3 хв, 1 блок → 2500 (0.3368ms)
+✔ T2: TC-12 — 4 хв → 1 блок → 2500 (0.3667ms)
+✔ T2: TC-13 — повернення в ту саму секунду не відхиляється, 0 хв → 0 (0.2717ms)
+✖ T2: TC-14 — ел., 2 хв — не залежить від типу велосипеда → 0 (0.7275ms)
+✖ T2: TC-15 — 1 хв 30 с, X01 — збір T7 нараховується → 15000 (0.957ms)
+✖ T2: TC-16 — пільг., 2 хв, X01 — пільга на збір не поширюється → 15000 (0.8503ms)
+✔ T3: TC-17 — клас., 50 хв → 2 блоки → 5000 (4.1903ms)
+✔ T3: TC-18 — ел., 75 хв → 3 блоки → 12000 (0.3826ms)
+✔ T3: TC-19 — клас., межа 60:00 → 2 блоки → 5000 (0.5318ms)
+✖ T3: TC-20 — клас., межа 60:01 → 61 хв, 3 блоки → 7500 (3.0618ms)
+✔ T3: TC-21 — ел., межа 30:00 → 1 блок → 4000 (0.4058ms)
+✖ T3: TC-22 — ел., межа 30:01 → 31 хв, 2 блоки → 8000 (2.3212ms)
+✔ T4: TC-23 — клас., 40 хв у межах 45 безкоштовних → 0 (4.296ms)
+✔ T4: TC-24 — клас., 100 хв → 55 платних, 2 блоки → 5000 (0.6027ms)
+✔ T4: TC-25 — клас., межа 45:00 → безкоштовно → 0 (0.4599ms)
+✖ T4: TC-26 — клас., межа 45:01 → 46 хв, 1 платна, 1 блок → 2500 (3.6108ms)
+✔ T4: TC-27 — клас., межа 75:00 → 30 платних, 1 блок → 2500 (0.8506ms)
+✖ T4: TC-28 — клас., межа 75:01 → 31 платна, 2 блоки → 5000 (1.5844ms)
+✖ T4: TC-29 — ел., 30 хв → 1 блок − 20 % → 3200 (1.0345ms)
+✖ T4: TC-30 — ел., 45 хв — безкоштовних хвилин немає, 2 блоки − 20 % → 6400 (0.5321ms)
+✖ T4: TC-31 — ел., 76 хв → 3 блоки − 20 % → 9600 (0.6407ms)
+✔ T5: TC-32 — пільг., клас., 40 хв → 2 блоки − 50 % → 2500 (4.0116ms)
+✔ T5: TC-33 — пільг., ел., 75 хв → 3 блоки − 50 % → 6000 (0.3441ms)
+✔ T5: TC-34 — абон.+пільга, клас., 80 хв: абонемент 5000 > пільга 3750 → пільга → 3750 (0.3292ms)
+✔ T5: TC-35 — абон.+пільга, клас., 40 хв: абонемент 0 < пільга 2500 → абонемент → 0 (0.2489ms)
+✔ T5: TC-36 — абон.+пільга, клас., межа 60 хв: суми рівні → абонемент → 2500 (0.3222ms)
+✔ T5: TC-37 — абон.+пільга, клас., межа 75:00: абонемент 2500 < пільга 3750 → 2500 (0.2878ms)
+✖ T5: TC-38 — абон.+пільга, клас., межа 75:01: абонемент 5000 > пільга 3750 → 3750 (2.3392ms)
+✖ T5: TC-39 — абон.+пільга, ел., 75 хв: абонемент 9600 > пільга 6000, знижки не поєднуються → 6000 (0.7257ms)
+✖ T5: TC-40 — пільг., клас., 20 хв, X03: збір T7 без знижки → 16250 (1.044ms)
+✖ T5: TC-41 — абон.+пільга, клас., 80 хв, X01: пільга, збір T7 без знижки → 18750 (0.8307ms)
+✖ T5: TC-42 — пільг., ел., 25 год: ліміт 30000, збір T8 без знижки → 230000 (1.838ms)
+✔ T5: TC-36 — суми рівні: у чеку рядок знижки абонемента, рядка пільгової знижки немає (1.5558ms)
+✔ T6: TC-43 — три поїздки ел. по 80 хв за 16.09: 12000, 12000, третя до ліміту 6000 (6.84ms)
+✔ T6: TC-44 — за добу 27500 (П1), 30 хв: 2500 = залишку → 2500 (1.0202ms)
+✔ T6: TC-45 — за добу 27500 (П1), 31 хв: 5000 > залишку → 2500 (0.4477ms)
+✔ T6: TC-46 — за добу 30000 (П3): ліміт вичерпано → 0 (0.4438ms)
+✔ T6: TC-47 — одна поїздка, межа 360 хв: рівно ліміт → 30000 (0.411ms)
+✔ T6: TC-48 — одна поїздка, межа 361 хв: 32500 → ліміт → 30000 (0.3765ms)
+✖ T6: TC-49 — ел., абон., за добу 22500 (П2): ліміт після знижки T4 → 7500 (3.0039ms)
+✔ T6: TC-50 — пільг., 600 хв: ліміт після знижки T5 → 25000 (0.3217ms)
+✔ T6: TC-51 — ел., 00:00:00 → 05:59:59: ліміт після нічної знижки T10 → 30000 (0.3661ms)
+✔ T6: TC-52 — за 16.09 27500 (П1), 23:40 → 17.09 00:20: поїздка належить до доби взяття → 2500 (2.5267ms)
+✖ T6: TC-53 — за 16.09 30000 (П3), взяття 17.09 00:30 (= 16.09 21:30Z): доба за київським часом → 1750 (0.9386ms)
+✔ T6: TC-54 — у користувача A за добу 30000 (П3), поїздка користувача B: ліміт окремий → 2500 (0.3708ms)
+✔ T6: TC-55 — за добу 30000 (П3), X02: збір поза лімітом → 15000 (0.8318ms)
+✔ T6: TC-56 — ел., 16.09 10:00 → 19.09 10:00: один ліміт доби взяття + збір T8 → 230000 (1.7659ms)
+✔ T6: TC-91 — за 16.09 30000 (П3), межа доби: взяття 23:59:59 — ще 16.09 → 0 (0.2742ms)
+✖ T6: TC-92 — за 16.09 30000 (П3), межа доби: взяття 00:00:00 — уже 17.09 → 1750 (0.7736ms)
+✔ T6: TC-93 — за 16.11 30000 (П4), взимку +02:00: взяття 23:20 — ще 16.11 → 0 (0.4398ms)
+✔ T7: TC-57 — 20 хв, X01 → 17500 (4.6101ms)
+✔ T7: TC-58 — ел., 30 хв, X02 → 19000 (0.3651ms)
+✔ T7: TC-59 — 20 хв, X03 → 17500 (0.3528ms)
+✔ T7: TC-60 — 20 хв, S01 у зоні — збору немає → 2500 (0.3034ms)
+✔ T7: TC-60 — 20 хв, S02 у зоні — збору немає → 2500 (0.3287ms)
+✔ T7: TC-60 — 20 хв, S03 у зоні — збору немає → 2500 (0.2973ms)
+✔ T7: TC-60 — 20 хв, S04 у зоні — збору немає → 2500 (0.2821ms)
+✔ T7: TC-60 — 20 хв, S05 у зоні — збору немає → 2500 (0.2928ms)
+✔ T7: TC-60 — 20 хв, S06 у зоні — збору немає → 2500 (0.3601ms)
+✔ T7: TC-60 — 20 хв, S07 у зоні — збору немає → 2500 (0.5227ms)
+✔ T7: TC-60 — 20 хв, S08 у зоні — збору немає → 2500 (0.2923ms)
+✔ T7: TC-61 — абон., 40 хв, X02: абонемент діє лише на погодинне → 15000 (0.3499ms)
+✔ T7: TC-62 — 01:10 → 01:40, X01: нічна знижка не зменшує збір → 16750 (0.2854ms)
+✔ T8: TC-63 — 25 год: ліміт 30000 + збір T8 → 230000 (7.8842ms)
+✔ T8: TC-64 — межа 23:59:59 → 1440 хв, збору немає → 30000 (1.0907ms)
+✔ T8: TC-65 — межа рівно 24 год — не «понад», збору немає → 30000 (0.8062ms)
+✖ T8: TC-66 — межа 24:00:01 → 1441 хв, збір T8 → 230000 (3.1169ms)
+✔ T8: TC-67 — 25 год, X01: обидва збори незалежно → 245000 (1.989ms)
+✔ T8: TC-68 — за добу 27500 (П1), 25 год: погодинне — залишок ліміту + збір T8 → 202500 (1.1543ms)
+✔ T8: TC-69 — абон., 25 год: ліміт 30000 + збір T8 → 230000 (0.5417ms)
+✔ T9: TC-70 — 30 % від 1235 коп.: 864,5 → 864 (3.8501ms)
+✔ T9: TC-71 — 50 % від 1003 коп.: рівно 501,5 → вниз, 501 (0.2905ms)
+✔ T9: TC-72 — 30 % від 1 коп.: 0,7 → 0 (0.3342ms)
+✔ T9: TC-73 — чек TC-57: 20 хв, X01 (3.3338ms)
+✔ T9: TC-74 — чек TC-32: пільг., 40 хв (0.8217ms)
+✔ T9: TC-75 — чек TC-78: 01:10–01:40, нічна знижка (0.8332ms)
+✔ T9: TC-76 — чек TC-63: 25 год, суми ≥ 1000 грн (0.699ms)
+✖ T9: TC-77 — чек TC-48: 361 хв, рядок ліміту (3.2509ms)
+✔ T9: TC-94 — чек TC-67: 25 год, X01 — два окремі рядки зборів (0.5228ms)
+✖ T9: TC-95 — чек TC-49: ел., абон., за добу 22500 (П2), 75 хв (3.4742ms)
+✔ T9: TC-96 — чек: ел., 720 хв, 960,00 грн (0.9389ms)
+✖ T9: TC-97 — чек: ел., 721 хв, 1 000,00 грн — тисячі через пробіл (1.8849ms)
+✔ T9: TC-98 — чек TC-24: клас., абон., 100 хв (0.3929ms)
+✔ charges recorded for a day reduce what is left of the cap (3.4482ms)
+✔ the day of a ride is the date of its pickup (0.39ms)
+✔ amounts are shown in hryvnias (1.8187ms)
+✔ a receipt has a line for every item (0.6361ms)
+✔ GET / serves the page and GET /api/health answers (1.9167ms)
+✔ POST /api/quote returns the quote and the receipt (3.3104ms)
+✔ POST /api/quote answers 400 to a body that is not JSON (0.7049ms)
+✔ quote returns an itemised price (1.7166ms)
+✔ a ride of 30 min 20 s is billed as one block (0.177ms)
+✔ e-bikes are billed at the e-bike rate (0.1796ms)
+✔ subscribers ride the first 45 minutes free (0.2337ms)
+✔ subscription on a long e-bike ride (0.1992ms)
+✔ reduced fare for a ride returned outside the zone (0.2304ms)
+✔ night rides get 30 % off (0.1792ms)
+✔ a bike kept over a day and left outside the zone pays both fees (0.1551ms)
+✔ the daily cap limits the time charge (0.6441ms)
+✔ a 45-minute classic ride costs 50 UAH (0.5697ms)
+✔ a return before the pickup is rejected (0.4652ms)
+ℹ tests 126
+ℹ suites 0
+ℹ pass 101
+ℹ fail 25
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 576.4716
+
+✖ failing tests:
+
+test at test\spec\t1-duration.test.js:30:3
+✖ T1: TC-05 — межа 30:01 → 31 хв, 2 блоки → 5000 (2.703ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [],
+  +   hourly: 2500,
+  +   minutes: 30,
+  +   total: 2500
+  -   hourly: 5000,
+  -   minutes: 31,
+  -   total: 5000
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t1-duration.test.js:32:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 30, hourly: 2500, fees: [], total: 2500 },
+    expected: { minutes: 31, hourly: 5000, fees: [], total: 5000 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t2-false-start.test.js:33:3
+✖ T2: TC-09 — межа 1:59 → 2 хв → 0 (2.7251ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [],
+  +   hourly: 2500,
+  +   total: 2500
+  -   hourly: 0,
+  -   total: 0
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t2-false-start.test.js:34:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 2500, fees: [], total: 2500 },
+    expected: { hourly: 0, fees: [], total: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t2-false-start.test.js:33:3
+✖ T2: TC-10 — межа 2:00 — «не більше 2 хвилин» → 0 (0.6733ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [],
+  +   hourly: 2500,
+  +   total: 2500
+  -   hourly: 0,
+  -   total: 0
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t2-false-start.test.js:34:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 2500, fees: [], total: 2500 },
+    expected: { hourly: 0, fees: [], total: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t2-false-start.test.js:33:3
+✖ T2: TC-14 — ел., 2 хв — не залежить від типу велосипеда → 0 (0.7275ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [],
+  +   hourly: 4000,
+  +   total: 4000
+  -   hourly: 0,
+  -   total: 0
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t2-false-start.test.js:34:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 4000, fees: [], total: 4000 },
+    expected: { hourly: 0, fees: [], total: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t2-false-start.test.js:33:3
+✖ T2: TC-15 — 1 хв 30 с, X01 — збір T7 нараховується → 15000 (0.957ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [
+        [
+          'out-of-zone',
+          15000
+        ]
+      ],
+  +   hourly: 2500,
+  +   total: 17500
+  -   hourly: 0,
+  -   total: 15000
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t2-false-start.test.js:34:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 2500, fees: [ [Array] ], total: 17500 },
+    expected: { hourly: 0, fees: [ [Array] ], total: 15000 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t2-false-start.test.js:33:3
+✖ T2: TC-16 — пільг., 2 хв, X01 — пільга на збір не поширюється → 15000 (0.8503ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [
+        [
+          'out-of-zone',
+  +       7500
+  -       15000
+        ]
+      ],
+  +   hourly: 1250,
+  +   total: 8750
+  -   hourly: 0,
+  -   total: 15000
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t2-false-start.test.js:34:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 1250, fees: [ [Array] ], total: 8750 },
+    expected: { hourly: 0, fees: [ [Array] ], total: 15000 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t3-hourly-charge.test.js:17:3
+✖ T3: TC-20 — клас., межа 60:01 → 61 хв, 3 блоки → 7500 (3.0618ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [],
+  +   hourly: 5000,
+  +   total: 5000
+  -   hourly: 7500,
+  -   total: 7500
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t3-hourly-charge.test.js:18:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 5000, fees: [], total: 5000 },
+    expected: { hourly: 7500, fees: [], total: 7500 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t3-hourly-charge.test.js:17:3
+✖ T3: TC-22 — ел., межа 30:01 → 31 хв, 2 блоки → 8000 (2.3212ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [],
+  +   hourly: 4000,
+  +   total: 4000
+  -   hourly: 8000,
+  -   total: 8000
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t3-hourly-charge.test.js:18:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 4000, fees: [], total: 4000 },
+    expected: { hourly: 8000, fees: [], total: 8000 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t4-subscription.test.js:22:3
+✖ T4: TC-26 — клас., межа 45:01 → 46 хв, 1 платна, 1 блок → 2500 (3.6108ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [],
+  +   hourly: 0,
+  +   total: 0
+  -   hourly: 2500,
+  -   total: 2500
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t4-subscription.test.js:23:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 0, fees: [], total: 0 },
+    expected: { hourly: 2500, fees: [], total: 2500 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t4-subscription.test.js:22:3
+✖ T4: TC-28 — клас., межа 75:01 → 31 платна, 2 блоки → 5000 (1.5844ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [],
+  +   hourly: 2500,
+  +   total: 2500
+  -   hourly: 5000,
+  -   total: 5000
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t4-subscription.test.js:23:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 2500, fees: [], total: 2500 },
+    expected: { hourly: 5000, fees: [], total: 5000 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t4-subscription.test.js:22:3
+✖ T4: TC-29 — ел., 30 хв → 1 блок − 20 % → 3200 (1.0345ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [],
+  +   hourly: 0,
+  +   total: 0
+  -   hourly: 3200,
+  -   total: 3200
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t4-subscription.test.js:23:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 0, fees: [], total: 0 },
+    expected: { hourly: 3200, fees: [], total: 3200 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t4-subscription.test.js:22:3
+✖ T4: TC-30 — ел., 45 хв — безкоштовних хвилин немає, 2 блоки − 20 % → 6400 (0.5321ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [],
+  +   hourly: 0,
+  +   total: 0
+  -   hourly: 6400,
+  -   total: 6400
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t4-subscription.test.js:23:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 0, fees: [], total: 0 },
+    expected: { hourly: 6400, fees: [], total: 6400 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t4-subscription.test.js:22:3
+✖ T4: TC-31 — ел., 76 хв → 3 блоки − 20 % → 9600 (0.6407ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [],
+  +   hourly: 6400,
+  +   total: 6400
+  -   hourly: 9600,
+  -   total: 9600
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t4-subscription.test.js:23:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 6400, fees: [], total: 6400 },
+    expected: { hourly: 9600, fees: [], total: 9600 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t5-reduced-fare.test.js:93:3
+✖ T5: TC-38 — абон.+пільга, клас., межа 75:01: абонемент 5000 > пільга 3750 → 3750 (2.3392ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [],
+  +   hourly: 2500,
+  +   total: 2500
+  -   hourly: 3750,
+  -   total: 3750
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t5-reduced-fare.test.js:94:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 2500, fees: [], total: 2500 },
+    expected: { hourly: 3750, fees: [], total: 3750 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t5-reduced-fare.test.js:93:3
+✖ T5: TC-39 — абон.+пільга, ел., 75 хв: абонемент 9600 > пільга 6000, знижки не поєднуються → 6000 (0.7257ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [],
+  +   hourly: 3200,
+  +   total: 3200
+  -   hourly: 6000,
+  -   total: 6000
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t5-reduced-fare.test.js:94:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 3200, fees: [], total: 3200 },
+    expected: { hourly: 6000, fees: [], total: 6000 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t5-reduced-fare.test.js:93:3
+✖ T5: TC-40 — пільг., клас., 20 хв, X03: збір T7 без знижки → 16250 (1.044ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [
+        [
+          'out-of-zone',
+  +       7500
+  -       15000
+        ]
+      ],
+      hourly: 1250,
+  +   total: 8750
+  -   total: 16250
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t5-reduced-fare.test.js:94:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 1250, fees: [ [Array] ], total: 8750 },
+    expected: { hourly: 1250, fees: [ [Array] ], total: 16250 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t5-reduced-fare.test.js:93:3
+✖ T5: TC-41 — абон.+пільга, клас., 80 хв, X01: пільга, збір T7 без знижки → 18750 (0.8307ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [
+        [
+          'out-of-zone',
+  +       7500
+  -       15000
+        ]
+      ],
+      hourly: 3750,
+  +   total: 11250
+  -   total: 18750
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t5-reduced-fare.test.js:94:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 3750, fees: [ [Array] ], total: 11250 },
+    expected: { hourly: 3750, fees: [ [Array] ], total: 18750 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t5-reduced-fare.test.js:93:3
+✖ T5: TC-42 — пільг., ел., 25 год: ліміт 30000, збір T8 без знижки → 230000 (1.838ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [
+        [
+          'unreturned',
+  +       100000
+  -       200000
+        ]
+      ],
+      hourly: 30000,
+  +   total: 130000
+  -   total: 230000
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t5-reduced-fare.test.js:94:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 30000, fees: [ [Array] ], total: 130000 },
+    expected: { hourly: 30000, fees: [ [Array] ], total: 230000 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t6-day-cap.test.js:111:3
+✖ T6: TC-49 — ел., абон., за добу 22500 (П2): ліміт після знижки T4 → 7500 (3.0039ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [],
+  +   hourly: 3200,
+  +   total: 3200
+  -   hourly: 7500,
+  -   total: 7500
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t6-day-cap.test.js:112:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 3200, fees: [], total: 3200 },
+    expected: { hourly: 7500, fees: [], total: 7500 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t6-day-cap.test.js:111:3
+✖ T6: TC-53 — за 16.09 30000 (П3), взяття 17.09 00:30 (= 16.09 21:30Z): доба за київським часом → 1750 (0.9386ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [],
+  +   hourly: 0,
+  +   total: 0
+  -   hourly: 1750,
+  -   total: 1750
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t6-day-cap.test.js:112:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 0, fees: [], total: 0 },
+    expected: { hourly: 1750, fees: [], total: 1750 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t6-day-cap.test.js:111:3
+✖ T6: TC-92 — за 16.09 30000 (П3), межа доби: взяття 00:00:00 — уже 17.09 → 1750 (0.7736ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      fees: [],
+  +   hourly: 0,
+  +   total: 0
+  -   hourly: 1750,
+  -   total: 1750
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t6-day-cap.test.js:112:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 0, fees: [], total: 0 },
+    expected: { hourly: 1750, fees: [], total: 1750 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t8-unreturned.test.js:50:3
+✖ T8: TC-66 — межа 24:00:01 → 1441 хв, збір T8 → 230000 (3.1169ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+  +   fees: [],
+  -   fees: [
+  -     [
+  -       'unreturned',
+  -       200000
+  -     ]
+  -   ],
+      hourly: 30000,
+  +   total: 30000
+  -   total: 230000
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t8-unreturned.test.js:51:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { hourly: 30000, fees: [], total: 30000 },
+    expected: { hourly: 30000, fees: [ [Array] ], total: 230000 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t9-amounts-receipt.test.js:110:3
+✖ T9: TC-77 — чек TC-48: 361 хв, рядок ліміту (3.2509ms)
+  AssertionError [ERR_ASSERTION]: receipt line /погодинн/iu; the receipt:
+  Тривалість поїздки: 360 хв
+  Погодинне нарахування ............. 300,00 грн
+  До сплати ......................... 300,00 грн
+  + actual - expected
+  
+    {
+  +   amount: '300,00 грн',
+  -   amount: '325,00 грн',
+      minus: false
+    }
+  
+      at assertReceipt (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/helpers.js:121:12)
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t9-amounts-receipt.test.js:111:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: { minus: false, amount: '300,00 грн' },
+    expected: { minus: false, amount: '325,00 грн' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t9-amounts-receipt.test.js:110:3
+✖ T9: TC-95 — чек TC-49: ел., абон., за добу 22500 (П2), 75 хв (3.4742ms)
+  AssertionError [ERR_ASSERTION]: receipt line /абонемент/iu; the receipt:
+  Тривалість поїздки: 75 хв
+  Погодинне нарахування ............. 120,00 грн
+  Знижка: абонемент ................. -88,00 грн
+  До сплати .......................... 32,00 грн
+  + actual - expected
+  
+    {
+  +   amount: '88,00 грн',
+  -   amount: '24,00 грн',
+      minus: true
+    }
+  
+      at assertReceipt (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/helpers.js:121:12)
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t9-amounts-receipt.test.js:111:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: { minus: true, amount: '88,00 грн' },
+    expected: { minus: true, amount: '24,00 грн' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\t9-amounts-receipt.test.js:110:3
+✖ T9: TC-97 — чек: ел., 721 хв, 1 000,00 грн — тисячі через пробіл (1.8849ms)
+  AssertionError [ERR_ASSERTION]: receipt line /погодинн/iu; the receipt:
+  Тривалість поїздки: 720 хв
+  Погодинне нарахування ............. 960,00 грн
+  Денний ліміт ..................... -660,00 грн
+  До сплати ......................... 300,00 грн
+  + actual - expected
+  
+    {
+  +   amount: '960,00 грн',
+  -   amount: '1 000,00 грн',
+      minus: false
+    }
+  
+      at assertReceipt (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/helpers.js:121:12)
+      at TestContext.<anonymous> (file:///C:/Users/Admin/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/t9-amounts-receipt.test.js:111:5)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: { minus: false, amount: '960,00 грн' },
+    expected: { minus: false, amount: '1 000,00 грн' },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
