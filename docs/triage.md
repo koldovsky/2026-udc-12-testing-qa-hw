@@ -91,7 +91,7 @@ $ node tools/repeat.mjs 50
 
 Решта тестів (160) — зелені в усіх прогонах.
 
-Час: 52.1 с
+Час: 51.5 с
 ```
 - **First AI answer** (`ai-runs/d-flaky-first.md`): the agent found the same cause and fixed the
   test. It replaced the formula with `Math.ceil(minutes / 30) * PRICE[ride.bike]` and added two

@@ -105,7 +105,7 @@ measured with `node tools/mutate.mjs` and `npm run -s coverage` and is not in `a
 | Mutants survived | 7 | 2 | 2 |
 | Test files (mutate header) | 14 | 14 | 16 |
 | Tests (mutate header: `unit` + `spec`) | 131 | 137 | 145 |
-| Assert calls (mutate header) | 45 | 73 | 64 |
+| Assert calls (mutate header) | 45 | 73 | 62 |
 | Line coverage of `src/` (`unit` only) | 96.36 % | 97.27 % | 97.27 % |
 | Branch coverage of `src/` (`unit` only) | 81.91 % | 85.00 % | 85.00–85.86 %, varies between runs (see below) |
 | Unit tests in the coverage run | 18 | 24 | 32 |
@@ -119,6 +119,7 @@ The steps in between, each measured the same way:
 | + `receipt-minus-sign.test.js` (kills M018, M023) and section 5 | 97.6 % | 2 | 141 | 59 | 97.27 % / 85.86 % | 28 |
 | + the two loops split into one test per case, exact `discounts`, the `До сплати` check (section 5) | 97.6 % | 2 | 144 | 64 | 97.27 % / 85.86 % | 31 |
 | + the missing-ride test split into one test per value (section 5) | 97.6 % | 2 | 145 | 64 | 97.27 % / 85.00–85.86 % | 32 |
+| + the three discount checks of `night rides get 30 % off` merged into one (section 5) | 97.6 % | 2 | 145 | 62 | 97.27 % / 85.86 % | 32 |
 
 `tariff-time-zone.test.js` starts child processes that run `quote`, and Node's coverage counts
 them: `app/src/tariff.js:131-132`, the rejection of a moment without an offset, is uncovered
@@ -127,9 +128,10 @@ exact check in the same test already implies or that checked a mock, and replace
 values; the new file adds one `assert` call, run once per row. It goes up by five in the fourth step:
 the first loop of `tariff.test.js` becomes a test of its own for the false start and a table for
 the two other rides, which adds three call sites, and the check of the `До сплати` line in
-`receipt-minus-sign.test.js` adds two. The last step adds one test and no call site: the loop over
-`null` and `undefined` becomes a table with one test per value. The two survivors are the
-equivalent mutants of section 4.
+`receipt-minus-sign.test.js` adds two. The fifth step adds one test and no call site: the loop over
+`null` and `undefined` becomes a table with one test per value. The last step removes two call
+sites and no check: `discounts.length`, `discounts[0].code` and `discounts[0].amount` become one
+comparison of the whole array. The two survivors are the equivalent mutants of section 4.
 
 Branch coverage is not stable between runs of the same files. On the submitted state, 10 runs of
 `npm run -s coverage` gave `85.86 %` five times and `85.00 %` five times, and 6 runs with
@@ -178,7 +180,7 @@ The corrections are a separate change on top of the agent's: the agent's version
 Numbers for the PR: line coverage 96.36 % → 97.27 %; mutation score 91.6 % → 97.6 %; tests
 131 → 137; assert calls 45 → 73; tests the AI deleted, skipped or weakened: 0. Submitted state,
 after the participant's corrections, the two new test files of section 4 and section 5: 97.6 %,
-2 survivors (both equivalent), 145 tests, 64 assert calls, 97.27 % line coverage.
+2 survivors (both equivalent), 145 tests, 62 assert calls, 97.27 % line coverage.
 
 ## 4. Surviving mutants
 
@@ -194,7 +196,7 @@ instead (M040 and M041 in one run, M083 in the next), which the tool counts as d
 stayed 97.6 %, with the same two survivors.
 
 ```text
-  тести:  app/test/unit, app/test/spec — файлів: 16, тестів: 145, пропущено: 0, todo: 0, викликів assert: 64
+  тести:  app/test/unit, app/test/spec — файлів: 16, тестів: 145, пропущено: 0, todo: 0, викликів assert: 62
 
 разом                     83        81         2         0    97.6 %
 
@@ -275,7 +277,7 @@ ride has, `out-of-zone` 15000 (`docs/spec/tariffs.md:87, 112`). The other change
 | `e-bikes are billed at the e-bike rate` (44) | the code's formula `Math.ceil(result.minutes / BLOCK_MINUTES) * RATES.ebike` (smell #2), `total === timeCharge` | `minutes` 75 and `total` 12000 (lines 46, 48) | Rule 2. T1 and T3 give 75 min and 12000 (`:45-47, 70`); line 47 already checked the 12000 of `timeCharge` |
 | `subscribers ride the first 45 minutes free on a classic bike, an e-bike gets 20 % off` (36 at `6c85f02`), now two tests (51-64) | two bikes in one loop: when the classic case fails, the e-bike case does not run (smell #12) | one test per bike, `T4: subscribers ride the first 45 minutes free on a classic bike, an e-bike gets 20 % off: classic, 40 min is free` and `…: e-bike, 40 min is 8000 less 20 %` | Rule 5. The expected values are unchanged, 0 and 6400 (`:62, 67, 74, 76-77, 81`) |
 | `subscription on a long e-bike ride` (66) | `some(… "subscription")`, `total < timeCharge` (smell #6) | `timeCharge` 16000 (line 69) | The exact `discounts` on line 70 implies the first. 100 min is 4 blocks × 40 UAH (`:62, 67`) |
-| `night rides get 30 % off` (80) | `total < timeCharge` (smell #5) | removed | Lines 83 and 87 assert 2500 and 1750 |
+| `night rides get 30 % off` (80) | `total < timeCharge` (smell #5); `discounts.length === 1`, `discounts[0].code` and the agent's `discounts[0].amount` (section 3, row 10) | the first removed; the other three are one comparison of the whole array, `[{ code: "night", amount: 750 }]` (line 86) | Lines 83 and 87 assert 2500 and 1750. Rule 3 names `length`: the whole array is the same check as one exact value, the form used on lines 70 and 111. A standard rider by day with no subscription or concession, below the cap, has the night discount only (`:74-77, 86, 100, 141`) |
 | `a bike kept over a day and left outside the zone pays both fees` (90) | `fees.length === 2` (smell #7) and the comparison by fee code of section 3 | the whole `fees` array sorted by code (line 94) | Still in any order (rule 7). The sorted array also fails on a third or a repeated fee, which the comparison by code alone let through |
 | `the daily cap limits the time charge` (102) | `last.total <= DAY_CAP` (smell #4) | removed | Line 110 asserts 6000; the bound came from the code's constant (rule 2) |
 | `a 45-minute classic ride costs 50 UAH` (115) | `mock.fn(quote)` and `callCount === 1` (smell #3) | a direct call of `quote` | Rule 4: the call count checked the mock, not the code. The exact 5000 on line 117 is unchanged |
@@ -283,7 +285,7 @@ ride has, `out-of-zone` 15000 (`docs/spec/tariffs.md:87, 112`). The other change
 
 In `app/test/unit/day-cap.test.js`, `remaining < DAY_CAP` (smell #9, rules 2 and 3) is removed:
 line 8 asserts 18000. No expected value changed: seven checks were removed, seven replaced by exact
-values, and three tests were split into one test per case. The old names of the three split tests
+values, three checks of one test merged into one, and three tests were split into one test per case. The old names of the three split tests
 no longer exist; each new name starts with the rule IDs (`§4` for the missing ride) and the old
 name, then the case. The run of
 section 4 lists no survivor that the run before these changes did not list. What is left against
@@ -296,7 +298,12 @@ tested from both sides in `app/test/spec/t4-subscription.test.js:9-10` (TC-25, T
 The participant's new tests, `app/test/unit/tariff-time-zone.test.js` and
 `app/test/unit/receipt-minus-sign.test.js`, have no expected value from the code (rule 2), run the
 real `quote` (rule 4) and assert nothing the spec leaves open (rule 7): not which formats are
-accepted, and not whether a line of 0 belongs on the receipt. The rows of the second one sit on
+accepted, and not whether a line of 0 belongs on the receipt. Rule 7 names lines with a zero amount,
+and `receipt-minus-sign.test.js` kills M018 and M023 through such a line (section 4). It asserts
+only the minus sign of that line, which T9 requires on every discount and cap line
+(`docs/spec/tariffs.md:134-135`), not whether the line exists or what amount it shows, so it holds
+under every answer to Q-4 and Q-12. The rule's text does not spell this out; it was left as it is
+because the rules run of section 6 used this exact file. The rows of the second one sit on
 both sides of the false start and of the cap, each a test of its own with the case in its name
 (rule 5), and its name carries the rule ID, T9 (rule 1). The name of the time-zone test carries the
 spec section, `§2`, instead of a rule ID: rule 1 asks for an ID from T1–T10, and the property comes from section 2 of the spec

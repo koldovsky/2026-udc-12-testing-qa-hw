@@ -5,7 +5,10 @@
 // gets a receipt line with a minus sign, and that the summary line «До сплати», the one wording the
 // spec fixes (:135), has none, so a wrong minus there cannot stand in for a missing one on a discount
 // line. Q-5 leaves the minus character open (docs/test-cases.md:163), so U+2212 and the ASCII hyphen
-// both count.
+// both count. Which discount and cap items a ride gets, and their amounts, are checked elsewhere: the
+// time charge after discounts and the cap reduction by the spec tests of T4, T5, T6 and T10, the
+// discount and cap lines of the receipt with their amounts by TC-79, TC-89, TC-95 and TC-96
+// (app/test/spec/t9-amounts-receipt.test.js).
 import test from "node:test";
 import assert from "node:assert/strict";
 import { formatReceipt } from "../../src/receipt.js";

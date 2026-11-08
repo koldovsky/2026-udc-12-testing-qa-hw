@@ -81,9 +81,9 @@ test("night rides get 30 % off", () => {
   // 01:10–01:40 in Kyiv
   const result = quote(ride("2026-09-15T22:10:00Z", "2026-09-15T22:40:00Z"), standard);
   assert.equal(result.timeCharge, 2500);
-  assert.equal(result.discounts.length, 1);
-  assert.equal(result.discounts[0].code, "night");
-  assert.equal(result.discounts[0].amount, 750); // 30 % of 2500, docs/spec/tariffs.md:141
+  // The night discount is the only one: a standard rider, no subscription or concession, the cap is
+  // not reached (docs/spec/tariffs.md:74-77, 86, 100); 30 % of 2500 (:141)
+  assert.deepEqual(result.discounts, [{ code: "night", amount: 750 }]);
   assert.equal(result.total, 1750); // docs/spec/tariffs.md:143
 });
 
