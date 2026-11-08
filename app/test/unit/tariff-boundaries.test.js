@@ -13,7 +13,7 @@
 
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createDayCap, DAY_CAP } from "../../src/day-cap.js";
+import { createDayCap } from "../../src/day-cap.js";
 import { QuoteError, quote } from "../../src/tariff.js";
 
 const ride = (pickupAt, returnAt, extra = {}) => ({
@@ -45,7 +45,8 @@ test("T2 + T10: нічна поїздка 2 хв → 0 до сплати і жо
 });
 
 // T6 (docs/spec/tariffs.md:101-102): ліміт — 300 грн на добу. Рівно ліміт ще не є
-// перевищенням: 360 хв класичного = 12 блоків × 2500 = 30000.
+// перевищенням: 360 хв класичного = 12 блоків × 2500 = 30000. Очікування — число зі
+// специфікації, а не константа `DAY_CAP` з модуля, який тестуємо (`app/AGENTS.md`, правило 3).
 test("T6: погодинне рівно 30000 → ліміт не перевищено, рядка «day-cap» у чеку немає", () => {
   const dayCap = createDayCap();
   const rider = { id: "rider-cap-exact", type: "standard" };
@@ -53,9 +54,9 @@ test("T6: погодинне рівно 30000 → ліміт не перевищ
 
   const result = quote(ride(pickupAt, at("15:00:00")), rider, { dayCap });
   assert.equal(result.minutes, 360, "тривалість у хвилинах");
-  assert.equal(result.timeCharge, DAY_CAP, "12 блоків × 2500 = рівно ліміт доби");
+  assert.equal(result.timeCharge, 30000, "12 блоків × 2500 = рівно ліміт доби (300 грн за T6)");
   assert.deepEqual(result.discounts, [], "ліміт не перевищено — знижки немає");
-  assert.equal(result.total, DAY_CAP, "до сплати");
+  assert.equal(result.total, 30000, "до сплати");
   assert.equal(dayCap.remaining(rider.id, Date.parse(pickupAt)), 0, "ліміт доби вичерпано");
 });
 
@@ -68,7 +69,7 @@ test("T6: погодинне 32500 → знижка «day-cap» рівно на 
   assert.equal(result.minutes, 390, "тривалість у хвилинах");
   assert.equal(result.timeCharge, 32500, "нарахування за T3 до ліміту");
   assert.deepEqual(result.discounts, [{ code: "day-cap", amount: 2500 }], "знижка — рівно перевищення");
-  assert.equal(result.total, DAY_CAP, "до сплати — ліміт доби");
+  assert.equal(result.total, 30000, "до сплати — ліміт доби (300 грн за T6)");
 });
 
 // §4 (docs/spec/tariffs.md:147-149): некоректні дані відхиляються «з поясненням». Дослівний

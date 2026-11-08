@@ -1,6 +1,6 @@
 import test, { mock } from "node:test";
 import assert from "node:assert/strict";
-import { createDayCap, DAY_CAP } from "../../src/day-cap.js";
+import { createDayCap } from "../../src/day-cap.js";
 import { BLOCK_MINUTES, QuoteError, RATES, quote } from "../../src/tariff.js";
 
 const ride = (pickupAt, returnAt, extra = {}) => ({ pickupAt, returnAt, bike: "classic", returnStation: "S01", ...extra });
@@ -59,7 +59,10 @@ test("subscription on a long e-bike ride", () => {
 test("reduced fare for a ride returned outside the zone", () => {
   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { returnStation: "X01" }), { type: "reduced" });
   assert.equal(result.total, 17500);
-  assert.equal(result.fees[0].amount, 15000);
+  // Склад зборів, а не звернення за індексом `fees[0]`: тест має падати від зміни
+  // поведінки, а не від зміни порядку зборів (`app/AGENTS.md`, правило 5; запах № 16 у
+  // `docs/test-quality.md`).
+  assert.deepEqual(result.fees, [{ code: "out-of-zone", amount: 15000 }]);
 });
 
 test("night rides get 30 % off", () => {
@@ -87,7 +90,9 @@ test("the daily cap limits the time charge", () => {
     totals.push(quote(ride(`2026-09-16T${from}:00Z`, `2026-09-16T${to}:00Z`, { bike: "ebike" }), rider, { dayCap }).total);
   }
   assert.deepEqual(totals, [12000, 12000, 6000]);
-  assert.equal(totals.reduce((sum, value) => sum + value, 0), DAY_CAP, "за добу нараховано рівно ліміт");
+  // 30000 — ліміт доби зі специфікації (T6, `docs/spec/tariffs.md:101`: «не перевищує
+  // 300 грн»), а не константа `DAY_CAP` з модуля, який тестуємо (`app/AGENTS.md`, правило 3).
+  assert.equal(totals.reduce((sum, value) => sum + value, 0), 30000, "за добу нараховано рівно ліміт");
   assert.equal(dayCap.remaining(rider.id, Date.parse("2026-09-16T15:00:00Z")), 0);
 });
 

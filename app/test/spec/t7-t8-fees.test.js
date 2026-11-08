@@ -9,6 +9,11 @@ const at = (time, date = "2026-09-16") => `${date}T${time}+03:00`;
 const plus = (iso, minutes) => new Date(Date.parse(iso) + minutes * 60_000).toISOString();
 const standard = { type: "standard" };
 
+// Збори звіряються складом — код і сума кожного, а не лише суми: тест має падати від зміни
+// поведінки, а не від зміни порядку, тож обидві сторони сортуємо за кодом (`app/AGENTS.md`,
+// правило 5). Саме слабка перевірка зборів пропустила дефект CI-1152 (`docs/bugs/CI-1152.md`).
+const byCode = (fees) => [...fees].sort((a, b) => (a.code < b.code ? -1 : a.code > b.code ? 1 : 0));
+
 const cases = [
   {
     tc: "TC-34",
@@ -17,7 +22,7 @@ const cases = [
     minutes: 20,
     returnStation: "X01",
     timeCharge: 2500,
-    fees: [15000],
+    fees: [{ code: "out-of-zone", amount: 15000 }],
     total: 17500,
   },
   {
@@ -37,7 +42,7 @@ const cases = [
     minutes: 20,
     returnStation: "X01",
     timeCharge: 2500,
-    fees: [15000],
+    fees: [{ code: "out-of-zone", amount: 15000 }],
     total: 17500,
   },
   {
@@ -57,7 +62,7 @@ const cases = [
     minutes: 24 * 60 + 1,
     returnStation: "S01",
     timeCharge: 122500,
-    fees: [200000],
+    fees: [{ code: "unreturned", amount: 200000 }],
     total: 230000,
   },
   {
@@ -67,7 +72,7 @@ const cases = [
     minutes: 25 * 60,
     returnStation: "S01",
     timeCharge: 125000,
-    fees: [200000],
+    fees: [{ code: "unreturned", amount: 200000 }],
     total: 230000,
   },
   {
@@ -77,7 +82,10 @@ const cases = [
     minutes: 25 * 60,
     returnStation: "X03",
     timeCharge: 125000,
-    fees: [15000, 200000],
+    fees: [
+      { code: "out-of-zone", amount: 15000 },
+      { code: "unreturned", amount: 200000 },
+    ],
     total: 245000,
   },
 ];
@@ -91,11 +99,7 @@ for (const c of cases) {
     );
     assert.equal(result.minutes, c.minutes, "тривалість у хвилинах");
     assert.equal(result.timeCharge, c.timeCharge, "нарахування за T3 до ліміту");
-    assert.deepEqual(
-      result.fees.map((fee) => fee.amount).sort((a, b) => a - b),
-      c.fees,
-      "збори",
-    );
+    assert.deepEqual(byCode(result.fees), byCode(c.fees), "збори: код і сума кожного");
     assert.equal(result.total, c.total, "до сплати");
   });
 }

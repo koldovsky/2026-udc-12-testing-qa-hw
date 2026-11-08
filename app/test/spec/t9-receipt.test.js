@@ -9,8 +9,12 @@ import { discount, quote } from "../../src/tariff.js";
 const at = (time, date = "2026-09-16") => `${date}T${time}+03:00`;
 const plus = (iso, minutes) => new Date(Date.parse(iso) + minutes * 60_000).toISOString();
 
-// Рядок чека — «мітка … сума», тож сума завжди йде після пробілу.
-const linesEndingWith = (lines, amount) => lines.filter((line) => line.endsWith(` ${amount}`));
+// Рядок чека — «мітка ... сума» (`app/src/receipt.js:35`): суму відділяє остання група
+// точок. Витягаємо саму суму й порівнюємо її точно, бо `endsWith` дає хибний збіг — тисячі
+// в сумі відокремлює пробіл, тож рядок на «2 450,00 грн» закінчується й на « 450,00 грн»
+// (запах № 14 у `docs/test-quality.md`). Рядок без точок (тривалість поїздки) суми не має.
+const amountOf = (line) => /^.+ \.{3,} (.+)$/.exec(line)?.[1];
+const linesWithAmount = (lines, amount) => lines.filter((line) => amountOf(line) === amount);
 
 const cases = [
   {
@@ -56,18 +60,18 @@ for (const c of cases) {
       assert.equal(lines[0], `Тривалість поїздки: ${c.duration} хв`, `рядок тривалості: ${shown}`);
     }
     if (c.timeCharge) {
-      const timeChargeLines = linesEndingWith(lines, c.timeCharge).filter((line) =>
+      const timeChargeLines = linesWithAmount(lines, c.timeCharge).filter((line) =>
         line.startsWith("Погодинне нарахування"),
       );
       assert.equal(timeChargeLines.length, 1, `рядок погодинного нарахування ${c.timeCharge}: ${shown}`);
     }
     for (const amount of c.items ?? []) {
-      assert.equal(linesEndingWith(lines, amount).length, 1, `окремий рядок на ${amount}: ${shown}`);
+      assert.equal(linesWithAmount(lines, amount).length, 1, `окремий рядок на ${amount}: ${shown}`);
     }
 
     const last = lines.at(-1);
     assert.ok(last.startsWith("До сплати"), `останній рядок чека — «До сплати»: ${shown}`);
-    assert.ok(last.endsWith(` ${c.due}`), `останній рядок чека — ${c.due}: ${shown}`);
+    assert.equal(amountOf(last), c.due, `останній рядок чека — ${c.due}: ${shown}`);
   });
 }
 

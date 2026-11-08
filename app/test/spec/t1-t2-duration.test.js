@@ -1,4 +1,4 @@
-// Автоматизація тест-кейсів TC-01…TC-09 з docs/test-cases.md.
+// Автоматизація тест-кейсів TC-01…TC-09, TC-59 з docs/test-cases.md.
 // Оракул очікувань — docs/test-cases.md і docs/spec/tariffs.md (T1, T2, §4).
 // З app/src/ узято лише спосіб виклику quote() і форму результату.
 
@@ -106,6 +106,19 @@ const cases = [
     minutes: 1,
     timeCharge: 0,
     total: 0,
+    fees: [],
+  },
+  {
+    // Другий приклад самої специфікації до T2 (`docs/spec/tariffs.md:58`): TC-07 перевіряє
+    // межу «2 хв 1 с», а цей кейс — наведене специфікацією значення 4 хв.
+    tc: "TC-59",
+    rule: "T2 + T3",
+    name: "4 хв (понад 2) → нараховується за T3: 1 блок",
+    pickupAt: at("10:00:00"),
+    returnAt: at("10:04:00"),
+    minutes: 4,
+    timeCharge: 2500,
+    total: 2500,
     fees: [],
   },
   {

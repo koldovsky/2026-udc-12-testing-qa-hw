@@ -14,10 +14,13 @@ test("the day of a ride is the date of its pickup", () => {
 
 // Свіжий реєстр: ліміт доби доступний повністю, нараховано нічого. Точні значення, а не
 // «менше за ліміт», — інакше помилка на одиницю в `remaining()` лишається непоміченою.
+// Очікування — число зі специфікації (T6, `docs/spec/tariffs.md:101`: «не перевищує 300 грн»
+// = 30000 коп.), а не константа `DAY_CAP` з модуля, який тестуємо: інакше зміна константи
+// перерахує обидві сторони перевірки й лишить тест зеленим (`app/AGENTS.md`, правило 3).
 test("a fresh ledger leaves the whole cap and has nothing charged", () => {
   const ledger = createDayCap();
-  assert.equal(ledger.limit, DAY_CAP, "ліміт за замовчуванням");
-  assert.equal(ledger.remaining("rider-new", "2026-09-16T08:00:00Z"), DAY_CAP, "доступний увесь ліміт");
+  assert.equal(ledger.limit, 30000, "ліміт за замовчуванням — 300 грн за T6");
+  assert.equal(ledger.remaining("rider-new", "2026-09-16T08:00:00Z"), 30000, "доступний увесь ліміт");
   assert.equal(ledger.chargedOn("rider-new", "2026-09-16"), 0, "за добу нічого не нараховано");
 });
 
@@ -25,7 +28,7 @@ test("remaining and chargedOn report exact amounts, per rider and per day", () =
   const ledger = createDayCap();
   ledger.record("rider-1", "2026-09-16T08:00:00Z", 12000);
   assert.equal(ledger.chargedOn("rider-1", "2026-09-16"), 12000);
-  assert.equal(ledger.remaining("rider-1", "2026-09-16T12:00:00Z"), DAY_CAP - 12000);
+  assert.equal(ledger.remaining("rider-1", "2026-09-16T12:00:00Z"), 18000); // 30000 − 12000
 
   // Нарахування складаються; понад ліміт залишок — рівно 0, а не від'ємне число.
   ledger.record("rider-1", "2026-09-16T12:00:00Z", 25000);
@@ -33,7 +36,7 @@ test("remaining and chargedOn report exact amounts, per rider and per day", () =
   assert.equal(ledger.remaining("rider-1", "2026-09-16T20:00:00Z"), 0, "залишок не буває від'ємним");
 
   assert.equal(ledger.chargedOn("rider-1", "2026-09-17"), 0, "інша доба — окремий рахунок");
-  assert.equal(ledger.remaining("rider-1", "2026-09-17T08:00:00Z"), DAY_CAP, "нова доба — повний ліміт");
+  assert.equal(ledger.remaining("rider-1", "2026-09-17T08:00:00Z"), 30000, "нова доба — повний ліміт");
   assert.equal(ledger.chargedOn("rider-2", "2026-09-16"), 0, "інший користувач — окремий рахунок");
 });
 

@@ -14,6 +14,16 @@ const uah = (kopecks) => `${(kopecks / 100).toFixed(2).replace(".", ",")} грн
 // неї тест падав, коли фабрика випадково видавала 30 або 60 хвилин.
 const blocks = (minutes) => Math.ceil(minutes / 30);
 
+// Рядок чека — «мітка ... сума» (`app/src/receipt.js:35`), тож суму відділяє остання група
+// точок. Витягаємо саму суму й порівнюємо її точно: `endsWith` тут дав би хибний збіг, бо
+// тисячі в сумі відокремлює пробіл — рядок на «2 425,00 грн» закінчується й на
+// « 425,00 грн» (запах № 14 у `docs/test-quality.md`).
+const amountOf = (line) => {
+  const match = /^.+ \.{3,} (.+)$/.exec(line);
+  assert.ok(match, `рядок чека не має вигляду «мітка ... сума»: "${line}"`);
+  return match[1];
+};
+
 // Фабрика дає поїздки 5–89 хв, у зоні, вдень і без журналу денного ліміту, тож до сплати —
 // рівно погодинне нарахування за T3: без T2, T4, T5, T6, T7, T8 і T10.
 const dueFor = (ride, minutes) => blocks(minutes) * PRICE[ride.bike];
@@ -28,8 +38,8 @@ test("every receipt of a week of rides ends with the amount due", () => {
 
     assert.ok(lines.at(-1).startsWith("До сплати "));
     assert.equal(
-      lines.at(-1).endsWith(` ${uah(expected)}`),
-      true,
+      amountOf(lines.at(-1)),
+      uah(expected),
       `TEST_SEED=${SEED}: ${ride.bike}, ${minutes} min from ${ride.pickupAt}: got "${lines.at(-1)}", expected ${uah(expected)}`,
     );
   }
@@ -65,8 +75,8 @@ test("T3: receipts at the exact block boundaries — 29, 30, 31, 59, 60, 61 min"
       };
       const lines = formatReceipt(quote(ride, rider));
       assert.equal(
-        lines.at(-1).endsWith(` ${uah(prices[bike])}`),
-        true,
+        amountOf(lines.at(-1)),
+        uah(prices[bike]),
         `${bike}, ${minutes} хв: got "${lines.at(-1)}", expected ${uah(prices[bike])}`,
       );
     }
