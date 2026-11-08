@@ -17,7 +17,8 @@ Baseline guidance for an Agentic IDE working in **this homework repo**.
     `src/receipt.js` — the receipt text; `src/kyiv-time.js` — Kyiv wall-clock time;
     `src/server.js` — HTTP API (`createHandler(deps)` is exported, tests never open a
     port); `public/index.html` — the web page.
-  - `test/unit/`, `test/integration/`, `test/helpers/` — the existing tests.
+  - `test/unit/`, `test/integration/`, `test/spec/`, `test/e2e/` — the tests. The random test
+    data of `test/helpers/` was removed in Task D (`docs/triage.md`, section 1).
 - `docs/spec/tariffs.md` — **the product specification** (rules T1–T10, approved
   2026-09-15).
 - `ci/` — logs of failed runs of the team's CI pipeline and the change behind each run.
