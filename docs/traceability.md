@@ -20,9 +20,9 @@ Status `partial` means the rule has an open question, `covered` means it has non
 
 - Rules covered by test cases: 10 of 10 (3 covered, 7 partial)
 - Rules covered by automated tests: 10 of 10. All 101 test cases are automated in 113 tests, and `npm test` runs them
-- Open questions: Q-1 to Q-12. None of them has a test case, and they stay out of the automated tests until the product owner answers
-- Q-8 (missing or unreadable moments) and Q-9 (rides across the version change) are not tied to one rule
+- Open questions: Q-1 to Q-13 (Q-13 from Task E). None of them has a test case, and they stay out of the automated tests until the product owner answers
+- Q-8 (missing or unreadable moments), Q-9 (rides across the version change) and Q-13 (the language of a rejection) are not tied to one rule
 
 ---
 
-Reviewed and approved by Yurii Slynko, 2026-11-07.
+Reviewed and approved by Yurii Slynko, 2026-11-07, updated 2026-11-08.

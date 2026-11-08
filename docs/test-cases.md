@@ -167,7 +167,8 @@ These points have no test case and no automated test until the product owner ans
 | Q-9 | Version | Line 8 gives the effective date, 2026-09-15, but not which version prices a ride that starts before that date and ends on or after it. Version 3 changed the cap, the T7 fee and T10 (lines 153-155). | (1) The pickup moment decides. (2) The return moment decides. | Product owner, community lawyer |
 | Q-10 | T6 | Line 100 caps the sum of time charges, but does not say what happens when the same ride is calculated twice, for example a repeated request or a preview. | (1) A ride counts towards the cap once. (2) Every calculation counts. | Product owner |
 | Q-11 | T6 | Line 100 caps the sum per rider and day, but the spec does not mention the API. `POST /api/quote` passes no ledger (`server.js:33`), and its documented request has no rider id (`app/README.md:28`). It is not stated whether a request is a charged ride or only a price calculation. | (1) A price calculation: the day total is kept elsewhere. (2) A charged ride: every request counts towards the day total, so the API needs a rider id. | Product owner |
-| Q-12 | T6, T9 | Lines 134-135 require a separate receipt line for each discount and for the cap, but not whether the cap gets a line when it reduces nothing: a time charge exactly equal to what is left of the day's cap. Classic, 360 min, nothing charged earlier that day (TC-47): 30000, no reduction. | (1) No cap line. (2) A cap line of `0,00 грн`, with the minus sign that line 134 requires on every cap line. | Product owner, financial controller |
+| Q-12 | T6, T9 | Lines 134-135 require a separate receipt line for each discount and for the cap, but not whether the cap gets a line when the time charge reaches it exactly: a time charge equal to what is left of the day's cap, so the cap is reached and reduces nothing. Classic, 360 min, nothing charged earlier that day (TC-47): 30000, no reduction. A time charge below what is left of the cap is not part of this question: the cap only stops the sum from going above 300 UAH (line 100), so it does not apply, and TC-80 and the tests that state no discount for such a ride assume no cap line. | (1) No cap line. (2) A cap line of `0,00 грн`, with the minus sign that line 134 requires on every cap line. | Product owner, financial controller |
+| Q-13 | §4 | Lines 147-149 require a rejection "з поясненням" but do not say in which language or for whom the explanation is written. The API answers `returnAt is before pickupAt` (`app/src/tariff.js:117`), and the page shows `Помилка: returnAt is before pickupAt`: English, with the code's field names, on a Ukrainian page. Found in Task E (`docs/task-e-bonus.md`). | (1) Any explanation is enough; the current page passes. (2) The explanation is for the rider: Ukrainian, in the words of the form. | Product owner |
 
 ## Comparison of the AI drafts
 
@@ -269,4 +270,4 @@ the code the drafts read. The Task B fixes moved them.
 
 ---
 
-Reviewed and approved by Yurii Slynko, 2026-11-07.
+Reviewed and approved by Yurii Slynko, 2026-11-07, updated 2026-11-08.
