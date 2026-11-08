@@ -1,0 +1,19 @@
+# Навмисний дефект у двох копіях app/ (поза репо): збір T8 (2 000 грн) зливається в збір T7 — один збір 215 000 замість 15 000 + 200 000; total не змінюється.
+# old = app з HEAD (до посилення TC-52), new = app з доданою перевіркою feeAmounts.
+$ (у <копія>/old/app і <копія>/new/app)
+node -e 'const fs=require("fs");const p="src/tariff.js";const a="if (minutes > UNRETURNED_AFTER_MINUTES) fees.push({ code: \"unreturned\", amount: UNRETURNED_FEE });";const b="if (minutes > UNRETURNED_AFTER_MINUTES) { if (fees.length) fees[0].amount += UNRETURNED_FEE; else fees.push({ code: \"unreturned\", amount: UNRETURNED_FEE }); }";const s=fs.readFileSync(p,"utf8");if(!s.includes(a))throw new Error("pattern not found");fs.writeFileSync(p,s.replace(a,b));console.log("patched")'
+
+## old
+$ node --test test/spec/t07-t08-fees.test.js   # <копія>/old/app
+ℹ tests 18
+ℹ pass 18
+ℹ fail 0
+
+## new
+$ node --test test/spec/t07-t08-fees.test.js   # <копія>/new/app
+✖ T8 (+T7): TC-52 25 год, X03 — обидва збори незалежно (5.64977ms)
+ℹ tests 18
+ℹ pass 17
+ℹ fail 1
+✖ failing tests:
+✖ T8 (+T7): TC-52 25 год, X03 — обидва збори незалежно (5.64977ms)

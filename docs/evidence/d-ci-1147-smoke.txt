@@ -1,0 +1,45 @@
+### копія з main + git apply ci/changes/run-1147.diff; порт 3000 вільний
+$ cd app && bash -e smoke.sh   # smoke.sh — крок smoke з ci/runs/run-1147.log:177-182 дослівно
+curl: (7) Failed to connect to 127.0.0.1 port 3000 after 0 ms: Couldn't connect to server
+Велопрокат громади слухає порт 3000
+{"status":"ok"}
+
+exit code: 0
+
+### копія з main + git apply ci/changes/run-1147.diff; порт 3000 зайнятий чужим сервером, що на все відповідає 404
+$ cd app && bash -e smoke.sh   # smoke.sh — крок smoke з ci/runs/run-1147.log:177-182 дослівно
+curl: (22) The requested URL returned error: 404
+Error: listen EADDRINUSE: address already in use :::3000
+Node.js v26.0.0
+curl: (22) The requested URL returned error: 404
+curl: (22) The requested URL returned error: 404
+curl: (22) The requested URL returned error: 404
+curl: (22) The requested URL returned error: 404
+
+exit code: 1
+
+### копія з main; порт 3000 вільний
+$ cd app && bash -e smoke.sh   # smoke.sh — крок smoke з ci/runs/run-1147.log:177-182 дослівно
+curl: (7) Failed to connect to 127.0.0.1 port 3000 after 0 ms: Couldn't connect to server
+Велопрокат громади: http://localhost:3000
+{"status":"ok"}
+
+exit code: 0
+
+### копія з main; порт 3000 зайнятий чужим сервером, що на все відповідає 404
+$ cd app && bash -e smoke.sh   # smoke.sh — крок smoke з ci/runs/run-1147.log:177-182 дослівно
+curl: (22) The requested URL returned error: 404
+Error: listen EADDRINUSE: address already in use :::3000
+Node.js v26.0.0
+curl: (22) The requested URL returned error: 404
+curl: (22) The requested URL returned error: 404
+curl: (22) The requested URL returned error: 404
+curl: (22) The requested URL returned error: 404
+
+exit code: 1
+
+### розбір PORT: було / стало (ci/changes/run-1147.diff:9-10)
+PORT=unset: було 3000, стало 3000
+PORT=3000: було 3000, стало 3000
+PORT=8080: було 8080, стало 8080
+PORT=0: було 0, стало 3000

@@ -1,0 +1,126 @@
+▶ DAY_CAP
+  ✔ is 300 UAH in kopecks (1.541327ms)
+✔ DAY_CAP (3.632416ms)
+▶ dayKey
+  ✔ returns YYYY-MM-DD for an epoch-ms instant (1.631154ms)
+  ✔ accepts an ISO string with an offset (0.222474ms)
+  ✔ uses the UTC date (current behaviour) (0.214874ms)
+  ⚠ groups rides by the Kyiv calendar day (2.582779ms) # dayKey uses UTC, not Europe/Kyiv
+✔ dayKey (5.18422ms)
+▶ createDayCap
+  ✔ defaults the limit to DAY_CAP (1.502338ms)
+  ✔ accepts a custom limit (0.261967ms)
+  ✔ record accumulates charges within the same day (0.307299ms)
+  ✔ remaining never goes below zero (0.252856ms)
+  ✔ days are tracked separately (0.269047ms)
+  ✔ riders are tracked separately (0.182251ms)
+  ✔ recording zero does not change the balance (0.158498ms)
+  ✔ separate ledgers do not share state (0.162248ms)
+✔ createDayCap (3.702814ms)
+▶ discount
+  ✔ percent off, remainder rounded down to the kopeck (1.677179ms)
+✔ discount (3.807007ms)
+▶ time charge
+  ✔ rides under 2 minutes are free (3.283343ms)
+  ✔ zero-length ride is free (0.27174ms)
+  ✔ minutes are rounded to the nearest minute (0.69426ms)
+  ✔ charged per started 30-minute block (0.841061ms)
+  ✔ e-bike rate (0.316365ms)
+✔ time charge (6.016647ms)
+▶ subscription
+  ✔ first 45 minutes free (0.487486ms)
+  ✔ time beyond 45 minutes billed in blocks (0.322333ms)
+  ✔ e-bike over the free period gets 20% off (0.302991ms)
+  ✔ short free ride gets no discount entry (0.322578ms)
+✔ subscription (1.840323ms)
+▶ reduced fare
+  ✔ 50% off time charge (0.319699ms)
+  ✔ concession subscriber gets the cheaper plan (reduced) (0.213003ms)
+  ✔ concession subscriber gets the cheaper plan (subscription) (0.17446ms)
+  ✔ concession must be exactly true (0.172304ms)
+  ✔ concession flag is ignored for standard riders (0.194888ms)
+✔ reduced fare (1.34214ms)
+▶ night discount
+  ✔ 30% off for pickup before 06:00 Kyiv (winter, UTC+2) (0.322979ms)
+  ✔ no night discount from 06:00 Kyiv (0.181842ms)
+  ✔ 05:59 Kyiv qualifies (0.166776ms)
+  ✔ uses Kyiv summer time (UTC+3) (0.242835ms)
+  ✔ midnight Kyiv qualifies (0.180684ms)
+  ✔ applied after the fare plan (0.201061ms)
+  ✔ not listed when nothing is due (0.160312ms)
+  ✔ pickup time matters, not return time (0.177344ms)
+✔ night discount (1.999376ms)
+▶ daily cap
+  ✔ without a ledger a single ride is capped at 300 UAH (0.302245ms)
+  ✔ exactly the cap is not discounted (0.169495ms)
+  ✔ ledger caps across rides on the same day and records charges (0.568791ms)
+  ✔ ledger partially caps a ride (0.238157ms)
+  ✔ the cap applies after the fare plan (0.233628ms)
+  ✔ different riders and days have separate caps (0.286795ms)
+  ✔ respects a custom ledger limit (0.197928ms)
+  ✔ fees are not capped (0.325511ms)
+  ✔ free rides record nothing (1.315263ms)
+✔ daily cap (4.026032ms)
+▶ fees
+  ✔ out-of-zone return fee (0.294378ms)
+  ✔ fee applies even to a free ride (0.135822ms)
+  ✔ unreturned fee after more than 24 hours (0.178129ms)
+  ✔ exactly 24 hours is not unreturned (0.16806ms)
+  ✔ both fees together, out-of-zone first (0.211857ms)
+  ✔ reduced fare halves fees (0.187712ms)
+  ✔ subscription does not reduce fees (0.186587ms)
+  ✔ concession subscriber gets halved fees only when the reduced plan wins (0.238292ms)
+  ✔ reduced rider on a free ride pays the full fee (current behaviour) (0.139316ms)
+✔ fees (2.071954ms)
+▶ total
+  ✔ equals timeCharge - discounts + fees (0.271104ms)
+✔ total (0.386777ms)
+▶ options
+  ✔ custom zones lookup (0.775407ms)
+✔ options (0.857454ms)
+▶ validation
+  ✔ ride is required (0.356939ms)
+  ✔ date-times must be ISO 8601 with an offset (0.301764ms)
+  ✔ accepts minutes-only and fractional seconds (0.156959ms)
+  ✔ rejects impossible dates (0.162603ms)
+  ✔ returnAt before pickupAt (0.194184ms)
+  ✔ unknown bike type (0.266554ms)
+  ✔ unknown station (0.271029ms)
+  ✔ unknown rider type (0.280457ms)
+  ✔ rider.id required with a ledger (0.22934ms)
+  ✔ invalid input does not touch the ledger (0.201878ms)
+✔ validation (2.800033ms)
+ℹ tests 66
+ℹ suites 13
+ℹ pass 65
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 1
+ℹ duration_ms 358.892727
+
+✖ failing tests:
+
+test at ai-runs/b1-from-code/day-cap.test.js:26:3
+⚠ groups rides by the Kyiv calendar day (2.582779ms) # dayKey uses UTC, not Europe/Kyiv
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '2026-11-05'
+  - '2026-11-06'
+              ^
+  
+      at TestContext.<anonymous> (file:///Users/fyfar/projects/ai_training/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:27:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '2026-11-05',
+    expected: '2026-11-06',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

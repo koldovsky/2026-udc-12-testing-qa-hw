@@ -1,0 +1,87 @@
+diff --git a/app/test/unit/day-cap.test.js b/app/test/unit/day-cap.test.js
+index 817aaf4..bf261b4 100644
+--- a/app/test/unit/day-cap.test.js
++++ b/app/test/unit/day-cap.test.js
+@@ -11,3 +11,23 @@ test("charges recorded for a day reduce what is left of the cap", () => {
+ test("the day of a ride is the date of its pickup", () => {
+   assert.equal(dayKey("2026-09-16T08:00:00Z"), "2026-09-16");
+ });
++
++// --- Strengthened after the mutation run (Task C) ---
++
++test("nothing is charged on a day with no rides", () => {
++  const ledger = createDayCap();
++  assert.equal(ledger.chargedOn("rider-1", "2026-09-16"), 0);
++  ledger.record("rider-1", "2026-09-16T08:00:00Z", 12000);
++  assert.equal(ledger.chargedOn("rider-2", "2026-09-16"), 0);
++  assert.equal(ledger.chargedOn("rider-1", "2026-09-17"), 0);
++});
++
++test("charges add up per rider and day; remaining is the cap minus them, never below 0", () => {
++  const ledger = createDayCap();
++  ledger.record("rider-1", "2026-09-16T08:00:00Z", 12000);
++  ledger.record("rider-1", "2026-09-16T12:00:00Z", 8000);
++  assert.equal(ledger.chargedOn("rider-1", "2026-09-16"), 20000);
++  assert.equal(ledger.remaining("rider-1", "2026-09-16T15:00:00Z"), DAY_CAP - 20000);
++  ledger.record("rider-1", "2026-09-16T15:00:00Z", 20000);
++  assert.equal(ledger.remaining("rider-1", "2026-09-16T18:00:00Z"), 0);
++});
+diff --git a/app/test/unit/tariff.test.js b/app/test/unit/tariff.test.js
+index 05a3c60..76ff3ef 100644
+--- a/app/test/unit/tariff.test.js
++++ b/app/test/unit/tariff.test.js
+@@ -89,3 +89,54 @@ test("a 45-minute classic ride costs 50 UAH", () => {
+ test("a return before the pickup is rejected", () => {
+   assert.throws(() => quote(ride("2026-09-16T08:00:00Z", "2026-09-16T07:00:00Z"), standard), QuoteError);
+ });
++
++// --- Strengthened after the mutation run (Task C) ---
++
++test("a ride that starts at 06:30 in Kyiv gets no night discount (T10: 00:00–06:00)", () => {
++  // 06:30–06:50 Kyiv lies wholly outside the night window
++  const result = quote(ride("2026-09-17T06:30:00+03:00", "2026-09-17T06:50:00+03:00"), standard);
++  assert.deepEqual(result.discounts, []);
++  assert.equal(result.total, 2500);
++});
++
++test("a ride that starts at 05:59 in Kyiv gets the exact night discount", () => {
++  const result = quote(ride("2026-09-17T05:59:00+03:00", "2026-09-17T06:10:00+03:00"), standard);
++  assert.deepEqual(result.discounts, [{ code: "night", amount: 750 }]);
++  assert.equal(result.total, 1750);
++});
++
++test("a free night ride (≤ 2 min) lists no zero-amount night discount", () => {
++  // T2 + T9: a receipt line per discount — a 0 kopeck "night" line is not a discount
++  const result = quote(ride("2026-09-17T01:10:00+03:00", "2026-09-17T01:11:00+03:00"), standard);
++  assert.equal(result.timeCharge, 0);
++  assert.deepEqual(result.discounts, []);
++  assert.equal(result.total, 0);
++});
++
++test("a free subscriber night ride lists only the subscription discount", () => {
++  // classic 30 min: T4 makes it free, so nothing is left for T10 to discount
++  const result = quote(ride("2026-09-17T01:00:00+03:00", "2026-09-17T01:30:00+03:00"), { type: "subscriber" });
++  assert.deepEqual(result.discounts, [{ code: "subscription", amount: 2500 }]);
++  assert.equal(result.total, 0);
++});
++
++test("a subscriber's 31-minute e-bike ride is billed from the first minute: 2 blocks − 20 %", () => {
++  // T4: no free minutes on an e-bike — 31 min = 2 blocks = 8000 − 20 % = 6400
++  const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:31:00Z", { bike: "ebike" }), { type: "subscriber" });
++  assert.equal(result.timeCharge, 8000);
++  assert.deepEqual(result.discounts, [{ code: "subscription", amount: 1600 }]);
++  assert.equal(result.total, 6400);
++});
++
++test("a null ride is rejected with a QuoteError, not a TypeError", () => {
++  assert.throws(() => quote(null, standard), QuoteError);
++  assert.throws(() => quote(undefined, standard), QuoteError);
++});
++
++test("a pickupAt that is not a string is rejected even if it stringifies to a valid date", () => {
++  // e.g. a JSON body with ["2026-09-16T07:00:00Z"] — String([x]) === x
++  const asArray = { ...ride("2026-09-16T07:00:00Z", "2026-09-16T07:20:00Z"), pickupAt: ["2026-09-16T07:00:00Z"] };
++  assert.throws(() => quote(asArray, standard), QuoteError);
++  const asObject = { ...ride("2026-09-16T07:00:00Z", "2026-09-16T07:20:00Z"), returnAt: { toString: () => "2026-09-16T07:20:00Z" } };
++  assert.throws(() => quote(asObject, standard), QuoteError);
++});

@@ -18,4 +18,11 @@ test("a receipt has a line for every item", () => {
   });
   assert.equal(lines.length, 5);
   assert.ok(lines.at(-1).includes("185,00"));
+  // T9, docs/spec/tariffs.md:132-135 — duration, T3 line, discount with a minus, fee, total.
+  // Order of the middle lines and the minus character are open question Q-14 (docs/test-plan.md): not asserted.
+  assert.ok(lines.some((l) => l.includes("40 хв")));
+  assert.ok(lines.some((l) => l.endsWith(" 50,00 грн")));
+  assert.ok(lines.some((l) => /[-−]15,00 грн$/.test(l)));
+  assert.ok(lines.some((l) => l.endsWith(" 150,00 грн")));
+  assert.ok(lines.at(-1).startsWith("До сплати"));
 });

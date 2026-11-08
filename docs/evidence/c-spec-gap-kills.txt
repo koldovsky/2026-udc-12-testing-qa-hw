@@ -1,0 +1,42 @@
+# Доказ: після додавання TC-67 і TC-68 лише спец-тести (app/test/spec) вбивають мутанти M009, M021, M039.
+# old = HEAD без TC-67/68 (очікуємо fail 0, тобто прогалина); new = робоче дерево з TC-67/68.
+# Мутант застосовано точною заміною рядка в app/src/tariff.js копії (рівно одне входження).
+
+## M009 (old): NIGHT_UNTIL_HOUR = 6 -> NIGHT_UNTIL_HOUR = 7
+$ cd <копія>/app && node --test "test/spec/**/*.test.js"
+ℹ tests 80
+ℹ pass 80
+ℹ fail 0
+
+## M009 (new): NIGHT_UNTIL_HOUR = 6 -> NIGHT_UNTIL_HOUR = 7
+$ cd <копія>/app && node --test "test/spec/**/*.test.js"
+✖ T10: TC-67 взяття 06:00:01 — уся поїздка після 06:00, нічної знижки немає (2.283924ms)
+ℹ tests 82
+ℹ pass 81
+ℹ fail 1
+
+## M021 (old): .hour < NIGHT_UNTIL_HOUR -> .hour <= NIGHT_UNTIL_HOUR
+$ cd <копія>/app && node --test "test/spec/**/*.test.js"
+ℹ tests 80
+ℹ pass 80
+ℹ fail 0
+
+## M021 (new): .hour < NIGHT_UNTIL_HOUR -> .hour <= NIGHT_UNTIL_HOUR
+$ cd <копія>/app && node --test "test/spec/**/*.test.js"
+✖ T10: TC-67 взяття 06:00:01 — уся поїздка після 06:00, нічної знижки немає (2.53621ms)
+ℹ tests 82
+ℹ pass 81
+ℹ fail 1
+
+## M039 (old): ? SUBSCRIPTION_FREE_MINUTES : 0; -> ? SUBSCRIPTION_FREE_MINUTES : 1;
+$ cd <копія>/app && node --test "test/spec/**/*.test.js"
+ℹ tests 80
+ℹ pass 80
+ℹ fail 0
+
+## M039 (new): ? SUBSCRIPTION_FREE_MINUTES : 0; -> ? SUBSCRIPTION_FREE_MINUTES : 1;
+$ cd <копія>/app && node --test "test/spec/**/*.test.js"
+✖ T4: TC-68 абонент, електро, 31 хв — 2 блоки −20 % (без безкоштовних хвилин) (4.01598ms)
+ℹ tests 82
+ℹ pass 81
+ℹ fail 1

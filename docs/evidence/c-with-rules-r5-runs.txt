@@ -1,0 +1,10 @@
+# (a) тести, які написав агент, відсутні: у ai-runs/c-with-rules-r5/ лише questions.md (питання, не тест)
+$ ls ai-runs/c-with-rules-r5/*.test.js
+
+# (b) в репо
+$ node --test "ai-runs/c-with-rules-r5/*.test.js"
+ℹ tests 0
+ℹ pass 0
+ℹ fail 0
+
+# (a) на main: тестів немає, запуск пропущено

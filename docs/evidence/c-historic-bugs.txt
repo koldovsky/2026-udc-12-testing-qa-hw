@@ -1,0 +1,96 @@
+$ node docs/evidence/c-historic-bugs.mjs
+
+== baseline
+unit@5b5c48c: pass 18, fail 0, todo 0
+unit now: pass 24, fail 0, todo 0
+spec now: pass 82, fail 0, todo 0
+B1: pass 59, fail 6, todo 1
+  ✖ uses the UTC date (current behaviour)
+  ✖ dayKey
+  ✖ minutes are rounded to the nearest minute
+  ✖ charged per started 30-minute block
+  ✖ time charge
+  ✖ e-bike over the free period gets 20% off
+  ✖ subscription
+  ✖ reduced fare halves fees
+  ✖ concession subscriber gets halved fees only when the reduced plan wins
+  ✖ fees
+C-rules: pass 3, fail 0, todo 0
+
+== BUG-1 round instead of ceil
+unit@5b5c48c: pass 17, fail 1, todo 0
+  ✖ a ride of 30 min 20 s is billed as two blocks
+unit now: pass 23, fail 1, todo 0
+  ✖ a ride of 30 min 20 s is billed as two blocks
+spec now: pass 79, fail 3, todo 0
+  ✖ T1: TC-05 30 хв 1 с → 31 хв, 2 блоки
+  ✖ T2: TC-08 2 хв 1 с → 3 хв — не хибний старт, 1 блок
+  ✖ T8 (+T6): TC-50 24 год + 1 с → 1 441 хв — збір 2 000 грн
+B1: pass 59, fail 6, todo 1
+  vs baseline: newly red 0, newly green 0
+C-rules: pass 3, fail 0, todo 0
+  vs baseline: newly red 0, newly green 0
+
+== BUG-2 < instead of <= FREE_START
+unit@5b5c48c: pass 18, fail 0, todo 0
+unit now: pass 24, fail 0, todo 0
+spec now: pass 81, fail 1, todo 0
+  ✖ T2: TC-07 рівно 2 хв — хибний старт, 0
+B1: pass 60, fail 5, todo 1
+  vs baseline: newly red 0, newly green 1
+  - green charged per started 30-minute block
+C-rules: pass 3, fail 0, todo 0
+  vs baseline: newly red 0, newly green 0
+
+== BUG-3 subscription free minutes on ebike
+unit@5b5c48c: pass 17, fail 1, todo 0
+  ✖ subscribers ride the first 45 minutes free on a classic bike only
+unit now: pass 21, fail 3, todo 0
+  ✖ subscribers ride the first 45 minutes free on a classic bike only
+  ✖ subscription on a long e-bike ride
+  ✖ a subscriber's 31-minute e-bike ride is billed from the first minute: 2 blocks − 20 %
+spec now: pass 78, fail 4, todo 0
+  ✖ T4: TC-23 абонент, електро, 30 хв — −20 %
+  ✖ T4: TC-24 абонент, електро, 45 хв — безкоштовних хвилин немає, −20 %
+  ✖ T4: TC-68 абонент, електро, 31 хв — 2 блоки −20 % (без безкоштовних хвилин)
+  ✖ T5 (+T7): TC-31 абонент з пільгою, електро, 30 хв, X03 — пільга, збір без знижки
+B1: pass 60, fail 5, todo 1
+  vs baseline: newly red 0, newly green 2
+  - green e-bike over the free period gets 20% off
+  - green subscription
+C-rules: pass 3, fail 0, todo 0
+  vs baseline: newly red 0, newly green 0
+
+== BUG-4 reduced discount on fees
+unit@5b5c48c: pass 17, fail 1, todo 0
+  ✖ reduced fare for a ride returned outside the zone
+unit now: pass 23, fail 1, todo 0
+  ✖ reduced fare for a ride returned outside the zone
+spec now: pass 79, fail 3, todo 0
+  ✖ T5 (+T7): TC-31 абонент з пільгою, електро, 30 хв, X03 — пільга, збір без знижки
+  ✖ T7 (+T5): TC-47 пільговий, X01 — пільга не поширюється на збір
+  ✖ T8 (+T5): TC-53 пільговий, електро, 25 год — збір T8 без знижки
+B1: pass 61, fail 4, todo 1
+  vs baseline: newly red 0, newly green 3
+  - green reduced fare halves fees
+  - green concession subscriber gets halved fees only when the reduced plan wins
+  - green fees
+C-rules: pass 3, fail 0, todo 0
+  vs baseline: newly red 0, newly green 0
+
+== BUG-5 dayKey by UTC
+unit@5b5c48c: pass 18, fail 0, todo 0
+unit now: pass 23, fail 1, todo 0
+  ✖ the day of a ride is the date of its pickup
+spec now: pass 80, fail 2, todo 0
+  ✖ T6 (+T10): TC-41 доба — за київським часом: 17.09 00:30 (16.09 за UTC) — новий ліміт
+  ✖ T6 (+T10): TC-38 нічна поїздка зі знижкою, потім довга денна — разом рівно 30 000
+B1: pass 60, fail 5, todo 1
+  vs baseline: newly red 0, newly green 2
+  - green uses the UTC date (current behaviour)
+  - green dayKey
+C-rules: pass 0, fail 3, todo 0
+  vs baseline: newly red 3, newly green 0
+  + red   T6: одна доба за Києвом, різні доби за UTC — ліміт спільний
+  + red   T6: різні доби за Києвом, одна доба за UTC — ліміт окремий
+  + red   T6: поїздка о 01:00 за Києвом записується на київську дату

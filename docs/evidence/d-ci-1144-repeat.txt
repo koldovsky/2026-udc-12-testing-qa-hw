@@ -1,0 +1,31 @@
+$ # копія з main + git apply ci/changes/run-1144.diff (як у d-ci-repro-1144.txt), потім:
+$ node tools/repeat.mjs 30 --app ../ws12-d-repro/app
+Прогонів: 30 (../ws12-d-repro/app: файлів 5, тестів 20)
+Червоних прогонів: 7 з 30 (№ 10, 17, 18, 19, 24, 26, 27)
+
+файл / тест                                                  падінь
+test/integration/receipt.test.js
+  every receipt of a week of rides ends with the amount due  7/30
+      ↳ ebike, 60 min from 2026-09-21T14:18:00.000Z: got "До сплати .......................... 80,00 грн", expected 120,00 грн
+      ↳ classic, 30 min from 2026-09-21T08:53:00.000Z: got "До сплати .......................... 25,00 грн", expected 50,00 грн
+      ↳ classic, 60 min from 2026-09-21T08:01:00.000Z: got "До сплати .......................... 50,00 грн", expected 75,00 грн
+
+Решта тестів (19) — зелені в усіх прогонах.
+
+Час: …
+
+$ # та сама копія з main, БЕЗ diff (git apply не виконано):
+$ node tools/repeat.mjs 30 --app ../ws12-d-repro/app
+Прогонів: 30 (../ws12-d-repro/app: файлів 5, тестів 20)
+Червоних прогонів: 4 з 30 (№ 7, 14, 15, 23)
+
+файл / тест                                                  падінь
+test/integration/receipt.test.js
+  every receipt of a week of rides ends with the amount due  4/30
+      ↳ ebike, 60 min from 2026-09-21T15:34:00.000Z: got "До сплати .......................... 80,00 грн", expected 120,00 грн
+      ↳ classic, 30 min from 2026-09-21T13:08:00.000Z: got "До сплати .......................... 25,00 грн", expected 50,00 грн
+      ↳ classic, 60 min from 2026-09-21T06:54:00.000Z: got "До сплати .......................... 50,00 грн", expected 75,00 грн
+
+Решта тестів (19) — зелені в усіх прогонах.
+
+Час: …

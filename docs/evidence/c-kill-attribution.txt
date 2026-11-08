@@ -1,0 +1,10 @@
+# Task C, крок 4: який тест вбиває кожного мутанта (стан після відкату трьох тестів агента).
+# Метод: свіжа копія app/, одна зміна-мутант у src/ (та сама, що в tools/mutate.mjs), прогін
+# node --test "test/unit/**/*.test.js" "test/spec/**/*.test.js" (тести як у tools/mutate.config.json), червоні тести.
+M009 | ℹ pass 103 ℹ fail 1  | FAILED: ✖ a ride that starts at 06:30 in Kyiv gets no night discount (T10: 00:00–06:00);
+M021 | ℹ pass 103 ℹ fail 1  | FAILED: ✖ a ride that starts at 06:30 in Kyiv gets no night discount (T10: 00:00–06:00);
+M039 | ℹ pass 103 ℹ fail 1  | FAILED: ✖ a subscriber's 31-minute e-bike ride is billed from the first minute: 2 blocks − 20 %;
+M067 | ℹ pass 103 ℹ fail 1  | FAILED: ✖ a null ride is rejected with a QuoteError, not a TypeError;
+M078 | ℹ pass 103 ℹ fail 1  | FAILED: ✖ a pickupAt that is not a string is rejected even if it stringifies to a valid date;
+M086 | ℹ pass 103 ℹ fail 1  | FAILED: ✖ nothing is charged on a day with no rides;
+M018 | ℹ pass 104 ℹ fail 0  | ВИЖИВ: жоден тест не впав (Q-12, docs/test-quality.md, розділ 4)

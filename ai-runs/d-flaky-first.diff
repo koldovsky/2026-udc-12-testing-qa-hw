@@ -1,0 +1,41 @@
+diff --git a/app/test/integration/receipt.test.js b/app/test/integration/receipt.test.js
+index 6c2335e..ed83ac1 100644
+--- a/app/test/integration/receipt.test.js
++++ b/app/test/integration/receipt.test.js
+@@ -3,16 +3,33 @@ import test from "node:test";
+ import assert from "node:assert/strict";
+ import { formatReceipt } from "../../src/receipt.js";
+ import { quote } from "../../src/tariff.js";
+-import { randomRider, randomRides } from "../helpers/factory.js";
++import { randomRider } from "../helpers/factory.js";
+ 
+ const PRICE = { classic: 2500, ebike: 4000 };
+ const uah = (kopecks) => `${(kopecks / 100).toFixed(2).replace(".", ",")} грн`;
+ 
++// Fixed daytime rides (Kyiv 09:00–19:00, in zone), with the 30/60-minute block edges on purpose.
++const DAY_START = Date.UTC(2026, 8, 21, 6, 0);
++const RIDES = [
++  [0, 5, "classic"], [37, 29, "ebike"], [100, 30, "classic"], [55, 30, "ebike"],
++  [161, 31, "classic"], [230, 45, "ebike"], [292, 59, "classic"], [351, 60, "ebike"],
++  [471, 60, "classic"], [540, 61, "ebike"], [600, 89, "classic"], [415, 90, "ebike"],
++].map(([offset, minutes, bike], i) => {
++  const pickup = DAY_START + offset * 60_000;
++  return {
++    pickupAt: new Date(pickup).toISOString(),
++    returnAt: new Date(pickup + minutes * 60_000).toISOString(),
++    bike,
++    returnStation: `S0${(i % 8) + 1}`,
++  };
++});
++
+ test("every receipt of a week of rides ends with the amount due", () => {
+   const rider = randomRider();
+-  for (const ride of randomRides(10)) {
++  for (const ride of RIDES) {
+     const minutes = (Date.parse(ride.returnAt) - Date.parse(ride.pickupAt)) / 60_000;
+-    const expected = (Math.floor(minutes / 30) + 1) * PRICE[ride.bike];
++    // T3: every started 30-minute block is charged (60 min → 2 blocks, 61 min → 3).
++    const expected = Math.ceil(minutes / 30) * PRICE[ride.bike];
+ 
+     const lines = formatReceipt(quote(ride, rider));
+ 
