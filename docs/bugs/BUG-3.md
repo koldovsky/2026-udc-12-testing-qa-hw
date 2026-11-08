@@ -38,7 +38,7 @@ cd ../ws12-base && node -e 'import("./app/src/tariff.js").then(({ quote }) => co
 {"minutes":40,"timeCharge":8000,"discounts":[{"code":"subscription","amount":8000}],"fees":[],"total":0}
 ```
 
-Та сама команда з кореня репо після виправлення (`82d49d0`):
+Та сама команда з кореня репо після виправлень (стан гілки `82d49d0`):
 
 ```text
 {"minutes":40,"timeCharge":8000,"discounts":[{"code":"subscription","amount":1600}],"fees":[],"total":6400}
