@@ -43,7 +43,11 @@ test("POST /api/quote returns the quote and the receipt", async () => {
   assert.equal(res.status, 200);
   const json = JSON.parse(res.body);
   assert.equal(json.quote.total, 5000);
-  assert.ok(json.receipt.at(-1).endsWith("50,00 грн"));
+  // Суму беремо з рядка чека й звіряємо точно: `endsWith("50,00 грн")` збігається й з
+  // «150,00 грн», бо це підрядок (запах № 14 у `docs/test-quality.md`).
+  const last = json.receipt.at(-1);
+  assert.ok(last.startsWith("До сплати"), `останній рядок чека — «До сплати»: ${last}`);
+  assert.equal(/^.+ \.{3,} (.+)$/.exec(last)?.[1], "50,00 грн", `сума в останньому рядку: ${last}`);
 });
 
 test("POST /api/quote answers 400 to a body that is not JSON", async () => {

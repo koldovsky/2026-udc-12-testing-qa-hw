@@ -60,15 +60,15 @@ export function quote(ride, rider, { zones = stationZones, dayCap } = {}) {
   }
   dayCap?.record(rider.id, pickup, due);
 
-  const fees = feesFor(minutes, zone).map((fee) =>
-    plan.code === "reduced" ? { code: fee.code, amount: fee.amount - discount(fee.amount, REDUCED_PERCENT) } : fee,
-  );
+  // T5 (docs/spec/tariffs.md:87): the reduced fare never applies to the fees T7 and T8.
+  const fees = feesFor(minutes, zone);
   const total = fees.reduce((sum, fee) => sum + fee.amount, due);
   return { minutes, timeCharge, discounts, fees, total };
 }
 
 function rideMinutes(pickup, returned) {
-  return Math.round((returned - pickup) / 60_000);
+  // T1: a partial minute counts as a full one — round up (docs/spec/tariffs.md:46).
+  return Math.ceil((returned - pickup) / 60_000);
 }
 
 function blocks(minutes) {
@@ -76,13 +76,20 @@ function blocks(minutes) {
 }
 
 function chargeFor(minutes, bike) {
-  if (minutes < FREE_START_MINUTES) return 0;
+  // T2: a ride of no more than 2 minutes carries no time charge (docs/spec/tariffs.md:54),
+  // so the boundary minute itself is still free.
+  if (minutes <= FREE_START_MINUTES) return 0;
   return blocks(minutes) * RATES[bike];
 }
 
 function subscriptionCharge(minutes, bike) {
-  const charge = blocks(Math.max(0, minutes - SUBSCRIPTION_FREE_MINUTES)) * RATES[bike];
-  return bike === "ebike" ? charge - discount(charge, SUBSCRIPTION_EBIKE_PERCENT) : charge;
+  // T4 (docs/spec/tariffs.md:74-77): on a classic bike the first 45 minutes of every ride
+  // are free; on an e-bike there are no free minutes at all — only 20 % off the T3 charge.
+  if (bike === "ebike") {
+    const charge = blocks(minutes) * RATES.ebike;
+    return charge - discount(charge, SUBSCRIPTION_EBIKE_PERCENT);
+  }
+  return blocks(Math.max(0, minutes - SUBSCRIPTION_FREE_MINUTES)) * RATES.classic;
 }
 
 /** The fare discount: subscription or reduced fare, whichever leaves the rider less to pay. */

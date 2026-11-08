@@ -1,6 +1,6 @@
 import test, { mock } from "node:test";
 import assert from "node:assert/strict";
-import { createDayCap, DAY_CAP } from "../../src/day-cap.js";
+import { createDayCap } from "../../src/day-cap.js";
 import { BLOCK_MINUTES, QuoteError, RATES, quote } from "../../src/tariff.js";
 
 const ride = (pickupAt, returnAt, extra = {}) => ({ pickupAt, returnAt, bike: "classic", returnStation: "S01", ...extra });
@@ -21,10 +21,12 @@ test("quote returns an itemised price", () => {
   }
 });
 
-test("a ride of 30 min 20 s is billed as one block", () => {
+// T1 (docs/spec/tariffs.md:46): a partial minute counts as a full one, so 30 min 20 s is
+// 31 minutes — which starts a second block (T3, docs/spec/tariffs.md:62).
+test("a ride of 30 min 20 s is 31 minutes and is billed as two blocks", () => {
   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:30:20Z"), standard);
-  assert.equal(result.minutes, 30);
-  assert.equal(result.timeCharge, 2500);
+  assert.equal(result.minutes, 31);
+  assert.equal(result.timeCharge, 5000);
 });
 
 test("e-bikes are billed at the e-bike rate", () => {
@@ -33,10 +35,16 @@ test("e-bikes are billed at the e-bike rate", () => {
   assert.equal(result.total, result.timeCharge);
 });
 
-test("subscribers ride the first 45 minutes free", () => {
-  for (const bike of ["classic", "ebike"]) {
+// T4 (docs/spec/tariffs.md:74-77): the 45 free minutes are a classic-bike benefit. On an
+// e-bike a subscriber has no free minutes and pays the T3 charge less 20 %: a 40-minute
+// ride is 2 blocks = 8000, so 6400 is due.
+test("subscribers ride the first 45 minutes free on a classic bike, and pay 20 % less on an e-bike", () => {
+  for (const [bike, expected] of [
+    ["classic", 0],
+    ["ebike", 6400],
+  ]) {
     const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { bike }), { type: "subscriber" });
-    assert.equal(result.total, 0);
+    assert.equal(result.total, expected, bike);
   }
 });
 
@@ -46,10 +54,15 @@ test("subscription on a long e-bike ride", () => {
   assert.ok(result.total < result.timeCharge);
 });
 
+// T5 (docs/spec/tariffs.md:87): «Пільга не поширюється на збори (T7, T8)» — the 50 % cuts
+// the time charge only (5000 → 2500), while the out-of-zone fee stays at its full 15000.
 test("reduced fare for a ride returned outside the zone", () => {
   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { returnStation: "X01" }), { type: "reduced" });
-  assert.equal(result.total, 10000);
-  assert.equal(result.fees[0].amount, 7500);
+  assert.equal(result.total, 17500);
+  // Склад зборів, а не звернення за індексом `fees[0]`: тест має падати від зміни
+  // поведінки, а не від зміни порядку зборів (`app/AGENTS.md`, правило 5; запах № 16 у
+  // `docs/test-quality.md`).
+  assert.deepEqual(result.fees, [{ code: "out-of-zone", amount: 15000 }]);
 });
 
 test("night rides get 30 % off", () => {
@@ -66,14 +79,21 @@ test("a bike kept over a day and left outside the zone pays both fees", () => {
   assert.equal(result.fees.length, 2);
 });
 
+// T6: три поїздки e-bike по 80 хв — 3 блоки × 4000 = 12000 кожна, третю обрізає ліміт доби.
+// Точні суми кожної поїздки, а не «не більше за ліміт»: інакше тест проходить і тоді, коли
+// ліміт зрізає зайве або, навпаки, не зрізає нічого.
 test("the daily cap limits the time charge", () => {
   const dayCap = createDayCap();
   const rider = { id: "rider-7", type: "standard" };
-  let last;
+  const totals = [];
   for (const [from, to] of [["06:00", "07:20"], ["10:00", "11:20"], ["15:00", "16:20"]]) {
-    last = quote(ride(`2026-09-16T${from}:00Z`, `2026-09-16T${to}:00Z`, { bike: "ebike" }), rider, { dayCap });
+    totals.push(quote(ride(`2026-09-16T${from}:00Z`, `2026-09-16T${to}:00Z`, { bike: "ebike" }), rider, { dayCap }).total);
   }
-  assert.ok(last.total <= DAY_CAP);
+  assert.deepEqual(totals, [12000, 12000, 6000]);
+  // 30000 — ліміт доби зі специфікації (T6, `docs/spec/tariffs.md:101`: «не перевищує
+  // 300 грн»), а не константа `DAY_CAP` з модуля, який тестуємо (`app/AGENTS.md`, правило 3).
+  assert.equal(totals.reduce((sum, value) => sum + value, 0), 30000, "за добу нараховано рівно ліміт");
+  assert.equal(dayCap.remaining(rider.id, Date.parse("2026-09-16T15:00:00Z")), 0);
 });
 
 test("a 45-minute classic ride costs 50 UAH", () => {

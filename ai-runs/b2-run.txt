@@ -1,0 +1,658 @@
+
+> test
+> npm --prefix app test
+
+
+> veloprokat@3.2.0 test
+> node --test "test/**/*.test.js"
+
+TAP version 13
+# Subtest: every receipt of a week of rides ends with the amount due
+ok 1 - every receipt of a week of rides ends with the amount due
+  ---
+  duration_ms: 1.801291
+  type: 'test'
+  ...
+# Subtest: a receipt lists the fee for a return outside the zone
+ok 2 - a receipt lists the fee for a return outside the zone
+  ---
+  duration_ms: 0.816833
+  type: 'test'
+  ...
+# Subtest: T1 (TC-01): взяття 10:00:00, повернення 10:12:40 → 13 хв, 1 блок
+ok 3 - T1 (TC-01): взяття 10:00:00, повернення 10:12:40 → 13 хв, 1 блок
+  ---
+  duration_ms: 3.565334
+  type: 'test'
+  ...
+# Subtest: T1 (TC-02): взяття 14:05:00, повернення 14:41:00 → 36 хв, 2 блоки
+ok 4 - T1 (TC-02): взяття 14:05:00, повернення 14:41:00 → 36 хв, 2 блоки
+  ---
+  duration_ms: 0.218875
+  type: 'test'
+  ...
+# Subtest: T1 + T3 (TC-03): рівно 30 хв → 1 блок
+ok 5 - T1 + T3 (TC-03): рівно 30 хв → 1 блок
+  ---
+  duration_ms: 0.097584
+  type: 'test'
+  ...
+# Subtest: T1 + T3 (TC-04): 30 хв 1 с → 31 хв (неповна хвилина як повна), 2 блоки
+not ok 6 - T1 + T3 (TC-04): 30 хв 1 с → 31 хв (неповна хвилина як повна), 2 блоки
+  ---
+  duration_ms: 1.58925
+  type: 'test'
+  location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/app/test/spec/t1-t2-duration.test.js:126:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    тривалість у хвилинах
+    
+    30 !== 31
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 31
+  actual: 30
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/app/test/spec/t1-t2-duration.test.js:131:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T1 + §4 (TC-05): моменти взяття й повернення рівні → запит не відхиляється, 0 хв, погодинне 0
+ok 7 - T1 + §4 (TC-05): моменти взяття й повернення рівні → запит не відхиляється, 0 хв, погодинне 0
+  ---
+  duration_ms: 0.104125
+  type: 'test'
+  ...
+# Subtest: T2 (TC-06): рівно 2 хв → хибний старт, погодинне 0
+not ok 8 - T2 (TC-06): рівно 2 хв → хибний старт, погодинне 0
+  ---
+  duration_ms: 0.230542
+  type: 'test'
+  location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/app/test/spec/t1-t2-duration.test.js:126:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    нарахування за T3 до знижок
+    
+    2500 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 2500
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/app/test/spec/t1-t2-duration.test.js:132:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T2 (TC-07): 2 хв 1 с → 3 хв (понад 2) → нараховується за T3: 1 блок
+not ok 9 - T2 (TC-07): 2 хв 1 с → 3 хв (понад 2) → нараховується за T3: 1 блок
+  ---
+  duration_ms: 0.107375
+  type: 'test'
+  location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/app/test/spec/t1-t2-duration.test.js:126:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    тривалість у хвилинах
+    
+    2 !== 3
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 3
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/app/test/spec/t1-t2-duration.test.js:131:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T2 (TC-08): 50 с → 1 хв, погодинне 0
+ok 10 - T2 (TC-08): 50 с → 1 хв, погодинне 0
+  ---
+  duration_ms: 0.064208
+  type: 'test'
+  ...
+# Subtest: T2 + T7 (TC-09): хибний старт + повернення поза зоною (X01) → погодинне 0, збір 15000 на загальних підставах
+ok 11 - T2 + T7 (TC-09): хибний старт + повернення поза зоною (X01) → погодинне 0, збір 15000 на загальних підставах
+  ---
+  duration_ms: 0.425584
+  type: 'test'
+  ...
+# Subtest: T10 (TC-44): стандартний, класичний, 01:10 → 01:40 → 1 блок 2500 − 30 %
+ok 12 - T10 (TC-44): стандартний, класичний, 01:10 → 01:40 → 1 блок 2500 − 30 %
+  ---
+  duration_ms: 0.992958
+  type: 'test'
+  ...
+# Subtest: T10 (TC-45): нижня межа інтервалу входить: 00:00 → 00:30 → 1750
+ok 13 - T10 (TC-45): нижня межа інтервалу входить: 00:00 → 00:30 → 1750
+  ---
+  duration_ms: 0.125584
+  type: 'test'
+  ...
+# Subtest: T10 (TC-46): поїздка цілком у межах 00:00–06:00: 05:30 → 05:59 → 1750
+ok 14 - T10 (TC-46): поїздка цілком у межах 00:00–06:00: 05:30 → 05:59 → 1750
+  ---
+  duration_ms: 0.066375
+  type: 'test'
+  ...
+# Subtest: T10 (TC-47): поїздка цілком поза інтервалом: 06:00 → 06:30 → нічної знижки немає
+ok 15 - T10 (TC-47): поїздка цілком поза інтервалом: 06:00 → 06:30 → нічної знижки немає
+  ---
+  duration_ms: 0.063875
+  type: 'test'
+  ...
+# Subtest: T10 (TC-48): 23:00 → 23:30 → нічної знижки немає
+ok 16 - T10 (TC-48): 23:00 → 23:30 → нічної знижки немає
+  ---
+  duration_ms: 0.0635
+  type: 'test'
+  ...
+# Subtest: T10 + T5 (TC-49): пільговий, 01:00 → 01:30 → діють обидві знижки: 2500 → пільга → нічна = 875
+ok 17 - T10 + T5 (TC-49): пільговий, 01:00 → 01:30 → діють обидві знижки: 2500 → пільга → нічна = 875
+  ---
+  duration_ms: 0.061333
+  type: 'test'
+  ...
+# Subtest: T10 (регресія v3) (TC-58): у версії 3 нічна знижка діє: 01:10 → 01:40 = 1750, а не 2500
+ok 18 - T10 (регресія v3) (TC-58): у версії 3 нічна знижка діє: 01:10 → 01:40 = 1750, а не 2500
+  ---
+  duration_ms: 0.048458
+  type: 'test'
+  ...
+# Subtest: T3 (TC-10): класичний, 50 хв → 2 блоки
+ok 19 - T3 (TC-10): класичний, 50 хв → 2 блоки
+  ---
+  duration_ms: 1.128166
+  type: 'test'
+  ...
+# Subtest: T3 (TC-11): електровелосипед, 75 хв → 3 блоки
+ok 20 - T3 (TC-11): електровелосипед, 75 хв → 3 блоки
+  ---
+  duration_ms: 0.076458
+  type: 'test'
+  ...
+# Subtest: T3 (TC-12): електровелосипед, рівно 30 хв → 1 блок
+ok 21 - T3 (TC-12): електровелосипед, рівно 30 хв → 1 блок
+  ---
+  duration_ms: 0.127125
+  type: 'test'
+  ...
+# Subtest: T3 (TC-13): класичний, рівно 60 хв → 2 блоки
+ok 22 - T3 (TC-13): класичний, рівно 60 хв → 2 блоки
+  ---
+  duration_ms: 0.064583
+  type: 'test'
+  ...
+# Subtest: T3 (TC-14): класичний, 61 хв → 3 блоки (розпочатий третій)
+ok 23 - T3 (TC-14): класичний, 61 хв → 3 блоки (розпочатий третій)
+  ---
+  duration_ms: 0.113833
+  type: 'test'
+  ...
+# Subtest: T4 (TC-15): абонент, класичний, 40 хв → 0 (у межах перших 45 безкоштовних хвилин)
+ok 24 - T4 (TC-15): абонент, класичний, 40 хв → 0 (у межах перших 45 безкоштовних хвилин)
+  ---
+  duration_ms: 1.279417
+  type: 'test'
+  ...
+# Subtest: T4 (TC-16): абонент, класичний, рівно 45 хв → 0 (45-та хвилина ще безкоштовна)
+ok 25 - T4 (TC-16): абонент, класичний, рівно 45 хв → 0 (45-та хвилина ще безкоштовна)
+  ---
+  duration_ms: 0.149041
+  type: 'test'
+  ...
+# Subtest: T4 (TC-17): абонент, класичний, 46 хв → платних 1 хв, 1 блок
+ok 26 - T4 (TC-17): абонент, класичний, 46 хв → платних 1 хв, 1 блок
+  ---
+  duration_ms: 0.111292
+  type: 'test'
+  ...
+# Subtest: T4 (TC-18): абонент, класичний, 100 хв → платних 55 хв, 2 блоки
+ok 27 - T4 (TC-18): абонент, класичний, 100 хв → платних 55 хв, 2 блоки
+  ---
+  duration_ms: 0.145417
+  type: 'test'
+  ...
+# Subtest: T4 (TC-19): абонент, електровелосипед, 30 хв → безкоштовних хвилин немає: 4000 − 20 %
+not ok 28 - T4 (TC-19): абонент, електровелосипед, 30 хв → безкоштовних хвилин немає: 4000 − 20 %
+  ---
+  duration_ms: 1.194125
+  type: 'test'
+  location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/app/test/spec/t4-subscription.test.js:23:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    до сплати
+    
+    0 !== 3200
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 3200
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/app/test/spec/t4-subscription.test.js:31:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T4 (TC-20): абонент, електровелосипед, 40 хв → 8000 − 20 % (45 безкоштовних хвилин на e-bike не діють)
+not ok 29 - T4 (TC-20): абонент, електровелосипед, 40 хв → 8000 − 20 % (45 безкоштовних хвилин на e-bike не діють)
+  ---
+  duration_ms: 0.22025
+  type: 'test'
+  location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/app/test/spec/t4-subscription.test.js:23:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    до сплати
+    
+    0 !== 6400
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 6400
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/app/test/spec/t4-subscription.test.js:31:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T4 (TC-54): 45 безкоштовних хвилин — кожної поїздки, а не доби: дві поїздки 40 хв → 0 і 0
+ok 30 - T4 (TC-54): 45 безкоштовних хвилин — кожної поїздки, а не доби: дві поїздки 40 хв → 0 і 0
+  ---
+  duration_ms: 1.873042
+  type: 'test'
+  ...
+# Subtest: T5 (TC-21): пільговий, класичний, 40 хв → 2 блоки 5000 − 50 %
+ok 31 - T5 (TC-21): пільговий, класичний, 40 хв → 2 блоки 5000 − 50 %
+  ---
+  duration_ms: 1.9335
+  type: 'test'
+  ...
+# Subtest: T5 (TC-22): пільговий, електровелосипед, 75 хв → 12000 − 50 %
+ok 32 - T5 (TC-22): пільговий, електровелосипед, 75 хв → 12000 − 50 %
+  ---
+  duration_ms: 0.096542
+  type: 'test'
+  ...
+# Subtest: T5 + T4 (TC-23): абонент з правом на пільгу, класичний, 80 хв → застосовується менша сума: пільга 3750
+ok 33 - T5 + T4 (TC-23): абонент з правом на пільгу, класичний, 80 хв → застосовується менша сума: пільга 3750
+  ---
+  duration_ms: 0.212333
+  type: 'test'
+  ...
+# Subtest: T5 + T4 (TC-24): абонент з правом на пільгу, класичний, 100 хв → суми однакові (5000 і 5000), застосовується абонемент
+ok 34 - T5 + T4 (TC-24): абонент з правом на пільгу, класичний, 100 хв → суми однакові (5000 і 5000), застосовується абонемент
+  ---
+  duration_ms: 0.216292
+  type: 'test'
+  ...
+# Subtest: T5 + T7 (TC-25): пільговий, класичний, 20 хв, станція X01 → погодинне 1250 + збір 15000 без знижки
+not ok 35 - T5 + T7 (TC-25): пільговий, класичний, 20 хв, станція X01 → погодинне 1250 + збір 15000 без знижки
+  ---
+  duration_ms: 1.375625
+  type: 'test'
+  location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/app/test/spec/t5-reduced.test.js:89:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    збори (пільга на них не поширюється)
+    + actual - expected
+    
+      [
+    +   7500
+    -   15000
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 15000
+  actual:
+    0: 7500
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/app/test/spec/t5-reduced.test.js:102:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T5 + T6 + T8 (TC-26): пільговий, класичний, 25 год → 62500 обмежено лімітом 30000 + збір T8 200000 без знижки
+not ok 36 - T5 + T6 + T8 (TC-26): пільговий, класичний, 25 год → 62500 обмежено лімітом 30000 + збір T8 200000 без знижки
+  ---
+  duration_ms: 0.30425
+  type: 'test'
+  location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/app/test/spec/t5-reduced.test.js:89:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    збори (пільга на них не поширюється)
+    + actual - expected
+    
+      [
+    +   100000
+    -   200000
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 200000
+  actual:
+    0: 100000
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/app/test/spec/t5-reduced.test.js:102:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T6 (TC-27): три поїздки e-bike по 80 хв (09:00, 13:00, 18:00) → 12000, 12000, 6000; разом рівно 30000
+ok 37 - T6 (TC-27): три поїздки e-bike по 80 хв (09:00, 13:00, 18:00) → 12000, 12000, 6000; разом рівно 30000
+  ---
+  duration_ms: 2.167
+  type: 'test'
+  ...
+# Subtest: T6 (TC-55): ліміт спільний для різних типів велосипедів: e-bike 180 хв, класичний 60 хв, класичний 30 хв
+ok 38 - T6 (TC-55): ліміт спільний для різних типів велосипедів: e-bike 180 хв, класичний 60 хв, класичний 30 хв
+  ---
+  duration_ms: 0.223834
+  type: 'test'
+  ...
+# Subtest: T6 (TC-57): регресія v3: ліміт 30000, а не 25000 — чотири поїздки e-bike по 60 хв
+ok 39 - T6 (TC-57): регресія v3: ліміт 30000, а не 25000 — чотири поїздки e-bike по 60 хв
+  ---
+  duration_ms: 0.24575
+  type: 'test'
+  ...
+# Subtest: T6 (TC-28): за добу вже нараховано 29900; класичний, 40 хв, взяття 12:00 → до сплати залишок ліміту 100
+ok 40 - T6 (TC-28): за добу вже нараховано 29900; класичний, 40 хв, взяття 12:00 → до сплати залишок ліміту 100
+  ---
+  duration_ms: 0.108833
+  type: 'test'
+  ...
+# Subtest: T6 (TC-29): за добу вже нараховано 30000; класичний, 40 хв, взяття 12:00 → погодинне 0 (ліміт вичерпано)
+ok 41 - T6 (TC-29): за добу вже нараховано 30000; класичний, 40 хв, взяття 12:00 → погодинне 0 (ліміт вичерпано)
+  ---
+  duration_ms: 0.147583
+  type: 'test'
+  ...
+# Subtest: T6 (TC-30): взяття 16.09 23:40, повернення 17.09 00:20 → поїздка належить добі 16.09 (за моментом взяття) → 0
+ok 42 - T6 (TC-30): взяття 16.09 23:40, повернення 17.09 00:20 → поїздка належить добі 16.09 (за моментом взяття) → 0
+  ---
+  duration_ms: 0.063542
+  type: 'test'
+  ...
+# Subtest: T6 + T10 (TC-31): взяття 17.09 00:20 → поїздка належить добі 17.09, ліміт 16.09 не діє; 2500 − 30 % (нічна)
+not ok 43 - T6 + T10 (TC-31): взяття 17.09 00:20 → поїздка належить добі 17.09, ліміт 16.09 не діє; 2500 − 30 % (нічна)
+  ---
+  duration_ms: 1.141333
+  type: 'test'
+  location: '/Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/app/test/spec/t6-day-cap.test.js:138:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    до сплати
+    
+    0 !== 1750
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1750
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/liudmyla.minenkova/Documents/Raif_AI/2026-udc-12-testing-qa-hw/app/test/spec/t6-day-cap.test.js:152:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: T6 + T7 (TC-32): ліміт вичерпано; класичний, 20 хв, станція X02 → погодинне 0, збір 15000 у ліміт не входить
+ok 44 - T6 + T7 (TC-32): ліміт вичерпано; класичний, 20 хв, станція X02 → погодинне 0, збір 15000 у ліміт не входить
+  ---
+  duration_ms: 0.148583
+  type: 'test'
+  ...
+# Subtest: T6 (TC-33): ліміт рахується для кожного користувача окремо → першому 0, другому 12000
+ok 45 - T6 (TC-33): ліміт рахується для кожного користувача окремо → першому 0, другому 12000
+  ---
+  duration_ms: 0.363958
+  type: 'test'
+  ...
+# Subtest: T7 (TC-34): стандартний, класичний, 20 хв, станція X01 (поза зоною) → 2500 + збір 15000
+ok 46 - T7 (TC-34): стандартний, класичний, 20 хв, станція X01 (поза зоною) → 2500 + збір 15000
+  ---
+  duration_ms: 1.876541
+  type: 'test'
+  ...
+# Subtest: T7 (TC-35): стандартний, класичний, 20 хв, станція S03 (у зоні) → збору немає
+ok 47 - T7 (TC-35): стандартний, класичний, 20 хв, станція S03 (у зоні) → збору немає
+  ---
+  duration_ms: 0.15325
+  type: 'test'
+  ...
+# Subtest: T7 (регресія v3) (TC-56): збір поза зоною — 15000, а не 10000 як у версії 2
+ok 48 - T7 (регресія v3) (TC-56): збір поза зоною — 15000, а не 10000 як у версії 2
+  ---
+  duration_ms: 0.072459
+  type: 'test'
+  ...
+# Subtest: T8 (TC-36): рівно 24 год 00 хв → 1440 хв, 48 блоків обмежено лімітом 30000; збору T8 немає
+ok 49 - T8 (TC-36): рівно 24 год 00 хв → 1440 хв, 48 блоків обмежено лімітом 30000; збору T8 немає
+  ---
+  duration_ms: 0.071625
+  type: 'test'
+  ...
+# Subtest: T8 (TC-37): 24 год 01 хв → 1441 хв, 49 блоків обмежено лімітом 30000; збір 200000
+ok 50 - T8 (TC-37): 24 год 01 хв → 1441 хв, 49 блоків обмежено лімітом 30000; збір 200000
+  ---
+  duration_ms: 0.06825
+  type: 'test'
+  ...
+# Subtest: T8 + T6 (TC-38): 25 год → 50 блоків обмежено лімітом 30000; збір 200000
+ok 51 - T8 + T6 (TC-38): 25 год → 50 блоків обмежено лімітом 30000; збір 200000
+  ---
+  duration_ms: 0.057417
+  type: 'test'
+  ...
+# Subtest: T7 + T8 (TC-39): 25 год, станція X03 (поза зоною) → обидва збори незалежно: 30000 + 15000 + 200000
+ok 52 - T7 + T8 (TC-39): 25 год, станція X03 (поза зоною) → обидва збори незалежно: 30000 + 15000 + 200000
+  ---
+  duration_ms: 0.135292
+  type: 'test'
+  ...
+# Subtest: T9 (TC-40): чек для поїздки з TC-39 — останній рядок «До сплати» на 2 450,00 грн (кома, тисячі через пробіл)
+ok 53 - T9 (TC-40): чек для поїздки з TC-39 — останній рядок «До сплати» на 2 450,00 грн (кома, тисячі через пробіл)
+  ---
+  duration_ms: 1.519667
+  type: 'test'
+  ...
+# Subtest: T9 (TC-41): чек для поїздки з TC-34 — тривалість, погодинне нарахування, окремий рядок збору, підсумок
+ok 54 - T9 (TC-41): чек для поїздки з TC-34 — тривалість, погодинне нарахування, окремий рядок збору, підсумок
+  ---
+  duration_ms: 0.144958
+  type: 'test'
+  ...
+# Subtest: T9 (TC-42): чек для поїздки з TC-21 — окремий рядок знижки зі знаком мінус
+ok 55 - T9 (TC-42): чек для поїздки з TC-21 — окремий рядок знижки зі знаком мінус
+  ---
+  duration_ms: 0.234875
+  type: 'test'
+  ...
+# Subtest: T9 (TC-43): знижка 30 % від 1235 коп. → до сплати 864 коп. (округлення вниз), знижка 371 коп.
+ok 56 - T9 (TC-43): знижка 30 % від 1235 коп. → до сплати 864 коп. (округлення вниз), знижка 371 коп.
+  ---
+  duration_ms: 0.085666
+  type: 'test'
+  ...
+# Subtest: §4 (TC-50): повернення раніше за взяття (10:00:00 → 09:00:00) → запит відхилено з поясненням
+ok 57 - §4 (TC-50): повернення раніше за взяття (10:00:00 → 09:00:00) → запит відхилено з поясненням
+  ---
+  duration_ms: 1.001792
+  type: 'test'
+  ...
+# Subtest: §4 (TC-51): невідомий тип велосипеда (cargo) → запит відхилено з поясненням
+ok 58 - §4 (TC-51): невідомий тип велосипеда (cargo) → запит відхилено з поясненням
+  ---
+  duration_ms: 0.062833
+  type: 'test'
+  ...
+# Subtest: §4 (TC-52): невідома категорія користувача (vip) → запит відхилено з поясненням
+ok 59 - §4 (TC-52): невідома категорія користувача (vip) → запит відхилено з поясненням
+  ---
+  duration_ms: 0.086625
+  type: 'test'
+  ...
+# Subtest: §4 (TC-53): станції повернення S09 немає в додатку А → запит відхилено з поясненням
+ok 60 - §4 (TC-53): станції повернення S09 немає в додатку А → запит відхилено з поясненням
+  ---
+  duration_ms: 0.050083
+  type: 'test'
+  ...
+# Subtest: charges recorded for a day reduce what is left of the cap
+ok 61 - charges recorded for a day reduce what is left of the cap
+  ---
+  duration_ms: 1.762375
+  type: 'test'
+  ...
+# Subtest: the day of a ride is the date of its pickup
+ok 62 - the day of a ride is the date of its pickup
+  ---
+  duration_ms: 0.082791
+  type: 'test'
+  ...
+# Subtest: amounts are shown in hryvnias
+ok 63 - amounts are shown in hryvnias
+  ---
+  duration_ms: 0.949291
+  type: 'test'
+  ...
+# Subtest: a receipt has a line for every item
+ok 64 - a receipt has a line for every item
+  ---
+  duration_ms: 0.180875
+  type: 'test'
+  ...
+# Subtest: GET / serves the page and GET /api/health answers
+ok 65 - GET / serves the page and GET /api/health answers
+  ---
+  duration_ms: 1.5145
+  type: 'test'
+  ...
+# Subtest: POST /api/quote returns the quote and the receipt
+ok 66 - POST /api/quote returns the quote and the receipt
+  ---
+  duration_ms: 1.916209
+  type: 'test'
+  ...
+# Subtest: POST /api/quote answers 400 to a body that is not JSON
+ok 67 - POST /api/quote answers 400 to a body that is not JSON
+  ---
+  duration_ms: 0.424917
+  type: 'test'
+  ...
+# Subtest: quote returns an itemised price
+ok 68 - quote returns an itemised price
+  ---
+  duration_ms: 1.152917
+  type: 'test'
+  ...
+# Subtest: a ride of 30 min 20 s is billed as one block
+ok 69 - a ride of 30 min 20 s is billed as one block
+  ---
+  duration_ms: 0.136083
+  type: 'test'
+  ...
+# Subtest: e-bikes are billed at the e-bike rate
+ok 70 - e-bikes are billed at the e-bike rate
+  ---
+  duration_ms: 0.078167
+  type: 'test'
+  ...
+# Subtest: subscribers ride the first 45 minutes free
+ok 71 - subscribers ride the first 45 minutes free
+  ---
+  duration_ms: 0.098459
+  type: 'test'
+  ...
+# Subtest: subscription on a long e-bike ride
+ok 72 - subscription on a long e-bike ride
+  ---
+  duration_ms: 0.130291
+  type: 'test'
+  ...
+# Subtest: reduced fare for a ride returned outside the zone
+ok 73 - reduced fare for a ride returned outside the zone
+  ---
+  duration_ms: 0.190458
+  type: 'test'
+  ...
+# Subtest: night rides get 30 % off
+ok 74 - night rides get 30 % off
+  ---
+  duration_ms: 0.067375
+  type: 'test'
+  ...
+# Subtest: a bike kept over a day and left outside the zone pays both fees
+ok 75 - a bike kept over a day and left outside the zone pays both fees
+  ---
+  duration_ms: 0.058375
+  type: 'test'
+  ...
+# Subtest: the daily cap limits the time charge
+ok 76 - the daily cap limits the time charge
+  ---
+  duration_ms: 0.459083
+  type: 'test'
+  ...
+# Subtest: a 45-minute classic ride costs 50 UAH
+ok 77 - a 45-minute classic ride costs 50 UAH
+  ---
+  duration_ms: 0.427292
+  type: 'test'
+  ...
+# Subtest: a return before the pickup is rejected
+ok 78 - a return before the pickup is rejected
+  ---
+  duration_ms: 0.235792
+  type: 'test'
+  ...
+1..78
+# tests 78
+# suites 0
+# pass 70
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 272.766959
