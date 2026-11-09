@@ -51,7 +51,7 @@ test("TC-19 T9: receipt itemises a capped 25-hour out-of-zone ride", () => {
   assert.equal(result.timeCharge, 125000);
   assert.equal(result.total, 245000);
   assert.equal(lines.length, 6);
-  assert.ok(lines.some((line) => line.startsWith("Тривалість поїздки:")));
+  assert.ok(lines.some((line) => /^Тривалість поїздки:\s*\S/.test(line)));
   assert.ok(hasAmount("1 250,00 грн"));
   assert.ok(hasAmount("-950,00 грн"));
   assert.ok(hasAmount("150,00 грн"));
