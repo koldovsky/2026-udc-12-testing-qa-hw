@@ -1,0 +1,26 @@
+
+> test:tools
+> node --test "tools/test/*.test.mjs"
+
+✔ the tokenizer keeps strings, templates, comments and regex literals whole (4.4845ms)
+✔ nothing inside strings, templates, comments or regexes is mutated (1.6677ms)
+✔ a regex after the head of if/while/for or after a block is a regex; after a value it is a division (1.1899ms)
+✔ each operator family produces the expected mutants (0.9694ms)
+✔ unary minus, arrows, spread, ?? and ?. are left alone; a complex conditional is not swapped (0.3962ms)
+✔ mutants carry line and column, and applying one changes exactly that spot (0.346ms)
+✔ assertion calls are counted statically, comments and imports excluded (0.3989ms)
+✔ a run over the fixture: known survivors, killed mutants and a timeout (3550.3969ms)
+✔ the CLI: --list is stable, --min-score sets the exit code (7668.0531ms)
+✔ parseTap reads nested names, results, directives, errors and the summary (5.0812ms)
+✔ listTestFiles finds *.test.js recursively and skips missing directories (1.0036ms)
+✔ repeat counts failures per test over N runs (1110.9865ms)
+✔ two tests with the same name in different files are counted apart (728.2792ms)
+✔ the CLI exits 0 when every run is green and 1 when any test failed (1809.8376ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11366.8096

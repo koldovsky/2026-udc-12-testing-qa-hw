@@ -1,0 +1,67 @@
+diff --git a/app/test/integration/receipt.test.js b/app/test/integration/receipt.test.js
+index 6c2335e..7c8d676 100644
+--- a/app/test/integration/receipt.test.js
++++ b/app/test/integration/receipt.test.js
+@@ -3,24 +3,36 @@ import test from "node:test";
+ import assert from "node:assert/strict";
+ import { formatReceipt } from "../../src/receipt.js";
+ import { quote } from "../../src/tariff.js";
+-import { randomRider, randomRides } from "../helpers/factory.js";
++// Fixed daytime rides exercise exact block boundaries on both bike types.
++const CASES = [
++  { minutes: 5, classic: "25,00 грн", ebike: "40,00 грн" },
++  { minutes: 29, classic: "25,00 грн", ebike: "40,00 грн" },
++  { minutes: 30, classic: "25,00 грн", ebike: "40,00 грн" },
++  { minutes: 31, classic: "50,00 грн", ebike: "80,00 грн" },
++  { minutes: 59, classic: "50,00 грн", ebike: "80,00 грн" },
++  { minutes: 60, classic: "50,00 грн", ebike: "80,00 грн" },
++  { minutes: 61, classic: "75,00 грн", ebike: "120,00 грн" },
++  { minutes: 89, classic: "75,00 грн", ebike: "120,00 грн" },
++];
++const rider = { id: "receipt-rider", type: "standard" };
+ 
+-const PRICE = { classic: 2500, ebike: 4000 };
+-const uah = (kopecks) => `${(kopecks / 100).toFixed(2).replace(".", ",")} грн`;
+-
+-test("every receipt of a week of rides ends with the amount due", () => {
+-  const rider = randomRider();
+-  for (const ride of randomRides(10)) {
+-    const minutes = (Date.parse(ride.returnAt) - Date.parse(ride.pickupAt)) / 60_000;
+-    const expected = (Math.floor(minutes / 30) + 1) * PRICE[ride.bike];
+-
+-    const lines = formatReceipt(quote(ride, rider));
+-
+-    assert.ok(lines.at(-1).startsWith("До сплати "));
+-    assert.ok(
+-      lines.at(-1).endsWith(` ${uah(expected)}`),
+-      `${ride.bike}, ${minutes} min from ${ride.pickupAt}: got "${lines.at(-1)}", expected ${uah(expected)}`,
+-    );
++test("every receipt ends with the amount due at block boundaries", () => {
++  for (const { minutes, ...amounts } of CASES) {
++    for (const bike of ["classic", "ebike"]) {
++      const pickupAt = "2026-09-21T07:15:00Z";
++      const ride = {
++        pickupAt,
++        returnAt: new Date(Date.parse(pickupAt) + minutes * 60_000).toISOString(),
++        bike,
++        returnStation: "S01",
++      };
++      const lines = formatReceipt(quote(ride, rider));
++      assert.ok(lines.at(-1).startsWith("До сплати "));
++      assert.ok(
++        lines.at(-1).endsWith(` ${amounts[bike]}`),
++        `${bike}, ${minutes} min: got "${lines.at(-1)}", expected ${amounts[bike]}`,
++      );
++    }
+   }
+ });
+ 
+@@ -32,7 +44,7 @@ test("a receipt lists the fee for a return outside the zone", () => {
+     returnStation: "X02",
+   };
+ 
+-  const lines = formatReceipt(quote(ride, randomRider()));
++  const lines = formatReceipt(quote(ride, rider));
+ 
+   assert.deepEqual(lines, [
+     "Тривалість поїздки: 20 хв",

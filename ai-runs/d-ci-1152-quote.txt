@@ -1,0 +1,1 @@
+{"minutes":2880,"timeCharge":240000,"discounts":[{"code":"day-cap","amount":210000}],"fees":[{"code":"out-of-zone","amount":15000}],"total":45000}
