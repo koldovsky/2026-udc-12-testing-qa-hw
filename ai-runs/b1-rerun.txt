@@ -1,0 +1,544 @@
+▶ DAY_CAP
+  ✔ is 300 UAH in kopecks (0.336709ms)
+✔ DAY_CAP (0.876625ms)
+▶ dayKey
+  ✔ accepts an ISO string, epoch milliseconds and a Date (0.152084ms)
+  ✔ throws RangeError on an invalid instant (0.221625ms)
+✔ dayKey (0.474ms)
+▶ createDayCap
+  ✔ uses DAY_CAP as the default limit (0.200584ms)
+  ✔ takes a custom limit, including zero (0.079458ms)
+  ✔ subtracts recorded charges from what remains (0.087208ms)
+  ✔ adds up several charges on one day (0.105334ms)
+  ✔ leaves nothing remaining at exactly the limit (0.078209ms)
+  ✔ never reports a negative remainder, but keeps the real sum charged (0.072084ms)
+  ✔ keeps riders apart (0.093375ms)
+  ✔ keeps days apart (0.084583ms)
+  ✔ keeps ledgers apart (0.075375ms)
+  ✔ reports zero charged for an unknown rider or day (0.049375ms)
+  ✔ treats different offsets of one instant as the same day (0.488208ms)
+✔ createDayCap (1.718417ms)
+▶ unconfirmed: the day boundary is UTC midnight, not Kyiv midnight
+  ✖ books a pickup at 01:00 Kyiv on the previous calendar date (1.035083ms)
+  ✖ changes the day at 03:00 Kyiv in summer and 02:00 in winter (0.176667ms)
+✖ unconfirmed: the day boundary is UTC midnight, not Kyiv midnight (1.325333ms)
+▶ RATES
+  ✔ cannot be changed (0.357166ms)
+✔ RATES (0.89075ms)
+▶ discount
+  ✔ takes the percentage off a round amount (0.111292ms)
+  ✔ rounds what is left to pay down, so the discount rounds up (0.051875ms)
+  ✔ handles 0 % and 100 % (0.058042ms)
+  ✔ is zero on a zero amount (0.053292ms)
+✔ discount (0.412458ms)
+▶ quote: time charge
+  ✔ returns the itemised result for a plain ride (0.786167ms)
+  ✔ charges an e-bike 40 UAH per block (0.150042ms)
+  ✔ charges 0 for 0 min on a classic bike (0.067083ms)
+  ✔ charges 0 for 1 min on a classic bike (0.106167ms)
+  ✖ charges 2500 for 2 min on a classic bike (0.589917ms)
+  ✔ charges 2500 for 29 min on a classic bike (0.074417ms)
+  ✔ charges 2500 for 30 min on a classic bike (0.057208ms)
+  ✔ charges 5000 for 31 min on a classic bike (0.055084ms)
+  ✔ charges 5000 for 60 min on a classic bike (0.052792ms)
+  ✔ charges 7500 for 61 min on a classic bike (0.046834ms)
+  ✖ rounds 89 s to 1 min (0.129542ms)
+  ✔ rounds 90 s to 2 min (0.030208ms)
+  ✖ rounds 1829 s to 30 min (0.0935ms)
+  ✔ rounds 1830 s to 31 min (0.037125ms)
+  ✖ makes the seconds decide between free and paid (0.08325ms)
+  ✔ measures a ride whose two ends use different offsets (0.045958ms)
+✖ quote: time charge (2.851708ms)
+▶ quote: subscription
+  ✔ makes the first 45 minutes free (0.115958ms)
+  ✔ bills blocks only for the time past 45 minutes (0.063958ms)
+  ✖ takes 20 % off the blocks past 45 minutes on an e-bike (0.400041ms)
+  ✔ gives no 20 % on a classic bike (0.067625ms)
+  ✔ lists no discount on a free-start ride (0.040792ms)
+✖ quote: subscription (0.78375ms)
+▶ quote: reduced fare
+  ✔ halves the time charge (0.072625ms)
+  ✔ halves an e-bike ride too (0.042542ms)
+  ✖ halves the out-of-zone fee (0.172875ms)
+  ✖ halves the unreturned fee (0.157458ms)
+✖ quote: reduced fare (0.5185ms)
+▶ quote: subscriber with a concession
+  ✔ gets the subscription when it is cheaper (0.0755ms)
+  ✔ gets the reduced fare when it is cheaper (0.058625ms)
+  ✔ compares against the e-bike subscription price (0.048792ms)
+  ✔ never combines the two plans (0.04225ms)
+  ✖ has its fees halved when the reduced fare wins (0.146875ms)
+  ✔ needs concession to be exactly true (0.062ms)
+  ✔ ignores concession on a standard rider (0.051417ms)
+✖ quote: subscriber with a concession (0.586833ms)
+▶ quote: night discount
+  ✔ takes 30 % off a night ride (0.099375ms)
+  ✔ applies to a pickup at 2026-06-15T00:00:00+03:00 (0.042083ms)
+  ✔ applies to a pickup at 2026-06-15T05:59:00+03:00 (0.032792ms)
+  ✔ does not apply to a pickup at 2026-06-15T06:00:00+03:00 (0.041292ms)
+  ✔ does not apply to a pickup at 2026-06-14T23:59:00+03:00 (0.052417ms)
+  ✔ reads the hour in Kyiv, whatever offset the pickup is written in (0.071458ms)
+  ✔ follows daylight saving: 03:30 UTC is night in winter but not in summer (0.087417ms)
+  ✔ depends on the pickup alone (0.058875ms)
+  ✔ applies after the reduced fare, on what is left (0.046291ms)
+  ✖ applies after the subscription, on what is left (0.15ms)
+  ✔ is not listed when nothing is left to discount (0.046917ms)
+  ✔ does not touch fees (0.048417ms)
+✖ quote: night discount (0.92525ms)
+▶ quote: fees
+  ✔ adds nothing for a return inside the zone (0.075125ms)
+  ✔ adds 150 UAH for a return outside the zone (0.047416ms)
+  ✔ charges the out-of-zone fee on a free ride as well (0.430958ms)
+  ✔ adds no unreturned fee at exactly 24 hours (0.040875ms)
+  ✔ adds 2000 UAH past 24 hours (0.054125ms)
+  ✖ uses the rounded minutes for the 24-hour limit (0.129041ms)
+  ✔ lists both fees, out-of-zone first (0.051208ms)
+  ✔ asks the given zones for the return station (0.0535ms)
+✖ quote: fees (0.98275ms)
+▶ quote: per-ride cap without a ledger
+  ✔ leaves a ride at exactly the cap alone (0.062125ms)
+  ✔ cuts a ride above the cap down to 300 UAH (0.040166ms)
+  ✔ applies after the night discount (0.039416ms)
+  ✔ does not cap fees (0.039291ms)
+  ✔ does not carry over between rides (0.039875ms)
+✔ quote: per-ride cap without a ledger (0.302417ms)
+▶ quote: with a day-cap ledger
+  ✔ books the ride on its pickup day (0.160291ms)
+  ✔ books the time charge after discounts (0.049916ms)
+  ✔ books no fees (0.0495ms)
+  ✔ cuts the ride that crosses the limit, then bills nothing more (0.096583ms)
+  ✔ still charges fees once the cap is used up (0.064125ms)
+  ✔ respects the ledger's own limit (0.05175ms)
+  ✔ caps each rider separately (0.064709ms)
+  ✔ starts afresh the next day (0.060667ms)
+  ✔ books a ride across midnight wholly on the pickup day (0.051125ms)
+  ✔ books zero for a free ride (0.048583ms)
+  ✔ requires rider.id (0.271583ms)
+  ✔ books nothing when the quote is rejected (0.055125ms)
+✔ quote: with a day-cap ledger (1.17025ms)
+▶ quote: invalid input
+  ✔ rejects ride = undefined (0.145583ms)
+  ✔ rejects ride = null (0.02875ms)
+  ✔ rejects ride = ride (0.027333ms)
+  ✔ rejects ride = 42 (0.026792ms)
+  ✔ rejects pickupAt = undefined (0.045833ms)
+  ✔ rejects pickupAt = 1781514000000 (0.027042ms)
+  ✔ rejects pickupAt = 2026-06-15 (0.03625ms)
+  ✔ rejects pickupAt = 2026-06-15T12:00:00 (0.03ms)
+  ✔ rejects pickupAt = 2026-06-15 12:00:00Z (0.030625ms)
+  ✔ rejects pickupAt = 2026-06-15T12:00:00+03 (0.02775ms)
+  ✔ rejects pickupAt = yesterday (0.025667ms)
+  ✔ rejects a malformed returnAt (0.048708ms)
+  ✔ rejects a well-formed but impossible date-time (0.057ms)
+  ✔ accepts date-times without seconds and with fractions (0.043167ms)
+  ✔ rejects a return before the pickup (0.044292ms)
+  ✔ rejects bike = undefined (0.04825ms)
+  ✔ rejects bike = tandem (0.040625ms)
+  ✔ rejects bike = toString (0.029333ms)
+  ✔ rejects bike = constructor (0.028958ms)
+  ✔ rejects returnStation = undefined (0.049291ms)
+  ✔ rejects returnStation = S99 (0.029875ms)
+  ✔ rejects returnStation = toString (0.028625ms)
+  ✔ rejects rider = undefined (0.039208ms)
+  ✔ rejects rider = null (0.025458ms)
+  ✔ rejects rider = {} (0.028667ms)
+  ✔ rejects rider = {"type":"vip"} (0.032208ms)
+✔ quote: invalid input (1.335458ms)
+▶ unconfirmed: fee halving depends on which plan won
+  ✔ a reduced rider pays the full fee on a free-start ride (0.058875ms)
+  ✔ a concession subscriber pays the full fee when the subscription wins (0.037125ms)
+  ✔ a tie between the plans goes to the subscription, so the fee stays full (0.040208ms)
+✔ unconfirmed: fee halving depends on which plan won (0.173666ms)
+▶ unconfirmed: the ledger's day is the UTC day, the night hours are Kyiv time
+  ✖ books a 01:00 Kyiv pickup on the previous date (0.176333ms)
+  ✖ gives two separate caps within one Kyiv date (0.118291ms)
+  ✖ shares one cap between two Kyiv dates (0.105ms)
+✖ unconfirmed: the ledger's day is the UTC day, the night hours are Kyiv time (0.441875ms)
+ℹ tests 122
+ℹ suites 17
+ℹ pass 107
+ℹ fail 15
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 92.792458
+
+✖ failing tests:
+
+test at ai-runs/b1-from-code/day-cap.test.js:104:3
+✖ books a pickup at 01:00 Kyiv on the previous calendar date (1.035083ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '2026-06-15'
+  - '2026-06-14'
+              ^
+  
+      at TestContext.<anonymous> (file:///Users/yurii/Projects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:105:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at node:internal/test_runner/test:1903:71
+      at node:internal/per_context/primordials:504:82
+      at new Promise (<anonymous>)
+      at new SafePromise (node:internal/per_context/primordials:478:3)
+      at node:internal/per_context/primordials:504:9
+      at Array.map (<anonymous>) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '2026-06-15',
+    expected: '2026-06-14',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/day-cap.test.js:109:3
+✖ changes the day at 03:00 Kyiv in summer and 02:00 in winter (0.176667ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '2026-06-15'
+  - '2026-06-14'
+              ^
+  
+      at TestContext.<anonymous> (file:///Users/yurii/Projects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:110:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Promise.all (index 0)
+      at async Suite.run (node:internal/test_runner/test:1905:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '2026-06-15',
+    expected: '2026-06-14',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:94:5
+✖ charges 2500 for 2 min on a classic bike (0.589917ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 2500
+  
+      at TestContext.<anonymous> (file:///Users/yurii/Projects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:95:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 2500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:105:5
+✖ rounds 89 s to 1 min (0.129542ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/yurii/Projects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:106:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:105:5
+✖ rounds 1829 s to 30 min (0.0935ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  31 !== 30
+  
+      at TestContext.<anonymous> (file:///Users/yurii/Projects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:106:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 31,
+    expected: 30,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:110:3
+✖ makes the seconds decide between free and paid (0.08325ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 2500
+  
+      at TestContext.<anonymous> (file:///Users/yurii/Projects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:112:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 2500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:141:3
+✖ takes 20 % off the blocks past 45 minutes on an e-bike (0.400041ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 1600,
+  -     amount: 4800,
+        code: 'subscription'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/yurii/Projects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:144:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'subscription', amount: 1600 } ],
+    expected: [ { code: 'subscription', amount: 4800 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:168:3
+✖ halves the out-of-zone fee (0.172875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 15000,
+  -     amount: 7500,
+        code: 'out-of-zone'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/yurii/Projects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:170:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'out-of-zone', amount: 15000 } ],
+    expected: [ { code: 'out-of-zone', amount: 7500 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:174:3
+✖ halves the unreturned fee (0.157458ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 200000,
+  -     amount: 100000,
+        code: 'unreturned'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/yurii/Projects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:176:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'unreturned', amount: 200000 } ],
+    expected: [ { code: 'unreturned', amount: 100000 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:205:3
+✖ has its fees halved when the reduced fare wins (0.146875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 15000,
+  -     amount: 7500,
+        code: 'out-of-zone'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/yurii/Projects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:207:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'out-of-zone', amount: 15000 } ],
+    expected: [ { code: 'out-of-zone', amount: 7500 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:268:3
+✖ applies after the subscription, on what is left (0.15ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 1600,
+  -     amount: 4800,
+        code: 'subscription'
+      },
+      {
+  +     amount: 1920,
+  -     amount: 960,
+        code: 'night'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/yurii/Projects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:270:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'subscription', amount: 1600 }, { code: 'night', amount: 1920 } ],
+    expected: [ { code: 'subscription', amount: 4800 }, { code: 'night', amount: 960 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:315:3
+✖ uses the rounded minutes for the 24-hour limit (0.129041ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + [
+  +   {
+  +     amount: 200000,
+  +     code: 'unreturned'
+  +   }
+  + ]
+  - []
+  
+      at TestContext.<anonymous> (file:///Users/yurii/Projects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:316:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'unreturned', amount: 200000 } ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:542:3
+✖ books a 01:00 Kyiv pickup on the previous date (0.176333ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1750
+  
+      at TestContext.<anonymous> (file:///Users/yurii/Projects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:545:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at node:internal/test_runner/test:1903:71
+      at node:internal/per_context/primordials:504:82
+      at new Promise (<anonymous>)
+      at new SafePromise (node:internal/per_context/primordials:478:3)
+      at node:internal/per_context/primordials:504:9
+      at Array.map (<anonymous>) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1750,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:549:3
+✖ gives two separate caps within one Kyiv date (0.118291ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2000 !== 20000
+  
+      at TestContext.<anonymous> (file:///Users/yurii/Projects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:554:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Promise.all (index 0)
+      at async Suite.run (node:internal/test_runner/test:1905:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2000,
+    expected: 20000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:557:3
+✖ shares one cap between two Kyiv dates (0.105ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1750 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/yurii/Projects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:561:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1750,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,41 @@
+- main [ref=e2]:
+  - heading "Вартість поїздки" [level=1] [ref=e3]
+  - paragraph [ref=e4]: "Час — за київським часом. Правила тарифів: «Тарифи Велопрокату громади», версія 3."
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - text: Велосипед
+      - combobox "Велосипед" [ref=e7]:
+        - option "Класичний" [selected]
+        - option "Електровелосипед"
+    - group "Користувач" [ref=e8]:
+      - generic [ref=e10]:
+        - text: Категорія
+        - combobox "Категорія" [ref=e11]:
+          - option "Стандартний" [selected]
+          - option "Пільговий (студент, пенсіонер)"
+          - option "Абонент"
+      - generic [ref=e12]:
+        - checkbox "Абонент має право на пільгу" [disabled] [ref=e13]
+        - text: Абонент має право на пільгу
+    - generic [ref=e14]:
+      - text: Взяття
+      - textbox "Взяття" [ref=e15]: 2026-09-16T09:00
+    - generic [ref=e16]:
+      - text: Повернення
+      - textbox "Повернення" [ref=e17]: 2026-09-16T09:40
+    - generic [ref=e18]:
+      - text: Станція повернення
+      - combobox "Станція повернення" [ref=e19]:
+        - option "S01 — Центральна площа" [selected]
+        - option "S02 — Залізничний вокзал"
+        - option "S03 — Міський парк"
+        - option "S04 — Ліцей № 2"
+        - option "S05 — Стадіон"
+        - option "S06 — Ринок"
+        - option "S07 — Лікарня"
+        - option "S08 — Бібліотека"
+        - option "X01 — Озеро (пляж), поза зоною"
+        - option "X02 — Садове товариство «Калина», поза зоною"
+        - option "X03 — Промзона, КПП № 1, поза зоною"
+    - button "Розрахувати" [ref=e20] [cursor=pointer]
+  - region "Результат розрахунку" [ref=e21]

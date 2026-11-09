@@ -1,0 +1,23 @@
+diff --git a/app/test/integration/receipt.test.js b/app/test/integration/receipt.test.js
+index 6c2335e..899d299 100644
+--- a/app/test/integration/receipt.test.js
++++ b/app/test/integration/receipt.test.js
+@@ -10,9 +10,16 @@ const uah = (kopecks) => `${(kopecks / 100).toFixed(2).replace(".", ",")} грн
+ 
+ test("every receipt of a week of rides ends with the amount due", () => {
+   const rider = randomRider();
+-  for (const ride of randomRides(10)) {
++  // Block boundaries (30 and 60 min) are checked on every run, not only when the dice land there.
++  const boundaries = [30, 60].map((minutes) => ({
++    pickupAt: "2026-09-21T07:00:00.000Z",
++    returnAt: new Date(Date.parse("2026-09-21T07:00:00.000Z") + minutes * 60_000).toISOString(),
++    bike: "classic",
++    returnStation: "S01",
++  }));
++  for (const ride of [...boundaries, ...randomRides(10)]) {
+     const minutes = (Date.parse(ride.returnAt) - Date.parse(ride.pickupAt)) / 60_000;
+-    const expected = (Math.floor(minutes / 30) + 1) * PRICE[ride.bike];
++    const expected = Math.ceil(minutes / 30) * PRICE[ride.bike];
+ 
+     const lines = formatReceipt(quote(ride, rider));
+ 
