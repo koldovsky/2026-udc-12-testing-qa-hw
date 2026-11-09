@@ -1,3 +1,6 @@
 # One line ending everywhere, so diffs, logs and `git apply` behave the same
 # on Windows, macOS and Linux.
 * text=auto eol=lf
+
+# Preserve the first Task E answer byte-for-byte, including its recorded SHA-256.
+ai-runs/e-test-plan.md -text
