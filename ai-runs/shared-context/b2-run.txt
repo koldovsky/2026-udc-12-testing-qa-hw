@@ -1,0 +1,282 @@
+
+> test
+> npm --prefix app test
+
+
+> veloprokat@3.2.0 test
+> node --test "test/**/*.test.js"
+
+✔ every receipt of a week of rides ends with the amount due (4.8085ms)
+✔ a receipt lists the fee for a return outside the zone (1.4742ms)
+✖ T1: TC-01 (5.9267ms)
+✔ T1: TC-02 (0.4565ms)
+✖ T2: TC-04 (0.3888ms)
+✖ T2: TC-05 (0.3559ms)
+✖ T2: TC-06 (0.3335ms)
+✔ T2/T7: TC-07 (1.0597ms)
+✔ T3: TC-08 (0.2608ms)
+✔ T3: TC-09 (0.2171ms)
+✔ T3: TC-10 (0.2672ms)
+✔ T3: TC-11 (0.367ms)
+✔ T4: TC-12 (0.3642ms)
+✔ T4: TC-13 (0.1771ms)
+✔ T4: TC-14 (0.1778ms)
+✔ T4: TC-15 (0.1713ms)
+✖ T4: TC-16 (1.1011ms)
+✔ T4: TC-17 (0.1284ms)
+✔ T5: TC-18 (0.1569ms)
+✔ T5: TC-19 (0.1916ms)
+✔ T5: TC-20 (0.1668ms)
+✔ T5: TC-21 (0.1415ms)
+✖ T5/T7: TC-22 (0.459ms)
+✖ T5/T8: TC-23 (0.4902ms)
+✔ T8: TC-31 (0.1674ms)
+✔ T8: TC-32 (0.1636ms)
+✔ T7/T8: TC-33 (0.1591ms)
+✔ T1: TC-03 elapsed duration across DST (0.27ms)
+✔ T6: TC-24 daily ledger sequence (0.6374ms)
+✔ T6: TC-25 crossing midnight belongs to pickup day (0.2894ms)
+✖ T6: TC-26 Kyiv date resets before UTC midnight (0.4264ms)
+✔ T6: TC-27 different riders have independent caps (0.2394ms)
+✔ T6/T7: TC-28 fees survive exhausted cap (0.2551ms)
+✔ T7: TC-29 X01 (0.2691ms)
+✔ T7: TC-29 X02 (0.1781ms)
+✔ T7: TC-29 X03 (0.159ms)
+✔ T7: TC-30 S01 (0.1568ms)
+✔ T7: TC-30 S02 (0.1394ms)
+✔ T7: TC-30 S03 (0.1581ms)
+✔ T7: TC-30 S04 (0.1554ms)
+✔ T7: TC-30 S05 (0.1226ms)
+✔ T7: TC-30 S06 (0.1232ms)
+✔ T7: TC-30 S07 (0.1332ms)
+✔ T7: TC-30 S08 (0.1193ms)
+✔ T9: TC-34 fractional kopeck rounds payable down (0.1206ms)
+✔ T9: TC-35 230000 (0.2785ms)
+✔ T9: TC-35 -1250 (0.162ms)
+✔ T9: TC-35 0 (0.161ms)
+✔ T9: TC-36 receipt itemization and signs (0.8719ms)
+✔ T10: TC-37 (0.246ms)
+✔ T10: TC-38 (0.1565ms)
+✔ T10: TC-39 (0.1322ms)
+✔ Validation: TC-40 (0.7121ms)
+✔ Validation: TC-41 (0.1313ms)
+✔ Validation: TC-42 (0.1212ms)
+✔ Validation: TC-43 (0.1062ms)
+✔ charges recorded for a day reduce what is left of the cap (2.6346ms)
+✔ the day of a ride is the date of its pickup (0.2889ms)
+✔ amounts are shown in hryvnias (1.428ms)
+✔ a receipt has a line for every item (0.468ms)
+✔ GET / serves the page and GET /api/health answers (3.1716ms)
+✔ POST /api/quote returns the quote and the receipt (5.8493ms)
+✔ POST /api/quote answers 400 to a body that is not JSON (1.2294ms)
+✔ quote returns an itemised price (2.8862ms)
+✔ a ride of 30 min 20 s is billed as one block (0.2832ms)
+✔ e-bikes are billed at the e-bike rate (0.2965ms)
+✔ subscribers ride the first 45 minutes free (0.6104ms)
+✔ subscription on a long e-bike ride (0.3975ms)
+✔ reduced fare for a ride returned outside the zone (0.4152ms)
+✔ night rides get 30 % off (0.3554ms)
+✔ a bike kept over a day and left outside the zone pays both fees (0.2873ms)
+✔ the daily cap limits the time charge (1.0651ms)
+✔ a 45-minute classic ride costs 50 UAH (1.016ms)
+✔ a return before the pickup is rejected (0.8766ms)
+ℹ tests 74
+ℹ suites 0
+ℹ pass 66
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 278.2705
+
+✖ failing tests:
+
+test at test\spec\tariffs.test.js:44:3
+✖ T1: TC-01 (5.9267ms)
+  AssertionError [ERR_ASSERTION]: minutes
+  
+  30 !== 31
+  
+      at TestContext.<anonymous> (file:///C:/Users/pc/Documents/ai/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:46:66)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.start (node:internal/test_runner/test:1096:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 30,
+    expected: 31,
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariffs.test.js:44:3
+✖ T2: TC-04 (0.3888ms)
+  AssertionError [ERR_ASSERTION]: total
+  
+  2500 !== 0
+  
+      at TestContext.<anonymous> (file:///C:/Users/pc/Documents/ai/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:46:66)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2500,
+    expected: 0,
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariffs.test.js:44:3
+✖ T2: TC-05 (0.3559ms)
+  AssertionError [ERR_ASSERTION]: total
+  
+  2500 !== 0
+  
+      at TestContext.<anonymous> (file:///C:/Users/pc/Documents/ai/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:46:66)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2500,
+    expected: 0,
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariffs.test.js:44:3
+✖ T2: TC-06 (0.3335ms)
+  AssertionError [ERR_ASSERTION]: minutes
+  
+  2 !== 3
+  
+      at TestContext.<anonymous> (file:///C:/Users/pc/Documents/ai/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:46:66)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 3,
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariffs.test.js:44:3
+✖ T4: TC-16 (1.1011ms)
+  AssertionError [ERR_ASSERTION]: discounts
+  + actual - expected
+  
+    [
+      {
+  +     amount: 8000,
+  -     amount: 1600,
+        code: 'subscription'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/pc/Documents/ai/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:46:66)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'subscription', amount: 8000 } ],
+    expected: [ { code: 'subscription', amount: 1600 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariffs.test.js:44:3
+✖ T5/T7: TC-22 (0.459ms)
+  AssertionError [ERR_ASSERTION]: fees
+  + actual - expected
+  
+    [
+      {
+  +     amount: 7500,
+  -     amount: 15000,
+        code: 'out-of-zone'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/pc/Documents/ai/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:46:66)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'out-of-zone', amount: 7500 } ],
+    expected: [ { code: 'out-of-zone', amount: 15000 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariffs.test.js:44:3
+✖ T5/T8: TC-23 (0.4902ms)
+  AssertionError [ERR_ASSERTION]: fees
+  + actual - expected
+  
+    [
+      {
+  +     amount: 100000,
+  -     amount: 200000,
+        code: 'unreturned'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/pc/Documents/ai/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:46:66)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'unreturned', amount: 100000 } ],
+    expected: [ { code: 'unreturned', amount: 200000 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariffs.test.js:69:1
+✖ T6: TC-26 Kyiv date resets before UTC midnight (0.4264ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '2026-09-16'
+  - '2026-09-17'
+              ^
+  
+      at TestContext.<anonymous> (file:///C:/Users/pc/Documents/ai/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:72:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
+      at Test.postRun (node:internal/test_runner/test:1330:19)
+      at Test.run (node:internal/test_runner/test:1258:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:831:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '2026-09-16',
+    expected: '2026-09-17',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

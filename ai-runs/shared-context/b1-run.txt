@@ -1,0 +1,21 @@
+✔ rounds 30m20s to 30 (3.0236ms)
+✔ two minutes costs a block (0.2545ms)
+✔ standard fifty minutes (0.2329ms)
+✔ classic subscriber forty minutes (0.3004ms)
+✔ electric subscriber forty minutes free (0.3062ms)
+✔ reduced rider discounts outside fee (0.359ms)
+✔ subscriber concession picks cheaper plan (0.2459ms)
+✔ outside zone (0.2532ms)
+✔ over day both fees (0.3246ms)
+✔ ledger uses UTC pickup date (0.3906ms)
+✔ ledger accumulates and clamps remaining (0.5096ms)
+✔ discount rounds payable down (0.1853ms)
+✔ invalid station rejected (0.8163ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 196.9301
