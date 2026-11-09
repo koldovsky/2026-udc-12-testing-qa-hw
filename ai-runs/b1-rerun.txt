@@ -1,0 +1,136 @@
+✔ ledger defaults to the published cap and starts with full allowance (0.5061ms)
+✖ recorded charges reduce remaining allowance and accumulate (0.5063ms)
+✖ ledger separates riders and pickup days (0.5157ms)
+✔ remaining allowance never becomes negative (0.0956ms)
+✖ dayKey uses the UTC calendar date of the instant (0.1894ms)
+✖ classic rides are free below two minutes and billed in 30-minute blocks (1.2506ms)
+✔ ebike block rate and reduced fare are applied (0.4919ms)
+✖ subscriber receives 45 free minutes and an ebike subscription discount (0.4379ms)
+✔ subscriber concession uses the cheaper of subscription and reduced plans (0.0997ms)
+✔ night discount applies before the daily cap and out-of-zone fee is separate (0.208ms)
+✔ rides longer than 24 hours incur the unreturned fee (0.0856ms)
+✔ invalid rides and riders are rejected with QuoteError (0.3296ms)
+✔ discount rounds the payable amount down to a kopeck (0.0499ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 8
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 73.8808
+
+✖ failing tests:
+
+test at ai-runs\b1-from-code\day-cap.test.js:12:1
+✖ recorded charges reduce remaining allowance and accumulate (0.5063ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  5000 !== 2900
+  
+      at TestContext.<anonymous> (file:///C:/Users/slpir/IdeaProjects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:17:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 5000,
+    expected: 2900,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\day-cap.test.js:20:1
+✖ ledger separates riders and pickup days (0.5157ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  200 !== 1000
+  
+      at TestContext.<anonymous> (file:///C:/Users/slpir/IdeaProjects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:23:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 1000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\day-cap.test.js:33:1
+✖ dayKey uses the UTC calendar date of the instant (0.1894ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '2026-09-16'
+  - '2026-09-15'
+              ^
+  
+      at TestContext.<anonymous> (file:///C:/Users/slpir/IdeaProjects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:34:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '2026-09-16',
+    expected: '2026-09-15',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:14:1
+✖ classic rides are free below two minutes and billed in 30-minute blocks (1.2506ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 2500
+  
+      at TestContext.<anonymous> (file:///C:/Users/slpir/IdeaProjects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:16:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.start (node:internal/test_runner/test:1177:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 2500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs\b1-from-code\tariff.test.js:28:1
+✖ subscriber receives 45 free minutes and an ebike subscription discount (0.4379ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 2400,
+  -     amount: 5600,
+        code: 'subscription'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/slpir/IdeaProjects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:32:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'subscription', amount: 2400 } ],
+    expected: [ { code: 'subscription', amount: 5600 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

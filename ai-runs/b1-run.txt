@@ -1,0 +1,21 @@
+✔ ledger defaults to the published cap and starts with full allowance (1.3171ms)
+✔ recorded charges reduce remaining allowance and accumulate (0.105ms)
+✔ ledger separates riders and pickup days (0.057ms)
+✔ remaining allowance never becomes negative (0.049ms)
+✔ dayKey uses the UTC calendar date of the instant (0.1848ms)
+✔ classic rides are free below two minutes and billed in 30-minute blocks (1.0808ms)
+✔ ebike block rate and reduced fare are applied (0.6029ms)
+✔ subscriber receives 45 free minutes and an ebike subscription discount (0.1743ms)
+✔ subscriber concession uses the cheaper of subscription and reduced plans (0.08ms)
+✔ night discount applies before the daily cap and out-of-zone fee is separate (0.2029ms)
+✔ rides longer than 24 hours incur the unreturned fee (0.159ms)
+✔ invalid rides and riders are rejected with QuoteError (0.3743ms)
+✔ discount rounds the payable amount down to a kopeck (0.0549ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 73.6417

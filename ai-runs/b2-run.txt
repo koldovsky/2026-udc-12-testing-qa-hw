@@ -1,0 +1,185 @@
+
+> test
+> npm --prefix app test
+
+
+> veloprokat@3.2.0 test
+> node --test "test/**/*.test.js"
+
+✔ every receipt of a week of rides ends with the amount due (1.5586ms)
+✔ a receipt lists the fee for a return outside the zone (0.464ms)
+✔ TC-12 T6: applies one daily cap across three rides (1.5761ms)
+✔ TC-13 T6: assigns an overnight ride to its pickup date (0.1428ms)
+✖ TC-19 T9: receipt itemises a capped 25-hour out-of-zone ride (2.5279ms)
+✔ TC-01 T1: rounds a partial minute up (1.0434ms)
+✔ TC-02 T1, T3: bills exactly 30 minutes as one block (0.1392ms)
+✖ TC-03 T1, T3: rounds 30 minutes and one second to 31 minutes (0.8189ms)
+✖ TC-04 T2: waives time charge at two minutes (0.204ms)
+✖ TC-05 T2, T3: charges one block after two minutes (0.1476ms)
+✔ TC-06 T3: charges three e-bike blocks for 75 minutes (0.1017ms)
+✔ TC-07 T4: makes a 45-minute classic subscriber ride free (0.1186ms)
+✔ TC-08 T4: charges one block for the first minute after the free period (0.0845ms)
+✖ TC-09 T4: discounts an e-bike subscriber ride without free minutes (0.1263ms)
+✔ TC-10 T5: applies the reduced fare to two classic blocks (0.1654ms)
+✔ TC-11 T5: chooses the cheaper eligible subscriber plan (0.1541ms)
+✔ TC-14 T7: adds the out-of-zone fee (0.4628ms)
+✖ TC-15 T5, T7: does not discount the out-of-zone fee (0.1133ms)
+✔ TC-16 T8: does not charge the unreturned fee at exactly 24 hours (0.4648ms)
+✔ TC-17 T8: adds unreturned fee after 24 hours (0.0772ms)
+✔ TC-18 T7, T8: charges both independent fees (0.0763ms)
+✔ TC-20 T10: discounts a night ride by 30 percent (0.0872ms)
+✔ TC-21 T2, T7: waives time charge but retains the out-of-zone fee (0.0645ms)
+✔ charges recorded for a day reduce what is left of the cap (1.5713ms)
+✔ the day of a ride is the date of its pickup (0.1236ms)
+✔ amounts are shown in hryvnias (0.4295ms)
+✔ a receipt has a line for every item (0.1497ms)
+✔ GET / serves the page and GET /api/health answers (0.8781ms)
+✔ POST /api/quote returns the quote and the receipt (1.5542ms)
+✔ POST /api/quote answers 400 to a body that is not JSON (0.3803ms)
+✔ quote returns an itemised price (0.7901ms)
+✔ a ride of 30 min 20 s is billed as one block (0.0947ms)
+✔ e-bikes are billed at the e-bike rate (0.0825ms)
+✔ subscribers ride the first 45 minutes free (0.0958ms)
+✔ subscription on a long e-bike ride (0.0834ms)
+✔ reduced fare for a ride returned outside the zone (0.0871ms)
+✔ night rides get 30 % off (0.0692ms)
+✔ a bike kept over a day and left outside the zone pays both fees (0.0586ms)
+✔ the daily cap limits the time charge (0.2944ms)
+✔ a 45-minute classic ride costs 50 UAH (0.2605ms)
+✔ a return before the pickup is rejected (0.231ms)
+ℹ tests 41
+ℹ suites 0
+ℹ pass 35
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 108.9957
+
+✖ failing tests:
+
+test at test\spec\day-cap-and-receipt.test.js:42:1
+✖ TC-19 T9: receipt itemises a capped 25-hour out-of-zone ride (2.5279ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(lines.some((line) => line.includes("Тривалість поїздки: 25 год")))
+  
+      at TestContext.<anonymous> (file:///C:/Users/slpir/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/day-cap-and-receipt.test.js:53:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff-cases.test.js:34:3
+✖ TC-03 T1, T3: rounds 30 minutes and one second to 31 minutes (0.8189ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  30 !== 31
+  
+      at TestContext.<anonymous> (file:///C:/Users/slpir/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/tariff-cases.test.js:36:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 30,
+    expected: 31,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff-cases.test.js:34:3
+✖ TC-04 T2: waives time charge at two minutes (0.204ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2500 !== 0
+  
+      at TestContext.<anonymous> (file:///C:/Users/slpir/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/tariff-cases.test.js:37:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2500,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff-cases.test.js:34:3
+✖ TC-05 T2, T3: charges one block after two minutes (0.1476ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 3
+  
+      at TestContext.<anonymous> (file:///C:/Users/slpir/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/tariff-cases.test.js:36:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff-cases.test.js:34:3
+✖ TC-09 T4: discounts an e-bike subscriber ride without free minutes (0.1263ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 3200
+  
+      at TestContext.<anonymous> (file:///C:/Users/slpir/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/tariff-cases.test.js:38:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 3200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff-cases.test.js:34:3
+✖ TC-15 T5, T7: does not discount the out-of-zone fee (0.1133ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  8750 !== 16250
+  
+      at TestContext.<anonymous> (file:///C:/Users/slpir/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/tariff-cases.test.js:38:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1306:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:897:18)
+      at Test.postRun (node:internal/test_runner/test:1447:19)
+      at Test.run (node:internal/test_runner/test:1372:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:897:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 8750,
+    expected: 16250,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
