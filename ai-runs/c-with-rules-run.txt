@@ -1,0 +1,26 @@
+✔ API: configured limit is exposed and available before any records (1.6085ms)
+✔ API: recorded charges accumulate for one rider and day (0.3547ms)
+✔ API: records belong to their rider (0.2337ms)
+✔ API: records belong to their day away from timezone boundaries (0.2849ms)
+✔ API: independent ledger instances do not share recorded charges (0.2883ms)
+✔ API: dayKey returns the pickup date for an unambiguous midday instant (0.2131ms)
+✔ API: accepts documented bike classic and rider standard (3.7631ms)
+✔ API: accepts documented bike classic and rider reduced (0.3424ms)
+✔ API: accepts documented bike classic and rider subscriber (0.295ms)
+✔ API: accepts documented bike ebike and rider standard (0.2664ms)
+✔ API: accepts documented bike ebike and rider reduced (0.3207ms)
+✔ API: accepts documented bike ebike and rider subscriber (0.2569ms)
+✔ API: explicit ISO instants express ten minutes across Z (0.2674ms)
+✔ API: explicit ISO instants express ten minutes across positive offset (0.2023ms)
+✔ API: explicit ISO instants express ten minutes across negative offset (0.2852ms)
+✔ API: explicit ISO instants express ten minutes across Kyiv midnight (0.3507ms)
+✔ API: explicit ISO instants express ten minutes across offset change (0.2344ms)
+✔ API: quote accepts a real independent daily ledger and rider id (0.5083ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 192.4301
