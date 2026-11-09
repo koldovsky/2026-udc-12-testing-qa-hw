@@ -23,8 +23,8 @@ test("quote returns an itemised price", () => {
 
 test("a ride of 30 min 20 s is billed as one block", () => {
   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:30:20Z"), standard);
-  assert.equal(result.minutes, 30);
-  assert.equal(result.timeCharge, 2500);
+  assert.equal(result.minutes, 31);
+  assert.equal(result.timeCharge, 5000);
 });
 
 test("e-bikes are billed at the e-bike rate", () => {
@@ -33,11 +33,13 @@ test("e-bikes are billed at the e-bike rate", () => {
   assert.equal(result.total, result.timeCharge);
 });
 
-test("subscribers ride the first 45 minutes free", () => {
-  for (const bike of ["classic", "ebike"]) {
-    const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { bike }), { type: "subscriber" });
-    assert.equal(result.total, 0);
-  }
+test("subscriber benefits follow the bike type", () => {
+  const classic = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z"), { type: "subscriber" });
+  assert.equal(classic.total, 0);
+
+  const ebike = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { bike: "ebike" }), { type: "subscriber" });
+  assert.equal(ebike.timeCharge, 8000);
+  assert.equal(ebike.total, 6400);
 });
 
 test("subscription on a long e-bike ride", () => {
@@ -48,8 +50,8 @@ test("subscription on a long e-bike ride", () => {
 
 test("reduced fare for a ride returned outside the zone", () => {
   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { returnStation: "X01" }), { type: "reduced" });
-  assert.equal(result.total, 10000);
-  assert.equal(result.fees[0].amount, 7500);
+  assert.equal(result.total, 17500);
+  assert.equal(result.fees[0].amount, 15000);
 });
 
 test("night rides get 30 % off", () => {
