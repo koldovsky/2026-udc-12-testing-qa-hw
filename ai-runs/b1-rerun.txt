@@ -1,0 +1,345 @@
+▶ dayKey
+  ✖ returns the UTC date as YYYY-MM-DD (1.040875ms)
+  ✖ normalises offsets to UTC (0.139542ms)
+  ✔ accepts epoch milliseconds (0.081125ms)
+✖ dayKey (1.7485ms)
+▶ createDayCap
+  ✔ default limit is DAY_CAP (30000 kopecks) (0.142792ms)
+  ✔ custom limit is respected (0.051875ms)
+  ✔ record reduces remaining and accumulates (0.060542ms)
+  ✔ remaining never goes below zero (0.056833ms)
+  ✔ riders are tracked independently (0.082583ms)
+  ✔ days are tracked independently (0.064125ms)
+  ✔ ledgers are independent of each other (0.07575ms)
+  ✔ chargedOn reports the booked total for a day, 0 if none (0.062583ms)
+  ✔ recording zero leaves remaining unchanged (0.051542ms)
+✔ createDayCap (0.866625ms)
+▶ discount
+  ✔ computes percent off, rounding what is left down (0.294458ms)
+  ✔ rounding the remainder down makes the discount round up (0.046708ms)
+  ✔ 0 amount gives 0 (0.040125ms)
+✔ discount (0.809708ms)
+▶ base time charge
+  ✔ rides shorter than 2 minutes are free (0.69225ms)
+  ✔ zero-length ride is free (0.059584ms)
+  ✖ 2 minutes costs one block (0.438792ms)
+  ✔ block boundaries: 30 min is one block, 31 is two (0.150375ms)
+  ✔ ebike uses its own rate (0.082583ms)
+  ✖ duration is rounded to the nearest minute (0.115416ms)
+  ✔ offsets are honoured when measuring duration (0.072542ms)
+✖ base time charge (1.849791ms)
+▶ reduced fare
+  ✔ reduced rider pays half (0.100125ms)
+  ✔ ebike reduced (0.057416ms)
+  ✔ concession flag is ignored for a standard rider (0.041292ms)
+  ✔ free ride has no discount entry (0.032458ms)
+✔ reduced fare (0.318708ms)
+▶ subscription
+  ✔ first 45 minutes are free (0.068958ms)
+  ✔ minutes past 45 are charged in blocks (0.038291ms)
+  ✖ ebike gets an extra 20% off the chargeable part (0.313875ms)
+  ✔ subscriber without concession never gets the reduced fare (0.035333ms)
+  ✔ concession: subscription wins when it leaves less to pay (0.035125ms)
+  ✔ concession: reduced wins when it leaves less to pay (0.036417ms)
+  ✔ concession: a tie keeps the subscription (0.032125ms)
+  ✔ plans are not combined (0.027292ms)
+✖ subscription (0.678083ms)
+▶ night discount
+  ✔ 30% off for pickups before 06:00 Kyiv time (0.063833ms)
+  ✔ 05:59 Kyiv is night, 06:00 Kyiv is not (0.040625ms)
+  ✔ uses summer time (UTC+3) in July (0.037875ms)
+  ✔ midnight in Kyiv counts as night (0.036334ms)
+  ✔ applies after the plan discount (0.033667ms)
+  ✔ not added when nothing is left to pay (0.036875ms)
+✔ night discount (0.321583ms)
+▶ daily cap
+  ✔ a long ride is capped at 30000 even without a ledger (0.062791ms)
+  ✔ exactly at the cap gives no cap discount (0.026416ms)
+  ✔ ledger books the amount charged (0.083458ms)
+  ✔ later rides the same day share the remaining allowance (0.072959ms)
+  ✔ allowance is partially used (0.062875ms)
+  ✔ other riders and other days are unaffected (0.068541ms)
+  ✔ cap applies after discounts, and records the discounted amount (0.042375ms)
+  ✔ a custom ledger limit is used (0.039792ms)
+  ✔ a free ride books 0 (0.030959ms)
+✔ daily cap (0.57875ms)
+▶ fees
+  ✔ returning outside the zone adds 15000 (0.064916ms)
+  ✔ out-of-zone fee applies even to a free ride (0.022708ms)
+  ✖ out-of-zone fee is halved when the reduced fare is the plan (0.128875ms)
+  ✔ out-of-zone fee is full for a subscriber using the subscription (0.034875ms)
+  ✖ out-of-zone fee is halved for a conceding subscriber when reduced wins (0.064917ms)
+  ✔ a ride over 24 hours adds the unreturned fee of 200000 (0.040875ms)
+  ✔ exactly 24 hours has no unreturned fee (0.0265ms)
+  ✔ fees are not subject to the daily cap and stack (0.041208ms)
+  ✖ reduced rider gets the unreturned fee halved too (0.097ms)
+  ✔ custom zones lookup is used (0.034208ms)
+✖ fees (0.66125ms)
+▶ validation
+  ✔ QuoteError is an Error with its name (0.086792ms)
+  ✔ ride is required (0.146958ms)
+  ✖ timestamps must be ISO 8601 with an offset (0.050125ms)
+  ✖ impossible dates are rejected (0.022125ms)
+  ✔ returnAt before pickupAt is rejected (0.02575ms)
+  ✔ unknown bike type is rejected (0.039083ms)
+  ✔ unknown station is rejected (0.030458ms)
+  ✖ unknown rider type is rejected (0.078375ms)
+  ✔ a ledger requires rider.id (0.032208ms)
+  ✔ a failed validation does not touch the ledger (0.045709ms)
+✖ validation (0.67075ms)
+ℹ tests 69
+ℹ suites 10
+ℹ pass 58
+ℹ fail 11
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 94.059667
+
+✖ failing tests:
+
+test at ai-runs/b1-from-code/day-cap.test.js:6:3
+✖ returns the UTC date as YYYY-MM-DD (1.040875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '2026-01-16'
+  - '2026-01-15'
+              ^
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:8:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at node:internal/test_runner/test:1903:71
+      at node:internal/per_context/primordials:505:82
+      at new Promise (<anonymous>)
+      at new SafePromise (node:internal/per_context/primordials:479:3)
+      at node:internal/per_context/primordials:505:9
+      at Array.map (<anonymous>) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '2026-01-16',
+    expected: '2026-01-15',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/day-cap.test.js:12:3
+✖ normalises offsets to UTC (0.139542ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '2026-01-15'
+  - '2026-01-14'
+              ^
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:14:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Promise.all (index 0)
+      at async Suite.run (node:internal/test_runner/test:1905:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '2026-01-15',
+    expected: '2026-01-14',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:47:3
+✖ 2 minutes costs one block (0.438792ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 2500
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:50:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 2500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:67:3
+✖ duration is rounded to the nearest minute (0.115416ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:75:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:128:3
+✖ ebike gets an extra 20% off the chargeable part (0.313875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 1600,
+  -     amount: 4800,
+        code: 'subscription'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:131:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'subscription', amount: 1600 } ],
+    expected: [ { code: 'subscription', amount: 4800 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:294:3
+✖ out-of-zone fee is halved when the reduced fare is the plan (0.128875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 15000,
+  -     amount: 7500,
+        code: 'out-of-zone'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:296:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'out-of-zone', amount: 15000 } ],
+    expected: [ { code: 'out-of-zone', amount: 7500 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:305:3
+✖ out-of-zone fee is halved for a conceding subscriber when reduced wins (0.064917ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  15000 !== 7500
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:307:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 15000,
+    expected: 7500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:326:3
+✖ reduced rider gets the unreturned fee halved too (0.097ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 200000,
+  -     amount: 100000,
+        code: 'unreturned'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:328:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'unreturned', amount: 200000 } ],
+    expected: [ { code: 'unreturned', amount: 100000 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:354:3
+✖ timestamps must be ISO 8601 with an offset (0.050125ms)
+  RangeError [Error]: Invalid time value
+      at Date.toISOString (<anonymous>)
+      at at (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:11:55)
+      at ride (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:16:32)
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:358:9)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at ai-runs/b1-from-code/tariff.test.js:361:3
+✖ impossible dates are rejected (0.022125ms)
+  RangeError [Error]: Invalid time value
+      at Date.toISOString (<anonymous>)
+      at at (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:11:55)
+      at ride (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:16:32)
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:362:9)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at ai-runs/b1-from-code/tariff.test.js:380:3
+✖ unknown rider type is rejected (0.078375ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception (QuoteError).
+      at bad (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:340:12)
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:384:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

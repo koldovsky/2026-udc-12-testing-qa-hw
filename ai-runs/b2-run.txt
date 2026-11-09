@@ -1,0 +1,416 @@
+
+> test
+> npm --prefix app test
+
+
+> veloprokat@3.2.0 test
+> node --test "test/**/*.test.js"
+
+✖ every receipt of a week of rides ends with the amount due (1.199375ms)
+✔ a receipt lists the fee for a return outside the zone (0.385375ms)
+✔ T6: TC-36 sum for the day is exactly 30000: not reduced (2.731959ms)
+✔ T6: TC-37 29999 already charged: 1 kopeck left (0.283708ms)
+✔ T6: TC-38 30000 already charged: nothing left (0.195417ms)
+✔ T6: TC-39 cap applies after discounts: 80000 - 50 % = 40000 -> 30000 (0.236416ms)
+✔ T6: TC-40 fee is not limited by the cap (0.261875ms)
+✔ T6: TC-42 ride across midnight belongs to its pickup day (0.143125ms)
+✔ T6: TC-43 new day, new cap (0.118209ms)
+✔ T6: TC-45 day is Kyiv's, not UTC (17.09 00:30 +03:00) (0.073791ms)
+✔ T6: TC-35 three 80-min e-bike rides in a day: 12000, 12000, 6000 (1.049792ms)
+✔ T6: TC-41 the fee does not reduce the cap left for the next ride (0.153833ms)
+✔ T6: TC-44 the cap is per rider (0.078583ms)
+✔ T7: TC-46 X01, 20 min: 2500 + 15000 (0.060458ms)
+✔ T7: TC-47 X02, 30 min (0.036792ms)
+✔ T7: TC-48 X03, 30 min (0.034833ms)
+✔ T7: TC-49 S01 is in the zone: no fee (0.027834ms)
+✔ T7: TC-49 S02 is in the zone: no fee (0.041125ms)
+✔ T7: TC-49 S03 is in the zone: no fee (0.043417ms)
+✔ T7: TC-49 S04 is in the zone: no fee (0.027083ms)
+✔ T7: TC-49 S05 is in the zone: no fee (0.021917ms)
+✔ T7: TC-49 S06 is in the zone: no fee (0.02175ms)
+✔ T7: TC-49 S07 is in the zone: no fee (0.021ms)
+✔ T7: TC-49 S08 is in the zone: no fee (0.022917ms)
+✔ T7: TC-50 night ride to X01: discounted time + full fee (0.022875ms)
+✔ T7: TC-51 subscriber, free time, X02: only the fee (0.08825ms)
+✔ T8: TC-52 25 h: cap 30000 + fee 200000 (0.025875ms)
+✔ T8: TC-53 exactly 24 h: no unreturned fee (0.020958ms)
+✖ T8: TC-54 24 h 1 s: unreturned fee (0.486ms)
+✔ T8: TC-55 X02 and 25 h: both fees (0.038958ms)
+✔ T8: TC-56 10000 already charged: 20000 left + fee (0.034958ms)
+✔ T4: TC-18 classic, 40 min is free (0.790708ms)
+✔ T4: TC-19 classic, 45 min is free (0.066041ms)
+✖ T4: TC-20 classic, 45 min 1 s is 46 min, 1 block (0.436042ms)
+✔ T4: TC-21 classic, 75 min: 30 paid min = 1 block (0.114583ms)
+✔ T4: TC-22 classic, 76 min: 31 paid min = 2 blocks (0.0605ms)
+✔ T4: TC-23 classic, 100 min: 55 paid min = 2 blocks (0.055583ms)
+✖ T4: TC-24 e-bike, 75 min: 12000 - 20 % (0.106292ms)
+✖ T4: TC-25 e-bike, 3 min: no free minutes, 4000 - 20 % (0.066875ms)
+✖ T4: TC-26 e-bike, 40 min: 8000 - 20 % (0.073625ms)
+✔ T5: TC-27 reduced, classic, 40 min: 5000 - 50 % (1.365333ms)
+✔ T5: TC-28 reduced, e-bike, 40 min: 8000 - 50 % (0.100542ms)
+✔ T5: TC-29 subscriber with concession, 80 min: reduced fare wins (0.049583ms)
+✔ T5: TC-30 subscriber with concession, 60 min: equal sums (0.041917ms)
+✔ T5: TC-31 subscriber with concession, 40 min: subscription 0 wins (0.03025ms)
+✖ T5: TC-32 subscriber with concession, e-bike, 60 min: reduced fare, not a sum of discounts (0.263667ms)
+✖ T5: TC-33 reduced fare does not apply to the out-of-zone fee (0.104958ms)
+✖ T5: TC-34 reduced fare, 25 h: cap 30000, unreturned fee without discount (0.063584ms)
+✔ T10: TC-64 01:10→01:40 is 30 % off (0.037875ms)
+✔ T10: TC-65 pickup exactly at 00:00 (0.028959ms)
+✔ T10: TC-66 whole ride before 06:00 (0.075083ms)
+✔ T10: TC-67 e-bike at night: 4000 - 30 % (0.108459ms)
+✔ T10: TC-68 daytime ride has no discount (0.037ms)
+✔ T10: TC-69 evening ride ending before midnight has no discount (0.028625ms)
+✔ T10: TC-70 subscriber at night, 100 min: 5000 - 30 % (0.0245ms)
+✔ T10: TC-71 night is Kyiv time, not UTC (21:30Z = 00:30) (0.024ms)
+✔ T10: TC-72 winter time: 21:30Z = 23:30 Kyiv, not night (0.021167ms)
+✔ T1, T10: TC-73 DST change: 30 min elapsed, night, not rejected (0.024042ms)
+✔ T1: TC-01 10:00:00→10:12:40 is 13 min (0.74275ms)
+✔ T1: TC-02 14:05:00→14:41:00 is 36 min (0.075083ms)
+✖ T1: TC-03 1 s rounds up to 1 min (0.426125ms)
+✔ T1: TC-04 exactly 30 min is 1 block (0.060791ms)
+✖ T1: TC-05 30 min 1 s is 31 min, 2 blocks (0.091542ms)
+✔ T2: TC-06 50 s is free (0.046ms)
+✖ T2: TC-07 exactly 2 min is free (0.079208ms)
+✖ T2: TC-08 2 min 1 s is 3 min, charged (0.060375ms)
+✔ T2: TC-09 4 min is 1 block (0.068042ms)
+✖ T2: TC-10 e-bike, 2 min is free (0.10575ms)
+✔ T2: TC-11 free time, but the out-of-zone fee X03 is charged (0.069042ms)
+✔ T3: TC-12 classic, 50 min is 2 blocks (0.045292ms)
+✔ T3: TC-13 e-bike, 75 min is 3 blocks (0.039208ms)
+✔ T3: TC-14 classic, 60 min is 2 blocks (0.043958ms)
+✔ T3: TC-15 classic, 61 min is 3 blocks (0.041125ms)
+✔ T3: TC-16 e-bike, 30 min is 1 block (0.034333ms)
+✔ T3: TC-17 e-bike, 31 min is 2 blocks (0.031042ms)
+✔ §4: TC-74 return earlier than pickup is rejected (0.855125ms)
+✔ §4: TC-75 unknown bike type is rejected (0.069417ms)
+✔ §4: TC-76 unknown rider category is rejected (0.07775ms)
+✔ §4: TC-77 station S09 is not in appendix A is rejected (0.047ms)
+✔ §4: TC-78 station X04 is not in appendix A is rejected (0.047417ms)
+✔ §4, T2: TC-79 return equal to pickup is calculated: 0 min, 0 (0.123959ms)
+✔ T9: TC-57 30 % off 1235 kopecks rounds the amount due down (0.433542ms)
+✔ T9: TC-58 50 % off 1001 kopecks rounds the amount due down (0.060375ms)
+✔ T9: TC-59 230000 kopecks is «2 300,00 грн» (0.166709ms)
+✔ T9: TC-61 0 kopecks is «0,00 грн» (0.042375ms)
+✔ T9: TC-61 5 kopecks is «0,05 грн» (0.043083ms)
+✔ T9: TC-61 100000 kopecks is «1 000,00 грн» (0.035375ms)
+✔ T9: TC-61 245000 kopecks is «2 450,00 грн» (0.04ms)
+✔ T9: TC-60 receipt for 25 h: duration, time charge, cap, fee, total in order (0.474292ms)
+✔ T9: TC-62 receipt for a reduced-fare ride: separate discount line with a minus (0.141291ms)
+✔ T9: TC-63 receipt for an out-of-zone ride: separate fee line (0.135458ms)
+✔ charges recorded for a day reduce what is left of the cap (1.23725ms)
+✔ the day of a ride is the date of its pickup (0.07325ms)
+✔ amounts are shown in hryvnias (0.419375ms)
+✔ a receipt has a line for every item (0.127042ms)
+✔ GET / serves the page and GET /api/health answers (0.816334ms)
+✔ POST /api/quote returns the quote and the receipt (1.727875ms)
+✔ POST /api/quote answers 400 to a body that is not JSON (0.282542ms)
+✔ quote returns an itemised price (0.787958ms)
+✔ a ride of 30 min 20 s is billed as one block (0.080083ms)
+✔ e-bikes are billed at the e-bike rate (0.072916ms)
+✔ subscribers ride the first 45 minutes free (0.089375ms)
+✔ subscription on a long e-bike ride (0.070542ms)
+✔ reduced fare for a ride returned outside the zone (0.072916ms)
+✔ night rides get 30 % off (0.076583ms)
+✔ a bike kept over a day and left outside the zone pays both fees (0.057542ms)
+✔ the daily cap limits the time charge (0.262125ms)
+✔ a 45-minute classic ride costs 50 UAH (0.217125ms)
+✔ a return before the pickup is rejected (0.19175ms)
+ℹ tests 109
+ℹ suites 0
+ℹ pass 95
+ℹ fail 14
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 138.686333
+
+✖ failing tests:
+
+test at test/integration/receipt.test.js:11:1
+✖ every receipt of a week of rides ends with the amount due (1.199375ms)
+  AssertionError [ERR_ASSERTION]: ebike, 60 min from 2026-09-21T11:53:00.000Z: got "До сплати .......................... 80,00 грн", expected 120,00 грн
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/app/test/integration/receipt.test.js:20:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at test/spec/cap-and-fees.test.js:75:3
+✖ T8: TC-54 24 h 1 s: unreturned fee (0.486ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  30000 !== 230000
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/app/test/spec/cap-and-fees.test.js:76:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 30000,
+    expected: 230000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/discounts.test.js:42:3
+✖ T4: TC-20 classic, 45 min 1 s is 46 min, 1 block (0.436042ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  45 !== 46
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/app/test/spec/discounts.test.js:44:41)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 45,
+    expected: 46,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/discounts.test.js:42:3
+✖ T4: TC-24 e-bike, 75 min: 12000 - 20 % (0.106292ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  3200 !== 9600
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/app/test/spec/discounts.test.js:45:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 3200,
+    expected: 9600,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/discounts.test.js:42:3
+✖ T4: TC-25 e-bike, 3 min: no free minutes, 4000 - 20 % (0.066875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 3200
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/app/test/spec/discounts.test.js:45:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 3200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/discounts.test.js:42:3
+✖ T4: TC-26 e-bike, 40 min: 8000 - 20 % (0.073625ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 6400
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/app/test/spec/discounts.test.js:45:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 6400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/discounts.test.js:42:3
+✖ T5: TC-32 subscriber with concession, e-bike, 60 min: reduced fare, not a sum of discounts (0.263667ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  3200 !== 4000
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/app/test/spec/discounts.test.js:45:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 3200,
+    expected: 4000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/discounts.test.js:42:3
+✖ T5: TC-33 reduced fare does not apply to the out-of-zone fee (0.104958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  8750 !== 16250
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/app/test/spec/discounts.test.js:45:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 8750,
+    expected: 16250,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/discounts.test.js:42:3
+✖ T5: TC-34 reduced fare, 25 h: cap 30000, unreturned fee without discount (0.063584ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  130000 !== 230000
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/app/test/spec/discounts.test.js:45:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 130000,
+    expected: 230000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/duration-and-time-charge.test.js:32:3
+✖ T1: TC-03 1 s rounds up to 1 min (0.426125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/app/test/spec/duration-and-time-charge.test.js:34:41)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/duration-and-time-charge.test.js:32:3
+✖ T1: TC-05 30 min 1 s is 31 min, 2 blocks (0.091542ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  30 !== 31
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/app/test/spec/duration-and-time-charge.test.js:34:41)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 30,
+    expected: 31,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/duration-and-time-charge.test.js:32:3
+✖ T2: TC-07 exactly 2 min is free (0.079208ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2500 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/app/test/spec/duration-and-time-charge.test.js:35:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2500,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/duration-and-time-charge.test.js:32:3
+✖ T2: TC-08 2 min 1 s is 3 min, charged (0.060375ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 3
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/app/test/spec/duration-and-time-charge.test.js:34:41)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/duration-and-time-charge.test.js:32:3
+✖ T2: TC-10 e-bike, 2 min is free (0.10575ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  4000 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/app/test/spec/duration-and-time-charge.test.js:35:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 4000,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

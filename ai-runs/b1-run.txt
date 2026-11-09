@@ -1,0 +1,145 @@
+▶ dayKey
+  ✔ returns the UTC date as YYYY-MM-DD (1.028292ms)
+  ✔ normalises offsets to UTC (0.061583ms)
+  ✔ accepts epoch milliseconds (0.049667ms)
+✔ dayKey (2.007875ms)
+▶ createDayCap
+  ✔ default limit is DAY_CAP (30000 kopecks) (0.150667ms)
+  ✔ custom limit is respected (0.055625ms)
+  ✔ record reduces remaining and accumulates (0.060709ms)
+  ✔ remaining never goes below zero (0.0565ms)
+  ✔ riders are tracked independently (0.078084ms)
+  ✔ days are tracked independently (0.071333ms)
+  ✔ ledgers are independent of each other (0.067375ms)
+  ✔ chargedOn reports the booked total for a day, 0 if none (0.061666ms)
+  ✔ recording zero leaves remaining unchanged (0.038125ms)
+✔ createDayCap (0.85625ms)
+▶ discount
+  ✔ computes percent off, rounding what is left down (0.301167ms)
+  ✔ rounding the remainder down makes the discount round up (0.047291ms)
+  ✔ 0 amount gives 0 (0.305916ms)
+✔ discount (1.101209ms)
+▶ base time charge
+  ✔ rides shorter than 2 minutes are free (0.652125ms)
+  ✔ zero-length ride is free (0.052208ms)
+  ✔ 2 minutes costs one block (0.099208ms)
+  ✔ block boundaries: 30 min is one block, 31 is two (0.113ms)
+  ✔ ebike uses its own rate (0.0745ms)
+  ✔ duration is rounded to the nearest minute (0.089709ms)
+  ✔ offsets are honoured when measuring duration (0.075917ms)
+✔ base time charge (1.338334ms)
+▶ reduced fare
+  ✔ reduced rider pays half (0.090291ms)
+  ✔ ebike reduced (0.041083ms)
+  ✔ concession flag is ignored for a standard rider (0.040125ms)
+  ✔ free ride has no discount entry (0.029709ms)
+✔ reduced fare (0.285375ms)
+▶ subscription
+  ✔ first 45 minutes are free (0.063958ms)
+  ✔ minutes past 45 are charged in blocks (0.038166ms)
+  ✔ ebike gets an extra 20% off the chargeable part (0.037708ms)
+  ✔ subscriber without concession never gets the reduced fare (0.024791ms)
+  ✔ concession: subscription wins when it leaves less to pay (0.033458ms)
+  ✔ concession: reduced wins when it leaves less to pay (0.028667ms)
+  ✔ concession: a tie keeps the subscription (0.030458ms)
+  ✔ plans are not combined (0.029ms)
+✔ subscription (0.36075ms)
+▶ night discount
+  ✔ 30% off for pickups before 06:00 Kyiv time (0.04575ms)
+  ✔ 05:59 Kyiv is night, 06:00 Kyiv is not (0.028708ms)
+  ✔ uses summer time (UTC+3) in July (0.030083ms)
+  ✔ midnight in Kyiv counts as night (0.032084ms)
+  ✔ applies after the plan discount (0.034834ms)
+  ✔ not added when nothing is left to pay (0.033291ms)
+✔ night discount (0.267666ms)
+▶ daily cap
+  ✔ a long ride is capped at 30000 even without a ledger (0.052375ms)
+  ✔ exactly at the cap gives no cap discount (0.023ms)
+  ✔ ledger books the amount charged (0.07225ms)
+  ✔ later rides the same day share the remaining allowance (0.058666ms)
+  ✔ allowance is partially used (0.04925ms)
+  ✔ other riders and other days are unaffected (0.051209ms)
+  ✔ cap applies after discounts, and records the discounted amount (0.040292ms)
+  ✔ a custom ledger limit is used (0.030208ms)
+  ✔ a free ride books 0 (0.023083ms)
+✔ daily cap (0.481667ms)
+▶ fees
+  ✔ returning outside the zone adds 15000 (0.064ms)
+  ✔ out-of-zone fee applies even to a free ride (0.020375ms)
+  ✔ out-of-zone fee is halved when the reduced fare is the plan (0.03125ms)
+  ✔ out-of-zone fee is full for a subscriber using the subscription (0.0345ms)
+  ✔ out-of-zone fee is halved for a conceding subscriber when reduced wins (0.038375ms)
+  ✔ a ride over 24 hours adds the unreturned fee of 200000 (0.032208ms)
+  ✔ exactly 24 hours has no unreturned fee (0.031292ms)
+  ✔ fees are not subject to the daily cap and stack (0.035584ms)
+  ✔ reduced rider gets the unreturned fee halved too (0.023417ms)
+  ✔ custom zones lookup is used (0.027458ms)
+✔ fees (0.430625ms)
+▶ validation
+  ✔ QuoteError is an Error with its name (0.078ms)
+  ✔ ride is required (0.138125ms)
+  ✖ timestamps must be ISO 8601 with an offset (0.078834ms)
+  ✖ impossible dates are rejected (0.026292ms)
+  ✔ returnAt before pickupAt is rejected (0.027458ms)
+  ✔ unknown bike type is rejected (0.035875ms)
+  ✔ unknown station is rejected (0.034ms)
+  ✖ unknown rider type is rejected (0.263125ms)
+  ✔ a ledger requires rider.id (0.027708ms)
+  ✔ a failed validation does not touch the ledger (0.033792ms)
+✖ validation (0.879417ms)
+ℹ tests 69
+ℹ suites 10
+ℹ pass 66
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 106.576
+
+✖ failing tests:
+
+test at ai-runs/b1-from-code/tariff.test.js:354:3
+✖ timestamps must be ISO 8601 with an offset (0.078834ms)
+  RangeError [Error]: Invalid time value
+      at Date.toISOString (<anonymous>)
+      at at (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:11:55)
+      at ride (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:16:32)
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:358:9)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at ai-runs/b1-from-code/tariff.test.js:361:3
+✖ impossible dates are rejected (0.026292ms)
+  RangeError [Error]: Invalid time value
+      at Date.toISOString (<anonymous>)
+      at at (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:11:55)
+      at ride (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:16:32)
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:362:9)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7)
+
+test at ai-runs/b1-from-code/tariff.test.js:380:3
+✖ unknown rider type is rejected (0.263125ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception (QuoteError).
+      at bad (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:340:12)
+      at TestContext.<anonymous> (file:///Users/igor.rakhmanov-external/work/study/ai/modern-dev-with-agentic-ai-ws/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:384:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Suite.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }
