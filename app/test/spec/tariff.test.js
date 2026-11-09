@@ -279,3 +279,100 @@ test("§4: unknown bike type → error", () => {
 test("§4: unknown station → error", () => {
   assert.throws(() => quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:30:00Z", { returnStation: "Z99" }), standard), QuoteError);
 });
+
+test("§4: null ride → error", () => {
+  assert.throws(() => quote(null, standard), QuoteError);
+});
+
+test("§4: null rider → error", () => {
+  assert.throws(() => quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:30:00Z"), null), QuoteError);
+});
+
+test("§4: non-string pickupAt → error", () => {
+  assert.throws(() => quote({ pickupAt: 12345, returnAt: "2026-09-16T07:30:00Z", bike: "classic", returnStation: "S01" }, standard), QuoteError);
+});
+
+test("§4: returnAt equals pickupAt (0 min ride) → no error", () => {
+  const r = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:00:00Z"), standard);
+  assert.equal(r.minutes, 0);
+  assert.equal(r.total, 0);
+});
+
+// --- Mutation killers ---
+
+test("T2: false start (2 min) has no discount entry in discounts array", () => {
+  const r = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:02:00Z"), subscriber);
+  assert.equal(r.discounts.length, 0);
+});
+
+test("T6: day-cap discount amount is exact", () => {
+  const dayCap = createDayCap();
+  const rider = { id: "rider-cap", type: "standard" };
+  quote(ride("2026-09-16T07:00:00Z", "2026-09-16T08:20:00Z", { bike: "ebike" }), rider, { dayCap });
+  quote(ride("2026-09-16T11:00:00Z", "2026-09-16T12:20:00Z", { bike: "ebike" }), rider, { dayCap });
+  const r3 = quote(ride("2026-09-16T16:00:00Z", "2026-09-16T17:20:00Z", { bike: "ebike" }), rider, { dayCap });
+  const capDiscount = r3.discounts.find((d) => d.code === "day-cap");
+  assert.ok(capDiscount);
+  assert.equal(capDiscount.amount, 6000);
+});
+
+test("T6: remaining returns exact value after recording", () => {
+  const dayCap = createDayCap();
+  dayCap.record("rider-x", "2026-09-16T08:00:00Z", 12000);
+  assert.equal(dayCap.remaining("rider-x", "2026-09-16T10:00:00Z"), 18000);
+});
+
+test("T6: chargedOn returns 0 for unknown rider", () => {
+  const dayCap = createDayCap();
+  assert.equal(dayCap.chargedOn("nobody", "2026-09-16"), 0);
+});
+
+test("T1: exact minute boundary (60000 ms = 1 min exactly)", () => {
+  const r = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:03:00Z"), standard);
+  assert.equal(r.minutes, 3);
+});
+
+test("T1: 1 sec over → ceil gives extra minute", () => {
+  const r = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:03:01Z"), standard);
+  assert.equal(r.minutes, 4);
+});
+
+test("T10: night ride with zero due has no night discount entry", () => {
+  const r = quote(ride("2026-09-15T22:00:00Z", "2026-09-15T22:01:00Z"), standard);
+  assert.equal(r.timeCharge, 0);
+  assert.ok(!r.discounts.some((d) => d.code === "night"));
+});
+
+test("T4: standard rider has no discount entry", () => {
+  const r = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z"), standard);
+  assert.equal(r.discounts.length, 0);
+  assert.equal(r.total, 5000);
+});
+
+test("T6: when due equals remaining cap exactly, no day-cap discount", () => {
+  const dayCap = createDayCap();
+  const rider = { id: "rider-eq", type: "standard" };
+  dayCap.record("rider-eq", "2026-09-16T08:00:00Z", 27500);
+  const r = quote(ride("2026-09-16T10:00:00Z", "2026-09-16T10:30:00Z"), rider, { dayCap });
+  assert.equal(r.total, 2500);
+  assert.ok(!r.discounts.some((d) => d.code === "day-cap"));
+});
+
+test("T6: remaining is exact for fresh rider", () => {
+  const dayCap = createDayCap();
+  assert.equal(dayCap.remaining("fresh", "2026-09-16T08:00:00Z"), 30000);
+});
+
+test("§4: pickupAt as number (not string) → error", () => {
+  assert.throws(
+    () => quote({ pickupAt: Date.now(), returnAt: "2026-09-16T07:30:00Z", bike: "classic", returnStation: "S01" }, standard),
+    QuoteError,
+  );
+});
+
+test("§4: pickupAt as invalid ISO string → error", () => {
+  assert.throws(
+    () => quote({ pickupAt: "not-a-date", returnAt: "2026-09-16T07:30:00Z", bike: "classic", returnStation: "S01" }, standard),
+    QuoteError,
+  );
+});
