@@ -194,6 +194,15 @@ function startServer(app, port) {
   });
 }
 
+/** Stops a server process from startServer and resolves once the process has exited. */
+function stop(child) {
+  if (child.exitCode !== null || child.signalCode !== null) return Promise.resolve();
+  return new Promise((done) => {
+    child.once("exit", () => done());
+    child.kill();
+  });
+}
+
 async function health(port) {
   const response = await fetch(`http://127.0.0.1:${port}/api/health`);
   return `${response.status} ${(await response.text()).trim()}`;
@@ -208,24 +217,31 @@ async function smoke() {
     res.statusCode = 404;
     res.end("not found");
   });
+  const children = [];
   try {
     const free = await freePort();
     const started = await startServer(app, free);
+    if (started.child) children.push(started.child);
     console.log(`\nPR #236, free port: server printed "${started.line}"; GET /api/health → ${await health(free)}`);
-    started.child.kill();
+    await stop(started.child);
     const busy = await listen(occupier, 0);
     for (const version of ["PR #236", "main"]) {
       if (version === "main") git(["apply", "-R", join(REPO, "ci/changes/run-1147.diff")], dir);
       const result = await startServer(app, busy);
       if (result.child) {
-        result.child.kill();
+        children.push(result.child);
+        await stop(result.child);
         unexpected(`${version}: the server started on a port that is taken`);
         continue;
       }
       console.log(`${version}, port taken: server exit code ${result.code}, "${result.error}"; GET /api/health → ${await health(busy)}`);
     }
   } finally {
-    occupier.close();
+    // No server process outlives the script. fetch keeps its connection to the occupier alive, so
+    // that connection is closed here instead of waiting for the server's idle timeout.
+    await Promise.all(children.map(stop));
+    occupier.closeAllConnections();
+    await new Promise((done) => occupier.close(() => done()));
     remove(dir);
   }
 }
