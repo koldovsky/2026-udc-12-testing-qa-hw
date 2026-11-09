@@ -12,12 +12,12 @@
 | 8 | Are all result-affecting inputs and state explicit? | Reproducibility | Pass: base, d, ledger records defined | Pass: common U1 data and prior charges |
 | 9 | Are code API contracts separated from product expectations? | Avoid unsupported exception/schema requirements | Fail: A1-43..50 exact contracts | Pass: A2-53..56 require explanation only |
 | 10 | Are monetary amounts integer kopecks? | Financial precision | Pass: A1-53 rounding example | Pass: rounding section gives 864 and 371 |
-| 11 | Does every boundary expectation have a clear oracle? | Do not silently settle ambiguities | Fail: A1-22 crosses 06:00 | Partial: A2-45 needs Q-3 clarification |
+| 11 | Does every boundary expectation have a clear oracle? | Do not silently settle ambiguities | Fail: A1-22 crosses 06:00 | Pass: A2-45 follows T1 ceil and T8; ceil(x)>1440 iff x>1440 |
 | 12 | Do tests call the real SUT and verify exact prices? | Green tests can be meaningless | Not applicable to a case draft | Not applicable to a case draft; added after mock-only unit finding in Task C |
 
 ## Review conclusions
 
 - Reuse A1 correct normal fares only after rechecking against specification; do not import its implementation contracts as product rules.
-- Reuse A2 unambiguous cases; defer A2-45 pending clarification.
+- Reuse A2 calculation cases after checking their source rules; Q-3 review confirmed A2-45, while A2-Q1..Q5 remain explicitly deferred.
 - Additional Task B/C checks: assert the real implementation, literal approved amounts, independent state, and no removed/weakened assertions for a green run.
 - Participant sign-off remains required; these are agent-reviewed findings.

@@ -1,0 +1,43 @@
+
+> test:unit
+> npm --prefix app run test:unit
+
+
+> veloprokat@3.2.0 test:unit
+> node --test "test/unit/**/*.test.js"
+
+✔ charges recorded for a day reduce what is left of the cap (2.285ms)
+✔ the day of a ride is the date of its pickup (0.4572ms)
+✔ amounts are shown in hryvnias (1.4519ms)
+✔ a receipt has a line for every item (0.457ms)
+✔ GET / serves the page and GET /api/health answers (2.9879ms)
+✔ POST /api/quote returns the quote and the receipt (5.4742ms)
+✔ POST /api/quote answers 400 to a body that is not JSON (1.5021ms)
+✔ T1: zero elapsed time is a valid free ride (3.3294ms)
+✔ T1,T2,T3: a millisecond beyond the boundary bills 3 minutes (0.447ms)
+✔ T1,T2,T3: a millisecond beyond the boundary bills 31 minutes (0.3036ms)
+✔ T2,T10: a free night ride has no monetary charge (0.2999ms)
+✔ T6: exactly reaching the allowance bills the remaining amount (0.7537ms)
+✔ T6,T7: cap discount is itemised and the zone fee is excluded from the ledger (0.4033ms)
+✔ API: missing ride produces a domain error (0.6478ms)
+✔ API: pickupAt without an explicit timezone is rejected (0.2267ms)
+✔ API: returnAt without an explicit timezone is rejected (0.2537ms)
+✔ quote returns an itemised price (3.8577ms)
+✔ T1: a ride of 30 min 20 s is billed as two blocks (0.3726ms)
+✔ e-bikes are billed at the e-bike rate (0.3958ms)
+✔ T4: only classic subscribers ride the first 45 minutes free (0.6439ms)
+✔ subscription on a long e-bike ride (0.4671ms)
+✔ reduced fare for a ride returned outside the zone (0.4954ms)
+✔ night rides get 30 % off (0.4214ms)
+✔ a bike kept over a day and left outside the zone pays both fees (0.3608ms)
+✔ the daily cap limits the time charge (1.1249ms)
+✔ a 45-minute classic ride costs 50 UAH (1.2087ms)
+✔ a return before the pickup is rejected (0.9804ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 283.5701

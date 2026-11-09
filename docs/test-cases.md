@@ -62,7 +62,7 @@ These are agent-reviewed participant artifacts; the participant must review and 
 |---|---|---|---|---|---|
 | Q-1 | T10 | Which discount applies across 00:00 or 06:00? | pickup / whole interval / prorate | product owner | Only wholly inside/outside intervals; TC-03/25 assert duration/base/date only |
 | Q-2 | T10,T4,T5,T9 | How do night and plan discounts compose, and in which rounding order? | sequential / additive / choose best | product owner | No combined discount expectations |
-| Q-3 | T8,T1 | Is 24 h plus fractional minute assessed using elapsed or rounded time? | actual / rounded | product owner | Exactly 24 h and 24 h 1 min only |
+| Q-3 (resolved) | T8,T1 | Does elapsed versus rounded duration change the 24 h threshold? | No: ceil(x)>1440 iff x>1440 under T1 | Mathematical review of T1/T8 | No remaining ambiguity; existing TC-31/32 cover threshold, A2-45 is valid |
 | Q-4 | T9 | Must a chosen zero discount appear in the receipt? | omit / show zero | product owner | No zero discount-line expectation |
 | Q-5 | T9 | Which receipt alignment is required? | arbitrary / fixed padding | product owner | Semantic content and amounts only |
 
@@ -75,7 +75,7 @@ Unsupported expectations count case rows with at least one behavior/contract not
 | Metric | A1 code | A2 specification |
 |---|---|---|
 | Rules correctly covered | 10/10 | 10/10 |
-| Case rows containing unsupported expectations | 25 | 1 |
+| Case rows containing unsupported expectations | 25 | 0 |
 | Ambiguities explicitly recorded as questions | 0 | 5 |
 
 Coverage witnesses A1: T1=A1-09; T2=02; T3=06; T4=12; T5=11; T6=27; T7=30; T8=34; T9=53; T10=23.
@@ -113,7 +113,7 @@ These are review findings, not edits to the first responses; an unsupported API 
 | A1 | A1-49 | Exact rider error wording/type | Section 4:147-149 only requires explanation |
 | A1 | A1-50 | Ledger rider.id mandatory API contract | Not a product requirement in specification |
 | A1 | A1-51 | Allows injected unknown P01 station | Section 4:147-149 and appendix only define listed stations |
-| A2 | A2-45 | Assumes 24 h + 1 s fee threshold uses actual rather than rounded duration | T1:45-47, T8:119-120; review question Q-3; no automated expectation for this disputed fraction |
+| A2 | None | No unsupported expectation retained after review | A2-45 is supported: T1 ceil preserves the >1440 threshold |
 
-A2-45 is a conservative review flag for an unconfirmed interpretation, not proof the stated total is false.
+Q-3 was initially raised conservatively, then resolved: ceil(x)>1440 if and only if x>1440. A2-45 is therefore valid; it is not counted as an invented expectation.
 No independent experiment output was rewritten; preliminary shared-context records remain under ai-runs/shared-context/.

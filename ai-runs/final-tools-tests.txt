@@ -1,0 +1,11 @@
+
+> test:tools
+> node --test "tools/test/*.test.mjs"
+
+✔ the tokenizer keeps strings, templates, comments and regex literals whole (4.0626ms)
+✔ nothing inside strings, templates, comments or regexes is mutated (1.4495ms)
+✔ a regex after the head of if/while/for or after a block is a regex; after a value it is a division (1.0597ms)
+✔ each operator family produces the expected mutants (0.9271ms)
+✔ unary minus, arrows, spread, ?? and ?. are left alone; a complex conditional is not swapped (0.3645ms)
+✔ mutants carry line and column, and applying one changes exactly that spot (0.288ms)
+✔ assertion calls are counted statically, comments and imports excluded (0.3689ms)
