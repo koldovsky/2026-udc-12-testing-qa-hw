@@ -60,15 +60,13 @@ export function quote(ride, rider, { zones = stationZones, dayCap } = {}) {
   }
   dayCap?.record(rider.id, pickup, due);
 
-  const fees = feesFor(minutes, zone).map((fee) =>
-    plan.code === "reduced" ? { code: fee.code, amount: fee.amount - discount(fee.amount, REDUCED_PERCENT) } : fee,
-  );
+  const fees = feesFor(minutes, zone);
   const total = fees.reduce((sum, fee) => sum + fee.amount, due);
   return { minutes, timeCharge, discounts, fees, total };
 }
 
 function rideMinutes(pickup, returned) {
-  return Math.round((returned - pickup) / 60_000);
+  return Math.ceil((returned - pickup) / 60_000);
 }
 
 function blocks(minutes) {
@@ -76,12 +74,13 @@ function blocks(minutes) {
 }
 
 function chargeFor(minutes, bike) {
-  if (minutes < FREE_START_MINUTES) return 0;
+  if (minutes <= FREE_START_MINUTES) return 0;
   return blocks(minutes) * RATES[bike];
 }
 
 function subscriptionCharge(minutes, bike) {
-  const charge = blocks(Math.max(0, minutes - SUBSCRIPTION_FREE_MINUTES)) * RATES[bike];
+  const paidMinutes = bike === "classic" ? Math.max(0, minutes - SUBSCRIPTION_FREE_MINUTES) : minutes;
+  const charge = blocks(paidMinutes) * RATES[bike];
   return bike === "ebike" ? charge - discount(charge, SUBSCRIPTION_EBIKE_PERCENT) : charge;
 }
 
