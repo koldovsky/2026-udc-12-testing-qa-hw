@@ -8,6 +8,7 @@ test("charges recorded for a day reduce what is left of the cap", () => {
   assert.ok(ledger.remaining("rider-1", "2026-09-16T12:00:00Z") < DAY_CAP);
 });
 
-test("the day of a ride is the date of its pickup", () => {
+test("the day of a ride is the Kyiv date of its pickup", () => {
   assert.equal(dayKey("2026-09-16T08:00:00Z"), "2026-09-16");
+  assert.equal(dayKey("2026-09-16T22:00:00Z"), "2026-09-17");
 });

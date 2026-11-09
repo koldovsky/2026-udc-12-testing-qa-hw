@@ -12,7 +12,7 @@ test("every receipt of a week of rides ends with the amount due", () => {
   const rider = randomRider();
   for (const ride of randomRides(10)) {
     const minutes = (Date.parse(ride.returnAt) - Date.parse(ride.pickupAt)) / 60_000;
-    const expected = (Math.floor(minutes / 30) + 1) * PRICE[ride.bike];
+    const expected = Math.ceil(minutes / 30) * PRICE[ride.bike];
 
     const lines = formatReceipt(quote(ride, rider));
 

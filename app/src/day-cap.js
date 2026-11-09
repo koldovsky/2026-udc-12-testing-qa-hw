@@ -4,7 +4,7 @@ export const DAY_CAP = 30000; // kopecks
 
 /** The day a ride is booked on, from its pickup instant. */
 export function dayKey(pickupAt) {
-  return new Date(pickupAt).toISOString().slice(0, 10);
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Kyiv" }).format(new Date(pickupAt));
 }
 
 export function createDayCap({ limit = DAY_CAP } = {}) {
