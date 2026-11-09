@@ -37,8 +37,8 @@ for (const { case: name, bike, returnAt, minutes, total } of itemised) {
 
 test("a ride of 30 min 20 s is billed as two blocks", () => {
   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:30:20Z"), standard);
-  assert.equal(result.minutes, 31);
-  assert.equal(result.timeCharge, 5000);
+  assert.equal(result.minutes, 31); // 30 min 20 s rounds up to 31 min, docs/spec/tariffs.md:46-47
+  assert.equal(result.timeCharge, 5000); // 31 min is 2 started blocks × 25 UAH, docs/spec/tariffs.md:62, 66
 });
 
 test("e-bikes are billed at the e-bike rate", () => {
