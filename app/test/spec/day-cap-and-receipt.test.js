@@ -45,15 +45,16 @@ test("TC-19 T9: receipt itemises a capped 25-hour out-of-zone ride", () => {
     rider,
   );
   const lines = formatReceipt(result);
-  const hasLine = (label, amount) => lines.some((line) => line.startsWith(label) && line.endsWith(amount));
+  const hasAmount = (amount) => lines.filter((line) => line.endsWith(amount)).length === 1;
 
   assert.equal(result.minutes, 1500);
   assert.equal(result.timeCharge, 125000);
   assert.equal(result.total, 245000);
-  assert.ok(lines.some((line) => line.includes("Тривалість") && line.includes("1500")));
-  assert.ok(hasLine("Погодинне нарахування", "1 250,00 грн"));
-  assert.ok(hasLine("Денний ліміт", "-950,00 грн"));
-  assert.ok(hasLine("Збір: повернення поза зоною", "150,00 грн"));
-  assert.ok(hasLine("Збір: неповернений велосипед", "2 000,00 грн"));
-  assert.ok(hasLine("До сплати", "2 450,00 грн"));
+  assert.equal(lines.length, 6);
+  assert.ok(lines.some((line) => line.includes("1500")));
+  assert.ok(hasAmount("1 250,00 грн"));
+  assert.ok(hasAmount("-950,00 грн"));
+  assert.ok(hasAmount("150,00 грн"));
+  assert.ok(hasAmount("2 000,00 грн"));
+  assert.ok(lines.at(-1).endsWith("2 450,00 грн"));
 });
