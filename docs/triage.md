@@ -2,7 +2,19 @@
 
 ## 1. Local flaky test
 
-Task D repeat measurements pending; the observed failure is app/test/integration/receipt.test.js / every receipt of a week of rides ends with the amount due.
+- Test: app/test/integration/receipt.test.js / every receipt of a week of rides ends with the amount due.
+- Frequency before: 11 failures in 30 runs; all other 82 tests passed every time (ai-runs/d-repeat-before.txt).
+- Example: classic,30 min: actual 25,00 грн, expected 50,00 грн; ebike,60 min: actual 80,00 грн, expected 120,00 грн.
+- Cause: the test used unseeded random 5..89-minute rides and an incorrect oracle (floor(minutes/30)+1). Exactly 30/60 minutes should use 1/2 blocks by T3:62-67, but the test expected 2/3.
+- Source evidence before: main app/test/integration/receipt.test.js:12-15 and app/test/helpers/factory.js:10-15; deterministic 60-minute reproduction is saved in ai-runs/d-ci-reproductions.txt run-1144.
+- For each generated ride there are 85 equally likely integer durations; 2 are bad boundaries. A ten-ride sample has approximate failure probability 1-(83/85)^10 = 21.2%; the observed 11/30 is a finite sample, not a required rate.
+- Fix: retain the original receipt prefix and exact amount-suffix assertions; use 16 literal rows covering both bikes at 5,29,30,31,59,60,61,89 minutes, with fixed daytime pickup instants across a week and a fixed standard rider.
+- The second receipt fixture also uses the fixed rider; no app pricing source change is needed.
+- After: 0 failures in 50 runs, all 83 tests (ai-runs/d-repeat-after.txt); no retry,sleep,skip or lowered monetary tolerance.
+- First AI response: corrected the oracle and replaced random data with fixed cases; retries/sleep/skip/weakened assertion: no (ai-runs/d-flaky-first.md and .diff).
+- The first AI patch remained in its snapshot; the participant branch fix was independently authored and retains the original test name, extends deterministic rows and preserves exact receipt checks.
+- Setup deviation: the first-response snapshot captured the current working tree rather than HEAD because root commit approval was pending; it excluded participant rules/docs and had its own clean app/tools/package git baseline.
+- Participant sign-off: still required before submission; the evidence and classifications here were prepared by the agent.
 
 ## 2. CI triage
 

@@ -1,0 +1,90 @@
+## run-1141
+git apply ci/changes/run-1141.diff
+exit=0
+
+node --test app/test/unit/clock-change.test.js
+exit=1
+✖ a ride on the night the clocks go back is billed by the station clock (2.9182ms)
+✔ a ride the evening before the change is not affected (1.3727ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 181.4738
+
+✖ failing tests:
+
+test at app\test\unit\clock-change.test.js:8:1
+✖ a ride on the night the clocks go back is billed by the station clock (2.9182ms)
+  AssertionError [ERR_ASSERTION]: tariff.quote() miscounts the ride across the DST change
+  
+  180 !== 120
+  
+      at TestContext.<anonymous> (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/repro-1141/app/test/unit/clock-change.test.js:11:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.start (node:internal/test_runner/test:1096:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 180,
+    expected: 120,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+## run-1144
+git apply ci/changes/run-1144.diff
+exit=0
+
+node --input-type=module -e "import {quote} from \"./app/src/tariff.js\";console.log(JSON.stringify({actual:quote({pickupAt:\"2026-09-21T08:14:00Z\",returnAt:\"2026-09-21T09:14:00Z\",bike:\"classic\",returnStation:\"S01\"},{type:\"standard\"}).total,badOracle:(Math.floor(60/30)+1)*2500}));"
+exit=0
+{"actual":5000,"badOracle":7500}
+
+## run-1147
+git apply ci/changes/run-1147.diff
+exit=0
+
+node --input-type=module -e "import {quote} from \"./app/src/tariff.js\";console.log(JSON.stringify({PORT:\"unset as in logged smoke environment\",before:Number(undefined??3000),after:Number.parseInt(undefined??\"\",10)||3000}));"
+exit=0
+{"PORT":"unset as in logged smoke environment","before":3000,"after":3000}
+
+## run-1152
+git apply ci/changes/run-1152.diff
+exit=0
+
+node --test "--test-name-pattern=a bike kept over a day" app/test/unit/tariff.test.js
+exit=1
+✖ a bike kept over a day and left outside the zone pays both fees (8.6092ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 181.3376
+
+✖ failing tests:
+
+test at app\test\unit\tariff.test.js:64:1
+✖ a bike kept over a day and left outside the zone pays both fees (8.6092ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 2
+  
+      at TestContext.<anonymous> (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/repro-1152/app/test/unit/tariff.test.js:66:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1201:25)
+      at Test.start (node:internal/test_runner/test:1096:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 2,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
