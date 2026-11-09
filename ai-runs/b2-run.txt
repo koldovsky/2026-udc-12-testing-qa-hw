@@ -6,80 +6,80 @@
 > veloprokat@3.2.0 test
 > node --test "test/**/*.test.js"
 
-✔ every receipt of a week of rides ends with the amount due (4.8085ms)
-✔ a receipt lists the fee for a return outside the zone (1.4742ms)
-✖ T1: TC-01 (5.9267ms)
-✔ T1: TC-02 (0.4565ms)
-✖ T2: TC-04 (0.3888ms)
-✖ T2: TC-05 (0.3559ms)
-✖ T2: TC-06 (0.3335ms)
-✔ T2/T7: TC-07 (1.0597ms)
-✔ T3: TC-08 (0.2608ms)
-✔ T3: TC-09 (0.2171ms)
-✔ T3: TC-10 (0.2672ms)
-✔ T3: TC-11 (0.367ms)
-✔ T4: TC-12 (0.3642ms)
-✔ T4: TC-13 (0.1771ms)
-✔ T4: TC-14 (0.1778ms)
-✔ T4: TC-15 (0.1713ms)
-✖ T4: TC-16 (1.1011ms)
-✔ T4: TC-17 (0.1284ms)
-✔ T5: TC-18 (0.1569ms)
-✔ T5: TC-19 (0.1916ms)
-✔ T5: TC-20 (0.1668ms)
-✔ T5: TC-21 (0.1415ms)
-✖ T5/T7: TC-22 (0.459ms)
-✖ T5/T8: TC-23 (0.4902ms)
-✔ T8: TC-31 (0.1674ms)
-✔ T8: TC-32 (0.1636ms)
-✔ T7/T8: TC-33 (0.1591ms)
-✔ T1: TC-03 elapsed duration across DST (0.27ms)
-✔ T6: TC-24 daily ledger sequence (0.6374ms)
-✔ T6: TC-25 crossing midnight belongs to pickup day (0.2894ms)
-✖ T6: TC-26 Kyiv date resets before UTC midnight (0.4264ms)
-✔ T6: TC-27 different riders have independent caps (0.2394ms)
-✔ T6/T7: TC-28 fees survive exhausted cap (0.2551ms)
-✔ T7: TC-29 X01 (0.2691ms)
-✔ T7: TC-29 X02 (0.1781ms)
-✔ T7: TC-29 X03 (0.159ms)
-✔ T7: TC-30 S01 (0.1568ms)
-✔ T7: TC-30 S02 (0.1394ms)
-✔ T7: TC-30 S03 (0.1581ms)
-✔ T7: TC-30 S04 (0.1554ms)
-✔ T7: TC-30 S05 (0.1226ms)
-✔ T7: TC-30 S06 (0.1232ms)
-✔ T7: TC-30 S07 (0.1332ms)
-✔ T7: TC-30 S08 (0.1193ms)
-✔ T9: TC-34 fractional kopeck rounds payable down (0.1206ms)
-✔ T9: TC-35 230000 (0.2785ms)
-✔ T9: TC-35 -1250 (0.162ms)
-✔ T9: TC-35 0 (0.161ms)
-✔ T9: TC-36 receipt itemization and signs (0.8719ms)
-✔ T10: TC-37 (0.246ms)
-✔ T10: TC-38 (0.1565ms)
-✔ T10: TC-39 (0.1322ms)
-✔ Validation: TC-40 (0.7121ms)
-✔ Validation: TC-41 (0.1313ms)
-✔ Validation: TC-42 (0.1212ms)
-✔ Validation: TC-43 (0.1062ms)
-✔ charges recorded for a day reduce what is left of the cap (2.6346ms)
-✔ the day of a ride is the date of its pickup (0.2889ms)
-✔ amounts are shown in hryvnias (1.428ms)
-✔ a receipt has a line for every item (0.468ms)
-✔ GET / serves the page and GET /api/health answers (3.1716ms)
-✔ POST /api/quote returns the quote and the receipt (5.8493ms)
-✔ POST /api/quote answers 400 to a body that is not JSON (1.2294ms)
-✔ quote returns an itemised price (2.8862ms)
-✔ a ride of 30 min 20 s is billed as one block (0.2832ms)
-✔ e-bikes are billed at the e-bike rate (0.2965ms)
-✔ subscribers ride the first 45 minutes free (0.6104ms)
-✔ subscription on a long e-bike ride (0.3975ms)
-✔ reduced fare for a ride returned outside the zone (0.4152ms)
-✔ night rides get 30 % off (0.3554ms)
-✔ a bike kept over a day and left outside the zone pays both fees (0.2873ms)
-✔ the daily cap limits the time charge (1.0651ms)
-✔ a 45-minute classic ride costs 50 UAH (1.016ms)
-✔ a return before the pickup is rejected (0.8766ms)
+✔ every receipt of a week of rides ends with the amount due (4.5605ms)
+✔ a receipt lists the fee for a return outside the zone (1.2701ms)
+✖ T1: TC-01 (1801s) (6.0177ms)
+✔ T1: TC-02 (760s) (0.3948ms)
+✔ T1: TC-03 (10800s) (0.2848ms)
+✖ T2: TC-04 (119s) (0.3721ms)
+✖ T2: TC-05 (120s) (0.3429ms)
+✖ T2: TC-06 (121s) (0.3167ms)
+✔ T2,T7: TC-07 (50s) (0.8713ms)
+✔ T3: TC-08 (1740s) (0.2196ms)
+✔ T3: TC-09 (1800s) (0.238ms)
+✔ T3: TC-10 (1860s) (0.3352ms)
+✔ T3: TC-11 (4500s) (0.27ms)
+✔ T4: TC-12 (2640s) (0.2641ms)
+✔ T4: TC-13 (2700s) (0.168ms)
+✔ T4: TC-14 (2760s) (0.1725ms)
+✔ T4: TC-15 (6000s) (0.133ms)
+✖ T4: TC-16 (2400s) (0.9596ms)
+✔ T4: TC-17 (120s) (0.1341ms)
+✔ T5: TC-18 (2400s) (0.1509ms)
+✔ T5: TC-19 (4800s) (0.1586ms)
+✔ T5: TC-20 (3000s) (0.1625ms)
+✔ T5: TC-21 (2400s) (0.1284ms)
+✖ T5,T7: TC-22 (2400s) (0.4262ms)
+✖ T5,T8: TC-23 (90000s) (0.4257ms)
+✔ T8: TC-31 (86400s) (0.1591ms)
+✔ T8: TC-32 (86460s) (0.144ms)
+✔ T7,T8: TC-33 (90000s) (0.2247ms)
+✔ T10: TC-37 (1800s) (0.1473ms)
+✔ T10: TC-38 (1800s) (0.1581ms)
+✔ T10: TC-39 (1800s) (0.1443ms)
+✔ T6: TC-24 accumulates three rides to the daily cap (0.3792ms)
+✔ T6: TC-25 crossing midnight books only the pickup day (0.2371ms)
+✖ T6: TC-26 midnight starts a new Kyiv-day allowance (0.4143ms)
+✔ T6: TC-27 capped rider and independent fees/riders (0.2546ms)
+✔ T6,T7: TC-28 capped rider and independent fees/riders (0.1595ms)
+✔ T7: TC-29 station X01 (0.2256ms)
+✔ T7: TC-29 station X02 (0.1718ms)
+✔ T7: TC-29 station X03 (0.1692ms)
+✔ T7: TC-30 station S01 (0.1416ms)
+✔ T7: TC-30 station S02 (0.1658ms)
+✔ T7: TC-30 station S03 (0.1353ms)
+✔ T7: TC-30 station S04 (0.1329ms)
+✔ T7: TC-30 station S05 (0.1194ms)
+✔ T7: TC-30 station S06 (0.1208ms)
+✔ T7: TC-30 station S07 (0.1437ms)
+✔ T7: TC-30 station S08 (0.1712ms)
+✔ T9: TC-34 fractional kopeck favors the rider (0.1471ms)
+✔ T9: TC-35 format 230000 (0.2505ms)
+✔ T9: TC-35 format -1250 (0.1108ms)
+✔ T9: TC-35 format 0 (0.0745ms)
+✔ T9: TC-36 receipt contains each item and signed amounts (0.7478ms)
+✔ T1,T3,T5,T7: TC-40 invalid data is rejected with explanation (0.76ms)
+✔ T1,T3,T5,T7: TC-41 invalid data is rejected with explanation (0.1306ms)
+✔ T1,T3,T5,T7: TC-42 invalid data is rejected with explanation (0.1218ms)
+✔ T1,T3,T5,T7: TC-43 invalid data is rejected with explanation (0.1109ms)
+✔ charges recorded for a day reduce what is left of the cap (2.599ms)
+✔ the day of a ride is the date of its pickup (0.2891ms)
+✔ amounts are shown in hryvnias (1.5651ms)
+✔ a receipt has a line for every item (0.7361ms)
+✔ GET / serves the page and GET /api/health answers (3.1501ms)
+✔ POST /api/quote returns the quote and the receipt (5.5657ms)
+✔ POST /api/quote answers 400 to a body that is not JSON (1.1386ms)
+✔ quote returns an itemised price (2.765ms)
+✔ a ride of 30 min 20 s is billed as one block (0.2798ms)
+✔ e-bikes are billed at the e-bike rate (0.3122ms)
+✔ subscribers ride the first 45 minutes free (0.408ms)
+✔ subscription on a long e-bike ride (0.3378ms)
+✔ reduced fare for a ride returned outside the zone (0.3677ms)
+✔ night rides get 30 % off (0.2964ms)
+✔ a bike kept over a day and left outside the zone pays both fees (0.2975ms)
+✔ the daily cap limits the time charge (0.9843ms)
+✔ a 45-minute classic ride costs 50 UAH (0.8668ms)
+✔ a return before the pickup is rejected (0.7363ms)
 ℹ tests 74
 ℹ suites 0
 ℹ pass 66
@@ -87,17 +87,18 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 278.2705
+ℹ duration_ms 312.0572
 
 ✖ failing tests:
 
-test at test\spec\tariffs.test.js:44:3
-✖ T1: TC-01 (5.9267ms)
+test at test\spec\tariffs.test.js:47:3
+✖ T1: TC-01 (1801s) (6.0177ms)
   AssertionError [ERR_ASSERTION]: minutes
   
   30 !== 31
   
-      at TestContext.<anonymous> (file:///C:/Users/pc/Documents/ai/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:46:66)
+      at check (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/b2/app/test/spec/tariffs.test.js:13:65)
+      at TestContext.<anonymous> (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/b2/app/test/spec/tariffs.test.js:49:5)
       at Test.runInAsyncScope (node:async_hooks:226:14)
       at Test.run (node:internal/test_runner/test:1201:25)
       at Test.start (node:internal/test_runner/test:1096:17)
@@ -110,13 +111,14 @@ test at test\spec\tariffs.test.js:44:3
     diff: 'simple'
   }
 
-test at test\spec\tariffs.test.js:44:3
-✖ T2: TC-04 (0.3888ms)
+test at test\spec\tariffs.test.js:47:3
+✖ T2: TC-04 (119s) (0.3721ms)
   AssertionError [ERR_ASSERTION]: total
   
   2500 !== 0
   
-      at TestContext.<anonymous> (file:///C:/Users/pc/Documents/ai/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:46:66)
+      at check (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/b2/app/test/spec/tariffs.test.js:13:65)
+      at TestContext.<anonymous> (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/b2/app/test/spec/tariffs.test.js:49:5)
       at Test.runInAsyncScope (node:async_hooks:226:14)
       at Test.run (node:internal/test_runner/test:1201:25)
       at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
@@ -131,13 +133,14 @@ test at test\spec\tariffs.test.js:44:3
     diff: 'simple'
   }
 
-test at test\spec\tariffs.test.js:44:3
-✖ T2: TC-05 (0.3559ms)
+test at test\spec\tariffs.test.js:47:3
+✖ T2: TC-05 (120s) (0.3429ms)
   AssertionError [ERR_ASSERTION]: total
   
   2500 !== 0
   
-      at TestContext.<anonymous> (file:///C:/Users/pc/Documents/ai/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:46:66)
+      at check (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/b2/app/test/spec/tariffs.test.js:13:65)
+      at TestContext.<anonymous> (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/b2/app/test/spec/tariffs.test.js:49:5)
       at Test.runInAsyncScope (node:async_hooks:226:14)
       at Test.run (node:internal/test_runner/test:1201:25)
       at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
@@ -152,13 +155,14 @@ test at test\spec\tariffs.test.js:44:3
     diff: 'simple'
   }
 
-test at test\spec\tariffs.test.js:44:3
-✖ T2: TC-06 (0.3335ms)
+test at test\spec\tariffs.test.js:47:3
+✖ T2: TC-06 (121s) (0.3167ms)
   AssertionError [ERR_ASSERTION]: minutes
   
   2 !== 3
   
-      at TestContext.<anonymous> (file:///C:/Users/pc/Documents/ai/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:46:66)
+      at check (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/b2/app/test/spec/tariffs.test.js:13:65)
+      at TestContext.<anonymous> (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/b2/app/test/spec/tariffs.test.js:49:5)
       at Test.runInAsyncScope (node:async_hooks:226:14)
       at Test.run (node:internal/test_runner/test:1201:25)
       at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
@@ -173,8 +177,8 @@ test at test\spec\tariffs.test.js:44:3
     diff: 'simple'
   }
 
-test at test\spec\tariffs.test.js:44:3
-✖ T4: TC-16 (1.1011ms)
+test at test\spec\tariffs.test.js:47:3
+✖ T4: TC-16 (2400s) (0.9596ms)
   AssertionError [ERR_ASSERTION]: discounts
   + actual - expected
   
@@ -186,7 +190,8 @@ test at test\spec\tariffs.test.js:44:3
       }
     ]
   
-      at TestContext.<anonymous> (file:///C:/Users/pc/Documents/ai/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:46:66)
+      at check (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/b2/app/test/spec/tariffs.test.js:13:65)
+      at TestContext.<anonymous> (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/b2/app/test/spec/tariffs.test.js:49:5)
       at Test.runInAsyncScope (node:async_hooks:226:14)
       at Test.run (node:internal/test_runner/test:1201:25)
       at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
@@ -201,8 +206,8 @@ test at test\spec\tariffs.test.js:44:3
     diff: 'simple'
   }
 
-test at test\spec\tariffs.test.js:44:3
-✖ T5/T7: TC-22 (0.459ms)
+test at test\spec\tariffs.test.js:47:3
+✖ T5,T7: TC-22 (2400s) (0.4262ms)
   AssertionError [ERR_ASSERTION]: fees
   + actual - expected
   
@@ -214,7 +219,8 @@ test at test\spec\tariffs.test.js:44:3
       }
     ]
   
-      at TestContext.<anonymous> (file:///C:/Users/pc/Documents/ai/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:46:66)
+      at check (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/b2/app/test/spec/tariffs.test.js:13:65)
+      at TestContext.<anonymous> (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/b2/app/test/spec/tariffs.test.js:49:5)
       at Test.runInAsyncScope (node:async_hooks:226:14)
       at Test.run (node:internal/test_runner/test:1201:25)
       at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
@@ -229,8 +235,8 @@ test at test\spec\tariffs.test.js:44:3
     diff: 'simple'
   }
 
-test at test\spec\tariffs.test.js:44:3
-✖ T5/T8: TC-23 (0.4902ms)
+test at test\spec\tariffs.test.js:47:3
+✖ T5,T8: TC-23 (90000s) (0.4257ms)
   AssertionError [ERR_ASSERTION]: fees
   + actual - expected
   
@@ -242,7 +248,8 @@ test at test\spec\tariffs.test.js:44:3
       }
     ]
   
-      at TestContext.<anonymous> (file:///C:/Users/pc/Documents/ai/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:46:66)
+      at check (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/b2/app/test/spec/tariffs.test.js:13:65)
+      at TestContext.<anonymous> (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/b2/app/test/spec/tariffs.test.js:49:5)
       at Test.runInAsyncScope (node:async_hooks:226:14)
       at Test.run (node:internal/test_runner/test:1201:25)
       at Test.processPendingSubtests (node:internal/test_runner/test:831:18)
@@ -257,8 +264,8 @@ test at test\spec\tariffs.test.js:44:3
     diff: 'simple'
   }
 
-test at test\spec\tariffs.test.js:69:1
-✖ T6: TC-26 Kyiv date resets before UTC midnight (0.4264ms)
+test at test\spec\tariffs.test.js:77:1
+✖ T6: TC-26 midnight starts a new Kyiv-day allowance (0.4143ms)
   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
   + actual - expected
   
@@ -266,7 +273,7 @@ test at test\spec\tariffs.test.js:69:1
   - '2026-09-17'
               ^
   
-      at TestContext.<anonymous> (file:///C:/Users/pc/Documents/ai/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:72:10)
+      at TestContext.<anonymous> (file:///C:/Users/pc/AppData/Local/Temp/ws12-okedo-20261109/b2/app/test/spec/tariffs.test.js:81:10)
       at Test.runInAsyncScope (node:async_hooks:226:14)
       at Test.run (node:internal/test_runner/test:1201:25)
       at Test.processPendingSubtests (node:internal/test_runner/test:831:18)

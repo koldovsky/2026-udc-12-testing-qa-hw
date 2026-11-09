@@ -68,8 +68,52 @@ These are agent-reviewed participant artifacts; the participant must review and 
 
 ## Порівняння чернеток AI
 
-Pending first experiment outputs.
+Counts are descriptive, not a controlled causal comparison: A1 received a parent brevity follow-up, and global platform rules remained active.
+A rule counts as covered when at least one correct case exists, even if other cases for the rule are wrong.
+Unsupported expectations count case rows with at least one behavior/contract not established by the specification; exact API wording counts too.
+
+| Metric | A1 code | A2 specification |
+|---|---|---|
+| Rules correctly covered | 10/10 | 10/10 |
+| Case rows containing unsupported expectations | 25 | 1 |
+| Ambiguities explicitly recorded as questions | 0 | 5 |
+
+Coverage witnesses A1: T1=A1-09; T2=02; T3=06; T4=12; T5=11; T6=27; T7=30; T8=34; T9=53; T10=23.
+Coverage witnesses A2: T1=A2-07; T2=03; T3=08; T4=20; T5=22; T6=30; T7=39; T8=46; T9=rounding/receipt section; T10=49.
+A2 questions: A2-Q1 through A2-Q5; A1 has no explicit question table.
 
 ## Що AI вигадав
 
-Pending comparison against preserved first outputs.
+These are review findings, not edits to the first responses; an unsupported API contract can still be useful in a separately approved API test.
+
+| Draft | Case | Unsupported expectation | Specification / reason |
+|---|---|---|---|
+| A1 | A1-03 | Rounds 1m29s to 1 rather than 2 | T1:45-47 |
+| A1 | A1-04 | Bills 1m30s as 2500 instead of free | T2:54 |
+| A1 | A1-05 | Bills exactly 2 min | T2:54 |
+| A1 | A1-08 | Rounds 30m29s down | T1:45-47 |
+| A1 | A1-16 | Free 45 min on ebike | T4:76-77 |
+| A1 | A1-17 | Subtracts free 45 min before ebike percentage | T4:76-77 |
+| A1 | A1-21 | Treats string concession as no eligibility | No schema for nonboolean concession in product spec |
+| A1 | A1-22 | Crossing 06:00 uses pickup only | T10:141; Q-1 |
+| A1 | A1-24 | Sequential night and concession discounts | T5/T10:86-91,141; Q-2 |
+| A1 | A1-25 | Crossing midnight uses pickup only | T10:141; Q-1 |
+| A1 | A1-26 | Omits a zero night discount line | T9:132-135; Q-4 |
+| A1 | A1-29 | Applies night to entire crossing interval | T10:141; Q-1 |
+| A1 | A1-31 | Halves outside fee | T5:87 |
+| A1 | A1-36 | Halves both fixed fees | T5:87 |
+| A1 | A1-41 | Uses UTC day rather than Kyiv day | T6:100-103 |
+| A1 | A1-42 | Uses configurable nonproduct cap 1000 | T6:101 mandates 30000 |
+| A1 | A1-43 | Requires null input specific QuoteError wording | Not specified by section 4:147-149 |
+| A1 | A1-44 | Exact exception type and English message | Section 4 requires rejection/explanation only:147-149 |
+| A1 | A1-45 | Rejects missing offset with exact message | Product spec does not define timestamp serialization rejection |
+| A1 | A1-46 | Invalid timestamp exact exception wording | Product spec does not specify invalid timestamp handling |
+| A1 | A1-47 | Exact bike error wording/type | Section 4:147-149 only requires explanation |
+| A1 | A1-48 | Exact station error wording/type | Section 4:147-149 only requires explanation |
+| A1 | A1-49 | Exact rider error wording/type | Section 4:147-149 only requires explanation |
+| A1 | A1-50 | Ledger rider.id mandatory API contract | Not a product requirement in specification |
+| A1 | A1-51 | Allows injected unknown P01 station | Section 4:147-149 and appendix only define listed stations |
+| A2 | A2-45 | Assumes 24 h + 1 s fee threshold uses actual rather than rounded duration | T1:45-47, T8:119-120; review question Q-3; no automated expectation for this disputed fraction |
+
+A2-45 is a conservative review flag for an unconfirmed interpretation, not proof the stated total is false.
+No independent experiment output was rewritten; preliminary shared-context records remain under ai-runs/shared-context/.
