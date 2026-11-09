@@ -1,0 +1,137 @@
+✖ duration: 30 min 20 sec rounds to 30 min (2.578583ms)
+✔ false start: 1 min ride is free (0.097042ms)
+✖ false start: 2 min ride is charged (0.1215ms)
+✔ classic 50 min → 2 blocks = 5000 (0.089333ms)
+✔ ebike 75 min → 3 blocks = 12000 (0.073708ms)
+✔ subscriber classic 40 min → free (0.094042ms)
+✖ subscriber ebike 40 min → free (45 min free) (0.10525ms)
+✔ subscriber classic 100 min → 55 paid → 2 blocks = 5000 (0.062792ms)
+✔ reduced classic 40 min → 50% off = 2500 (0.070625ms)
+✖ reduced with out-of-zone → fee also discounted (0.134041ms)
+✔ night ride 01:10-01:40 Kyiv → 30% off (0.070125ms)
+✔ out-of-zone fee = 15000 (0.05775ms)
+✔ unreturned fee after 24 hours (0.082334ms)
+✔ both fees: out-of-zone + unreturned (0.047875ms)
+✔ daily cap limits charges (1.921416ms)
+✖ dayKey uses UTC date (0.572042ms)
+✔ return before pickup throws (0.191334ms)
+✔ unknown bike throws (0.048542ms)
+✔ unknown station throws (0.043208ms)
+✔ discount rounds down (0.027916ms)
+✔ formatUah formats correctly (0.07675ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 16
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 120.440458
+
+✖ failing tests:
+
+test at ai-runs/b1-from-code/tariff.test.js:12:1
+✖ duration: 30 min 20 sec rounds to 30 min (2.578583ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  31 !== 30
+  
+      at TestContext.<anonymous> (file:///Users/iuade0tr/IdeaProjects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:14:10)
+      at Test.runInAsyncScope (node:async_hooks:213:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.start (node:internal/test_runner/test:1003:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 31,
+    expected: 30,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:22:1
+✖ false start: 2 min ride is charged (0.1215ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 2500
+  
+      at TestContext.<anonymous> (file:///Users/iuade0tr/IdeaProjects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:24:10)
+      at Test.runInAsyncScope (node:async_hooks:213:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 2500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:42:1
+✖ subscriber ebike 40 min → free (45 min free) (0.10525ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  6400 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/iuade0tr/IdeaProjects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:44:10)
+      at Test.runInAsyncScope (node:async_hooks:213:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 6400,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:57:1
+✖ reduced with out-of-zone → fee also discounted (0.134041ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  15000 !== 7500
+  
+      at TestContext.<anonymous> (file:///Users/iuade0tr/IdeaProjects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:59:10)
+      at Test.runInAsyncScope (node:async_hooks:213:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 15000,
+    expected: 7500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:92:1
+✖ dayKey uses UTC date (0.572042ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '2026-09-17'
+  - '2026-09-16'
+              ^
+  
+      at TestContext.<anonymous> (file:///Users/iuade0tr/IdeaProjects/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:93:10)
+      at Test.runInAsyncScope (node:async_hooks:213:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '2026-09-17',
+    expected: '2026-09-16',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

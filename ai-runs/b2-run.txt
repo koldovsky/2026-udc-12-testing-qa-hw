@@ -1,0 +1,206 @@
+
+> test
+> npm --prefix app test
+
+
+> veloprokat@3.2.0 test
+> node --test "test/**/*.test.js"
+
+✔ every receipt of a week of rides ends with the amount due (1.657667ms)
+✔ a receipt lists the fee for a return outside the zone (0.427708ms)
+✔ T1: 10:00:00 → 10:12:40 = 13 minutes (ceil) (1.566459ms)
+✔ T1: 14:05:00 → 14:41:00 = 36 minutes (0.108375ms)
+✖ T1: 30 min 20 sec → 31 minutes (rounded up) (0.434541ms)
+✔ T1: exactly 30 min → 30 minutes, 1 block (0.083583ms)
+✔ T2: 50 sec ride (1 min after ceil) → free (0.06875ms)
+✖ T2: exactly 2 min → free (≤2) (0.108791ms)
+✖ T2: 2 min 1 sec → 3 min (ceil) → 1 block = 2500 (0.095083ms)
+✔ T2: false start with out-of-zone still charges fee (0.487125ms)
+✔ T3: classic 50 min → 2 blocks = 5000 (0.074833ms)
+✔ T3: ebike 75 min → 3 blocks = 12000 (0.100041ms)
+✔ T3: classic 30 min → 1 block = 2500 (0.065916ms)
+✔ T3: classic 31 min → 2 blocks = 5000 (0.053917ms)
+✔ T3: classic 60 min → 2 blocks = 5000 (0.042708ms)
+✔ T3: classic 61 min → 3 blocks = 7500 (0.041ms)
+✔ T4: subscriber classic 40 min → free (first 45 min) (0.051542ms)
+✔ T4: subscriber classic 100 min → 55 paid → 2 blocks = 5000 (0.140042ms)
+✔ T4: subscriber classic 45 min → free (boundary) (0.046542ms)
+✔ T4: subscriber classic 46 min → 1 paid → 1 block = 2500 (0.040958ms)
+✖ T4: subscriber ebike 40 min → 2 blocks × 4000 = 8000 − 20% = 6400 (no free minutes) (0.092459ms)
+✖ T4: subscriber ebike 75 min → 3 blocks × 4000 = 12000 − 20% = 9600 (0.070708ms)
+✔ T5: reduced classic 40 min → 5000 − 50% = 2500 (0.038167ms)
+✖ T5: reduced fare does NOT apply to out-of-zone fee (0.073875ms)
+✔ T5: subscriber+concession classic 80 min → reduced 3750 < subscription 5000 (0.069084ms)
+✔ T5: subscriber+concession classic 46 min → equal → subscription wins (0.035917ms)
+✔ T6: 3 ebike rides of 80 min → capped at 30000 (0.22ms)
+✔ T6: ride pickup at 23:40 Kyiv → belongs to that Kyiv date (0.059709ms)
+✔ T6: fees are not limited by the daily cap (0.076291ms)
+✔ T7: classic 20 min X02 → 2500 + 15000 = 17500 (0.032833ms)
+✔ T7: classic 20 min S03 (in zone) → no fee (0.03175ms)
+✔ T8: classic 25 hours → capped time + 200000 = 230000 (0.045625ms)
+✔ T8: exactly 24 hours (1440 min) → no unreturned fee (0.031375ms)
+✔ T8: 24 hours 1 min (1441 min) → unreturned fee (0.03475ms)
+✔ T8: >24h + out-of-zone → both fees (0.046667ms)
+✔ T9: discount rounds down (in user's favor) (0.023917ms)
+✔ T9: formatUah 230000 → '2 300,00 грн' (0.075875ms)
+✔ T9: formatUah -2500 → '-25,00 грн' (0.030917ms)
+✔ T10: classic 01:10→01:40 Kyiv → 2500 − 30% = 1750 (0.037958ms)
+✔ T10: pickup at 05:59 Kyiv → night discount applies (0.04375ms)
+✔ T10: pickup at 06:00 Kyiv → no night discount (0.02975ms)
+✔ §4: returnAt before pickupAt → error (0.174625ms)
+✔ §4: unknown bike type → error (0.037125ms)
+✔ §4: unknown station → error (0.041291ms)
+✔ charges recorded for a day reduce what is left of the cap (3.201084ms)
+✔ the day of a ride is the date of its pickup (0.375333ms)
+✔ amounts are shown in hryvnias (0.522834ms)
+✔ a receipt has a line for every item (0.144833ms)
+✔ GET / serves the page and GET /api/health answers (0.877291ms)
+✔ POST /api/quote returns the quote and the receipt (1.623458ms)
+✔ POST /api/quote answers 400 to a body that is not JSON (0.327417ms)
+✔ quote returns an itemised price (1.202583ms)
+✔ a ride of 30 min 20 s is billed as one block (0.084166ms)
+✔ e-bikes are billed at the e-bike rate (0.082417ms)
+✔ subscribers ride the first 45 minutes free (0.100542ms)
+✔ subscription on a long e-bike ride (0.089291ms)
+✔ reduced fare for a ride returned outside the zone (0.087542ms)
+✔ night rides get 30 % off (0.069792ms)
+✔ a bike kept over a day and left outside the zone pays both fees (0.065792ms)
+✔ the daily cap limits the time charge (0.2595ms)
+✔ a 45-minute classic ride costs 50 UAH (0.204875ms)
+✔ a return before the pickup is rejected (0.203666ms)
+ℹ tests 62
+ℹ suites 0
+ℹ pass 56
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 103.158625
+
+✖ failing tests:
+
+test at test/spec/tariff.test.js:32:1
+✖ T1: 30 min 20 sec → 31 minutes (rounded up) (0.434541ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  30 !== 31
+  
+      at TestContext.<anonymous> (file:///Users/iuade0tr/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:34:10)
+      at Test.runInAsyncScope (node:async_hooks:213:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 30,
+    expected: 31,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/tariff.test.js:53:1
+✖ T2: exactly 2 min → free (≤2) (0.108791ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2500 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/iuade0tr/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:56:10)
+      at Test.runInAsyncScope (node:async_hooks:213:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2500,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/tariff.test.js:60:1
+✖ T2: 2 min 1 sec → 3 min (ceil) → 1 block = 2500 (0.095083ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 3
+  
+      at TestContext.<anonymous> (file:///Users/iuade0tr/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:62:10)
+      at Test.runInAsyncScope (node:async_hooks:213:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/tariff.test.js:130:1
+✖ T4: subscriber ebike 40 min → 2 blocks × 4000 = 8000 − 20% = 6400 (no free minutes) (0.092459ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 6400
+  
+      at TestContext.<anonymous> (file:///Users/iuade0tr/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:132:10)
+      at Test.runInAsyncScope (node:async_hooks:213:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 6400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/tariff.test.js:135:1
+✖ T4: subscriber ebike 75 min → 3 blocks × 4000 = 12000 − 20% = 9600 (0.070708ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  3200 !== 9600
+  
+      at TestContext.<anonymous> (file:///Users/iuade0tr/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:137:10)
+      at Test.runInAsyncScope (node:async_hooks:213:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 3200,
+    expected: 9600,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/tariff.test.js:147:1
+✖ T5: reduced fare does NOT apply to out-of-zone fee (0.073875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  7500 !== 15000
+  
+      at TestContext.<anonymous> (file:///Users/iuade0tr/IdeaProjects/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:149:10)
+      at Test.runInAsyncScope (node:async_hooks:213:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 7500,
+    expected: 15000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
