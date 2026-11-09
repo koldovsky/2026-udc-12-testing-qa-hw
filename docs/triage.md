@@ -93,6 +93,15 @@ $ node tools/repeat.mjs 50
 
 Час: 51.5 с
 ```
+
+- **Test count since the fix:** `npm test` counts every file under `app/test/`. It ran 146 tests at
+  `9126021` (`ai-runs/d-repeat-after.txt:1`); 152 at `5505694`, with the 6 tests of
+  `app/test/unit/receipt-minus-sign.test.js`; 155 at `c679050`, where two tests were split into one
+  test per case (3 more); 159 at `545f3cd`, with the 4 e2e tests of Task E; 160 at `8182f12`, where
+  the missing-ride test was split (1 more). The 145 tests of `docs/test-quality.md` are the header
+  of the mutation run, which counts only `app/test/unit/` and `app/test/spec/`: 160 less the 11
+  tests of `app/test/integration/receipt.test.js` and the 4 e2e tests. The counts come from
+  `git archive <commit> app` and `node --test "test/**/*.test.js"` on each copy.
 - **First AI answer** (`ai-runs/d-flaky-first.md`): the agent found the same cause and fixed the
   test. It replaced the formula with `Math.ceil(minutes / 30) * PRICE[ride.bike]` and added two
   fixed classic rides of 30 and 60 min in front of the 10 random ones (`ai-runs/d-flaky-first.diff`).

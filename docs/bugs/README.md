@@ -252,7 +252,7 @@ The files in `ai-runs/b1-from-code/` were not changed.
 
 - Defects found by the tests from code: 0
 - Defects found by the tests from the spec: 5
-- Tests from code that pinned a defect: 15
+- Tests from code that pinned a defect: 15 distinct tests. The per-defect counts below the table of `ai-runs/b1-rerun.txt` add up to 16, because one test pinned both BUG-1 and BUG-2
 
 ## Run notes
 
@@ -288,6 +288,39 @@ The files in `ai-runs/b1-from-code/` were not changed.
   are not in the table of red tests, because that table classifies the saved run.
 - `app/test/spec/t6-day-cap.test.js` had its own copy of the `ebike80` helper from
   `app/test/spec/support.js`. It now imports that helper. No test name or expected value changed.
+
+## Every change to the existing unit and integration tests
+
+The three tests changed by the Task B fixes are in the section "Existing tests that went red after
+the fixes". The table below lists every other change to `app/test/unit/` and
+`app/test/integration/` against `main`, made in Tasks C and D. No expected value of an existing test
+changed in them: weak checks were removed or replaced by the exact value of the spec, and tests that
+held several cases were split into one test per case. The reasons, with the lines of the AI's diff,
+are in `docs/test-quality.md` (sections 3 and 5) and `docs/triage.md` (section 1). `a return before
+the pickup is rejected`, `app/test/unit/receipt-format.test.js` and `app/test/unit/server.test.js`
+did not change.
+
+| Test on `main` (file › name) | Task | What changed | Why (spec line) |
+|---|---|---|---|
+| `day-cap.test.js` › `charges recorded for a day reduce what is left of the cap` | C | `remaining < DAY_CAP` replaced by the exact 18000 | Smell #9; 300 − 120 UAH (`docs/spec/tariffs.md:100-101`) |
+| `day-cap.test.js` › `the day of a ride is the date of its pickup` | C | the agent's second check added: `2026-09-16T22:30:00Z` is booked on `2026-09-17` | Smell #10: the old instant has the same date in UTC and in Kyiv; the Kyiv date decides (`:34, 101-102`) |
+| `tariff.test.js` › `quote returns an itemised price` | C | now three tests, `T1, T2: quote returns an itemised price: classic, 1 min is a false start` and `T1, T3: …: classic, 50 min is 2 blocks` / `…: e-bike, 130 min is 5 blocks`, with exact minutes, totals, `discounts` and `fees` | Smell #1 (`total >= 0`, `Array.isArray`, `typeof`); one test per ride, `app/AGENTS.md` rule 5 (`:45-47, 54, 57, 62, 67, 69`) |
+| `tariff.test.js` › `subscribers ride the first 45 minutes free on a classic bike, an e-bike gets 20 % off` (the Task B name) | C | now two tests, `T4: …: classic, 40 min is free` and `T4: …: e-bike, 40 min is 8000 less 20 %`, with the same values, 0 and 6400 | Smell #12: when the first case failed, the second did not run; rule 5 (`:74, 76-77, 81`) |
+| `tariff.test.js` › `e-bikes are billed at the e-bike rate` | C | the code's formula `Math.ceil(result.minutes / BLOCK_MINUTES) * RATES.ebike` replaced by 75 min, `timeCharge` 12000 and `total` 12000 | Smell #2: the expected value repeated the code (`:45-47, 70`) |
+| `tariff.test.js` › `subscription on a long e-bike ride` | C | `some(… "subscription")` and `total < timeCharge` replaced by `timeCharge` 16000, `discounts` `[{ subscription, 3200 }]` and `total` 12800 | Smell #6 (`:62, 67, 76`) |
+| `tariff.test.js` › `reduced fare for a ride returned outside the zone` | C | besides the Task B values, `fees[0].amount` replaced by the whole `fees` array | Smell #8: the index assumed an order of the fees, which the spec does not fix (`:87, 112, 133-135`) |
+| `tariff.test.js` › `night rides get 30 % off` | C | `total < timeCharge` removed; `discounts` compared as one array, `[{ night, 750 }]`; `total` 1750 | Smell #5 (`:141, 143`) |
+| `tariff.test.js` › `a bike kept over a day and left outside the zone pays both fees` | C | `fees.length === 2` replaced by the whole `fees` array sorted by code, and `total` 245000 | Smell #7; both fees in any order (`:112, 120-122, 124-125`) |
+| `tariff.test.js` › `the daily cap limits the time charge` | C | `last.total <= DAY_CAP` replaced by `total` 6000, the `day-cap` discount of 6000 and 30000 charged that day | Smell #4: the bound held with the cap removed (`:105-106`) |
+| `tariff.test.js` › `a 45-minute classic ride costs 50 UAH` | C | the mock and its `callCount` check removed: the test calls `quote`; the expected 5000 is unchanged | Smell #3: the test checked the mock, not the code (`:62, 66`) |
+| `integration/receipt.test.js` › `every receipt of a week of rides ends with the amount due` | D | now ten tests, `T3, T9: every receipt ends with the amount due, …`, with fixed rides and literal amounts (`9126021`) | The flaky test: a wrong expected value at 30 and 60 min and random rides (`:29, 62, 66-67`; `docs/triage.md`, section 1) |
+| `integration/receipt.test.js` › `a receipt lists the fee for a return outside the zone` | D | the fixed rider of the file instead of `randomRider()`; `app/test/helpers/factory.js` removed, no test imports it | No test draws a random value (`docs/triage.md`, section 1) |
+
+Tests added to `app/test/unit/` in Task C: `a rider with no rides that day has been charged nothing`
+and `§4: a missing ride is rejected with a QuoteError: ride null` / `…: ride undefined` (the agent's,
+kept: `docs/test-quality.md`, section 3, rows 8 and 9), `app/test/unit/tariff-time-zone.test.js` (2
+tests) and `app/test/unit/receipt-minus-sign.test.js` (6 tests, both section 4). Four tests the
+agent added were reverted before submission and are not in the suite (section 3, rows 5-7).
 
 ---
 

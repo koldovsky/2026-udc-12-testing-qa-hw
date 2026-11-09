@@ -39,7 +39,7 @@ Priority follows the risk for the rider's money:
   is affected.
 - low: a further check of a step that no ride reaches at current prices.
 
-Rows are grouped by rule, so the IDs added last (TC-89 to TC-101) stand in their rule's block.
+Rows are grouped by rule, so the IDs added last (TC-89 to TC-101) stand in their rule's block. The Technique column names the design technique of each case: `EP` is equivalence partitioning, `BVA` is boundary value analysis, `Decision table` is a decision table of combined conditions, `States and time` covers states and time (several rides on one day, clock changes, Kyiv against UTC).
 
 ## Test cases
 
