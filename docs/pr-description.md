@@ -9,7 +9,7 @@ The receipt integration test now uses deterministic block-boundary cases; its in
 - [x] **Task B** — independent code-derived and spec-derived tests, original/fixed run outputs, five source fixes in separate commits, five bug reports.
 - [ ] **Task C** — all artifacts and 11 testing rules are present, but the strict instruction to select five survivors from c-after.txt cannot be met: the strengthened run has only two; both are analyzed, plus five killed baseline survivors and two reviewed policy-dependent survivors.
 - [x] **Task D** — 30-run baseline, independent first flaky fix and diff, independently authored deterministic fix, 50 clean runs, four evidence-based CI classifications, CI-1152 report.
-- [ ] **Task E (bonus)** — not attempted; optional.
+- [x] **Task E (bonus)** — path 2: reviewed master test plan in `docs/test-plan.md`, verbatim isolated draft in `ai-runs/e-test-plan.md`, six documented review changes in `docs/task-e-bonus.md`.
 
 ### Числа
 
@@ -37,7 +37,7 @@ CI paths above are ci/runs/run-NNNN.log; full commands, source/diff references a
 - [x] docs/spec/,ci/,tools/,docs/templates/ unchanged; git diff --stat main -- docs/spec ci tools docs/templates is empty.
 - [x] No original test deleted/skipped; changes and rejected assumptions are explained below; no retry/sleep/skip/todo added to app tests.
 - [x] No new workflows, dependencies, secrets or .env files.
-- [ ] Participant personal review/sign-off and mentor acceptance of the strict Task C survivor-count exception remain open; this PR is a draft.
+- [ ] Participant personal review/sign-off and mentor acceptance of the strict Task C survivor-count exception remain open.
 
 ### Інструмент і модель
 
