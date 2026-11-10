@@ -1,0 +1,108 @@
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+index 0000000..26d3352
+--- /dev/null
++++ b/.idea/.gitignore
+@@ -0,0 +1,3 @@
++# Default ignored files
++/shelf/
++/workspace.xml
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+index 0000000..90dee70
+--- /dev/null
++++ b/.idea/misc.xml
+@@ -0,0 +1,4 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="KubernetesApiProvider">{}</component>
++</project>
+\ No newline at end of file
+diff --git a/ai-runs/d-flaky-first.md b/ai-runs/d-flaky-first.md
+new file mode 100644
+index 0000000..bca4172
+--- /dev/null
++++ b/ai-runs/d-flaky-first.md
+@@ -0,0 +1,42 @@
++# Flaky test: `test/integration/receipt.test.js`
++
++## Symptom
++
++`npm run test:repeat -- 30` (`ai-runs/d-repeat-before.txt`): 10 of 30 runs were red, all on
++"every receipt of a week of rides ends with the amount due". Each failure was a 30-minute ride:
++the receipt said `40,00 грн`, but the test expected `80,00 грн` (ebike).
++
++## Cause: the test's expected value is wrong, not `src/`
++
++The test computed the expected price with its own formula:
++
++```js
++const expected = (Math.floor(minutes / 30) + 1) * PRICE[ride.bike];
++```
++
++Under T3, a started 30-minute block is charged in full, so a ride of exactly 30 min is **one**
++block. The project's own spec test agrees: TC-18 in `test/spec/t03-blocks.test.js` is ebike
++10:00–10:30 → 4000 kopecks. `floor(n/30) + 1` matches `ceil(n/30)` for every duration except
++the multiples of 30, where it counts one block too many. `src/tariff.js` (`Math.ceil`) is correct.
++
++The test was flaky, not always red, because its rides came from `randomRides(10)` in
++`test/helpers/factory.js`, with durations drawn from 5–89 minutes. A run failed only when one of
++the 10 rides came out at exactly 30 or 60 minutes. That happens in roughly 1 run in 4 to 1 in 3,
++which matches the 10/30 seen.
++
++## Fix (test only, `app/test/integration/receipt.test.js`)
++
++1. Expected value is now `Math.ceil(minutes / 30) * PRICE[ride.bike]`, as T3 says.
++2. The random rides are replaced by a fixed set: durations 5, 29, 30, 31, 59, 60, 61 and 89 min,
++   for both classic and ebike, at daytime pickups and in-zone stations. The boundary cases the
++   random data only hit sometimes are now tested on every run, and a failure is reproducible.
++
++No change to `src/`. `test/helpers/factory.js` stays, because `randomRider()` is still used. The
++rider's random id does not affect the price.
++
++## Verification
++
++- `npm test`: 122/122 green.
++- `npm run test:repeat -- 30`: 0 of 30 runs red, all 122 tests green in every run.
++- With the old formula, the fixed data fails on every run (at 30 and 60 min), so the test now
++  reliably checks the boundary.
+diff --git a/app/test/integration/receipt.test.js b/app/test/integration/receipt.test.js
+index 6c2335e..ce55130 100644
+--- a/app/test/integration/receipt.test.js
++++ b/app/test/integration/receipt.test.js
+@@ -3,16 +3,32 @@ import test from "node:test";
+ import assert from "node:assert/strict";
+ import { formatReceipt } from "../../src/receipt.js";
+ import { quote } from "../../src/tariff.js";
+-import { randomRider, randomRides } from "../helpers/factory.js";
++import { randomRider } from "../helpers/factory.js";
+ 
+ const PRICE = { classic: 2500, ebike: 4000 };
+ const uah = (kopecks) => `${(kopecks / 100).toFixed(2).replace(".", ",")} грн`;
+ 
++// Daytime rides of a standard rider, returned in the zone, with durations around the
++// 30-minute block boundaries (T3: a started block is charged in full, exactly 30 min is one).
++const DAY_START = Date.UTC(2026, 8, 21, 6, 0); // 21.09.2026, 09:00 in Kyiv
++const DURATIONS = [5, 29, 30, 31, 59, 60, 61, 89];
++const RIDES = DURATIONS.flatMap((minutes, i) =>
++  ["classic", "ebike"].map((bike, j) => {
++    const pickup = DAY_START + (i * 2 + j) * 37 * 60_000;
++    return {
++      pickupAt: new Date(pickup).toISOString(),
++      returnAt: new Date(pickup + minutes * 60_000).toISOString(),
++      bike,
++      returnStation: `S0${((i + j) % 8) + 1}`,
++    };
++  }),
++);
++
+ test("every receipt of a week of rides ends with the amount due", () => {
+   const rider = randomRider();
+-  for (const ride of randomRides(10)) {
++  for (const ride of RIDES) {
+     const minutes = (Date.parse(ride.returnAt) - Date.parse(ride.pickupAt)) / 60_000;
+-    const expected = (Math.floor(minutes / 30) + 1) * PRICE[ride.bike];
++    const expected = Math.ceil(minutes / 30) * PRICE[ride.bike];
+ 
+     const lines = formatReceipt(quote(ride, rider));
+ 

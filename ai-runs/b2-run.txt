@@ -1,0 +1,960 @@
+
+> test
+> npm --prefix app test
+
+
+> veloprokat@3.2.0 test
+> node --test "test/**/*.test.js"
+
+TAP version 13
+# Subtest: every receipt of a week of rides ends with the amount due
+ok 1 - every receipt of a week of rides ends with the amount due
+  ---
+  duration_ms: 1.273292
+  ...
+# Subtest: a receipt lists the fee for a return outside the zone
+ok 2 - a receipt lists the fee for a return outside the zone
+  ---
+  duration_ms: 0.291708
+  ...
+# Subtest: Розд. 4: TC-77 повернення раніше взяття: 10:00:01 → 10:00:00 → відмова з поясненням
+ok 3 - Розд. 4: TC-77 повернення раніше взяття: 10:00:01 → 10:00:00 → відмова з поясненням
+  ---
+  duration_ms: 0.568625
+  ...
+# Subtest: Розд. 4: TC-78 невідомий тип велосипеда «самокат» → відмова з поясненням
+ok 4 - Розд. 4: TC-78 невідомий тип велосипеда «самокат» → відмова з поясненням
+  ---
+  duration_ms: 0.059792
+  ...
+# Subtest: Розд. 4: TC-79 невідома категорія користувача «VIP» → відмова з поясненням
+ok 5 - Розд. 4: TC-79 невідома категорія користувача «VIP» → відмова з поясненням
+  ---
+  duration_ms: 0.065333
+  ...
+# Subtest: Розд. 4: TC-80 станції повернення S09 немає в додатку А → відмова з поясненням
+ok 6 - Розд. 4: TC-80 станції повернення S09 немає в додатку А → відмова з поясненням
+  ---
+  duration_ms: 0.043291
+  ...
+# Subtest: Розд. 4: TC-81 станцію повернення не вказано → відмова з поясненням
+ok 7 - Розд. 4: TC-81 станцію повернення не вказано → відмова з поясненням
+  ---
+  duration_ms: 0.046333
+  ...
+# Subtest: T1: TC-01 Ст · Кл · 10:00:00 → 10:12:40 → 13 хв, 2500 коп.
+ok 8 - T1: TC-01 Ст · Кл · 10:00:00 → 10:12:40 → 13 хв, 2500 коп.
+  ---
+  duration_ms: 0.721125
+  ...
+# Subtest: T1: TC-02 Ст · Кл · 14:05:00 → 14:41:00 → 36 хв, 5000 коп.
+ok 9 - T1: TC-02 Ст · Кл · 14:05:00 → 14:41:00 → 36 хв, 5000 коп.
+  ---
+  duration_ms: 0.109875
+  ...
+# Subtest: T1: TC-03 Ст · Кл · 10:00:00 → 10:30:00 → 30 хв, 2500 коп.
+ok 10 - T1: TC-03 Ст · Кл · 10:00:00 → 10:30:00 → 30 хв, 2500 коп.
+  ---
+  duration_ms: 0.051208
+  ...
+# Subtest: T1: TC-04 Ст · Кл · 10:00:00 → 10:30:01 → 31 хв, 5000 коп.
+not ok 11 - T1: TC-04 Ст · Кл · 10:00:00 → 10:30:01 → 31 хв, 5000 коп.
+  ---
+  duration_ms: 0.324083
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t01-duration.test.js:25:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    minutes (T1)
+    
+    30 !== 31
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 31
+  actual: 30
+  operator: 'strictEqual'
+  stack: |-
+    assertQuote (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/support.js:83:41)
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t01-duration.test.js:26:5)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T1: TC-05 Ст · Кл · 10:00:00 → 10:30:29 → 31 хв, 5000 коп.
+not ok 12 - T1: TC-05 Ст · Кл · 10:00:00 → 10:30:29 → 31 хв, 5000 коп.
+  ---
+  duration_ms: 0.164291
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t01-duration.test.js:25:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    minutes (T1)
+    
+    30 !== 31
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 31
+  actual: 30
+  operator: 'strictEqual'
+  stack: |-
+    assertQuote (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/support.js:83:41)
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t01-duration.test.js:26:5)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T1, T10: TC-06 Ст · Кл · 2026-10-25T02:50:00+03:00 → 2026-10-25T04:10:00+02:00 → 140 хв, 8750 коп.
+ok 13 - T1, T10: TC-06 Ст · Кл · 2026-10-25T02:50:00+03:00 → 2026-10-25T04:10:00+02:00 → 140 хв, 8750 коп.
+  ---
+  duration_ms: 0.056875
+  ...
+# Subtest: T2: TC-07 Ст · Кл · 10:00:00 → 10:00:50 → 0 коп.
+ok 14 - T2: TC-07 Ст · Кл · 10:00:00 → 10:00:50 → 0 коп.
+  ---
+  duration_ms: 0.711625
+  ...
+# Subtest: T2: TC-08 Ст · Кл · 10:00:00 → 10:00:00 → 0 коп.
+ok 15 - T2: TC-08 Ст · Кл · 10:00:00 → 10:00:00 → 0 коп.
+  ---
+  duration_ms: 0.059375
+  ...
+# Subtest: T2: TC-09 Ст · Кл · 10:00:00 → 10:02:00 → 0 коп.
+not ok 16 - T2: TC-09 Ст · Кл · 10:00:00 → 10:02:00 → 0 коп.
+  ---
+  duration_ms: 0.4465
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t02-false-start.test.js:18:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    total
+    
+    2500 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 2500
+  operator: 'strictEqual'
+  stack: |-
+    assertQuote (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/support.js:95:10)
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t02-false-start.test.js:19:5)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T2: TC-10 Ст · Кл · 10:00:00 → 10:02:01 → 2500 коп.
+not ok 17 - T2: TC-10 Ст · Кл · 10:00:00 → 10:02:01 → 2500 коп.
+  ---
+  duration_ms: 0.14225
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t02-false-start.test.js:18:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    minutes (T1)
+    
+    2 !== 3
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 3
+  actual: 2
+  operator: 'strictEqual'
+  stack: |-
+    assertQuote (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/support.js:83:41)
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t02-false-start.test.js:19:5)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T2: TC-11 Ст · Ел · 10:00:00 → 10:01:30 → 0 коп.
+not ok 18 - T2: TC-11 Ст · Ел · 10:00:00 → 10:01:30 → 0 коп.
+  ---
+  duration_ms: 0.118875
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t02-false-start.test.js:18:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    total
+    
+    4000 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 4000
+  operator: 'strictEqual'
+  stack: |-
+    assertQuote (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/support.js:95:10)
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t02-false-start.test.js:19:5)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T2: TC-12 Ст · Кл · 10:00:00 → 10:04:00 → 2500 коп.
+ok 19 - T2: TC-12 Ст · Кл · 10:00:00 → 10:04:00 → 2500 коп.
+  ---
+  duration_ms: 0.0555
+  ...
+# Subtest: T2, T7: TC-13 Ст · Кл · 10:00:00 → 10:01:30 · X01 → 15000 коп.
+not ok 20 - T2, T7: TC-13 Ст · Кл · 10:00:00 → 10:01:30 · X01 → 15000 коп.
+  ---
+  duration_ms: 0.071083
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t02-false-start.test.js:18:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    total
+    
+    17500 !== 15000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 15000
+  actual: 17500
+  operator: 'strictEqual'
+  stack: |-
+    assertQuote (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/support.js:95:10)
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t02-false-start.test.js:19:5)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T2, T5, T7: TC-14 Піл · Ел · 10:00:00 → 10:00:30 · X03 → 15000 коп.
+ok 21 - T2, T5, T7: TC-14 Піл · Ел · 10:00:00 → 10:00:30 · X03 → 15000 коп.
+  ---
+  duration_ms: 0.094917
+  ...
+# Subtest: T2, T4: TC-15 Аб · Ел · 10:00:00 → 10:01:00 → 0 коп.
+ok 22 - T2, T4: TC-15 Аб · Ел · 10:00:00 → 10:01:00 → 0 коп.
+  ---
+  duration_ms: 0.285667
+  ...
+# Subtest: T3: TC-16 Ст · Кл · 10:00:00 → 10:50:00 → 5000 коп.
+ok 23 - T3: TC-16 Ст · Кл · 10:00:00 → 10:50:00 → 5000 коп.
+  ---
+  duration_ms: 0.798084
+  ...
+# Subtest: T3: TC-17 Ст · Ел · 10:00:00 → 11:15:00 → 12000 коп.
+ok 24 - T3: TC-17 Ст · Ел · 10:00:00 → 11:15:00 → 12000 коп.
+  ---
+  duration_ms: 0.11825
+  ...
+# Subtest: T3: TC-18 Ст · Ел · 10:00:00 → 10:30:00 → 4000 коп.
+ok 25 - T3: TC-18 Ст · Ел · 10:00:00 → 10:30:00 → 4000 коп.
+  ---
+  duration_ms: 0.056708
+  ...
+# Subtest: T3: TC-19 Ст · Ел · 10:00:00 → 10:31:00 → 8000 коп.
+ok 26 - T3: TC-19 Ст · Ел · 10:00:00 → 10:31:00 → 8000 коп.
+  ---
+  duration_ms: 0.052292
+  ...
+# Subtest: T3: TC-20 Ст · Кл · 10:00:00 → 11:00:00 → 5000 коп.
+ok 27 - T3: TC-20 Ст · Кл · 10:00:00 → 11:00:00 → 5000 коп.
+  ---
+  duration_ms: 0.101
+  ...
+# Subtest: T3: TC-21 Ст · Кл · 10:00:00 → 11:01:00 → 7500 коп.
+ok 28 - T3: TC-21 Ст · Кл · 10:00:00 → 11:01:00 → 7500 коп.
+  ---
+  duration_ms: 0.043084
+  ...
+# Subtest: T4: TC-22 Аб · Кл · 10:00:00 → 10:40:00 → 0 коп.
+ok 29 - T4: TC-22 Аб · Кл · 10:00:00 → 10:40:00 → 0 коп.
+  ---
+  duration_ms: 0.775
+  ...
+# Subtest: T4: TC-23 Аб · Кл · 10:00:00 → 11:40:00 → 5000 коп.
+ok 30 - T4: TC-23 Аб · Кл · 10:00:00 → 11:40:00 → 5000 коп.
+  ---
+  duration_ms: 0.095166
+  ...
+# Subtest: T4: TC-24 Аб · Кл · 10:00:00 → 10:45:00 → 0 коп.
+ok 31 - T4: TC-24 Аб · Кл · 10:00:00 → 10:45:00 → 0 коп.
+  ---
+  duration_ms: 0.089166
+  ...
+# Subtest: T4: TC-25 Аб · Кл · 10:00:00 → 10:46:00 → 2500 коп.
+ok 32 - T4: TC-25 Аб · Кл · 10:00:00 → 10:46:00 → 2500 коп.
+  ---
+  duration_ms: 0.050708
+  ...
+# Subtest: T4: TC-26 Аб · Кл · 10:00:00 → 11:15:00 → 2500 коп.
+ok 33 - T4: TC-26 Аб · Кл · 10:00:00 → 11:15:00 → 2500 коп.
+  ---
+  duration_ms: 0.097
+  ...
+# Subtest: T4: TC-27 Аб · Кл · 10:00:00 → 11:16:00 → 5000 коп.
+ok 34 - T4: TC-27 Аб · Кл · 10:00:00 → 11:16:00 → 5000 коп.
+  ---
+  duration_ms: 0.04675
+  ...
+# Subtest: T4: TC-28 Аб · Ел · 10:00:00 → 10:30:00 → 3200 коп.
+not ok 35 - T4: TC-28 Аб · Ел · 10:00:00 → 10:30:00 → 3200 коп.
+  ---
+  duration_ms: 0.379084
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t04-subscription.test.js:19:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    total
+    
+    0 !== 3200
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 3200
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    assertQuote (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/support.js:95:10)
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t04-subscription.test.js:20:5)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T4: TC-29 Аб · Ел · 10:00:00 → 10:40:00 → 6400 коп.
+not ok 36 - T4: TC-29 Аб · Ел · 10:00:00 → 10:40:00 → 6400 коп.
+  ---
+  duration_ms: 0.0725
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t04-subscription.test.js:19:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    total
+    
+    0 !== 6400
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 6400
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    assertQuote (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/support.js:95:10)
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t04-subscription.test.js:20:5)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T4: TC-30 Аб · Ел · 10:00:00 → 11:40:00 → 12800 коп.
+not ok 37 - T4: TC-30 Аб · Ел · 10:00:00 → 11:40:00 → 12800 коп.
+  ---
+  duration_ms: 0.2845
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t04-subscription.test.js:19:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    total
+    
+    6400 !== 12800
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 12800
+  actual: 6400
+  operator: 'strictEqual'
+  stack: |-
+    assertQuote (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/support.js:95:10)
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t04-subscription.test.js:20:5)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T5: TC-31 Піл · Кл · 10:00:00 → 10:40:00 → 2500 коп.
+ok 38 - T5: TC-31 Піл · Кл · 10:00:00 → 10:40:00 → 2500 коп.
+  ---
+  duration_ms: 0.741791
+  ...
+# Subtest: T5: TC-32 Піл · Ел · 10:00:00 → 11:15:00 → 6000 коп.
+ok 39 - T5: TC-32 Піл · Ел · 10:00:00 → 11:15:00 → 6000 коп.
+  ---
+  duration_ms: 0.122375
+  ...
+# Subtest: T5: TC-33 Аб+П · Кл · 10:00:00 → 11:20:00 → 3750 коп. (reduced)
+ok 40 - T5: TC-33 Аб+П · Кл · 10:00:00 → 11:20:00 → 3750 коп. (reduced)
+  ---
+  duration_ms: 0.095833
+  ...
+# Subtest: T5: TC-34 Аб+П · Кл · 10:00:00 → 10:40:00 → 0 коп. (subscription)
+ok 41 - T5: TC-34 Аб+П · Кл · 10:00:00 → 10:40:00 → 0 коп. (subscription)
+  ---
+  duration_ms: 0.046083
+  ...
+# Subtest: T5: TC-35 Аб+П · Кл · 10:00:00 → 10:50:00 → 2500 коп. (subscription)
+ok 42 - T5: TC-35 Аб+П · Кл · 10:00:00 → 10:50:00 → 2500 коп. (subscription)
+  ---
+  duration_ms: 0.108667
+  ...
+# Subtest: T5: TC-36 Аб+П · Кл · 10:00:00 → 11:40:00 → 5000 коп. (subscription)
+ok 43 - T5: TC-36 Аб+П · Кл · 10:00:00 → 11:40:00 → 5000 коп. (subscription)
+  ---
+  duration_ms: 0.090292
+  ...
+# Subtest: T5: TC-37 Аб+П · Ел · 10:00:00 → 11:00:00 → 4000 коп.
+not ok 44 - T5: TC-37 Аб+П · Ел · 10:00:00 → 11:00:00 → 4000 коп.
+  ---
+  duration_ms: 0.331166
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t05-reduced.test.js:32:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    total
+    
+    3200 !== 4000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 4000
+  actual: 3200
+  operator: 'strictEqual'
+  stack: |-
+    assertQuote (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/support.js:95:10)
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t05-reduced.test.js:33:5)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T5, T7: TC-38 Піл · Кл · 10:00:00 → 10:20:00 · X01 → 16250 коп.
+not ok 45 - T5, T7: TC-38 Піл · Кл · 10:00:00 → 10:20:00 · X01 → 16250 коп.
+  ---
+  duration_ms: 0.139417
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t05-reduced.test.js:32:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    total
+    
+    8750 !== 16250
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 16250
+  actual: 8750
+  operator: 'strictEqual'
+  stack: |-
+    assertQuote (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/support.js:95:10)
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t05-reduced.test.js:33:5)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T5, T8, T6: TC-39 Піл · Кл · 16.09 10:00:00 → 17.09 11:00:00 → 230000 коп.
+not ok 46 - T5, T8, T6: TC-39 Піл · Кл · 16.09 10:00:00 → 17.09 11:00:00 → 230000 коп.
+  ---
+  duration_ms: 0.295125
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t05-reduced.test.js:32:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    total
+    
+    130000 !== 230000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 230000
+  actual: 130000
+  operator: 'strictEqual'
+  stack: |-
+    assertQuote (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/support.js:95:10)
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t05-reduced.test.js:33:5)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T5, T7: TC-40 Аб+П · Кл · 10:00:00 → 10:30:00 · X01 → 15000 коп. (subscription)
+ok 47 - T5, T7: TC-40 Аб+П · Кл · 10:00:00 → 10:30:00 · X01 → 15000 коп. (subscription)
+  ---
+  duration_ms: 0.285
+  ...
+# Subtest: T6: TC-42 Ст · Кл · 10:00:00 → 16:00:00 → 30000 коп.
+ok 48 - T6: TC-42 Ст · Кл · 10:00:00 → 16:00:00 → 30000 коп.
+  ---
+  duration_ms: 0.732417
+  ...
+# Subtest: T6: TC-43 Ст · Кл · 10:00:00 → 16:01:00 → 30000 коп.
+ok 49 - T6: TC-43 Ст · Кл · 10:00:00 → 16:01:00 → 30000 коп.
+  ---
+  duration_ms: 0.067959
+  ...
+# Subtest: T6: TC-41 Ст · Ел · 09:00 → 10:20; Ст · Ел · 13:00 → 14:20; Ст · Ел · 18:00 → 19:20 → 12000, 12000, 6000 коп.
+ok 50 - T6: TC-41 Ст · Ел · 09:00 → 10:20; Ст · Ел · 13:00 → 14:20; Ст · Ел · 18:00 → 19:20 → 12000, 12000, 6000 коп.
+  ---
+  duration_ms: 0.475042
+  ...
+# Subtest: T6: TC-44 Ст · Кл · 08:00 → 14:01; Ст · Кл · 17:00 → 17:30 → 30000, 0 коп.
+ok 51 - T6: TC-44 Ст · Кл · 08:00 → 14:01; Ст · Кл · 17:00 → 17:30 → 30000, 0 коп.
+  ---
+  duration_ms: 0.071666
+  ...
+# Subtest: T6, T7: TC-45 Ст · Кл · 08:00 → 14:01; Ст · Кл · 17:00 → 17:30 · X01 → 30000, 15000 коп.
+ok 52 - T6, T7: TC-45 Ст · Кл · 08:00 → 14:01; Ст · Кл · 17:00 → 17:30 · X01 → 30000, 15000 коп.
+  ---
+  duration_ms: 0.198917
+  ...
+# Subtest: T6, T7: TC-46 Ст · Кл · 09:00 → 09:20 · X01; Ст · Ел · 11:00 → 17:00 → 17500, 27500 коп.
+ok 53 - T6, T7: TC-46 Ст · Кл · 09:00 → 09:20 · X01; Ст · Ел · 11:00 → 17:00 → 17500, 27500 коп.
+  ---
+  duration_ms: 0.071459
+  ...
+# Subtest: T6: TC-47 Ст · Ел · 16.09 08:00 → 16.09 15:00; Ст · Кл · 16.09 23:40 → 17.09 00:20; Ст · Ел · 17.09 08:00 → 17.09 08:30 → 30000, 0, 4000 коп.
+ok 54 - T6: TC-47 Ст · Ел · 16.09 08:00 → 16.09 15:00; Ст · Кл · 16.09 23:40 → 17.09 00:20; Ст · Ел · 17.09 08:00 → 17.09 08:30 → 30000, 0, 4000 коп.
+  ---
+  duration_ms: 0.117875
+  ...
+# Subtest: T6: TC-48 Ст · Ел · 16.09 08:00 → 16.09 15:00; Ст · Кл · 2026-09-17T00:30:00+03:00 → 2026-09-17T01:00:00+03:00 → 30000, 1750 коп.
+not ok 55 - T6: TC-48 Ст · Ел · 16.09 08:00 → 16.09 15:00; Ст · Кл · 2026-09-17T00:30:00+03:00 → 2026-09-17T01:00:00+03:00 → 30000, 1750 коп.
+  ---
+  duration_ms: 0.449792
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t06-day-cap.test.js:108:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        30000,
+    +   0
+    -   1750
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 30000
+    1: 1750
+  actual:
+    0: 30000
+    1: 0
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t06-day-cap.test.js:110:12)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T6: TC-49 Ст · Ел · 2026-09-17T00:00:00+03:00 → 2026-09-17T05:00:00+03:00; Ст · Ел · 17.09 10:00 → 17.09 10:30 → 28000, 2000 коп.
+not ok 56 - T6: TC-49 Ст · Ел · 2026-09-17T00:00:00+03:00 → 2026-09-17T05:00:00+03:00; Ст · Ел · 17.09 10:00 → 17.09 10:30 → 28000, 2000 коп.
+  ---
+  duration_ms: 0.79475
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t06-day-cap.test.js:108:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        28000,
+    +   4000
+    -   2000
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 28000
+    1: 2000
+  actual:
+    0: 28000
+    1: 4000
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t06-day-cap.test.js:110:12)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T6, T10: TC-50 Ст · Ел · 18.09 01:00 → 18.09 03:00; Ст · Ел · 18.09 09:00 → 18.09 11:00; Ст · Кл · 18.09 12:00 → 18.09 12:30; Ст · Кл · 18.09 14:00 → 18.09 14:30 → 11200, 16000, 2500, 300 коп.
+not ok 57 - T6, T10: TC-50 Ст · Ел · 18.09 01:00 → 18.09 03:00; Ст · Ел · 18.09 09:00 → 18.09 11:00; Ст · Кл · 18.09 12:00 → 18.09 12:30; Ст · Кл · 18.09 14:00 → 18.09 14:30 → 11200, 16000, 2500, 300 коп.
+  ---
+  duration_ms: 0.37575
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t06-day-cap.test.js:108:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        11200,
+        16000,
+        2500,
+    +   2500
+    -   300
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 11200
+    1: 16000
+    2: 2500
+    3: 300
+  actual:
+    0: 11200
+    1: 16000
+    2: 2500
+    3: 2500
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t06-day-cap.test.js:110:12)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T6, T5: TC-51 Піл · Ел · 10:00 → 17:00; Піл · Ел · 18:00 → 19:00 → 28000, 2000 коп.
+ok 58 - T6, T5: TC-51 Піл · Ел · 10:00 → 17:00; Піл · Ел · 18:00 → 19:00 → 28000, 2000 коп.
+  ---
+  duration_ms: 0.1075
+  ...
+# Subtest: T6: TC-52 A: Ст · Кл · 08:00 → 14:01; B: Ст · Кл · 17:00 → 17:30 → 30000, 2500 коп.
+ok 59 - T6: TC-52 A: Ст · Кл · 08:00 → 14:01; B: Ст · Кл · 17:00 → 17:30 → 30000, 2500 коп.
+  ---
+  duration_ms: 0.0845
+  ...
+# Subtest: T7: TC-53 Ст · Кл · 10:00:00 → 10:20:00 · X01 → 17500 коп.
+ok 60 - T7: TC-53 Ст · Кл · 10:00:00 → 10:20:00 · X01 → 17500 коп.
+  ---
+  duration_ms: 0.852208
+  ...
+# Subtest: T7: TC-54 Ст · Кл · 10:00:00 → 10:20:00 · X02 → 17500 коп.
+ok 61 - T7: TC-54 Ст · Кл · 10:00:00 → 10:20:00 · X02 → 17500 коп.
+  ---
+  duration_ms: 0.111125
+  ...
+# Subtest: T7: TC-54 Ст · Кл · 10:00:00 → 10:20:00 · X03 → 17500 коп.
+ok 62 - T7: TC-54 Ст · Кл · 10:00:00 → 10:20:00 · X03 → 17500 коп.
+  ---
+  duration_ms: 0.0535
+  ...
+# Subtest: T7: TC-55 Ст · Кл · 10:00:00 → 10:20:00 · S01 → 2500 коп.
+ok 63 - T7: TC-55 Ст · Кл · 10:00:00 → 10:20:00 · S01 → 2500 коп.
+  ---
+  duration_ms: 0.049375
+  ...
+# Subtest: T7: TC-55 Ст · Кл · 10:00:00 → 10:20:00 · S02 → 2500 коп.
+ok 64 - T7: TC-55 Ст · Кл · 10:00:00 → 10:20:00 · S02 → 2500 коп.
+  ---
+  duration_ms: 0.099375
+  ...
+# Subtest: T7: TC-55 Ст · Кл · 10:00:00 → 10:20:00 · S03 → 2500 коп.
+ok 65 - T7: TC-55 Ст · Кл · 10:00:00 → 10:20:00 · S03 → 2500 коп.
+  ---
+  duration_ms: 0.041583
+  ...
+# Subtest: T7: TC-55 Ст · Кл · 10:00:00 → 10:20:00 · S04 → 2500 коп.
+ok 66 - T7: TC-55 Ст · Кл · 10:00:00 → 10:20:00 · S04 → 2500 коп.
+  ---
+  duration_ms: 0.080792
+  ...
+# Subtest: T7: TC-55 Ст · Кл · 10:00:00 → 10:20:00 · S05 → 2500 коп.
+ok 67 - T7: TC-55 Ст · Кл · 10:00:00 → 10:20:00 · S05 → 2500 коп.
+  ---
+  duration_ms: 0.036666
+  ...
+# Subtest: T7: TC-55 Ст · Кл · 10:00:00 → 10:20:00 · S06 → 2500 коп.
+ok 68 - T7: TC-55 Ст · Кл · 10:00:00 → 10:20:00 · S06 → 2500 коп.
+  ---
+  duration_ms: 0.288042
+  ...
+# Subtest: T7: TC-55 Ст · Кл · 10:00:00 → 10:20:00 · S07 → 2500 коп.
+ok 69 - T7: TC-55 Ст · Кл · 10:00:00 → 10:20:00 · S07 → 2500 коп.
+  ---
+  duration_ms: 0.265584
+  ...
+# Subtest: T7: TC-55 Ст · Кл · 10:00:00 → 10:20:00 · S08 → 2500 коп.
+ok 70 - T7: TC-55 Ст · Кл · 10:00:00 → 10:20:00 · S08 → 2500 коп.
+  ---
+  duration_ms: 0.083208
+  ...
+# Subtest: T7, T4: TC-56 Аб · Кл · 10:00:00 → 10:30:00 · X02 → 15000 коп.
+ok 71 - T7, T4: TC-56 Аб · Кл · 10:00:00 → 10:30:00 · X02 → 15000 коп.
+  ---
+  duration_ms: 0.051083
+  ...
+# Subtest: T8: TC-57 Ст · Кл · 16.09 10:00:00 → 17.09 11:00:00 → 230000 коп.
+ok 72 - T8: TC-57 Ст · Кл · 16.09 10:00:00 → 17.09 11:00:00 → 230000 коп.
+  ---
+  duration_ms: 0.657542
+  ...
+# Subtest: T8: TC-58 Ст · Кл · 16.09 10:00:00 → 17.09 10:00:00 → 30000 коп.
+ok 73 - T8: TC-58 Ст · Кл · 16.09 10:00:00 → 17.09 10:00:00 → 30000 коп.
+  ---
+  duration_ms: 0.066709
+  ...
+# Subtest: T8: TC-59 Ст · Кл · 16.09 10:00:00 → 17.09 10:00:01 → 230000 коп.
+not ok 74 - T8: TC-59 Ст · Кл · 16.09 10:00:00 → 17.09 10:00:01 → 230000 коп.
+  ---
+  duration_ms: 0.375916
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t08-unreturned.test.js:25:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    minutes (T1)
+    
+    1440 !== 1441
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1441
+  actual: 1440
+  operator: 'strictEqual'
+  stack: |-
+    assertQuote (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/support.js:83:41)
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t08-unreturned.test.js:26:5)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T8: TC-60 Ст · Кл · 16.09 10:00:00 → 17.09 10:00:29 → 230000 коп.
+not ok 75 - T8: TC-60 Ст · Кл · 16.09 10:00:00 → 17.09 10:00:29 → 230000 коп.
+  ---
+  duration_ms: 0.132875
+  location: '/Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t08-unreturned.test.js:25:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    minutes (T1)
+    
+    1440 !== 1441
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1441
+  actual: 1440
+  operator: 'strictEqual'
+  stack: |-
+    assertQuote (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/support.js:83:41)
+    TestContext.<anonymous> (file:///Users/vlad/Projects/rbi_ai_training/hw/2026-udc-12-testing-qa-hw/app/test/spec/t08-unreturned.test.js:26:5)
+    Test.runInAsyncScope (node:async_hooks:211:14)
+    Test.run (node:internal/test_runner/test:979:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:677:18)
+    Test.postRun (node:internal/test_runner/test:1090:19)
+    Test.run (node:internal/test_runner/test:1018:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:677:7)
+  ...
+# Subtest: T8, T7: TC-61 Ст · Кл · 16.09 10:00:00 → 17.09 11:00:00 · X02 → 245000 коп.
+ok 76 - T8, T7: TC-61 Ст · Кл · 16.09 10:00:00 → 17.09 11:00:00 · X02 → 245000 коп.
+  ---
+  duration_ms: 0.064209
+  ...
+# Subtest: T8, T4: TC-63 Аб · Кл · 16.09 10:00:00 → 17.09 11:00:00 → 230000 коп.
+ok 77 - T8, T4: TC-63 Аб · Кл · 16.09 10:00:00 → 17.09 11:00:00 → 230000 коп.
+  ---
+  duration_ms: 0.065083
+  ...
+# Subtest: T8, T6: TC-62 Ст · Кл · 16.09 08:00 → 16.09 14:01; Ст · Кл · 16.09 20:00 → 17.09 21:00 → 30000, 200000 коп.
+ok 78 - T8, T6: TC-62 Ст · Кл · 16.09 08:00 → 16.09 14:01; Ст · Кл · 16.09 20:00 → 17.09 21:00 → 30000, 200000 коп.
+  ---
+  duration_ms: 0.460958
+  ...
+# Subtest: T9: TC-64 1235 коп. − 30 % → до сплати 864, знижка 371
+ok 79 - T9: TC-64 1235 коп. − 30 % → до сплати 864, знижка 371
+  ---
+  duration_ms: 0.502458
+  ...
+# Subtest: T9: TC-65 2501 коп. − 50 % → до сплати 1250, знижка 1251
+ok 80 - T9: TC-65 2501 коп. − 50 % → до сплати 1250, знижка 1251
+  ---
+  duration_ms: 0.075667
+  ...
+# Subtest: T9, T8: TC-66 чек Ст · Кл · 16.09 10:00:00 → 17.09 11:00:00 → «До сплати» 2 300,00 грн
+ok 81 - T9, T8: TC-66 чек Ст · Кл · 16.09 10:00:00 → 17.09 11:00:00 → «До сплати» 2 300,00 грн
+  ---
+  duration_ms: 0.703625
+  ...
+# Subtest: T9, T10, T7: TC-67 чек Ст · Кл · 01:10:00 → 01:40:00 · X01 → «До сплати» 167,50 грн
+ok 82 - T9, T10, T7: TC-67 чек Ст · Кл · 01:10:00 → 01:40:00 · X01 → «До сплати» 167,50 грн
+  ---
+  duration_ms: 0.238375
+  ...
+# Subtest: T9: TC-68 300 коп. → «3,00 грн»
+ok 83 - T9: TC-68 300 коп. → «3,00 грн»
+  ---
+  duration_ms: 0.113041
+  ...
+# Subtest: T9: TC-68 1750 коп. → «17,50 грн»
+ok 84 - T9: TC-68 1750 коп. → «17,50 грн»
+  ---
+  duration_ms: 0.050416
+  ...
+# Subtest: T9: TC-68 245000 коп. → «2 450,00 грн»
+ok 85 - T9: TC-68 245000 коп. → «2 450,00 грн»
+  ---
+  duration_ms: 0.037333
+  ...
+# Subtest: T10: TC-69 Ст · Кл · 01:10:00 → 01:40:00 → 1750 коп.
+ok 86 - T10: TC-69 Ст · Кл · 01:10:00 → 01:40:00 → 1750 коп.
+  ---
+  duration_ms: 0.801916
+  ...
+# Subtest: T10: TC-70 Ст · Кл · 00:00:00 → 00:30:00 → 1750 коп.
+ok 87 - T10: TC-70 Ст · Кл · 00:00:00 → 00:30:00 → 1750 коп.
+  ---
+  duration_ms: 0.073584
+  ...
+# Subtest: T10: TC-71 Ст · Кл · 06:00:00 → 06:30:00 → 2500 коп.
+ok 88 - T10: TC-71 Ст · Кл · 06:00:00 → 06:30:00 → 2500 коп.
+  ---
+  duration_ms: 0.099916
+  ...
+# Subtest: T10: TC-72 Ст · Кл · 23:00:00 → 23:30:00 → 2500 коп.
+ok 89 - T10: TC-72 Ст · Кл · 23:00:00 → 23:30:00 → 2500 коп.
+  ---
+  duration_ms: 0.051167
+  ...
+# Subtest: T10: TC-73 Ст · Ел · 02:00:00 → 03:00:00 → 5600 коп.
+ok 90 - T10: TC-73 Ст · Ел · 02:00:00 → 03:00:00 → 5600 коп.
+  ---
+  duration_ms: 0.102542
+  ...
+# Subtest: T10, T7: TC-74 Ст · Кл · 01:10:00 → 01:40:00 · X01 → 16750 коп.
+ok 91 - T10, T7: TC-74 Ст · Кл · 01:10:00 → 01:40:00 · X01 → 16750 коп.
+  ---
+  duration_ms: 0.057291
+  ...
+# Subtest: T10, T2: TC-75 Ст · Ел · 03:00:00 → 03:01:00 → 0 коп.
+ok 92 - T10, T2: TC-75 Ст · Ел · 03:00:00 → 03:01:00 → 0 коп.
+  ---
+  duration_ms: 0.07925
+  ...
+# Subtest: T10, T4: TC-76 Аб · Кл · 03:00:00 → 03:30:00 → 0 коп.
+ok 93 - T10, T4: TC-76 Аб · Кл · 03:00:00 → 03:30:00 → 0 коп.
+  ---
+  duration_ms: 0.051541
+  ...
+# Subtest: charges recorded for a day reduce what is left of the cap
+ok 94 - charges recorded for a day reduce what is left of the cap
+  ---
+  duration_ms: 1.503875
+  ...
+# Subtest: the day of a ride is the date of its pickup
+ok 95 - the day of a ride is the date of its pickup
+  ---
+  duration_ms: 0.091834
+  ...
+# Subtest: amounts are shown in hryvnias
+ok 96 - amounts are shown in hryvnias
+  ---
+  duration_ms: 0.365416
+  ...
+# Subtest: a receipt has a line for every item
+ok 97 - a receipt has a line for every item
+  ---
+  duration_ms: 0.114708
+  ...
+# Subtest: GET / serves the page and GET /api/health answers
+ok 98 - GET / serves the page and GET /api/health answers
+  ---
+  duration_ms: 0.656083
+  ...
+# Subtest: POST /api/quote returns the quote and the receipt
+ok 99 - POST /api/quote returns the quote and the receipt
+  ---
+  duration_ms: 1.333459
+  ...
+# Subtest: POST /api/quote answers 400 to a body that is not JSON
+ok 100 - POST /api/quote answers 400 to a body that is not JSON
+  ---
+  duration_ms: 0.305208
+  ...
+# Subtest: quote returns an itemised price
+ok 101 - quote returns an itemised price
+  ---
+  duration_ms: 0.709625
+  ...
+# Subtest: a ride of 30 min 20 s is billed as one block
+ok 102 - a ride of 30 min 20 s is billed as one block
+  ---
+  duration_ms: 0.095792
+  ...
+# Subtest: e-bikes are billed at the e-bike rate
+ok 103 - e-bikes are billed at the e-bike rate
+  ---
+  duration_ms: 0.054709
+  ...
+# Subtest: subscribers ride the first 45 minutes free
+ok 104 - subscribers ride the first 45 minutes free
+  ---
+  duration_ms: 0.067792
+  ...
+# Subtest: subscription on a long e-bike ride
+ok 105 - subscription on a long e-bike ride
+  ---
+  duration_ms: 0.100042
+  ...
+# Subtest: reduced fare for a ride returned outside the zone
+ok 106 - reduced fare for a ride returned outside the zone
+  ---
+  duration_ms: 0.119959
+  ...
+# Subtest: night rides get 30 % off
+ok 107 - night rides get 30 % off
+  ---
+  duration_ms: 0.046709
+  ...
+# Subtest: a bike kept over a day and left outside the zone pays both fees
+ok 108 - a bike kept over a day and left outside the zone pays both fees
+  ---
+  duration_ms: 0.041167
+  ...
+# Subtest: the daily cap limits the time charge
+ok 109 - the daily cap limits the time charge
+  ---
+  duration_ms: 0.307042
+  ...
+# Subtest: a 45-minute classic ride costs 50 UAH
+ok 110 - a 45-minute classic ride costs 50 UAH
+  ---
+  duration_ms: 0.313667
+  ...
+# Subtest: a return before the pickup is rejected
+ok 111 - a return before the pickup is rejected
+  ---
+  duration_ms: 0.199959
+  ...
+1..111
+# tests 111
+# suites 0
+# pass 94
+# fail 17
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 102.6195

@@ -1,0 +1,34 @@
+### node --test --experimental-test-coverage --test-coverage-include="app/src/**" "ai-runs/b1-from-code/*.test.js"  (app/src at 13ba25a)
+# tests 86
+# pass 77
+# fail 9
+# start of coverage report
+# ---------------------------------------------------------------
+# file           | line % | branch % | funcs % | uncovered lines
+# ---------------------------------------------------------------
+#   day-cap.js   | 100.00 |   100.00 |  100.00 | 
+#   kyiv-time.js | 100.00 |   100.00 |  100.00 | 
+#   tariff.js    | 100.00 |   100.00 |  100.00 | 
+#   zones.js     |  96.55 |   100.00 |   66.67 | 24
+# ---------------------------------------------------------------
+# all files      |  99.54 |   100.00 |   95.83 | 
+# ---------------------------------------------------------------
+# end of coverage report
+
+### node --test --experimental-test-coverage --test-coverage-include="app/src/**" "ai-runs/c-with-rules/*.test.js"  (app/src at 13ba25a)
+# tests 64
+# pass 63
+# fail 1
+# start of coverage report
+# ---------------------------------------------------------------
+# file           | line % | branch % | funcs % | uncovered lines
+# ---------------------------------------------------------------
+#   day-cap.js   | 100.00 |   100.00 |  100.00 | 
+#   kyiv-time.js | 100.00 |   100.00 |  100.00 | 
+#   tariff.js    |  97.81 |    96.23 |  100.00 | 84-86
+#   zones.js     |  96.55 |   100.00 |   66.67 | 24
+# ---------------------------------------------------------------
+# all files      |  98.17 |    97.18 |   95.83 | 
+# ---------------------------------------------------------------
+# end of coverage report
+

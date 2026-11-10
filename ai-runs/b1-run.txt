@@ -1,0 +1,545 @@
+TAP version 13
+# Subtest: DAY_CAP
+    # Subtest: is 300 UAH in kopecks
+    ok 1 - is 300 UAH in kopecks
+      ---
+      duration_ms: 0.440959
+      ...
+    1..1
+ok 1 - DAY_CAP
+  ---
+  duration_ms: 0.789167
+  type: 'suite'
+  ...
+# Subtest: dayKey
+    # Subtest: returns the YYYY-MM-DD date of an ISO string
+    ok 1 - returns the YYYY-MM-DD date of an ISO string
+      ---
+      duration_ms: 4.094125
+      ...
+    # Subtest: accepts epoch milliseconds and Date objects
+    ok 2 - accepts epoch milliseconds and Date objects
+      ---
+      duration_ms: 0.061042
+      ...
+    # Subtest: normalises an offset to the same instant
+    ok 3 - normalises an offset to the same instant
+      ---
+      duration_ms: 0.043583
+      ...
+    # Subtest: uses the UTC calendar date (current behaviour)
+    ok 4 - uses the UTC calendar date (current behaviour)
+      ---
+      duration_ms: 0.046334
+      ...
+    # Subtest: throws on an invalid date
+    ok 5 - throws on an invalid date
+      ---
+      duration_ms: 0.165792
+      ...
+    1..5
+ok 2 - dayKey
+  ---
+  duration_ms: 4.576042
+  type: 'suite'
+  ...
+# Subtest: createDayCap
+    # Subtest: defaults the limit to DAY_CAP
+    ok 1 - defaults the limit to DAY_CAP
+      ---
+      duration_ms: 0.179334
+      ...
+    # Subtest: takes a custom limit
+    ok 2 - takes a custom limit
+      ---
+      duration_ms: 0.101042
+      ...
+    # Subtest: an empty options object keeps the default limit
+    ok 3 - an empty options object keeps the default limit
+      ---
+      duration_ms: 0.077084
+      ...
+    # Subtest: record reduces what remains for that rider on that day
+    ok 4 - record reduces what remains for that rider on that day
+      ---
+      duration_ms: 0.158209
+      ...
+    # Subtest: records on the same day accumulate, whatever the time of day
+    ok 5 - records on the same day accumulate, whatever the time of day
+      ---
+      duration_ms: 0.043958
+      ...
+    # Subtest: remaining never goes below zero
+    ok 6 - remaining never goes below zero
+      ---
+      duration_ms: 0.03325
+      ...
+    # Subtest: remaining is exactly zero when the limit is reached
+    ok 7 - remaining is exactly zero when the limit is reached
+      ---
+      duration_ms: 0.024333
+      ...
+    # Subtest: riders are tracked separately
+    ok 8 - riders are tracked separately
+      ---
+      duration_ms: 0.024333
+      ...
+    # Subtest: a new day starts from the full limit
+    ok 9 - a new day starts from the full limit
+      ---
+      duration_ms: 0.024375
+      ...
+    # Subtest: recording zero is harmless
+    ok 10 - recording zero is harmless
+      ---
+      duration_ms: 0.026416
+      ...
+    # Subtest: chargedOn is 0 for an unknown rider or day
+    ok 11 - chargedOn is 0 for an unknown rider or day
+      ---
+      duration_ms: 0.021166
+      ...
+    # Subtest: chargedOn takes the day as a YYYY-MM-DD key, not an instant
+    ok 12 - chargedOn takes the day as a YYYY-MM-DD key, not an instant
+      ---
+      duration_ms: 0.028042
+      ...
+    # Subtest: instants on either side of UTC midnight land on different days
+    ok 13 - instants on either side of UTC midnight land on different days
+      ---
+      duration_ms: 0.026375
+      ...
+    # Subtest: ledgers do not share state
+    ok 14 - ledgers do not share state
+      ---
+      duration_ms: 0.025
+      ...
+    # Subtest: a custom limit caps remaining the same way
+    ok 15 - a custom limit caps remaining the same way
+      ---
+      duration_ms: 0.027917
+      ...
+    1..15
+ok 3 - createDayCap
+  ---
+  duration_ms: 1.338625
+  type: 'suite'
+  ...
+# Subtest: tariff constants
+    # Subtest: have the values the rest of these tests assume
+    ok 1 - have the values the rest of these tests assume
+      ---
+      duration_ms: 0.536375
+      ...
+    # Subtest: RATES is frozen
+    ok 2 - RATES is frozen
+      ---
+      duration_ms: 0.063292
+      ...
+    1..2
+ok 4 - tariff constants
+  ---
+  duration_ms: 0.931583
+  type: 'suite'
+  ...
+# Subtest: discount
+    # Subtest: takes the percentage off
+    ok 1 - takes the percentage off
+      ---
+      duration_ms: 0.06425
+      ...
+    # Subtest: rounds what is left to pay down, so the discount rounds up
+    ok 2 - rounds what is left to pay down, so the discount rounds up
+      ---
+      duration_ms: 0.03475
+      ...
+    # Subtest: handles 0 % and 100 % and a zero amount
+    ok 3 - handles 0 % and 100 % and a zero amount
+      ---
+      duration_ms: 0.033333
+      ...
+    1..3
+ok 5 - discount
+  ---
+  duration_ms: 0.241958
+  type: 'suite'
+  ...
+# Subtest: quote: result shape
+    # Subtest: returns minutes, timeCharge, discounts, fees and total
+    ok 1 - returns minutes, timeCharge, discounts, fees and total
+      ---
+      duration_ms: 0.411708
+      ...
+    # Subtest: total = timeCharge − discounts + fees, across many cases
+    ok 2 - total = timeCharge − discounts + fees, across many cases
+      ---
+      duration_ms: 2.433583
+      ...
+    # Subtest: does not mutate its arguments
+    ok 3 - does not mutate its arguments
+      ---
+      duration_ms: 0.111292
+      ...
+    1..3
+ok 6 - quote: result shape
+  ---
+  duration_ms: 3.05475
+  type: 'suite'
+  ...
+# Subtest: quote: time charge
+    # Subtest: a zero-length ride is free
+    ok 1 - a zero-length ride is free
+      ---
+      duration_ms: 0.0845
+      ...
+    # Subtest: the first minute is free (under FREE_START_MINUTES)
+    ok 2 - the first minute is free (under FREE_START_MINUTES)
+      ---
+      duration_ms: 0.13975
+      ...
+    # Subtest: from 2 minutes a whole 30-minute block is charged
+    ok 3 - from 2 minutes a whole 30-minute block is charged
+      ---
+      duration_ms: 0.040166
+      ...
+    # Subtest: blocks are rounded up
+    ok 4 - blocks are rounded up
+      ---
+      duration_ms: 0.045667
+      ...
+    # Subtest: ride length is rounded to the nearest minute
+    ok 5 - ride length is rounded to the nearest minute
+      ---
+      duration_ms: 0.050834
+      ...
+    # Subtest: pickup and return may be written with different offsets
+    ok 6 - pickup and return may be written with different offsets
+      ---
+      duration_ms: 0.027416
+      ...
+    1..6
+ok 7 - quote: time charge
+  ---
+  duration_ms: 0.446417
+  type: 'suite'
+  ...
+# Subtest: quote: subscription
+    # Subtest: the first 45 minutes are free
+    ok 1 - the first 45 minutes are free
+      ---
+      duration_ms: 0.051542
+      ...
+    # Subtest: after 45 minutes, blocks are counted from minute 45
+    ok 2 - after 45 minutes, blocks are counted from minute 45
+      ---
+      duration_ms: 0.039875
+      ...
+    # Subtest: e-bike blocks after the free time are 20 % off
+    ok 3 - e-bike blocks after the free time are 20 % off
+      ---
+      duration_ms: 0.039625
+      ...
+    # Subtest: an e-bike within 45 minutes is free
+    ok 4 - an e-bike within 45 minutes is free
+      ---
+      duration_ms: 0.022375
+      ...
+    # Subtest: no discount line when there is nothing to discount
+    ok 5 - no discount line when there is nothing to discount
+      ---
+      duration_ms: 0.0695
+      ...
+    1..5
+ok 8 - quote: subscription
+  ---
+  duration_ms: 0.28625
+  type: 'suite'
+  ...
+# Subtest: quote: reduced fare
+    # Subtest: is 50 % off the time charge
+    ok 1 - is 50 % off the time charge
+      ---
+      duration_ms: 0.046292
+      ...
+    # Subtest: does not apply to a standard rider, even with concession: true
+    ok 2 - does not apply to a standard rider, even with concession: true
+      ---
+      duration_ms: 0.025791
+      ...
+    1..2
+ok 9 - quote: reduced fare
+  ---
+  duration_ms: 0.094083
+  type: 'suite'
+  ...
+# Subtest: quote: subscriber with a concession gets the cheaper plan
+    # Subtest: subscription when it is cheaper
+    ok 1 - subscription when it is cheaper
+      ---
+      duration_ms: 0.041417
+      ...
+    # Subtest: reduced fare when it is cheaper
+    ok 2 - reduced fare when it is cheaper
+      ---
+      duration_ms: 0.0285
+      ...
+    # Subtest: on a tie the subscription is chosen
+    ok 3 - on a tie the subscription is chosen
+      ---
+      duration_ms: 0.026375
+      ...
+    # Subtest: only concession === true counts
+    ok 4 - only concession === true counts
+      ---
+      duration_ms: 0.049417
+      ...
+    # Subtest: only one fare discount is ever applied
+    ok 5 - only one fare discount is ever applied
+      ---
+      duration_ms: 0.030084
+      ...
+    1..5
+ok 10 - quote: subscriber with a concession gets the cheaper plan
+  ---
+  duration_ms: 0.213625
+  type: 'suite'
+  ...
+# Subtest: quote: night discount (pickup before 06:00 Kyiv time)
+    # Subtest: 30 % off in winter (UTC+2): 05:59 yes, 06:00 no
+    ok 1 - 30 % off in winter (UTC+2): 05:59 yes, 06:00 no
+      ---
+      duration_ms: 0.110708
+      ...
+    # Subtest: follows summer time (UTC+3): 05:59 yes, 06:00 no
+    ok 2 - follows summer time (UTC+3): 05:59 yes, 06:00 no
+      ---
+      duration_ms: 0.034834
+      ...
+    # Subtest: starts at midnight Kyiv time
+    ok 3 - starts at midnight Kyiv time
+      ---
+      duration_ms: 0.029167
+      ...
+    # Subtest: depends on pickup time only, even if the ride ends after 06:00
+    ok 4 - depends on pickup time only, even if the ride ends after 06:00
+      ---
+      duration_ms: 0.031833
+      ...
+    # Subtest: reads a pickup written with an offset
+    ok 5 - reads a pickup written with an offset
+      ---
+      duration_ms: 0.027375
+      ...
+    # Subtest: is applied after the fare discount, to what is left
+    ok 6 - is applied after the fare discount, to what is left
+      ---
+      duration_ms: 0.038292
+      ...
+    # Subtest: no night line when nothing is left to pay
+    ok 7 - no night line when nothing is left to pay
+      ---
+      duration_ms: 0.025541
+      ...
+    1..7
+ok 11 - quote: night discount (pickup before 06:00 Kyiv time)
+  ---
+  duration_ms: 0.344167
+  type: 'suite'
+  ...
+# Subtest: quote: daily cap without a ledger
+    # Subtest: a single ride's time charge is capped at DAY_CAP
+    ok 1 - a single ride's time charge is capped at DAY_CAP
+      ---
+      duration_ms: 0.046208
+      ...
+    # Subtest: exactly DAY_CAP is not capped
+    ok 2 - exactly DAY_CAP is not capped
+      ---
+      duration_ms: 0.036709
+      ...
+    # Subtest: is applied after the night discount
+    ok 3 - is applied after the night discount
+      ---
+      duration_ms: 0.032791
+      ...
+    # Subtest: is applied after the fare discount
+    ok 4 - is applied after the fare discount
+      ---
+      duration_ms: 0.029584
+      ...
+    # Subtest: fees are not capped
+    ok 5 - fees are not capped
+      ---
+      duration_ms: 0.035416
+      ...
+    1..5
+ok 12 - quote: daily cap without a ledger
+  ---
+  duration_ms: 0.359208
+  type: 'suite'
+  ...
+# Subtest: quote: daily cap with a ledger
+    # Subtest: books what the rider pays for time
+    ok 1 - books what the rider pays for time
+      ---
+      duration_ms: 0.114042
+      ...
+    # Subtest: a later ride the same day is capped at what remains
+    ok 2 - a later ride the same day is capped at what remains
+      ---
+      duration_ms: 0.045708
+      ...
+    # Subtest: once the cap is used up, time is free but fees still apply
+    ok 3 - once the cap is used up, time is free but fees still apply
+      ---
+      duration_ms: 0.045958
+      ...
+    # Subtest: books the amount after discounts, and never fees
+    ok 4 - books the amount after discounts, and never fees
+      ---
+      duration_ms: 0.028583
+      ...
+    # Subtest: other riders and other days are not affected
+    ok 5 - other riders and other days are not affected
+      ---
+      duration_ms: 0.040917
+      ...
+    # Subtest: respects a ledger with a custom limit
+    ok 6 - respects a ledger with a custom limit
+      ---
+      duration_ms: 0.032208
+      ...
+    # Subtest: requires rider.id
+    ok 7 - requires rider.id
+      ---
+      duration_ms: 0.152166
+      ...
+    # Subtest: rider.id is not needed without a ledger
+    ok 8 - rider.id is not needed without a ledger
+      ---
+      duration_ms: 0.042458
+      ...
+    # Subtest: an invalid ride books nothing
+    ok 9 - an invalid ride books nothing
+      ---
+      duration_ms: 0.036959
+      ...
+    # Subtest: books by UTC date (current behaviour)
+    ok 10 - books by UTC date (current behaviour)
+      ---
+      duration_ms: 0.065042
+      ...
+    1..10
+ok 13 - quote: daily cap with a ledger
+  ---
+  duration_ms: 0.668125
+  type: 'suite'
+  ...
+# Subtest: quote: fees
+    # Subtest: returning outside the zone costs 150 UAH
+    ok 1 - returning outside the zone costs 150 UAH
+      ---
+      duration_ms: 0.045
+      ...
+    # Subtest: the out-of-zone fee applies even to a free ride
+    ok 2 - the out-of-zone fee applies even to a free ride
+      ---
+      duration_ms: 0.023125
+      ...
+    # Subtest: no fees for a return inside the zone
+    ok 3 - no fees for a return inside the zone
+      ---
+      duration_ms: 0.023125
+      ...
+    # Subtest: unreturned fee only for rides longer than 24 h
+    ok 4 - unreturned fee only for rides longer than 24 h
+      ---
+      duration_ms: 0.031292
+      ...
+    # Subtest: fees are halved when the reduced fare is applied
+    ok 5 - fees are halved when the reduced fare is applied
+      ---
+      duration_ms: 0.026
+      ...
+    # Subtest: a concession subscriber gets halved fees only when the reduced plan wins
+    ok 6 - a concession subscriber gets halved fees only when the reduced plan wins
+      ---
+      duration_ms: 0.029917
+      ...
+    # Subtest: subscription does not reduce fees
+    ok 7 - subscription does not reduce fees
+      ---
+      duration_ms: 0.024
+      ...
+    # Subtest: a reduced rider pays the full fee when the time charge is 0 (current behaviour)
+    ok 8 - a reduced rider pays the full fee when the time charge is 0 (current behaviour)
+      ---
+      duration_ms: 0.022042
+      ...
+    # Subtest: uses the zones lookup passed in options
+    ok 9 - uses the zones lookup passed in options
+      ---
+      duration_ms: 0.051042
+      ...
+    1..9
+ok 14 - quote: fees
+  ---
+  duration_ms: 0.323959
+  type: 'suite'
+  ...
+# Subtest: quote: validation
+    # Subtest: ride is required
+    ok 1 - ride is required
+      ---
+      duration_ms: 0.061375
+      ...
+    # Subtest: pickupAt and returnAt must be ISO 8601 with Z or an offset
+    ok 2 - pickupAt and returnAt must be ISO 8601 with Z or an offset
+      ---
+      duration_ms: 0.109542
+      ...
+    # Subtest: accepts minutes-only and fractional-second forms
+    ok 3 - accepts minutes-only and fractional-second forms
+      ---
+      duration_ms: 0.027334
+      ...
+    # Subtest: a well-formed but impossible date is rejected
+    ok 4 - a well-formed but impossible date is rejected
+      ---
+      duration_ms: 0.025833
+      ...
+    # Subtest: returnAt may not be before pickupAt
+    ok 5 - returnAt may not be before pickupAt
+      ---
+      duration_ms: 0.024125
+      ...
+    # Subtest: bike must be classic or ebike
+    ok 6 - bike must be classic or ebike
+      ---
+      duration_ms: 0.033583
+      ...
+    # Subtest: return station must be known
+    ok 7 - return station must be known
+      ---
+      duration_ms: 0.029417
+      ...
+    # Subtest: rider type must be standard, reduced or subscriber
+    ok 8 - rider type must be standard, reduced or subscriber
+      ---
+      duration_ms: 0.035
+      ...
+    1..8
+ok 15 - quote: validation
+  ---
+  duration_ms: 0.393333
+  type: 'suite'
+  ...
+1..15
+# tests 86
+# suites 15
+# pass 86
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 82.401666

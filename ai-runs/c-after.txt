@@ -1,0 +1,184 @@
+TAP version 13
+# Subtest: the daily cap is 300 UAH
+ok 1 - the daily cap is 300 UAH
+  ---
+  duration_ms: 0.407041
+  ...
+# Subtest: charges recorded for a day reduce what is left of the cap
+ok 2 - charges recorded for a day reduce what is left of the cap
+  ---
+  duration_ms: 0.190375
+  ...
+# Subtest: what is left of the cap never goes below zero
+ok 3 - what is left of the cap never goes below zero
+  ---
+  duration_ms: 0.108916
+  ...
+# Subtest: charges are kept per rider and per day
+ok 4 - charges are kept per rider and per day
+  ---
+  duration_ms: 0.066041
+  ...
+# Subtest: nothing is charged for a rider or day with no rides
+ok 5 - nothing is charged for a rider or day with no rides
+  ---
+  duration_ms: 0.043875
+  ...
+# Subtest: a custom limit replaces the default cap
+ok 6 - a custom limit replaces the default cap
+  ---
+  duration_ms: 0.046834
+  ...
+# Subtest: the day of a ride is the date of its pickup
+ok 7 - the day of a ride is the date of its pickup
+  ---
+  duration_ms: 0.097625
+  ...
+# Subtest: the day of a ride is the Kyiv calendar date, not the UTC one
+ok 8 - the day of a ride is the Kyiv calendar date, not the UTC one
+  ---
+  duration_ms: 0.04875
+  ...
+# Subtest: amounts are shown in hryvnias
+ok 9 - amounts are shown in hryvnias
+  ---
+  duration_ms: 0.656542
+  ...
+# Subtest: a receipt has a line for every item
+ok 10 - a receipt has a line for every item
+  ---
+  duration_ms: 0.188208
+  ...
+# Subtest: GET / serves the page and GET /api/health answers
+ok 11 - GET / serves the page and GET /api/health answers
+  ---
+  duration_ms: 0.871125
+  ...
+# Subtest: POST /api/quote returns the quote and the receipt
+ok 12 - POST /api/quote returns the quote and the receipt
+  ---
+  duration_ms: 1.590584
+  ...
+# Subtest: POST /api/quote answers 400 to a body that is not JSON
+ok 13 - POST /api/quote answers 400 to a body that is not JSON
+  ---
+  duration_ms: 0.280791
+  ...
+# Subtest: quote returns an itemised price
+ok 14 - quote returns an itemised price
+  ---
+  duration_ms: 0.925041
+  ...
+# Subtest: a ride of 30 min 20 s is billed as two blocks
+ok 15 - a ride of 30 min 20 s is billed as two blocks
+  ---
+  duration_ms: 0.126125
+  ...
+# Subtest: e-bikes are billed at the e-bike rate
+ok 16 - e-bikes are billed at the e-bike rate
+  ---
+  duration_ms: 0.058792
+  ...
+# Subtest: subscribers ride the first 45 minutes of a classic bike free, not of an e-bike
+ok 17 - subscribers ride the first 45 minutes of a classic bike free, not of an e-bike
+  ---
+  duration_ms: 0.093417
+  ...
+# Subtest: subscription on a long e-bike ride
+ok 18 - subscription on a long e-bike ride
+  ---
+  duration_ms: 0.058625
+  ...
+# Subtest: reduced fare for a ride returned outside the zone
+ok 19 - reduced fare for a ride returned outside the zone
+  ---
+  duration_ms: 0.054042
+  ...
+# Subtest: night rides get 30 % off
+ok 20 - night rides get 30 % off
+  ---
+  duration_ms: 0.071084
+  ...
+# Subtest: a bike kept over a day and left outside the zone pays both fees
+ok 21 - a bike kept over a day and left outside the zone pays both fees
+  ---
+  duration_ms: 0.466542
+  ...
+# Subtest: the daily cap limits the time charge
+ok 22 - the daily cap limits the time charge
+  ---
+  duration_ms: 0.149042
+  ...
+# Subtest: a 45-minute classic ride costs 50 UAH
+ok 23 - a 45-minute classic ride costs 50 UAH
+  ---
+  duration_ms: 0.176041
+  ...
+# Subtest: a return before the pickup is rejected
+ok 24 - a return before the pickup is rejected
+  ---
+  duration_ms: 0.203042
+  ...
+# Subtest: a night ride with nothing to pay has no night discount line
+ok 25 - a night ride with nothing to pay has no night discount line
+  ---
+  duration_ms: 0.3875
+  ...
+# Subtest: a night false start has no discount lines
+ok 26 - a night false start has no discount lines
+  ---
+  duration_ms: 0.047292
+  ...
+# Subtest: a missing ride is refused with a QuoteError
+ok 27 - a missing ride is refused with a QuoteError
+  ---
+  duration_ms: 0.079417
+  ...
+# Subtest: a date-time without an offset is refused
+ok 28 - a date-time without an offset is refused
+  ---
+  duration_ms: 0.061875
+  ...
+# Subtest: a non-string date-time is refused
+ok 29 - a non-string date-time is refused
+  ---
+  duration_ms: 0.11375
+  ...
+1..29
+# tests 29
+# suites 0
+# pass 29
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 70.464583
+# start of coverage report
+# --------------------------------------------------------------
+# file          | line % | branch % | funcs % | uncovered lines
+# --------------------------------------------------------------
+# src           |        |          |         | 
+#  day-cap.js   | 100.00 |   100.00 |  100.00 | 
+#  kyiv-time.js | 100.00 |   100.00 |  100.00 | 
+#  receipt.js   | 100.00 |    75.00 |  100.00 | 
+#  server.js    |  89.61 |    73.91 |   71.43 | 36 39-40 73-77
+#  tariff.js    | 100.00 |    88.46 |  100.00 | 
+#  zones.js     |  96.55 |    75.00 |   66.67 | 24
+# --------------------------------------------------------------
+# all files     |  97.28 |    85.00 |   91.18 | 
+# --------------------------------------------------------------
+# end of coverage report
+Мутаційне тестування
+  цілі:   app/src/tariff.js, app/src/day-cap.js
+  тести:  app/test/unit, app/test/spec — файлів: 15, тестів: 120, пропущено: 0, todo: 0, викликів assert: 65
+
+файл                мутантів     вбито    вижило   таймаут     score
+app/src/tariff.js         76        74         2         0    97.4 %
+app/src/day-cap.js         7         7         0         0   100.0 %
+разом                     83        81         2         0    97.6 %
+
+Вижили (2) — тести не помітили цієї зміни:
+  M016  app/src/tariff.js:47:21     0 → 1                       if (plan.amount > 0) discounts.push({ code: plan.code, amount: plan...
+  M019  app/src/tariff.js:50:13     0 → 1                       if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+
+Час: 6.3 с
