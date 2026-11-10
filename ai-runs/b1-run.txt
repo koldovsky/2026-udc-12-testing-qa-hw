@@ -1,0 +1,198 @@
+TAP version 13
+# Subtest: uses the default daily cap and derives the UTC calendar day
+ok 1 - uses the default daily cap and derives the UTC calendar day
+  ---
+  duration_ms: 2.6979
+  type: 'test'
+  ...
+# Subtest: remaining is capped at zero and records cumulative charges by rider and day
+ok 2 - remaining is capped at zero and records cumulative charges by rider and day
+  ---
+  duration_ms: 0.4927
+  type: 'test'
+  ...
+# Subtest: separates riders and days
+ok 3 - separates riders and days
+  ---
+  duration_ms: 0.2576
+  type: 'test'
+  ...
+# Subtest: supports a zero custom limit and unknown entries are empty
+ok 4 - supports a zero custom limit and unknown entries are empty
+  ---
+  duration_ms: 0.3083
+  type: 'test'
+  ...
+# Subtest: discount rounds the amount left down to kopecks
+ok 5 - discount rounds the amount left down to kopecks
+  ---
+  duration_ms: 1.1149
+  type: 'test'
+  ...
+# Subtest: charges no time fee below two minutes and one block at the boundary
+ok 6 - charges no time fee below two minutes and one block at the boundary
+  ---
+  duration_ms: 1.5722
+  type: 'test'
+  ...
+# Subtest: rounds a ride up to the next thirty-minute block
+ok 7 - rounds a ride up to the next thirty-minute block
+  ---
+  duration_ms: 0.1867
+  type: 'test'
+  ...
+# Subtest: uses the ebike rate
+ok 8 - uses the ebike rate
+  ---
+  duration_ms: 0.2442
+  type: 'test'
+  ...
+# Subtest: applies reduced fare to time charge and out-of-zone fee
+ok 9 - applies reduced fare to time charge and out-of-zone fee
+  ---
+  duration_ms: 0.2829
+  type: 'test'
+  ...
+# Subtest: subscriber gets 45 free minutes and charges the next block
+ok 10 - subscriber gets 45 free minutes and charges the next block
+  ---
+  duration_ms: 0.3127
+  type: 'test'
+  ...
+# Subtest: subscriber ebike subscription reduces its billed block by twenty percent
+not ok 11 - subscriber ebike subscription reduces its billed block by twenty percent
+  ---
+  duration_ms: 1.3461
+  type: 'test'
+  location: 'C:\\Users\\bogar\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:72:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        {
+    +     amount: 4800,
+    -     amount: 3200,
+          code: 'subscription'
+        }
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      code: 'subscription'
+      amount: 3200
+  actual:
+    0:
+      code: 'subscription'
+      amount: 4800
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/bogar/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:74:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: subscriber concession chooses the cheaper reduced plan when applicable
+not ok 12 - subscriber concession chooses the cheaper reduced plan when applicable
+  ---
+  duration_ms: 0.8289
+  type: 'test'
+  location: 'C:\\Users\\bogar\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:78:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        {
+          amount: 2500,
+    +     code: 'subscription'
+    -     code: 'reduced'
+        }
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      code: 'reduced'
+      amount: 2500
+  actual:
+    0:
+      code: 'subscription'
+      amount: 2500
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/bogar/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:80:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: applies night discount only before six Kyiv time
+ok 13 - applies night discount only before six Kyiv time
+  ---
+  duration_ms: 0.4811
+  type: 'test'
+  ...
+# Subtest: adds out-of-zone and unreturned fees without applying them to time charge
+not ok 14 - adds out-of-zone and unreturned fees without applying them to time charge
+  ---
+  duration_ms: 0.588
+  type: 'test'
+  location: 'C:\\Users\\bogar\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:92:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    245000 !== 337500
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 337500
+  actual: 245000
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/bogar/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:98:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: combines night discount, reduced fare, and reduced fee
+ok 15 - combines night discount, reduced fare, and reduced fee
+  ---
+  duration_ms: 0.3366
+  type: 'test'
+  ...
+# Subtest: applies the daily cap after fare and night discounts
+ok 16 - applies the daily cap after fare and night discounts
+  ---
+  duration_ms: 0.25
+  type: 'test'
+  ...
+# Subtest: rejects invalid rides and requires rider id with a cap ledger
+ok 17 - rejects invalid rides and requires rider id with a cap ledger
+  ---
+  duration_ms: 0.585
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 14
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 191.5548

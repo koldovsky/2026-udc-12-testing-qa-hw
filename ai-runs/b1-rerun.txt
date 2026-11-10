@@ -1,0 +1,384 @@
+TAP version 13
+# Subtest: uses the default daily cap and derives the UTC calendar day
+ok 1 - uses the default daily cap and derives the UTC calendar day
+  ---
+  duration_ms: 1.9041
+  type: 'test'
+  ...
+# Subtest: remaining is capped at zero and records cumulative charges by rider and day
+ok 2 - remaining is capped at zero and records cumulative charges by rider and day
+  ---
+  duration_ms: 0.33
+  type: 'test'
+  ...
+# Subtest: separates riders and days
+ok 3 - separates riders and days
+  ---
+  duration_ms: 0.1661
+  type: 'test'
+  ...
+# Subtest: supports a zero custom limit and unknown entries are empty
+ok 4 - supports a zero custom limit and unknown entries are empty
+  ---
+  duration_ms: 0.2114
+  type: 'test'
+  ...
+# Subtest: discount rounds the amount left down to kopecks
+ok 5 - discount rounds the amount left down to kopecks
+  ---
+  duration_ms: 1.0957
+  type: 'test'
+  ...
+# Subtest: charges no time fee below two minutes and one block at the boundary
+not ok 6 - charges no time fee below two minutes and one block at the boundary
+  ---
+  duration_ms: 2.7136
+  type: 'test'
+  location: 'C:\\Users\\bogar\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:35:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+        discounts: [],
+        fees: [],
+        minutes: 2,
+    +   timeCharge: 0,
+    +   total: 0
+    -   timeCharge: 2500,
+    -   total: 2500
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    minutes: 2
+    timeCharge: 2500
+    discounts:
+    fees:
+    total: 2500
+  actual:
+    minutes: 2
+    timeCharge: 0
+    discounts:
+    fees:
+    total: 0
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/bogar/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:37:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: rounds a ride up to the next thirty-minute block
+ok 7 - rounds a ride up to the next thirty-minute block
+  ---
+  duration_ms: 0.3085
+  type: 'test'
+  ...
+# Subtest: uses the ebike rate
+not ok 8 - uses the ebike rate
+  ---
+  duration_ms: 0.3851
+  type: 'test'
+  location: 'C:\\Users\\bogar\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:53:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    0 !== 4000
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 4000
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/bogar/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:54:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: applies reduced fare to time charge and out-of-zone fee
+not ok 9 - applies reduced fare to time charge and out-of-zone fee
+  ---
+  duration_ms: 0.4914
+  type: 'test'
+  location: 'C:\\Users\\bogar\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:57:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   {
+    -     amount: 1250,
+    -     code: 'reduced'
+    -   }
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      code: 'reduced'
+      amount: 1250
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/bogar/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:59:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: subscriber gets 45 free minutes and charges the next block
+ok 10 - subscriber gets 45 free minutes and charges the next block
+  ---
+  duration_ms: 0.3057
+  type: 'test'
+  ...
+# Subtest: subscriber ebike subscription reduces its billed block by twenty percent
+not ok 11 - subscriber ebike subscription reduces its billed block by twenty percent
+  ---
+  duration_ms: 0.5357
+  type: 'test'
+  location: 'C:\\Users\\bogar\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:72:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        {
+    +     amount: 1600,
+    -     amount: 3200,
+          code: 'subscription'
+        }
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      code: 'subscription'
+      amount: 3200
+  actual:
+    0:
+      code: 'subscription'
+      amount: 1600
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/bogar/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:74:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: subscriber concession chooses the cheaper reduced plan when applicable
+not ok 12 - subscriber concession chooses the cheaper reduced plan when applicable
+  ---
+  duration_ms: 0.4448
+  type: 'test'
+  location: 'C:\\Users\\bogar\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:78:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        {
+          amount: 2500,
+    +     code: 'subscription'
+    -     code: 'reduced'
+        }
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      code: 'reduced'
+      amount: 2500
+  actual:
+    0:
+      code: 'subscription'
+      amount: 2500
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/bogar/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:80:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: applies night discount only before six Kyiv time
+not ok 13 - applies night discount only before six Kyiv time
+  ---
+  duration_ms: 0.5593
+  type: 'test'
+  location: 'C:\\Users\\bogar\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:84:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   {
+    -     amount: 750,
+    -     code: 'night'
+    -   }
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      code: 'night'
+      amount: 750
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/bogar/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:87:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: adds out-of-zone and unreturned fees without applying them to time charge
+not ok 14 - adds out-of-zone and unreturned fees without applying them to time charge
+  ---
+  duration_ms: 0.6039
+  type: 'test'
+  location: 'C:\\Users\\bogar\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:92:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    245000 !== 337500
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 337500
+  actual: 245000
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/bogar/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:98:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: combines night discount, reduced fare, and reduced fee
+not ok 15 - combines night discount, reduced fare, and reduced fee
+  ---
+  duration_ms: 0.3941
+  type: 'test'
+  location: 'C:\\Users\\bogar\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:101:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   {
+    -     amount: 1250,
+    -     code: 'reduced'
+    -   },
+    -   {
+    -     amount: 375,
+    -     code: 'night'
+    -   }
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      code: 'reduced'
+      amount: 1250
+    1:
+      code: 'night'
+      amount: 375
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/bogar/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:103:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: applies the daily cap after fare and night discounts
+not ok 16 - applies the daily cap after fare and night discounts
+  ---
+  duration_ms: 0.4388
+  type: 'test'
+  location: 'C:\\Users\\bogar\\2026-udc-12-testing-qa-hw\\ai-runs\\b1-from-code\\tariff.test.js:108:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+    + []
+    - [
+    -   {
+    -     amount: 1500,
+    -     code: 'day-cap'
+    -   }
+    - ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      code: 'day-cap'
+      amount: 1500
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/bogar/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:111:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: rejects invalid rides and requires rider id with a cap ledger
+ok 17 - rejects invalid rides and requires rider id with a cap ledger
+  ---
+  duration_ms: 0.5825
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 8
+# fail 9
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 155.4484

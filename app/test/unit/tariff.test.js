@@ -1,7 +1,7 @@
 import test, { mock } from "node:test";
 import assert from "node:assert/strict";
 import { createDayCap, DAY_CAP } from "../../src/day-cap.js";
-import { BLOCK_MINUTES, QuoteError, RATES, quote } from "../../src/tariff.js";
+import { BLOCK_MINUTES, QuoteError, RATES, discount, quote } from "../../src/tariff.js";
 
 const ride = (pickupAt, returnAt, extra = {}) => ({ pickupAt, returnAt, bike: "classic", returnStation: "S01", ...extra });
 const standard = { type: "standard" };
@@ -21,10 +21,10 @@ test("quote returns an itemised price", () => {
   }
 });
 
-test("a ride of 30 min 20 s is billed as one block", () => {
+test("a ride of 30 min 20 s rounds up to 31 minutes and is billed as two blocks", () => {
   const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:30:20Z"), standard);
-  assert.equal(result.minutes, 30);
-  assert.equal(result.timeCharge, 2500);
+  assert.equal(result.minutes, 31);
+  assert.equal(result.timeCharge, 5000);
 });
 
 test("e-bikes are billed at the e-bike rate", () => {
@@ -33,10 +33,15 @@ test("e-bikes are billed at the e-bike rate", () => {
   assert.equal(result.total, result.timeCharge);
 });
 
-test("subscribers ride the first 45 minutes free", () => {
-  for (const bike of ["classic", "ebike"]) {
-    const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { bike }), { type: "subscriber" });
-    assert.equal(result.total, 0);
+test("subscribers get 45 free classic minutes but a 20 percent ebike discount", () => {
+  const classic = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:45:00Z", { bike: "classic" }), { type: "subscriber" });
+  assert.equal(classic.total, 0);
+
+  for (const [minutes, timeCharge, discountAmount, total] of [[30, 4000, 800, 3200], [45, 8000, 1600, 6400]]) {
+    const result = quote(ride("2026-09-16T07:00:00Z", `2026-09-16T07:${String(minutes).padStart(2, "0")}:00Z`, { bike: "ebike" }), { type: "subscriber" });
+    assert.equal(result.timeCharge, timeCharge);
+    assert.deepEqual(result.discounts, [{ code: "subscription", amount: discountAmount }]);
+    assert.equal(result.total, total);
   }
 });
 
@@ -85,4 +90,66 @@ test("a 45-minute classic ride costs 50 UAH", () => {
 
 test("a return before the pickup is rejected", () => {
   assert.throws(() => quote(ride("2026-09-16T08:00:00Z", "2026-09-16T07:00:00Z"), standard), QuoteError);
+});
+
+test("free start ends after exactly two minutes", () => {
+  assert.equal(quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:02:00Z"), standard).total, 0);
+  assert.equal(quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:03:00Z"), standard).timeCharge, 2500);
+});
+
+test("subscription free classic allowance ends at 45 minutes", () => {
+  const free = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:45:00Z"), { type: "subscriber" });
+  assert.equal(free.total, 0);
+  assert.equal(quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:46:00Z"), { type: "subscriber" }).total, 2500);
+});
+
+test("night discount applies before 06:00 but not at 06:00", () => {
+  const before = quote(ride("2026-09-15T22:59:00Z", "2026-09-15T23:29:00Z"), standard);
+  const atSix = quote(ride("2026-09-16T03:00:00Z", "2026-09-16T03:30:00Z"), standard);
+  assert.equal(before.discounts[0].code, "night");
+  assert.deepEqual(atSix.discounts, []);
+  const freeAtNight = quote(ride("2026-09-15T21:00:00Z", "2026-09-15T21:02:00Z"), standard);
+  assert.deepEqual(freeAtNight.discounts, []);
+  assert.deepEqual(quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:02:00Z"), { type: "subscriber" }).discounts, []);
+});
+
+test("a charge exactly equal to the remaining daily allowance is not capped", () => {
+  const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:30:00Z"), { id: "rider-cap", type: "standard" }, {
+    dayCap: createDayCap({ limit: 2500 }),
+  });
+  assert.deepEqual(result.discounts, []);
+  assert.equal(result.total, 2500);
+});
+
+test("discount rounds the amount payable down to kopecks", () => {
+  assert.equal(discount(1235, 30), 371);
+});
+
+test("a concession subscriber uses the subscription plan on an exact tie", () => {
+  const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T08:00:00Z"), { type: "subscriber", concession: true });
+  assert.deepEqual(result.discounts, [{ code: "subscription", amount: 2500 }]);
+});
+
+test("unreturned fee starts only after 24 hours", () => {
+  const exact = quote(ride("2026-09-16T07:00:00Z", "2026-09-17T07:00:00Z"), standard);
+  const late = quote(ride("2026-09-16T07:00:00Z", "2026-09-17T07:01:00Z"), standard);
+  assert.deepEqual(exact.fees, []);
+  assert.deepEqual(late.fees, [{ code: "unreturned", amount: 200000 }]);
+});
+
+test("invalid ride, rider, and date values are rejected with QuoteError", () => {
+  assert.throws(() => quote(null, standard), QuoteError);
+  assert.throws(() => quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:01:00Z"), null), QuoteError);
+  assert.throws(() => quote(ride("not-a-date", "2026-09-16T07:01:00Z"), standard), QuoteError);
+});
+
+test("a zero-length ride is valid", () => {
+  const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:00:00Z"), standard);
+  assert.equal(result.minutes, 0);
+  assert.equal(result.total, 0);
+});
+
+test("date-time fields must be strings even if another value stringifies like one", () => {
+  const dateLike = { toString: () => "2026-09-16T07:00:00Z" };
+  assert.throws(() => quote(ride(dateLike, "2026-09-16T07:01:00Z"), standard), QuoteError);
 });

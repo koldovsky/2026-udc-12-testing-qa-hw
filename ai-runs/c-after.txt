@@ -1,0 +1,25 @@
+bash: pm: command not found
+мутантів: 89, паралельно: 2, базовий прогін: 348 мс
+  10/89
+  20/89
+  30/89
+  40/89
+  50/89
+  60/89
+  70/89
+  80/89
+  89/89
+Мутаційне тестування
+  цілі:   app/src/tariff.js, app/src/day-cap.js
+  тести:  app/test/unit, app/test/spec — файлів: 5, тестів: 50, пропущено: 0, todo: 0, викликів assert: 84
+
+файл                мутантів     вбито    вижило   таймаут     score
+app/src/tariff.js         80        78         2         0    97.5 %
+app/src/day-cap.js         9         9         0         0   100.0 %
+разом                     89        87         2         0    97.8 %
+
+Вижили (2) — тести не помітили цієї зміни:
+  M016  app/src/tariff.js:47:21     0 → 1                       if (plan.amount > 0) discounts.push({ code: plan.code, amount: plan...
+  M019  app/src/tariff.js:50:13     0 → 1                       if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+
+Час: 17.8 с

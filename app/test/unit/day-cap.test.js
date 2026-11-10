@@ -11,3 +11,13 @@ test("charges recorded for a day reduce what is left of the cap", () => {
 test("the day of a ride is the date of its pickup", () => {
   assert.equal(dayKey("2026-09-16T08:00:00Z"), "2026-09-16");
 });
+
+test("remaining is zero at and below an exhausted limit", () => {
+  const ledger = createDayCap();
+  ledger.record("rider-1", "2026-09-16T08:00:00Z", DAY_CAP);
+  assert.equal(ledger.remaining("rider-1", "2026-09-16T12:00:00Z"), 0);
+});
+
+test("chargedOn returns zero for an unknown rider and day", () => {
+  assert.equal(createDayCap().chargedOn("missing", "2026-09-16"), 0);
+});
