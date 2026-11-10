@@ -60,15 +60,15 @@ export function quote(ride, rider, { zones = stationZones, dayCap } = {}) {
   }
   dayCap?.record(rider.id, pickup, due);
 
-  const fees = feesFor(minutes, zone).map((fee) =>
-    plan.code === "reduced" ? { code: fee.code, amount: fee.amount - discount(fee.amount, REDUCED_PERCENT) } : fee,
-  );
+  // T5: the reduced fare does not apply to fees (T7, T8); fees are added in full.
+  const fees = feesFor(minutes, zone);
   const total = fees.reduce((sum, fee) => sum + fee.amount, due);
   return { minutes, timeCharge, discounts, fees, total };
 }
 
+/** T1: an incomplete minute counts as a full one — round up. */
 function rideMinutes(pickup, returned) {
-  return Math.round((returned - pickup) / 60_000);
+  return Math.ceil((returned - pickup) / 60_000);
 }
 
 function blocks(minutes) {
@@ -76,20 +76,22 @@ function blocks(minutes) {
 }
 
 function chargeFor(minutes, bike) {
-  if (minutes < FREE_START_MINUTES) return 0;
+  // T2: a ride of no more than 2 minutes is a false start — no time charge.
+  if (minutes <= FREE_START_MINUTES) return 0;
   return blocks(minutes) * RATES[bike];
 }
 
-function subscriptionCharge(minutes, bike) {
-  const charge = blocks(Math.max(0, minutes - SUBSCRIPTION_FREE_MINUTES)) * RATES[bike];
-  return bike === "ebike" ? charge - discount(charge, SUBSCRIPTION_EBIKE_PERCENT) : charge;
+/** T4: classic — the first 45 minutes are free; e-bike — 20 % off the T3 charge, no free minutes. */
+function subscriptionCharge(minutes, bike, timeCharge) {
+  if (bike === "ebike") return timeCharge - discount(timeCharge, SUBSCRIPTION_EBIKE_PERCENT);
+  return blocks(Math.max(0, minutes - SUBSCRIPTION_FREE_MINUTES)) * RATES[bike];
 }
 
 /** The fare discount: subscription or reduced fare, whichever leaves the rider less to pay. */
 function cheaperPlan(minutes, bike, rider, timeCharge) {
   const plans = [{ code: "none", amount: 0 }];
   if (rider.type === "subscriber") {
-    plans.push({ code: "subscription", amount: timeCharge - subscriptionCharge(minutes, bike) });
+    plans.push({ code: "subscription", amount: timeCharge - subscriptionCharge(minutes, bike, timeCharge) });
   }
   if (rider.type === "reduced" || (rider.type === "subscriber" && rider.concession === true)) {
     plans.push({ code: "reduced", amount: discount(timeCharge, REDUCED_PERCENT) });

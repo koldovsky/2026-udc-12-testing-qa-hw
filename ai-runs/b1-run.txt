@@ -1,0 +1,71 @@
+✔ DAY_CAP is 30000 kopecks (1.3909ms)
+✔ dayKey returns the UTC date of the instant (ms or ISO string) (3.8319ms)
+✔ new ledger: default limit, full allowance, nothing charged (0.6527ms)
+✔ custom limit is used (0.3974ms)
+✔ record reduces remaining and accumulates in chargedOn (0.3475ms)
+✔ remaining never goes below zero (0.282ms)
+✔ riders and days are tracked independently (0.2578ms)
+✔ ledgers are independent of each other (0.2453ms)
+✔ recording 0 is harmless (0.323ms)
+▶ discount()
+  ✔ percent off, remainder rounded down to the kopeck (0.9405ms)
+✔ discount() (3.6007ms)
+▶ time charge
+  ✔ rides under 2 minutes are free (2.5682ms)
+  ✔ zero-length ride is free (0.2517ms)
+  ✔ 2 minutes already costs one block (0.4238ms)
+  ✔ blocks of 30 minutes, a started block is charged (0.4597ms)
+  ✔ e-bike rate (0.2543ms)
+  ✔ minutes are rounded to the nearest minute (0.3777ms)
+  ✔ Z and offset timestamps denote the same instant (0.3169ms)
+✔ time charge (6.6624ms)
+▶ rider plans
+  ✔ reduced rider pays half (0.7354ms)
+  ✔ subscriber: first 45 minutes are free (classic) (0.4237ms)
+  ✔ subscriber classic beyond free minutes pays the remaining blocks (0.2972ms)
+  ✔ subscriber e-bike gets an extra 20% off the paid part (0.2815ms)
+  ✔ subscriber with concession gets the cheaper of subscription and reduced (0.2507ms)
+  ✔ concession is ignored for non-subscribers and when not strictly true (0.2157ms)
+  ✔ no discount entry when there is nothing to discount (0.1221ms)
+✔ rider plans (2.8795ms)
+▶ night discount (Kyiv time, before 06:00)
+  ✔ 30% off a ride started at night (0.2557ms)
+  ✔ 05:59 is night, 06:00 is not (0.1609ms)
+  ✔ hour is judged in Kyiv time, whatever offset the input uses (0.1721ms)
+  ✔ night applies on top of the plan discount (0.1605ms)
+  ✔ no night discount when nothing is left to pay (0.1602ms)
+✔ night discount (Kyiv time, before 06:00) (1.1137ms)
+▶ daily cap
+  ✔ without a ledger a single ride is capped at 30000 (0.2593ms)
+  ✔ a ride below the cap gets no day-cap discount (1.31ms)
+  ✔ ledger: a second ride the same day gets only the remaining allowance (0.8715ms)
+  ✔ ledger: partial remaining (0.3479ms)
+  ✔ ledger books the amount due after discounts (0.2418ms)
+  ✔ different riders have separate allowances (0.189ms)
+  ✔ night discount is applied before the cap (0.1791ms)
+  ✔ rider.id is required with a ledger (0.6086ms)
+✔ daily cap (4.4882ms)
+▶ fees
+  ✔ out-of-zone return adds 15000 (0.3889ms)
+  ✔ fees are not subject to the daily cap (0.1725ms)
+  ✔ exactly 24h is not 'unreturned'; more than 24h adds 200000 (0.3438ms)
+  ✔ both fees combine, in order (0.3097ms)
+  ✔ reduced fare halves the fees too (0.2511ms)
+  ✔ subscription does not discount fees (0.173ms)
+  ✔ a custom zone lookup is honoured (0.1622ms)
+✔ fees (2.1821ms)
+▶ validation
+  ✔ bad ride input (0.469ms)
+  ✔ return before pickup (0.203ms)
+  ✔ unknown bike, including inherited property names (0.2555ms)
+  ✔ unknown station (0.2418ms)
+  ✔ bad rider (0.2274ms)
+✔ validation (1.6524ms)
+ℹ tests 49
+ℹ suites 7
+ℹ pass 49
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 501.0114

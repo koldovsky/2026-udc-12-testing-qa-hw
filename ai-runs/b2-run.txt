@@ -1,0 +1,370 @@
+
+> test
+> npm --prefix app test
+
+
+> veloprokat@3.2.0 test
+> node --test "test/**/*.test.js"
+
+✔ every receipt of a week of rides ends with the amount due (5.6424ms)
+✔ a receipt lists the fee for a return outside the zone (1.4748ms)
+✔ T9: TC-46 форматування 230000 коп. → «2 300,00 грн» (3.306ms)
+✔ T9: TC-47 чек 20 хв, X01: рядки по черзі з правильними сумами (2.8334ms)
+✔ T9: TC-48 чек 25 год: рядки по черзі з правильними сумами (0.6944ms)
+✔ T9: TC-60 чек абонент+пільга, 80 хв: рядки по черзі з правильними сумами (0.8044ms)
+✔ T1: TC-01 10:00:00–10:12:40 → 13 хв, 1 блок (2.5294ms)
+✔ T1: TC-02 14:05–14:41 → 36 хв, 2 блоки (0.2304ms)
+✔ T1: TC-03 29:59 → 30 хв, 1 блок (0.1572ms)
+✔ T1: TC-04 рівно 30:00 → 30 хв, 1 блок (0.2187ms)
+✖ T1: TC-05 30:01 → 31 хв, 2 блоки (4.5641ms)
+✖ T1: TC-06 ніч переведення годинника: фактично 180 хв, 6 блоків (лише minutes і timeCharge) (0.8566ms)
+✔ T1: TC-58 повернення «раніше» за годинником, але фактично пізніше: не відхиляється, 40 хв, −30 % → 3500 (0.3688ms)
+✔ T2: TC-07 50 с → 1 хв, 0 (0.2877ms)
+✖ T2: TC-08 рівно 2 хв → 0 (0.5443ms)
+✖ T2: TC-09 2 хв 1 с → 3 хв → 2500 (0.6554ms)
+✔ T2: TC-10 4 хв → 1 блок 2500 (0.3566ms)
+✔ T2: TC-11 0 с → 0 хв, не відхиляється, 0 (0.249ms)
+✔ T2: TC-12 1 хв + повернення на X01 → лише збір 15000 (1.8609ms)
+✔ T3: TC-13 класичний 50 хв → 2 блоки 5000 (0.2981ms)
+✔ T3: TC-14 електро 75 хв → 3 блоки 12000 (0.236ms)
+✔ T3: TC-15 класичний 60 хв → 5000 (0.2344ms)
+✔ T3: TC-15 класичний 61 хв → 7500 (0.1962ms)
+✔ T3: TC-16 електро 30 хв → 4000 (0.1886ms)
+✔ T3: TC-16 електро 31 хв → 8000 (0.2012ms)
+✔ T4: TC-17 абонент, класичний 40 хв → 0 (0.3643ms)
+✔ T4: TC-18 абонент, класичний 100 хв → 5000 (0.3049ms)
+✔ T4: TC-19 абонент, класичний 45 хв → 0 (0.1859ms)
+✔ T4: TC-20 абонент, класичний 46 хв → 2500 (0.2545ms)
+✔ T4: TC-21 абонент, класичний 75 хв → 2500 (0.1923ms)
+✔ T4: TC-21 абонент, класичний 76 хв → 5000 (0.1889ms)
+✖ T4: TC-22 абонент, електро 40 хв → 4000 − 20 % = 3200 (0.4256ms)
+✖ T4: TC-23 абонент, електро 75 хв → 12000 − 20 % = 9600 (1.3695ms)
+✖ T4: TC-59 абонент, електро 20 хв, X01 → 3200 + збір 15000 без знижки = 18200 (0.8327ms)
+✔ T5: TC-24 пільговий, класичний 40 хв → 5000 − 50 % = 2500 (0.2867ms)
+✔ T5: TC-25 пільговий, електро 75 хв → 6000 (0.2397ms)
+✔ T5: TC-26 абонент+пільга, класичний 80 хв: абонемент 5000 vs пільга 3750 → 3750 (0.2689ms)
+✔ T5: TC-27 абонент+пільга, класичний 40 хв: абонемент 0 vs пільга 2500 → 0 (0.287ms)
+✔ T5: TC-28 абонент+пільга, класичний 91 хв: суми рівні (5000) → до сплати 5000 (0.2613ms)
+✖ T5: TC-29 абонент+пільга, електро 40 хв: абонемент 3200 vs пільга 2000 → 2000 (0.4383ms)
+✖ T5: TC-30 пільговий, 20 хв, X01 → 1250 + збір 15000 без знижки = 16250 (1.8188ms)
+✖ T5: TC-31 пільговий, 25 год → ліміт 30000 + збір 200000 без знижки = 230000 (0.7059ms)
+✔ T5: TC-28 рівність сум → застосовано знижку «абонемент», а не пільгу (0.4439ms)
+✔ T6: TC-32 три поїздки електро по 80 хв: 12000, 12000, 6000 (0.614ms)
+✔ T6: TC-33 300 хв → 25000; 60 хв → 5000 (рівно 30000); 20 хв → 0 (0.3114ms)
+✔ T6: TC-34 поїздка 16.09 23:40 → 17.09 00:20 належить до 16.09, ліміт вичерпано → 0 (0.2021ms)
+✖ T6: TC-35 17.09 00:30–01:00 за Києвом — нова доба: 2500 − 30 % = 1750 (0.3927ms)
+✔ T6: TC-36 ліміт на одного користувача: інший користувач платить 2500 (0.2908ms)
+✔ T6: TC-37 пільговий, електро: 20000, потім залишок ліміту 10000 (0.2585ms)
+✔ T6: TC-38 ліміт вичерпано, повернення на X02: лише збір 15000 (0.2482ms)
+✔ T6: TC-33 третя поїздка — рядок «ліміт» на 2500; друга (рівно 30000) — без рядка ліміту (0.5156ms)
+✔ T6: TC-32 третя поїздка — рядок «денний ліміт» на 6000 (0.686ms)
+✔ T7: TC-39 20 хв, X01 → 2500 + 15000 = 17500 (0.3166ms)
+✔ T7: TC-40 20 хв, X02 → 17500 (0.263ms)
+✔ T7: TC-40 20 хв, X03 → 17500 (0.2244ms)
+✔ T7: TC-40 20 хв, S08 (у зоні) → 2500 (0.2314ms)
+✔ T8: TC-41 рівно 24 год → збору немає, 30000 (3.0515ms)
+✖ T8: TC-42 24 год 1 с → 1441 хв → 30000 + 200000 (0.5116ms)
+✔ T8: TC-43 25 год → ліміт 30000 + збір 200000 = 230000 (0.2852ms)
+✔ T8: TC-44 25 год, X03 → 30000 + 15000 + 200000 = 245000 (0.2336ms)
+✔ T8: TC-44 обидва збори застосовано (15000 і 200000) (0.4682ms)
+✔ T9: TC-45 знижка 30 % від 1235 коп.: до сплати 864, знижка 371 (0.1926ms)
+✔ T10: TC-49 01:10–01:40 → 2500 − 30 % = 1750 (0.2174ms)
+✔ T10: TC-50 00:00–00:20 → 1750 (0.2065ms)
+✔ T10: TC-51 05:30–05:59 → 1750 (0.1674ms)
+✔ T10: TC-52 06:01–06:21 → 2500 (0.1579ms)
+✔ T10: TC-52 23:00–23:30 → 2500 (0.1799ms)
+✔ T10: TC-53 електро 02:00–02:30 → 4000 − 30 % = 2800 (0.1693ms)
+✔ Розд. 4: TC-54 повернення раніше за взяття → запит відхилено (1.0936ms)
+✔ Розд. 4: TC-55 тип велосипеда tandem → запит відхилено (0.2344ms)
+✔ Розд. 4: TC-56 категорія користувача vip → запит відхилено (0.2734ms)
+✔ Розд. 4: TC-57 станція повернення S09 → запит відхилено (0.1916ms)
+✔ charges recorded for a day reduce what is left of the cap (5.5665ms)
+✔ the day of a ride is the date of its pickup (0.4685ms)
+✔ amounts are shown in hryvnias (3.0921ms)
+✔ a receipt has a line for every item (0.8818ms)
+✔ GET / serves the page and GET /api/health answers (5.0981ms)
+✔ POST /api/quote returns the quote and the receipt (7.997ms)
+✔ POST /api/quote answers 400 to a body that is not JSON (3.1059ms)
+✔ quote returns an itemised price (4.5244ms)
+✔ a ride of 30 min 20 s is billed as one block (0.4667ms)
+✔ e-bikes are billed at the e-bike rate (0.4352ms)
+✔ subscribers ride the first 45 minutes free (0.5847ms)
+✔ subscription on a long e-bike ride (0.521ms)
+✔ reduced fare for a ride returned outside the zone (0.6001ms)
+✔ night rides get 30 % off (0.4885ms)
+✔ a bike kept over a day and left outside the zone pays both fees (0.4428ms)
+✔ the daily cap limits the time charge (1.3555ms)
+✔ a 45-minute classic ride costs 50 UAH (1.1819ms)
+✔ a return before the pickup is rejected (0.9499ms)
+ℹ tests 90
+ℹ suites 0
+ℹ pass 78
+ℹ fail 12
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 712.4574
+
+✖ failing tests:
+
+test at test\spec\tariff.test.js:17:5
+✖ T1: TC-05 30:01 → 31 хв, 2 блоки (4.5641ms)
+  AssertionError [ERR_ASSERTION]: minutes
+  
+  30 !== 31
+  
+      at TestContext.<anonymous> (file:///C:/Users/Home-User/Documents/Git/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:20:39)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 30,
+    expected: 31,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff.test.js:17:5
+✖ T1: TC-06 ніч переведення годинника: фактично 180 хв, 6 блоків (лише minutes і timeCharge) (0.8566ms)
+  AssertionError [ERR_ASSERTION]: total
+  + actual - expected
+  
+  + 10500
+  - undefined
+  
+      at TestContext.<anonymous> (file:///C:/Users/Home-User/Documents/Git/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:23:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 10500,
+    expected: undefined,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff.test.js:17:5
+✖ T2: TC-08 рівно 2 хв → 0 (0.5443ms)
+  AssertionError [ERR_ASSERTION]: timeCharge
+  
+  2500 !== 0
+  
+      at TestContext.<anonymous> (file:///C:/Users/Home-User/Documents/Git/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:21:42)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2500,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff.test.js:17:5
+✖ T2: TC-09 2 хв 1 с → 3 хв → 2500 (0.6554ms)
+  AssertionError [ERR_ASSERTION]: minutes
+  
+  2 !== 3
+  
+      at TestContext.<anonymous> (file:///C:/Users/Home-User/Documents/Git/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:20:39)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff.test.js:17:5
+✖ T4: TC-22 абонент, електро 40 хв → 4000 − 20 % = 3200 (0.4256ms)
+  AssertionError [ERR_ASSERTION]: total
+  
+  0 !== 3200
+  
+      at TestContext.<anonymous> (file:///C:/Users/Home-User/Documents/Git/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:23:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 3200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff.test.js:17:5
+✖ T4: TC-23 абонент, електро 75 хв → 12000 − 20 % = 9600 (1.3695ms)
+  AssertionError [ERR_ASSERTION]: total
+  
+  3200 !== 9600
+  
+      at TestContext.<anonymous> (file:///C:/Users/Home-User/Documents/Git/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:23:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3200,
+    expected: 9600,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff.test.js:17:5
+✖ T4: TC-59 абонент, електро 20 хв, X01 → 3200 + збір 15000 без знижки = 18200 (0.8327ms)
+  AssertionError [ERR_ASSERTION]: total
+  
+  15000 !== 18200
+  
+      at TestContext.<anonymous> (file:///C:/Users/Home-User/Documents/Git/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:23:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 15000,
+    expected: 18200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff.test.js:17:5
+✖ T5: TC-29 абонент+пільга, електро 40 хв: абонемент 3200 vs пільга 2000 → 2000 (0.4383ms)
+  AssertionError [ERR_ASSERTION]: total
+  
+  0 !== 2000
+  
+      at TestContext.<anonymous> (file:///C:/Users/Home-User/Documents/Git/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:23:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 2000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff.test.js:17:5
+✖ T5: TC-30 пільговий, 20 хв, X01 → 1250 + збір 15000 без знижки = 16250 (1.8188ms)
+  AssertionError [ERR_ASSERTION]: fees
+  + actual - expected
+  
+    [
+  +   7500
+  -   15000
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/Home-User/Documents/Git/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:22:36)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 7500 ],
+    expected: [ 15000 ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff.test.js:17:5
+✖ T5: TC-31 пільговий, 25 год → ліміт 30000 + збір 200000 без знижки = 230000 (0.7059ms)
+  AssertionError [ERR_ASSERTION]: fees
+  + actual - expected
+  
+    [
+  +   100000
+  -   200000
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Users/Home-User/Documents/Git/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:22:36)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: [ 100000 ],
+    expected: [ 200000 ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff.test.js:124:3
+✖ T6: TC-35 17.09 00:30–01:00 за Києвом — нова доба: 2500 − 30 % = 1750 (0.3927ms)
+  AssertionError [ERR_ASSERTION]: крок 1
+  
+  0 !== 1750
+  
+      at TestContext.<anonymous> (file:///C:/Users/Home-User/Documents/Git/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:126:14)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1750,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff.test.js:17:5
+✖ T8: TC-42 24 год 1 с → 1441 хв → 30000 + 200000 (0.5116ms)
+  AssertionError [ERR_ASSERTION]: minutes
+  
+  1440 !== 1441
+  
+      at TestContext.<anonymous> (file:///C:/Users/Home-User/Documents/Git/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:20:39)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1440,
+    expected: 1441,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
