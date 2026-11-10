@@ -20,7 +20,8 @@ function runTable(rule, rows) {
       if ("minutes" in expect) assert.equal(result.minutes, expect.minutes, "minutes");
       if ("timeCharge" in expect) assert.equal(result.timeCharge, expect.timeCharge, "timeCharge");
       if ("fees" in expect) assert.deepEqual(result.fees.map((f) => f.amount), expect.fees, "fees");
-      assert.equal(result.total, expect.total, "total");
+      // TC-06 checks only minutes and timeCharge (the night part depends on Q-1): compare total only when the case states it.
+      if ("total" in expect) assert.equal(result.total, expect.total, "total");
     });
   }
 }
@@ -75,7 +76,8 @@ runTable("T4", [
   { id: "TC-20", name: "абонент, класичний 46 хв → 2500", ride: ride("10:00", "10:46"), rider: sub, expect: { total: 2500 } },
   { id: "TC-21", name: "абонент, класичний 75 хв → 2500", ride: ride("10:00", "11:15"), rider: sub, expect: { total: 2500 } },
   { id: "TC-21", name: "абонент, класичний 76 хв → 5000", ride: ride("10:00", "11:16"), rider: sub, expect: { total: 5000 } },
-  { id: "TC-22", name: "абонент, електро 40 хв → 4000 − 20 % = 3200", ride: ride("10:00", "10:40", EBIKE), rider: sub, expect: { total: 3200 } },
+  // docs/spec/tariffs.md:62 (40 min = 2 started blocks), :76-77 (no free minutes on an e-bike, 20 % off)
+  { id: "TC-22", name: "абонент, електро 40 хв → 2 блоки 8000 − 20 % = 6400", ride: ride("10:00", "10:40", EBIKE), rider: sub, expect: { timeCharge: 8000, total: 6400 } },
   { id: "TC-23", name: "абонент, електро 75 хв → 12000 − 20 % = 9600", ride: ride("10:00", "11:15", EBIKE), rider: sub, expect: { total: 9600 } },
   {
     id: "TC-59",
@@ -95,7 +97,8 @@ runTable("T5", [
   { id: "TC-26", name: "абонент+пільга, класичний 80 хв: абонемент 5000 vs пільга 3750 → 3750", ride: ride("10:00", "11:20"), rider: subConc, expect: { total: 3750 } },
   { id: "TC-27", name: "абонент+пільга, класичний 40 хв: абонемент 0 vs пільга 2500 → 0", ride: ride("10:00", "10:40"), rider: subConc, expect: { total: 0 } },
   { id: "TC-28", name: "абонент+пільга, класичний 91 хв: суми рівні (5000) → до сплати 5000", ride: ride("10:00", "11:31"), rider: subConc, expect: { timeCharge: 10000, total: 5000 } },
-  { id: "TC-29", name: "абонент+пільга, електро 40 хв: абонемент 3200 vs пільга 2000 → 2000", ride: ride("10:00", "10:40", EBIKE), rider: subConc, expect: { total: 2000 } },
+  // docs/spec/tariffs.md:62, :76, :86, :89-91 — 8000: subscription 6400 vs reduced 4000 → reduced
+  { id: "TC-29", name: "абонент+пільга, електро 40 хв: абонемент 6400 vs пільга 4000 → 4000", ride: ride("10:00", "10:40", EBIKE), rider: subConc, expect: { timeCharge: 8000, total: 4000 } },
   {
     id: "TC-30",
     name: "пільговий, 20 хв, X01 → 1250 + збір 15000 без знижки = 16250",
