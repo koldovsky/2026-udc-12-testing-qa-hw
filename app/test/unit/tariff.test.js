@@ -35,11 +35,17 @@ test("e-bikes are billed at the e-bike rate", () => {
   assert.equal(result.total, result.timeCharge);
 });
 
-test("subscribers ride the first 45 minutes free", () => {
-  for (const bike of ["classic", "ebike"]) {
-    const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { bike }), { type: "subscriber" });
-    assert.equal(result.total, 0);
-  }
+// T4 (docs/spec/tariffs.md:74-77): 45 free minutes only on a classic bike; an e-bike gets 20 % off
+// and "has no free minutes". The test used to assert total 0 for the e-bike too — it asserted BUG-3.
+test("subscribers ride the first 45 minutes free on a classic bike", () => {
+  const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z"), { type: "subscriber" });
+  assert.equal(result.total, 0);
+});
+
+test("subscribers get 20 % off an e-bike and no free minutes", () => {
+  const result = quote(ride("2026-09-16T07:00:00Z", "2026-09-16T07:40:00Z", { bike: "ebike" }), { type: "subscriber" });
+  assert.equal(result.timeCharge, 8000);
+  assert.equal(result.total, 6400);
 });
 
 test("subscription on a long e-bike ride", () => {
