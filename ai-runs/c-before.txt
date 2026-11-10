@@ -1,0 +1,66 @@
+[32m✔ charges recorded for a day reduce what is left of the cap [90m(6.7234ms)[39m[39m
+[32m✔ the day of a ride is the date of its pickup [90m(0.4314ms)[39m[39m
+[32m✔ amounts are shown in hryvnias [90m(3.9689ms)[39m[39m
+[32m✔ a receipt has a line for every item [90m(0.7638ms)[39m[39m
+[32m✔ GET / serves the page and GET /api/health answers [90m(4.9821ms)[39m[39m
+[32m✔ POST /api/quote returns the quote and the receipt [90m(11.0477ms)[39m[39m
+[32m✔ POST /api/quote answers 400 to a body that is not JSON [90m(2.5376ms)[39m[39m
+[32m✔ quote returns an itemised price [90m(4.2525ms)[39m[39m
+[32m✔ a ride of 30 min 20 s is billed as 31 minutes → 2 blocks (T1) [90m(0.656ms)[39m[39m
+[32m✔ e-bikes are billed at the e-bike rate [90m(0.5046ms)[39m[39m
+[32m✔ subscribers: classic first 45 min free, e-bike has no free minutes (T4) [90m(0.7689ms)[39m[39m
+[32m✔ subscription on a long e-bike ride [90m(0.702ms)[39m[39m
+[32m✔ reduced fare for a ride returned outside the zone [90m(0.7389ms)[39m[39m
+[32m✔ night rides get 30 % off [90m(0.4481ms)[39m[39m
+[32m✔ a bike kept over a day and left outside the zone pays both fees [90m(0.3878ms)[39m[39m
+[32m✔ the daily cap limits the time charge [90m(1.3027ms)[39m[39m
+[32m✔ a 45-minute classic ride costs 50 UAH [90m(1.1798ms)[39m[39m
+[32m✔ a return before the pickup is rejected [90m(1.3247ms)[39m[39m
+[34mℹ tests 18[39m
+[34mℹ suites 0[39m
+[34mℹ pass 18[39m
+[34mℹ fail 0[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 648.9168[39m
+[34mℹ start of coverage report
+ℹ ----------------------------------------------------------------
+ℹ file            | [31mline %[34m | [31mbranch %[34m | [31mfuncs %[34m | uncovered lines
+ℹ ----------------------------------------------------------------
+ℹ src             | [31m      [34m | [31m        [34m | [31m       [34m | 
+ℹ  [32mday-cap.js    [34m | [32m 96.43[34m | [32m  100.00[34m | [33m  83.33[34m | 25
+ℹ  [32mkyiv-time.js  [34m | [32m100.00[34m | [32m  100.00[34m | [32m 100.00[34m | 
+ℹ  [32mreceipt.js    [34m | [32m100.00[34m | [33m   75.00[34m | [32m 100.00[34m | 
+ℹ  [33mserver.js     [34m | [33m 89.61[34m | [33m   73.91[34m | [33m  71.43[34m | 36 39-40 73-77
+ℹ  [32mtariff.js     [34m | [32m 98.53[34m | [33m   84.91[34m | [32m 100.00[34m | 131-132
+ℹ  [33mzones.js      [34m | [32m 96.55[34m | [33m   75.00[34m | [33m  66.67[34m | 24
+ℹ ----------------------------------------------------------------
+ℹ all files       | [32m 96.34[34m | [33m   82.83[34m | [33m  88.57[34m | 
+ℹ ----------------------------------------------------------------
+ℹ end of coverage report
+[39mМутаційне тестування
+  цілі:   app/src/tariff.js, app/src/day-cap.js
+  тести:  app/test/unit, app/test/spec — файлів: 5, тестів: 45, пропущено: 0, todo: 0, викликів assert: 45
+
+файл                мутантів     вбито    вижило   таймаут     score
+app/src/tariff.js         81        70        11         0    86.4 %
+app/src/day-cap.js         9         7         2         0    77.8 %
+разом                     90        77        13         0    85.6 %
+
+Вижили (13) — тести не помітили цієї зміни:
+  M014  app/src/tariff.js:28:46     60 → 61                     export const UNRETURNED_AFTER_MINUTES = 24 * 60;
+  M016  app/src/tariff.js:47:21     0 → 1                       if (plan.amount > 0) discounts.push({ code: plan.code, amount: plan...
+  M018  app/src/tariff.js:50:11     > → >=                      if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+  M019  app/src/tariff.js:50:13     0 → 1                       if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+  M023  app/src/tariff.js:57:11     > → >=                      if (due > allowance) {
+  M033  app/src/tariff.js:71:42     60_000 → 60001              return Math.ceil((returned - pickup) / 60_000);
+  M067  app/src/tariff.js:109:15    > → >=                      if (minutes > UNRETURNED_AFTER_MINUTES) fees.push({ code: "unreturn...
+  M069  app/src/tariff.js:114:13    || → &&                     if (!ride || typeof ride !== "object") throw new QuoteError("ride i...
+  M071  app/src/tariff.js:117:16    < → <=                      if (returned < pickup) throw new QuoteError("returnAt is before pic...
+  M075  app/src/tariff.js:125:14    || → &&                     if (!rider || !RIDER_TYPES.has(rider.type)) throw new QuoteError(`u...
+  M080  app/src/tariff.js:130:33    || → &&                     if (typeof value !== "string" || !ISO_DATE_TIME.test(value)) {
+  M085  app/src/day-cap.js:18:23    0 → 1                       return Math.max(0, limit - (charged.get(keyOf(riderId, pickupAt)) ?...
+  M090  app/src/day-cap.js:25:50    0 → 1                       return charged.get(`${riderId}|${day}`) ?? 0;
+
+Час: 59.8 с

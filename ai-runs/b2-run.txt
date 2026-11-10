@@ -1,0 +1,145 @@
+[32m✔ every receipt of a week of rides ends with the amount due [90m(5.3193ms)[39m[39m
+[32m✔ a receipt lists the fee for a return outside the zone [90m(1.8674ms)[39m[39m
+[32m✔ T1: 50 с округляється вгору до 1 хв; 1 ≤ 2 хв → 0 грн (TC-01) [90m(3.9233ms)[39m[39m
+[31m✖ T1: 121 с → 3 хв; > 2 хв → ceil(3/30)=1 блок, класичний 25 грн (TC-02) [90m(2.2074ms)[39m[39m
+[31m✖ T2: 120 с = 2 хв; ≤ 2 хв → погодинне нарахування 0 грн (TC-03) [90m(0.5323ms)[39m[39m
+[31m✖ T2: 121 с → 3 хв; > 2 хв → ceil(3/30)=1 блок, класичний 25 грн (TC-04) [90m(0.4805ms)[39m[39m
+[32m✔ T3: класичний 50 хв → ceil(50/30)=2 блоки, 50 грн (TC-05) [90m(0.4752ms)[39m[39m
+[32m✔ T3: електровелосипед 75 хв → ceil(75/30)=3 блоки, 120 грн (TC-06) [90m(0.3435ms)[39m[39m
+[32m✔ T3: класичний 30 хв (ровно 1 блок) → 25 грн (TC-07) [90m(3.2761ms)[39m[39m
+[32m✔ T3: класичний 31 хв (2 блоки) → 50 грн (TC-08) [90m(0.3508ms)[39m[39m
+[32m✔ T4: абонент, класичний 40 хв → перші 45 безкоштовно → 0 грн (TC-09) [90m(3.23ms)[39m[39m
+[32m✔ T4: абонент, класичний 45 хв (межа безкоштовних) → 0 грн (TC-10) [90m(1.9825ms)[39m[39m
+[32m✔ T4: абонент, класичний 46 хв → платних 1 хв → 1 блок, 25 грн (TC-11) [90m(0.4516ms)[39m[39m
+[32m✔ T4: абонент, класичний 100 хв → платних 55 хв → 2 блоки, 50 грн (TC-12) [90m(0.3209ms)[39m[39m
+[31m✖ T4: абонент, електровелосипед 75 хв → 3 блоки 120 грн, −20% → 96 грн (TC-13) [90m(0.6281ms)[39m[39m
+[32m✔ T5: пільговий (не абонент), класичний 40 хв → 2 блоки 50 грн − 50% → 25 грн (TC-14) [90m(0.3283ms)[39m[39m
+[32m✔ T5: абонент із пільгою, класичний 80 хв → менше з пільги: 37,50 грн (TC-15) [90m(0.2653ms)[39m[39m
+[32m✔ T5: абонент із пільгою, класичний 100 хв → рівні суми → абонемент: 50 грн (TC-16) [90m(0.2206ms)[39m[39m
+[32m✔ T6: електровелосипед 80 хв, перша поїздка за 16.09 → 120 ≤ 300 → 120 грн (TC-17) [90m(0.4439ms)[39m[39m
+[32m✔ T6: електровелосипед 80 хв, вже нараховано 120 грн → 120+120=240 ≤ 300 → 120 грн (TC-18) [90m(0.2317ms)[39m[39m
+[32m✔ T6: електровелосипед 80 хв, вже нараховано 240 грн → залишок 60 грн → 60 грн (TC-19) [90m(0.3275ms)[39m[39m
+[32m✔ T6: взяття 16.09 23:40, повернення 17.09 00:20, класичний 40 хв → добу 16.09, 50 грн (TC-20) [90m(0.29ms)[39m[39m
+[32m✔ T7: класичний 20 хв, повернення поза зоною X01 → 25 грн + збір 150 грн = 175 грн (TC-21) [90m(0.5099ms)[39m[39m
+[32m✔ T8: класичний 25 год = 1500 хв → 50 блоків 1250 грн → ліміт 300, + збір 2000 грн = 2300 грн (TC-22) [90m(0.2608ms)[39m[39m
+[32m✔ T7+T8: класичний 25 год, повернення поза зоною → 300 + 150 + 2000 = 2450 грн (TC-23) [90m(0.2165ms)[39m[39m
+[32m✔ T9: 30 % знижка від 1235 kop округляється вниз → до сплати 864 kop (TC-24) [90m(0.208ms)[39m[39m
+[32m✔ T10: взяття 00:00, класичний 30 хв → нічна знижка −30% → 17,50 грн (TC-25) [90m(0.2857ms)[39m[39m
+[32m✔ T10: взяття 06:00, класичний 30 хв → 06:00 не в нічному вікні → 25 грн (TC-26) [90m(0.1764ms)[39m[39m
+[32m✔ T10: взяття 01:10, класичний 30 хв → нічна знижка −30% → 17,50 грн (TC-27) [90m(0.2205ms)[39m[39m
+[32m✔ charges recorded for a day reduce what is left of the cap [90m(4.0527ms)[39m[39m
+[32m✔ the day of a ride is the date of its pickup [90m(0.4008ms)[39m[39m
+[32m✔ amounts are shown in hryvnias [90m(2.0845ms)[39m[39m
+[32m✔ a receipt has a line for every item [90m(0.6831ms)[39m[39m
+[32m✔ GET / serves the page and GET /api/health answers [90m(3.9753ms)[39m[39m
+[32m✔ POST /api/quote returns the quote and the receipt [90m(7.022ms)[39m[39m
+[32m✔ POST /api/quote answers 400 to a body that is not JSON [90m(1.649ms)[39m[39m
+[32m✔ quote returns an itemised price [90m(2.9034ms)[39m[39m
+[32m✔ a ride of 30 min 20 s is billed as one block [90m(0.3336ms)[39m[39m
+[32m✔ e-bikes are billed at the e-bike rate [90m(0.265ms)[39m[39m
+[32m✔ subscribers ride the first 45 minutes free [90m(0.3369ms)[39m[39m
+[32m✔ subscription on a long e-bike ride [90m(0.341ms)[39m[39m
+[32m✔ reduced fare for a ride returned outside the zone [90m(0.4381ms)[39m[39m
+[32m✔ night rides get 30 % off [90m(0.2644ms)[39m[39m
+[32m✔ a bike kept over a day and left outside the zone pays both fees [90m(0.2254ms)[39m[39m
+[32m✔ the daily cap limits the time charge [90m(1.1246ms)[39m[39m
+[32m✔ a 45-minute classic ride costs 50 UAH [90m(1.1103ms)[39m[39m
+[32m✔ a return before the pickup is rejected [90m(0.9266ms)[39m[39m
+[34mℹ tests 47[39m
+[34mℹ suites 0[39m
+[34mℹ pass 43[39m
+[34mℹ fail 4[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 583.6271[39m
+
+[31m✖ failing tests:[39m
+
+test at test\spec\tariff.test.js:99:3
+[31m✖ T1: 121 с → 3 хв; > 2 хв → ceil(3/30)=1 блок, класичний 25 грн (TC-02) [90m(2.2074ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: minutes
+  
+  2 !== 3
+  
+      at expectQuote (file:///D:/Lessons_Selenium_Bionics/lesson1/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:40:10)
+      at TestContext.<anonymous> (file:///D:/Lessons_Selenium_Bionics/lesson1/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:100:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff.test.js:99:3
+[31m✖ T2: 120 с = 2 хв; ≤ 2 хв → погодинне нарахування 0 грн (TC-03) [90m(0.5323ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: timeCharge
+  
+  2500 !== 0
+  
+      at expectQuote (file:///D:/Lessons_Selenium_Bionics/lesson1/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:41:10)
+      at TestContext.<anonymous> (file:///D:/Lessons_Selenium_Bionics/lesson1/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:100:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2500,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff.test.js:99:3
+[31m✖ T2: 121 с → 3 хв; > 2 хв → ceil(3/30)=1 блок, класичний 25 грн (TC-04) [90m(0.4805ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: minutes
+  
+  2 !== 3
+  
+      at expectQuote (file:///D:/Lessons_Selenium_Bionics/lesson1/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:40:10)
+      at TestContext.<anonymous> (file:///D:/Lessons_Selenium_Bionics/lesson1/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:100:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test\spec\tariff.test.js:218:3
+[31m✖ T4: абонент, електровелосипед 75 хв → 3 блоки 120 грн, −20% → 96 грн (TC-13) [90m(0.6281ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: total
+  
+  3200 !== 9600
+  
+      at expectQuote (file:///D:/Lessons_Selenium_Bionics/lesson1/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:42:10)
+      at TestContext.<anonymous> (file:///D:/Lessons_Selenium_Bionics/lesson1/2026-udc-12-testing-qa-hw/app/test/spec/tariff.test.js:219:5)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 3200,
+    expected: 9600,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

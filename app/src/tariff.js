@@ -68,7 +68,7 @@ export function quote(ride, rider, { zones = stationZones, dayCap } = {}) {
 }
 
 function rideMinutes(pickup, returned) {
-  return Math.round((returned - pickup) / 60_000);
+  return Math.ceil((returned - pickup) / 60_000);
 }
 
 function blocks(minutes) {
@@ -76,12 +76,13 @@ function blocks(minutes) {
 }
 
 function chargeFor(minutes, bike) {
-  if (minutes < FREE_START_MINUTES) return 0;
+  if (minutes <= FREE_START_MINUTES) return 0;
   return blocks(minutes) * RATES[bike];
 }
 
 function subscriptionCharge(minutes, bike) {
-  const charge = blocks(Math.max(0, minutes - SUBSCRIPTION_FREE_MINUTES)) * RATES[bike];
+  const billableMinutes = bike === "ebike" ? minutes : Math.max(0, minutes - SUBSCRIPTION_FREE_MINUTES);
+  const charge = blocks(billableMinutes) * RATES[bike];
   return bike === "ebike" ? charge - discount(charge, SUBSCRIPTION_EBIKE_PERCENT) : charge;
 }
 
