@@ -67,8 +67,9 @@ export function quote(ride, rider, { zones = stationZones, dayCap } = {}) {
   return { minutes, timeCharge, discounts, fees, total };
 }
 
+/** T1: an incomplete minute counts as a full one — round up. */
 function rideMinutes(pickup, returned) {
-  return Math.round((returned - pickup) / 60_000);
+  return Math.ceil((returned - pickup) / 60_000);
 }
 
 function blocks(minutes) {
