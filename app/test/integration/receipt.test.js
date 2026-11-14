@@ -12,7 +12,7 @@ test("every receipt of a week of rides ends with the amount due", () => {
   const rider = randomRider();
   for (const ride of randomRides(10)) {
     const minutes = (Date.parse(ride.returnAt) - Date.parse(ride.pickupAt)) / 60_000;
-    const expected = (Math.floor(minutes / 30) + 1) * PRICE[ride.bike];
+    const expected = Math.ceil(minutes / 30) * PRICE[ride.bike];
 
     const lines = formatReceipt(quote(ride, rider));
 
@@ -21,6 +21,26 @@ test("every receipt of a week of rides ends with the amount due", () => {
       lines.at(-1).endsWith(` ${uah(expected)}`),
       `${ride.bike}, ${minutes} min from ${ride.pickupAt}: got "${lines.at(-1)}", expected ${uah(expected)}`,
     );
+  }
+});
+
+test("a receipt at an exact block boundary does not add another block", () => {
+  const rider = { id: "boundary-rider", type: "standard" };
+  const pickupAt = "2026-09-21T09:00:00Z";
+  for (const [minutes, bike, amount] of [
+    [30, "classic", "25,00 грн"],
+    [60, "classic", "50,00 грн"],
+    [30, "ebike", "40,00 грн"],
+    [60, "ebike", "80,00 грн"],
+  ]) {
+    const ride = {
+      pickupAt,
+      returnAt: new Date(Date.parse(pickupAt) + minutes * 60_000).toISOString(),
+      bike,
+      returnStation: "S01",
+    };
+    const lines = formatReceipt(quote(ride, rider));
+    assert.ok(lines.at(-1).endsWith(` ${amount}`), `${bike} ${minutes} min: ${lines.at(-1)}`);
   }
 });
 

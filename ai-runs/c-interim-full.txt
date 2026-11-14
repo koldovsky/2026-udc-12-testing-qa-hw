@@ -1,0 +1,16 @@
+Мутаційне тестування
+  цілі:   app/src/tariff.js, app/src/day-cap.js
+  тести:  app/test/unit, app/test/spec — файлів: 6, тестів: 63, пропущено: 0, todo: 0, викликів assert: 65
+
+файл                мутантів     вбито    вижило   таймаут     score
+app/src/tariff.js         76        72         4         0    94.7 %
+app/src/day-cap.js         7         7         0         0   100.0 %
+разом                     83        79         4         0    95.2 %
+
+Вижили (4) — тести не помітили цієї зміни:
+  M009  app/src/tariff.js:25:33     6 → 7                       export const NIGHT_UNTIL_HOUR = 6;
+  M016  app/src/tariff.js:47:21     0 → 1                       if (plan.amount > 0) discounts.push({ code: plan.code, amount: plan...
+  M019  app/src/tariff.js:50:13     0 → 1                       if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+  M021  app/src/tariff.js:50:40     < → <=                      if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+
+Час: 15.1 с

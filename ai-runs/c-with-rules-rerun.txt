@@ -1,0 +1,298 @@
+✔ характеризаційний: UTC dayKey для 2026-01-15T12:00:00+02:00 (1.06675ms)
+✖ характеризаційний: UTC dayKey для 2026-01-16T00:30:00+02:00 (0.606416ms)
+✔ характеризаційний: UTC dayKey для 2026-01-15T23:30:00-02:00 (0.065041ms)
+✔ характеризаційний: накопичення, ізоляція користувачів і UTC-днів (0.157625ms)
+✖ характеризаційний: київська північ не перемикає UTC-журнал (0.123334ms)
+✔ характеризаційний: запис 29999 коп. (0.070792ms)
+✔ характеризаційний: запис 30000 коп. (0.05425ms)
+✔ характеризаційний: запис 30001 коп. (0.05025ms)
+✔ характеризаційний: окремі екземпляри та власний ліміт (0.098791ms)
+✔ характеризаційний: classic 0 хв (1.186459ms)
+✔ характеризаційний: classic 1 хв (0.070791ms)
+✖ характеризаційний: classic 2 хв (0.692083ms)
+✔ характеризаційний: classic 3 хв (0.121333ms)
+✔ характеризаційний: classic 29 хв (0.075125ms)
+✔ характеризаційний: classic 30 хв (0.06525ms)
+✔ характеризаційний: classic 31 хв (0.153583ms)
+✖ характеризаційний: округлення 1.49 хв (0.22925ms)
+✖ характеризаційний: округлення 1.5 хв (0.133542ms)
+✖ характеризаційний: округлення 30.49 хв (0.168291ms)
+✔ характеризаційний: округлення 30.5 хв (0.079959ms)
+✔ характеризаційний: ebike 29 хв (0.076167ms)
+✔ характеризаційний: ebike 30 хв (0.053792ms)
+✔ характеризаційний: ebike 31 хв (0.047958ms)
+✔ характеризаційний: абонемент classic 44 хв (0.084541ms)
+✔ характеризаційний: абонемент classic 45 хв (0.037708ms)
+✔ характеризаційний: абонемент classic 46 хв (0.061208ms)
+✔ характеризаційний: абонемент classic 75 хв (0.049208ms)
+✔ характеризаційний: абонемент classic 76 хв (0.043709ms)
+✖ характеризаційний: абонемент ebike (0.210333ms)
+✖ характеризаційний: вибір пільги та зменшення збору (0.143625ms)
+✔ характеризаційний: за однакової економії обирається абонемент (0.059625ms)
+✔ характеризаційний: межа неповернення 1439 хв (0.044583ms)
+✔ характеризаційний: межа неповернення 1440 хв (0.0325ms)
+✔ характеризаційний: межа неповернення 1441 хв (0.02875ms)
+✔ характеризаційний: нічна знижка всередині інтервалу (0.043375ms)
+✔ характеризаційний: ліміт обмежує час, збори не записуються до журналу (0.152667ms)
+✔ характеризаційний: discount(101, 50) (0.023875ms)
+✔ характеризаційний: discount(1, 20) (0.017792ms)
+✔ характеризаційний: discount(2500, 30) (0.016792ms)
+✔ характеризаційний: discount(0, 50) (0.027583ms)
+✔ характеризаційний: валідація — немає поїздки (0.223625ms)
+✔ характеризаційний: валідація — немає offset (0.024875ms)
+✔ характеризаційний: валідація — некоректна дата (0.020834ms)
+✔ характеризаційний: валідація — повернення раніше (0.019125ms)
+✔ характеризаційний: валідація — невідомий велосипед (0.047958ms)
+✔ характеризаційний: валідація — невідома станція (0.02425ms)
+✔ характеризаційний: валідація — невідомий користувач (0.033125ms)
+✔ характеризаційний: валідація — немає id (0.027042ms)
+✔ характеризаційний: QuoteError є Error (0.056375ms)
+ℹ tests 49
+ℹ suites 0
+ℹ pass 41
+ℹ fail 8
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 155.927541
+
+✖ failing tests:
+
+test at ai-runs/c-with-rules/day-cap.test.js:12:3
+✖ характеризаційний: UTC dayKey для 2026-01-16T00:30:00+02:00 (0.606416ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '2026-01-16'
+  - '2026-01-15'
+              ^
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/ai-runs/c-with-rules/day-cap.test.js:12:69)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '2026-01-16',
+    expected: '2026-01-15',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/c-with-rules/day-cap.test.js:28:1
+✖ характеризаційний: київська північ не перемикає UTC-журнал (0.123334ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  30000 !== 27500
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/ai-runs/c-with-rules/day-cap.test.js:32:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 30000,
+    expected: 27500,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/c-with-rules/tariff.test.js:20:3
+✖ характеризаційний: classic 2 хв (0.692083ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      discounts: [],
+      fees: [],
+      minutes: 2,
+  +   timeCharge: 0,
+  +   total: 0
+  -   timeCharge: 2500,
+  -   total: 2500
+    }
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/ai-runs/c-with-rules/tariff.test.js:21:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 2, timeCharge: 0, discounts: [], fees: [], total: 0 },
+    expected: { minutes: 2, timeCharge: 2500, discounts: [], fees: [], total: 2500 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/c-with-rules/tariff.test.js:25:3
+✖ характеризаційний: округлення 1.49 хв (0.22925ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      discounts: [],
+      fees: [],
+  +   minutes: 2,
+  -   minutes: 1,
+      timeCharge: 0,
+      total: 0
+    }
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/ai-runs/c-with-rules/tariff.test.js:26:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 2, timeCharge: 0, discounts: [], fees: [], total: 0 },
+    expected: { minutes: 1, timeCharge: 0, discounts: [], fees: [], total: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/c-with-rules/tariff.test.js:25:3
+✖ характеризаційний: округлення 1.5 хв (0.133542ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      discounts: [],
+      fees: [],
+      minutes: 2,
+  +   timeCharge: 0,
+  +   total: 0
+  -   timeCharge: 2500,
+  -   total: 2500
+    }
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/ai-runs/c-with-rules/tariff.test.js:26:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 2, timeCharge: 0, discounts: [], fees: [], total: 0 },
+    expected: { minutes: 2, timeCharge: 2500, discounts: [], fees: [], total: 2500 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/c-with-rules/tariff.test.js:25:3
+✖ характеризаційний: округлення 30.49 хв (0.168291ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      discounts: [],
+      fees: [],
+  +   minutes: 31,
+  +   timeCharge: 5000,
+  +   total: 5000
+  -   minutes: 30,
+  -   timeCharge: 2500,
+  -   total: 2500
+    }
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/ai-runs/c-with-rules/tariff.test.js:26:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 31, timeCharge: 5000, discounts: [], fees: [], total: 5000 },
+    expected: { minutes: 30, timeCharge: 2500, discounts: [], fees: [], total: 2500 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/c-with-rules/tariff.test.js:40:1
+✖ характеризаційний: абонемент ebike (0.210333ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      discounts: [
+        {
+  +       amount: 1600,
+  -       amount: 4800,
+          code: 'subscription'
+        }
+      ],
+      fees: [],
+      minutes: 46,
+      timeCharge: 8000,
+  +   total: 6400
+  -   total: 3200
+    }
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/ai-runs/c-with-rules/tariff.test.js:41:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 46, timeCharge: 8000, discounts: [ [Object] ], fees: [], total: 6400 },
+    expected: { minutes: 46, timeCharge: 8000, discounts: [ [Object] ], fees: [], total: 3200 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/c-with-rules/tariff.test.js:44:1
+✖ характеризаційний: вибір пільги та зменшення збору (0.143625ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    {
+      discounts: [
+        {
+          amount: 7500,
+          code: 'reduced'
+  ...
+        {
+  +       amount: 15000,
+  -       amount: 7500,
+          code: 'out-of-zone'
+        }
+      ],
+      minutes: 180,
+      timeCharge: 15000,
+  +   total: 22500
+  -   total: 15000
+    }
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/ai-runs/c-with-rules/tariff.test.js:45:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 180, timeCharge: 15000, discounts: [ [Object] ], fees: [ [Object] ], total: 22500 },
+    expected: { minutes: 180, timeCharge: 15000, discounts: [ [Object] ], fees: [ [Object] ], total: 15000 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

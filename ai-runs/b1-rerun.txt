@@ -1,0 +1,167 @@
+✖ dayKey uses the UTC date and accepts strings, dates and timestamps (1.014125ms)
+✔ default ledger accumulates charges and clamps the remaining allowance (0.305875ms)
+✖ custom limits, riders, UTC days and ledger instances are independent (0.558666ms)
+✖ rounds duration to minutes, then applies free start and started 30-minute blocks (1.758875ms)
+✖ subscription free minutes and ebike discount apply to the remaining blocks (0.353417ms)
+✔ concession picks the cheaper plan, retaining subscription on a tie (0.17775ms)
+✔ night discount uses Kyiv pickup hour, follows plan discount, and ends at 06:00 (0.14875ms)
+✖ fees are outside the cap, with reduced fees only when the reduced plan wins (0.269ms)
+✖ ledger books discounted time charge on pickup day and excludes fees (0.259208ms)
+✔ discount rounds the payable remainder down to a kopeck (0.064292ms)
+✔ accepts explicit offsets and an injected station lookup (0.073084ms)
+✔ invalid rides and riders raise QuoteError without booking a charge (0.3065ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 6
+ℹ fail 6
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 151.653917
+
+✖ failing tests:
+
+test at ai-runs/b1-from-code/day-cap.test.js:5:1
+✖ dayKey uses the UTC date and accepts strings, dates and timestamps (1.014125ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '2026-01-02'
+  - '2026-01-01'
+              ^
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:6:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '2026-01-02',
+    expected: '2026-01-01',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/day-cap.test.js:29:1
+✖ custom limits, riders, UTC days and ledger instances are independent (0.558666ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  3000 !== 5000
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/day-cap.test.js:35:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 3000,
+    expected: 5000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:13:1
+✖ rounds duration to minutes, then applies free start and started 30-minute blocks (1.758875ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      discounts: [],
+      fees: [],
+  +   minutes: 2,
+  -   minutes: 1,
+      timeCharge: 0,
+      total: 0
+    }
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:18:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 2, timeCharge: 0, discounts: [], fees: [], total: 0 },
+    expected: { minutes: 1, timeCharge: 0, discounts: [], fees: [], total: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:25:1
+✖ subscription free minutes and ebike discount apply to the remaining blocks (0.353417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  6400 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:31:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 6400,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:56:1
+✖ fees are outside the cap, with reduced fees only when the reduced plan wins (0.269ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      {
+  +     amount: 15000,
+  -     amount: 7500,
+        code: 'out-of-zone'
+      },
+      {
+  +     amount: 200000,
+  -     amount: 100000,
+        code: 'unreturned'
+      }
+    ]
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:62:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'out-of-zone', amount: 15000 }, { code: 'unreturned', amount: 200000 } ],
+    expected: [ { code: 'out-of-zone', amount: 7500 }, { code: 'unreturned', amount: 100000 } ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at ai-runs/b1-from-code/tariff.test.js:67:1
+✖ ledger books discounted time charge on pickup day and excludes fees (0.259208ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 7000
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/ai-runs/b1-from-code/tariff.test.js:79:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 7000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

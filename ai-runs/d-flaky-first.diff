@@ -1,0 +1,113 @@
+diff --git a/ai-runs/d-repeat-after.txt b/ai-runs/d-repeat-after.txt
+new file mode 100644
+index 0000000..bc0d0d4
+--- /dev/null
++++ b/ai-runs/d-repeat-after.txt
+@@ -0,0 +1,40 @@
++
++> test:repeat
++> node tools/repeat.mjs 30
++
++  прогін 1/30: зелений
++  прогін 2/30: зелений
++  прогін 3/30: зелений
++  прогін 4/30: зелений
++  прогін 5/30: зелений
++  прогін 6/30: зелений
++  прогін 7/30: зелений
++  прогін 8/30: зелений
++  прогін 9/30: зелений
++  прогін 10/30: зелений
++  прогін 11/30: зелений
++  прогін 12/30: зелений
++  прогін 13/30: зелений
++  прогін 14/30: зелений
++  прогін 15/30: зелений
++  прогін 16/30: зелений
++  прогін 17/30: зелений
++  прогін 18/30: зелений
++  прогін 19/30: зелений
++  прогін 20/30: зелений
++  прогін 21/30: зелений
++  прогін 22/30: зелений
++  прогін 23/30: зелений
++  прогін 24/30: зелений
++  прогін 25/30: зелений
++  прогін 26/30: зелений
++  прогін 27/30: зелений
++  прогін 28/30: зелений
++  прогін 29/30: зелений
++  прогін 30/30: зелений
++Прогонів: 30 (app: файлів 7, тестів 64)
++Червоних прогонів: 0 з 30
++
++Решта тестів (64) — зелені в усіх прогонах.
++
++Час: 9.7 с
+diff --git a/app/test/integration/receipt.test.js b/app/test/integration/receipt.test.js
+index 6c2335e..4b6d6cd 100644
+--- a/app/test/integration/receipt.test.js
++++ b/app/test/integration/receipt.test.js
+@@ -3,24 +3,39 @@ import test from "node:test";
+ import assert from "node:assert/strict";
+ import { formatReceipt } from "../../src/receipt.js";
+ import { quote } from "../../src/tariff.js";
+-import { randomRider, randomRides } from "../helpers/factory.js";
++const rider = { id: "receipt-rider", type: "standard" };
+ 
+-const PRICE = { classic: 2500, ebike: 4000 };
+-const uah = (kopecks) => `${(kopecks / 100).toFixed(2).replace(".", ",")} грн`;
++// Literal T3 amounts: an exact 30-minute boundary still belongs to that block.
++const cases = [
++  [5, "25,00 грн", "40,00 грн"],
++  [29, "25,00 грн", "40,00 грн"],
++  [30, "25,00 грн", "40,00 грн"],
++  [31, "50,00 грн", "80,00 грн"],
++  [59, "50,00 грн", "80,00 грн"],
++  [60, "50,00 грн", "80,00 грн"],
++  [61, "75,00 грн", "120,00 грн"],
++  [89, "75,00 грн", "120,00 грн"],
++];
+ 
+-test("every receipt of a week of rides ends with the amount due", () => {
+-  const rider = randomRider();
+-  for (const ride of randomRides(10)) {
+-    const minutes = (Date.parse(ride.returnAt) - Date.parse(ride.pickupAt)) / 60_000;
+-    const expected = (Math.floor(minutes / 30) + 1) * PRICE[ride.bike];
++test("receipts end with the amount due around each billing boundary", () => {
++  for (const [minutes, classic, ebike] of cases) {
++    for (const [bike, expected] of [["classic", classic], ["ebike", ebike]]) {
++      const pickupAt = "2026-09-21T09:00:00Z";
++      const ride = {
++        pickupAt,
++        returnAt: new Date(Date.parse(pickupAt) + minutes * 60_000).toISOString(),
++        bike,
++        returnStation: "S01",
++      };
+ 
+-    const lines = formatReceipt(quote(ride, rider));
++      const lines = formatReceipt(quote(ride, rider));
+ 
+-    assert.ok(lines.at(-1).startsWith("До сплати "));
+-    assert.ok(
+-      lines.at(-1).endsWith(` ${uah(expected)}`),
+-      `${ride.bike}, ${minutes} min from ${ride.pickupAt}: got "${lines.at(-1)}", expected ${uah(expected)}`,
+-    );
++      assert.ok(lines.at(-1).startsWith("До сплати "));
++      assert.ok(
++        lines.at(-1).endsWith(` ${expected}`),
++        `${bike}, ${minutes} min from ${pickupAt}: got "${lines.at(-1)}", expected ${expected}`,
++      );
++    }
+   }
+ });
+ 
+@@ -32,7 +47,7 @@ test("a receipt lists the fee for a return outside the zone", () => {
+     returnStation: "X02",
+   };
+ 
+-  const lines = formatReceipt(quote(ride, randomRider()));
++  const lines = formatReceipt(quote(ride, rider));
+ 
+   assert.deepEqual(lines, [
+     "Тривалість поїздки: 20 хв",

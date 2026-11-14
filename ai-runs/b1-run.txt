@@ -1,0 +1,20 @@
+✔ dayKey uses the UTC date and accepts strings, dates and timestamps (2.130375ms)
+✔ default ledger accumulates charges and clamps the remaining allowance (0.146375ms)
+✔ custom limits, riders, UTC days and ledger instances are independent (0.086042ms)
+✔ rounds duration to minutes, then applies free start and started 30-minute blocks (1.386208ms)
+✔ subscription free minutes and ebike discount apply to the remaining blocks (0.221959ms)
+✔ concession picks the cheaper plan, retaining subscription on a tie (0.106042ms)
+✔ night discount uses Kyiv pickup hour, follows plan discount, and ends at 06:00 (0.1335ms)
+✔ fees are outside the cap, with reduced fees only when the reduced plan wins (0.146375ms)
+✔ ledger books discounted time charge on pickup day and excludes fees (0.195875ms)
+✔ discount rounds the payable remainder down to a kopeck (0.049166ms)
+✔ accepts explicit offsets and an injected station lookup (0.065292ms)
+✔ invalid rides and riders raise QuoteError without booking a charge (0.317459ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 151.559

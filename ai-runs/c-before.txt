@@ -1,0 +1,66 @@
+✔ charges recorded for a day reduce what is left of the cap (0.647125ms)
+✔ the day of a ride is the Kyiv date of its pickup (0.111417ms)
+✔ amounts are shown in hryvnias (1.237167ms)
+✔ a receipt has a line for every item (0.217125ms)
+✔ GET / serves the page and GET /api/health answers (1.120667ms)
+✔ POST /api/quote returns the quote and the receipt (3.033833ms)
+✔ POST /api/quote answers 400 to a body that is not JSON (0.330625ms)
+✔ quote returns an itemised price (0.986292ms)
+✔ a ride of 30 min 20 s is rounded up and billed as two blocks (0.078791ms)
+✔ e-bikes are billed at the e-bike rate (0.087834ms)
+✔ subscriber terms differ between classic and electric bikes (0.114333ms)
+✔ subscription on a long e-bike ride (0.072541ms)
+✔ reduced fare for a ride returned outside the zone (0.093ms)
+✔ night rides get 30 % off (0.081458ms)
+✔ a bike kept over a day and left outside the zone pays both fees (0.056542ms)
+✔ the daily cap limits the time charge (0.206459ms)
+✔ a 45-minute classic ride costs 50 UAH (0.211041ms)
+✔ a return before the pickup is rejected (0.245834ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 199.983208
+ℹ start of coverage report
+ℹ --------------------------------------------------------------
+ℹ file          | line % | branch % | funcs % | uncovered lines
+ℹ --------------------------------------------------------------
+ℹ src           |        |          |         | 
+ℹ  day-cap.js   |  96.67 |   100.00 |   83.33 | 27
+ℹ  kyiv-time.js | 100.00 |   100.00 |  100.00 | 
+ℹ  receipt.js   | 100.00 |    75.00 |  100.00 | 
+ℹ  server.js    |  89.61 |    73.91 |   71.43 | 36 39-40 73-77
+ℹ  tariff.js    |  98.53 |    83.33 |  100.00 | 131-132
+ℹ  zones.js     |  96.55 |    75.00 |   66.67 | 24
+ℹ --------------------------------------------------------------
+ℹ all files     |  96.36 |    81.91 |   88.24 | 
+ℹ --------------------------------------------------------------
+ℹ end of coverage report
+Мутаційне тестування
+  цілі:   app/src/tariff.js, app/src/day-cap.js
+  тести:  app/test/unit, app/test/spec — файлів: 5, тестів: 55, пропущено: 0, todo: 0, викликів assert: 50
+
+файл                мутантів     вбито    вижило   таймаут     score
+app/src/tariff.js         76        64        12         0    84.2 %
+app/src/day-cap.js         7         6         1         0    85.7 %
+разом                     83        70        13         0    84.3 %
+
+Вижили (13) — тести не помітили цієї зміни:
+  M009  app/src/tariff.js:25:33     6 → 7                       export const NIGHT_UNTIL_HOUR = 6;
+  M016  app/src/tariff.js:47:21     0 → 1                       if (plan.amount > 0) discounts.push({ code: plan.code, amount: plan...
+  M018  app/src/tariff.js:50:11     > → >=                      if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+  M019  app/src/tariff.js:50:13     0 → 1                       if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+  M021  app/src/tariff.js:50:40     < → <=                      if (due > 0 && kyivTime(pickup).hour < NIGHT_UNTIL_HOUR) {
+  M023  app/src/tariff.js:57:11     > → >=                      if (due > allowance) {
+  M030  app/src/tariff.js:69:42     60_000 → 60001              return Math.ceil((returned - pickup) / 60_000);
+  M054  app/src/tariff.js:103:19    Math.floor → Math.ceil      return amount - Math.floor((amount * (100 - percent)) / 100);
+  M055  app/src/tariff.js:103:19    Math.floor → Math.round     return amount - Math.floor((amount * (100 - percent)) / 100);
+  M064  app/src/tariff.js:114:13    || → &&                     if (!ride || typeof ride !== "object") throw new QuoteError("ride i...
+  M066  app/src/tariff.js:117:16    < → <=                      if (returned < pickup) throw new QuoteError("returnAt is before pic...
+  M075  app/src/tariff.js:130:33    || → &&                     if (typeof value !== "string" || !ISO_DATE_TIME.test(value)) {
+  M083  app/src/day-cap.js:27:50    0 → 1                       return charged.get(`${riderId}|${day}`) ?? 0;
+
+Час: 12.6 с

@@ -1,0 +1,351 @@
+
+> test
+> npm --prefix app test
+
+
+> veloprokat@3.2.0 test
+> node --test "test/**/*.test.js"
+
+✔ every receipt of a week of rides ends with the amount due (1.411625ms)
+✔ a receipt lists the fee for a return outside the zone (0.493834ms)
+✔ T1, T3: TC-01 round 12:40 upward (1.563875ms)
+✖ T1, T3: TC-02 30 minutes and one second (0.820459ms)
+✔ T2, T1: TC-03 50-second false start (0.08425ms)
+✖ T2: TC-04 exactly two minutes (0.580167ms)
+✖ T2, T1, T3: TC-05 two minutes and one second (0.202958ms)
+✔ T3: TC-06 exactly one classic block (0.09525ms)
+✔ T3: TC-07 three electric blocks (0.076167ms)
+✔ T4: TC-08 45 subscription minutes (0.11075ms)
+✖ T4, T1: TC-09 45 minutes and one second (0.213167ms)
+✔ T4: TC-10 55 paid subscription minutes (0.131958ms)
+✖ T4: TC-11 electric subscription has no free minutes (0.143708ms)
+✔ T5: TC-12 student pays half (0.069041ms)
+✔ T5, T4: TC-13 subscription is cheaper (0.048375ms)
+✔ T5, T4: TC-14 subscription wins a tie (0.04875ms)
+✔ T5, T4: TC-15 concession is cheaper (0.052125ms)
+✖ T5, T7: TC-16 student pays the full zone fee (0.155583ms)
+✔ T6, T3: TC-17 electric charge reaches daily cap (0.060875ms)
+✔ T7: TC-23 outside-zone return (0.051458ms)
+✖ T7, T2: TC-24 false start still pays zone fee (0.130916ms)
+✔ T8, T6: TC-25 exactly 24 hours (0.057083ms)
+✔ T8, T6: TC-26 24 hours and one minute (0.0365ms)
+✔ T8, T7, T6: TC-27 both independent fees (0.032958ms)
+✔ T9, T8: TC-28 integer kopecks and itemised receipt (0.426875ms)
+✔ T10: TC-29 fully nighttime ride (0.042ms)
+✔ T10, T7: TC-30 night discount excludes fee (0.032625ms)
+✔ T10: TC-31 daytime has no night discount (0.02825ms)
+✔ T6: TC-18 daily ledger by rider and Kyiv pickup date (0.078167ms)
+✔ T6, T7: TC-19 daily ledger by rider and Kyiv pickup date (0.033333ms)
+✔ T6: TC-20 daily ledger by rider and Kyiv pickup date (0.040417ms)
+✔ T6: TC-21 daily ledger by rider and Kyiv pickup date (0.146958ms)
+✔ T6: TC-22 daily ledger by rider and Kyiv pickup date (0.082667ms)
+✖ T6, T10: TC-36 daily ledger by rider and Kyiv pickup date (0.135042ms)
+✖ T6, T10: TC-37 daily ledger by rider and Kyiv pickup date (0.08575ms)
+✔ T1: TC-32 invalid request is rejected with an explanation (0.307125ms)
+✔ T3: TC-33 invalid request is rejected with an explanation (0.044375ms)
+✔ T5: TC-34 invalid request is rejected with an explanation (0.036333ms)
+✔ T7: TC-35 invalid request is rejected with an explanation (0.034166ms)
+✔ charges recorded for a day reduce what is left of the cap (1.311917ms)
+✔ the day of a ride is the date of its pickup (0.093291ms)
+✔ amounts are shown in hryvnias (0.509792ms)
+✔ a receipt has a line for every item (0.167333ms)
+✔ GET / serves the page and GET /api/health answers (0.930917ms)
+✔ POST /api/quote returns the quote and the receipt (1.824875ms)
+✔ POST /api/quote answers 400 to a body that is not JSON (0.32425ms)
+✔ quote returns an itemised price (0.883708ms)
+✔ a ride of 30 min 20 s is billed as one block (0.08825ms)
+✔ e-bikes are billed at the e-bike rate (0.082584ms)
+✔ subscribers ride the first 45 minutes free (0.10075ms)
+✔ subscription on a long e-bike ride (0.087625ms)
+✔ reduced fare for a ride returned outside the zone (0.083958ms)
+✔ night rides get 30 % off (0.097833ms)
+✔ a bike kept over a day and left outside the zone pays both fees (0.063083ms)
+✔ the daily cap limits the time charge (0.278084ms)
+✔ a 45-minute classic ride costs 50 UAH (0.237959ms)
+✔ a return before the pickup is rejected (0.206334ms)
+ℹ tests 57
+ℹ suites 0
+ℹ pass 48
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 176.802916
+
+✖ failing tests:
+
+test at test/spec/tariffs.test.js:57:3
+✖ T1, T3: TC-02 30 minutes and one second (0.820459ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      discounts: [],
+      fees: [],
+  +   minutes: 30,
+  +   timeCharge: 2500,
+  +   total: 2500
+  -   minutes: 31,
+  -   timeCharge: 5000,
+  -   total: 5000
+    }
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:59:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 30, timeCharge: 2500, discounts: [], fees: [], total: 2500 },
+    expected: { minutes: 31, timeCharge: 5000, discounts: [], fees: [], total: 5000 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/tariffs.test.js:57:3
+✖ T2: TC-04 exactly two minutes (0.580167ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      discounts: [],
+      fees: [],
+      minutes: 2,
+  +   timeCharge: 2500,
+  +   total: 2500
+  -   timeCharge: 0,
+  -   total: 0
+    }
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:59:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 2, timeCharge: 2500, discounts: [], fees: [], total: 2500 },
+    expected: { minutes: 2, timeCharge: 0, discounts: [], fees: [], total: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/tariffs.test.js:57:3
+✖ T2, T1, T3: TC-05 two minutes and one second (0.202958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      discounts: [],
+      fees: [],
+  +   minutes: 2,
+  -   minutes: 3,
+      timeCharge: 2500,
+      total: 2500
+    }
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:59:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 2, timeCharge: 2500, discounts: [], fees: [], total: 2500 },
+    expected: { minutes: 3, timeCharge: 2500, discounts: [], fees: [], total: 2500 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/tariffs.test.js:57:3
+✖ T4, T1: TC-09 45 minutes and one second (0.213167ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      discounts: [
+        {
+  +       amount: 5000,
+  -       amount: 2500,
+          code: 'subscription'
+        }
+      ],
+      fees: [],
+  +   minutes: 45,
+  -   minutes: 46,
+      timeCharge: 5000,
+  +   total: 0
+  -   total: 2500
+    }
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:59:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 45, timeCharge: 5000, discounts: [ [Object] ], fees: [], total: 0 },
+    expected: { minutes: 46, timeCharge: 5000, discounts: [ [Object] ], fees: [], total: 2500 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/tariffs.test.js:57:3
+✖ T4: TC-11 electric subscription has no free minutes (0.143708ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      discounts: [
+        {
+  +       amount: 4000,
+  -       amount: 800,
+          code: 'subscription'
+        }
+      ],
+      fees: [],
+      minutes: 30,
+      timeCharge: 4000,
+  +   total: 0
+  -   total: 3200
+    }
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:59:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 30, timeCharge: 4000, discounts: [ [Object] ], fees: [], total: 0 },
+    expected: { minutes: 30, timeCharge: 4000, discounts: [ [Object] ], fees: [], total: 3200 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/tariffs.test.js:57:3
+✖ T5, T7: TC-16 student pays the full zone fee (0.155583ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    {
+      discounts: [
+        {
+          amount: 1250,
+          code: 'reduced'
+  ...
+        {
+  +       amount: 7500,
+  -       amount: 15000,
+          code: 'out-of-zone'
+        }
+      ],
+      minutes: 30,
+      timeCharge: 2500,
+  +   total: 8750
+  -   total: 16250
+    }
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:59:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 30, timeCharge: 2500, discounts: [ [Object] ], fees: [ [Object] ], total: 8750 },
+    expected: { minutes: 30, timeCharge: 2500, discounts: [ [Object] ], fees: [ [Object] ], total: 16250 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/tariffs.test.js:57:3
+✖ T7, T2: TC-24 false start still pays zone fee (0.130916ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    {
+      discounts: [],
+      fees: [
+        {
+          amount: 15000,
+  ...
+      minutes: 2,
+  +   timeCharge: 2500,
+  +   total: 17500
+  -   timeCharge: 0,
+  -   total: 15000
+    }
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:59:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { minutes: 2, timeCharge: 2500, discounts: [], fees: [ [Object] ], total: 17500 },
+    expected: { minutes: 2, timeCharge: 0, discounts: [], fees: [ [Object] ], total: 15000 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/tariffs.test.js:86:3
+✖ T6, T10: TC-36 daily ledger by rider and Kyiv pickup date (0.135042ms)
+  AssertionError [ERR_ASSERTION]: ride total
+  
+  1750 !== 0
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:90:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1750,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at test/spec/tariffs.test.js:86:3
+✖ T6, T10: TC-37 daily ledger by rider and Kyiv pickup date (0.08575ms)
+  AssertionError [ERR_ASSERTION]: ride total
+  
+  0 !== 1750
+  
+      at TestContext.<anonymous> (file:///Users/aholovko/Documents/projects/udc-agentic-workshop/2026-udc-12-testing-qa-hw/app/test/spec/tariffs.test.js:90:12)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1750,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
